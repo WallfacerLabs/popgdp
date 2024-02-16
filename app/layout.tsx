@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { AccountButton } from "@/components/ui/accountButton";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -26,7 +29,19 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <main className="flex flex-col min-h-screen items-center gap-12 px-16 py-12">
+          <div className="w-full justify-between items-center flex">
+            <Button
+              variant="link"
+              className="text-3xl font-mono font-bold"
+              asChild
+            >
+              <Link href="/">POPGDP</Link>
+            </Button>
+            <AccountButton />
+          </div>
+          {children}
+        </main>
       </body>
     </html>
   );
