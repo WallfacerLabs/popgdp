@@ -105,7 +105,7 @@ export default function CreateWave() {
           )}
         />
 
-        <SubmitButton>Create wave</SubmitButton>
+        <Button disabled={form.formState.isSubmitting}>Create wave</Button>
       </form>
     </Form>
   );

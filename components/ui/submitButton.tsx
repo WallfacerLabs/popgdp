@@ -6,6 +6,7 @@ import { Button, type ButtonProps } from "./button";
 
 type SubmitButtonProps = Omit<ButtonProps, "type" | "asChild">;
 
+// Only works in forms with `action` prop
 export const SubmitButton = forwardRef<HTMLButtonElement, SubmitButtonProps>(
   ({ disabled, ...props }, ref) => {
     const { pending } = useFormStatus();
