@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submitButton";
 import { db } from "@/drizzle/db";
 import { counters } from "@/drizzle/schema";
 import { eq, sql } from "drizzle-orm";
@@ -53,9 +53,8 @@ export default async function Home() {
       <div className="flex flex-col items-center gap-4">
         <div>{value}</div>
         <form className="flex gap-6">
-          <Button
+          <SubmitButton
             className="w-[120px]"
-            type="submit"
             formAction={async () => {
               "use server";
               await db
@@ -69,10 +68,9 @@ export default async function Home() {
             }}
           >
             Increment
-          </Button>
-          <Button
+          </SubmitButton>
+          <SubmitButton
             className="w-[120px]"
-            type="submit"
             formAction={async () => {
               "use server";
               await db
@@ -86,7 +84,7 @@ export default async function Home() {
             }}
           >
             Decrement
-          </Button>
+          </SubmitButton>
         </form>
       </div>
 
