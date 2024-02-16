@@ -13,6 +13,13 @@ export const counters = pgTable("counters", {
   value: integer("value").default(0),
 });
 
+export const waves = pgTable("waves", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  startsAt: timestamp("startsAt", { mode: "date" }).notNull(),
+  endsAt: timestamp("endsAt", { mode: "date" }).notNull(),
+});
+
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
