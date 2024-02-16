@@ -1,6 +1,17 @@
+import { Button } from "@/components/ui/button";
+import { db } from "@/drizzle/db";
+import { counters } from "@/drizzle/schema";
+import { eq, sql } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+  const { value = 0 } =
+    (await db.query.counters.findFirst({
+      columns: { value: true },
+      where: eq(counters.id, 1),
+    })) ?? {};
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -37,6 +48,46 @@ export default function Home() {
           height={37}
           priority
         />
+      </div>
+
+      <div className="flex flex-col items-center gap-4">
+        <div>{value}</div>
+        <form className="flex gap-6">
+          <Button
+            className="w-[120px]"
+            type="submit"
+            formAction={async () => {
+              "use server";
+              await db
+                .insert(counters)
+                .values({ value: 1, id: 1 })
+                .onConflictDoUpdate({
+                  target: counters.id,
+                  set: { value: sql`${counters.value} + 1` },
+                });
+              revalidatePath("/");
+            }}
+          >
+            Increment
+          </Button>
+          <Button
+            className="w-[120px]"
+            type="submit"
+            formAction={async () => {
+              "use server";
+              await db
+                .insert(counters)
+                .values({ value: -1, id: 1 })
+                .onConflictDoUpdate({
+                  target: counters.id,
+                  set: { value: sql`${counters.value} - 1` },
+                });
+              revalidatePath("/");
+            }}
+          >
+            Decrement
+          </Button>
+        </form>
       </div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
