@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm install -g pnpm && pnpm install
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm exec playwright install chromium
       - name: Run migrations
         run: pnpm drizzle-kit push:pg
         env:
