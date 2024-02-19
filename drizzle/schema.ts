@@ -8,11 +8,6 @@ import {
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
-export const counters = pgTable("counters", {
-  id: serial("id").primaryKey(),
-  value: integer("value").default(0),
-});
-
 export const waves = pgTable("waves", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
