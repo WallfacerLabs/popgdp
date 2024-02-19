@@ -26,6 +26,6 @@ export async function createApplicationAction(
     })
     .returning({ id: applications.id });
 
-  revalidatePath(`/applications/${id}`);
-  redirect(`/applications/${id}`);
+  revalidatePath(`/waves/${waveId}`);
+  redirect(`/waves/${waveId}`);
 }
