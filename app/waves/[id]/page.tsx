@@ -15,14 +15,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function Wave({ params }: { params: { id: string } }) {
-  const wave = await db.query.waves.findFirst({
-    where: eq(waves.id, Number(params.id)),
-  });
-
-  const projects = await db.query.applications.findMany({
-    where: eq(applications.waveId, Number(params.id)),
-    with: { users: { columns: { name: true } } },
-  });
+  const [wave, projects] = await Promise.all([
+    db.query.waves.findFirst({
+      where: eq(waves.id, Number(params.id)),
+    }),
+    db.query.applications.findMany({
+      where: eq(applications.waveId, Number(params.id)),
+      with: { users: { columns: { name: true } } },
+    }),
+  ]);
 
   if (!wave) {
     return notFound();
