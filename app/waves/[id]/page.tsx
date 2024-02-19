@@ -54,6 +54,7 @@ export default async function Wave({ params }: { params: { id: string } }) {
             <TableHead>Project</TableHead>
             <TableHead>Submitted</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -63,6 +64,15 @@ export default async function Wave({ params }: { params: { id: string } }) {
               <TableCell>{project.name}</TableCell>
               <TableCell>{format(new Date(), "LLL dd, y")}</TableCell>
               <TableCell>Pending</TableCell>
+              <TableCell className="text-end">
+                <Button variant="secondary">
+                  <Link
+                    href={`/waves/${params.id}/applications/${project.id}}`}
+                  >
+                    Go to
+                  </Link>
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
