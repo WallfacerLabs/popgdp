@@ -1,0 +1,138 @@
+@startuml
+
+entity UserAccounts {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime
+    ethereumAddress: Text
+}
+
+'if account type is managed by ethereum address then best way will be to store it in separate tables
+entity Reviewers {
+    id: ID <<generated>>
+    claimed: boolean
+    --
+    ethereumAddress: Text <<FK>>/'(? depends on requirements)'/
+}
+
+entity Moderators {
+    id: ID <<generated>>
+    --
+    ethereumAddress: Text <<FK>>/'(? depends on requirements)'/
+}
+
+entity BlockedUsers {
+    blocked_user_id: ID <<FK>>
+    blocked_by_user_id: ID <<FK>>
+}
+
+entity Applications {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime
+    name: Text
+    --
+    wave_id: ID <<FK>>
+    user_id: ID <<FK>>
+    category_id: ID <<FK>>
+}
+
+'private data of application
+entity ApplicationContacts {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime
+    name: Text
+    email: Text
+    --
+    application_id: ID <<FK>>
+
+}
+
+entity ApplicationCategories {
+    id: ID <<generated>>
+    name: Text
+}
+
+entity ApplicationSpam {
+    application_id: ID <<FK>>
+    user_id: ID <<FK>>
+}
+
+entity ApplicationValue {
+    application_id: ID <<FK>>
+    user_id: ID <<FK>>
+    value: Number
+}
+
+entity Comments {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime
+    --
+    application_id: ID <<FK>>
+    user_id: ID <<FK>>
+}
+
+entity CommentsSpam {
+    comment_id: ID <<FK>>
+    user_id: ID <<FK>>
+}
+
+entity CommentsHelpful {
+    comment_id: ID <<FK>>
+    user_id: ID <<FK>>
+}
+
+entity Reviews {
+    comment_id: ID <<FK>>
+    application_id: ID <<FK>>
+    reviewer_id: ID <<FK>>
+
+    PrimaryKey(reviewer_id, application_id)
+}
+
+entity Wave {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime 
+    name: Text
+    start_date: DateTime
+    end_date: DateTime
+    phase: WavePhase
+  
+}
+
+Reviewers ||--o{ UserAccounts
+Moderators ||--o{ UserAccounts
+Applications ||--o{ Wave
+Applications ||--o{ UserAccounts
+Comments ||--o{ Applications
+Comments ||--o{ UserAccounts
+Reviews ||--o{ Comments
+Reviews ||--o{ Applications
+Reviews ||--o{ UserAccounts
+ApplicationContacts ||--o{ Applications
+BlockedUsers ||--o{ UserAccounts
+BlockedUsers ||--o{ UserAccounts
+Applications ||--o{ ApplicationCategories
+ApplicationSpam ||--o{ Applications
+ApplicationSpam ||--o{ UserAccounts
+CommentsSpam ||--o{ Comments
+CommentsSpam ||--o{ UserAccounts
+CommentsHelpful ||--o{ Comments
+CommentsHelpful ||--o{ UserAccounts
+ApplicationValue ||--o{ Applications
+ApplicationValue ||--o{ UserAccounts
+
+
+enum WavePhase {
+    OPEN
+    DENOISING
+    ASSESEMENT
+    CLOSED
+}
+
+WavePhase --o{ Wave
+
+@enduml
