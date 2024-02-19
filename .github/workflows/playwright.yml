@@ -31,6 +31,8 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         run: pnpm exec playwright test
+        env:
+          DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
       - uses: actions/upload-artifact@v3
         if: always()
         with:
