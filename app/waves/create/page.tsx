@@ -1,7 +1,6 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { SubmitButton } from "@/components/ui/submitButton";
 import { createWaveAction } from "./createWaveAction";
 import { createWaveSchema } from "./createWaveSchema";
 import { useForm } from "react-hook-form";
