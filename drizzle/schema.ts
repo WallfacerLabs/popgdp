@@ -7,6 +7,7 @@ import {
   primaryKey,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
+import { relations } from "drizzle-orm";
 
 export const waves = pgTable("waves", {
   id: serial("id").primaryKey(),
@@ -25,6 +26,17 @@ export const applications = pgTable("applications", {
     .notNull()
     .references(() => users.id),
 });
+
+export const applicationsRelations = relations(applications, ({ one }) => ({
+  wave: one(waves, {
+    fields: [applications.waveId],
+    references: [waves.id],
+  }),
+  users: one(users, {
+    fields: [applications.userId],
+    references: [users.id],
+  }),
+}));
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
