@@ -8,6 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
     services:
       postgres:
         image: postgres
@@ -38,12 +40,8 @@ jobs:
         run: pnpm exec playwright install chromium
       - name: Run migrations
         run: pnpm drizzle-kit push:pg
-        env:
-          DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       - name: Run Playwright tests
         run: pnpm test:e2e
-        env:
-          DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       - uses: actions/upload-artifact@v3
         if: always()
         with:
