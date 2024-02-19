@@ -1,0 +1,80 @@
+@startuml
+
+left to right direction
+
+actor Moderator as moderator
+actor Visitor as visitor
+actor Member as member
+actor Applicant as applicant
+actor Reviewer as reviewer
+
+rectangle Waves {
+    usecase "Create new wave" as uc1
+    usecase "Edit wave" as uc2
+    usecase "Switch wave phase" as uc4
+}
+
+rectangle Users {
+    usecase "Grant reviewer role" as uc3
+    usecase "See list of users" as uc5
+    usecase "See users activity" as uc6
+    usecase "Mark user as ignored" as uc7
+    usecase "Mark user as blocked" as uc8
+    usecase "See spam ranking" as uc9
+    usecase "Export list of users" as uc11
+    usecase "Log in" as uc23
+    usecase "Create an account" as uc24
+}
+
+rectangle Applications {
+    usecase "Export applications" as uc10
+    usecase "Mark as spam" as uc12
+    usecase "Assign value" as uc14
+    usecase "Mark as helpful" as uc15
+    usecase "Filter by categories" as uc16
+    usecase "Apply for a grant" as uc17
+    usecase "See public and hidden parts of application" as uc18
+    usecase "Save as draft" as uc19
+}
+
+rectangle Reviews {
+    usecase "Add review" as uc20
+    usecase "Mark as helpful" as uc21
+}
+
+rectangle Comments {
+    usecase "Mark as spam" as uc13
+    usecase "Edit comment" as uc22
+}
+
+moderator --> uc1
+moderator --> uc2
+moderator --> uc3
+moderator --> uc4
+moderator --> uc5
+moderator --> uc6
+moderator --> uc7
+moderator --> uc8
+moderator --> uc9
+moderator --> uc10
+moderator --> uc11
+
+visitor --> uc23
+visitor --> uc24
+visitor --> (Browse POPGDP)
+
+member --> uc12
+member --> uc13
+member --> uc14
+member --> uc15
+member --> uc16
+member --> uc21
+member --> uc22
+
+applicant --> uc17
+applicant --> uc18
+applicant --> uc19
+
+reviewer --> uc20
+
+@enduml
