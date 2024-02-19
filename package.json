@@ -6,7 +6,8 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@auth/core": "^0.27.0",
@@ -32,6 +33,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.41.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
