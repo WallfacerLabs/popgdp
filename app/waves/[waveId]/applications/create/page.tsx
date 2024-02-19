@@ -18,7 +18,7 @@ import { createApplicationAction } from "./createApplicationAction";
 export default function CreateApplication({
   params,
 }: {
-  params: { id: string };
+  params: { waveId: string };
 }) {
   const form = useForm<createApplicationSchema>({
     resolver: zodResolver(createApplicationSchema),
@@ -32,7 +32,7 @@ export default function CreateApplication({
       <form
         className="flex flex-col gap-4 w-full max-w-lg"
         onSubmit={form.handleSubmit(async (data) => {
-          await createApplicationAction(data, Number(params.id));
+          await createApplicationAction(data, Number(params.waveId));
         })}
       >
         <div>Create Application</div>

@@ -14,13 +14,13 @@ import { eq } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default async function Wave({ params }: { params: { id: string } }) {
+export default async function Wave({ params }: { params: { waveId: string } }) {
   const [wave, projects] = await Promise.all([
     db.query.waves.findFirst({
-      where: eq(waves.id, Number(params.id)),
+      where: eq(waves.id, Number(params.waveId)),
     }),
     db.query.applications.findMany({
-      where: eq(applications.waveId, Number(params.id)),
+      where: eq(applications.waveId, Number(params.waveId)),
       with: { users: { columns: { name: true } } },
     }),
   ]);
@@ -41,7 +41,7 @@ export default async function Wave({ params }: { params: { id: string } }) {
           </div>
         </div>
         <Button variant="secondary" asChild>
-          <Link href={`/waves/${params.id}/applications/create`}>
+          <Link href={`/waves/${params.waveId}/applications/create`}>
             Create new application
           </Link>
         </Button>
@@ -67,7 +67,7 @@ export default async function Wave({ params }: { params: { id: string } }) {
               <TableCell className="text-end">
                 <Button variant="secondary">
                   <Link
-                    href={`/waves/${params.id}/applications/${project.id}}`}
+                    href={`/waves/${params.waveId}/applications/${project.id}}`}
                   >
                     Go to
                   </Link>
