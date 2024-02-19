@@ -14,12 +14,14 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
+          POSTGRES_DB: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - "5432:5432"
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -32,7 +34,7 @@ jobs:
       - name: Run Playwright tests
         run: pnpm exec playwright test
         env:
-          DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
+          DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       - uses: actions/upload-artifact@v3
         if: always()
         with:
