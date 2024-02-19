@@ -32,11 +32,11 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
       - name: Run migrations
-        run: pnpm exec drizzle push:pg
+        run: pnpm drizzle-kit push:pg
         env:
           DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       - name: Run Playwright tests
-        run: pnpm exec playwright test
+        run: pnpm test:e2e
         env:
           DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       - uses: actions/upload-artifact@v3
