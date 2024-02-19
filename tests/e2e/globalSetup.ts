@@ -1,10 +1,9 @@
 import { db } from "@/drizzle/db";
 import { users, sessions, accounts } from "@/drizzle/schema";
 import { addDays } from "date-fns";
-import { sql } from "drizzle-orm";
 
 async function globalSetup() {
-  await db.execute(sql`TRUNCATE ${users} CASCADE`);
+  await db.delete(users);
 
   const [{ userId }] = await db
     .insert(users)
