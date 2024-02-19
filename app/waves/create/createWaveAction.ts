@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createWaveAction(data: createWaveSchema) {
-  const wave = await db
+  const [{ id }] = await db
     .insert(waves)
     .values({
       name: data.waveName,
@@ -15,8 +15,6 @@ export async function createWaveAction(data: createWaveSchema) {
       endsAt: data.duration.to,
     })
     .returning({ id: waves.id });
-
-  const { id } = wave[0];
 
   revalidatePath(`/waves/${id}`);
   redirect(`/waves/${id}`);

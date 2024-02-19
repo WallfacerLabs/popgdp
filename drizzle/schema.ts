@@ -15,6 +15,17 @@ export const waves = pgTable("waves", {
   endsAt: timestamp("endsAt", { mode: "date" }).notNull(),
 });
 
+export const applications = pgTable("applications", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  waveId: integer("waveId")
+    .notNull()
+    .references(() => waves.id),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id),
+});
+
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
