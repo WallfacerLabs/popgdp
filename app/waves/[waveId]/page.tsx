@@ -67,7 +67,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
               <TableCell className="text-end">
                 <Button variant="secondary">
                   <Link
-                    href={`/waves/${params.waveId}/applications/${project.id}}`}
+                    href={`/waves/${params.waveId}/applications/${project.id}`}
                   >
                     Go to
                   </Link>
