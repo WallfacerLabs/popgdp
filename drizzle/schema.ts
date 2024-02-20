@@ -9,14 +9,29 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
-export const waves = pgTable("waves", {
+export const waves = pgTable("wave", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  startsAt: timestamp("startsAt", { mode: "date" }).notNull(),
-  endsAt: timestamp("endsAt", { mode: "date" }).notNull(),
+  startsAt: timestamp("startsAt", {
+    mode: "date",
+    withTimezone: true,
+  }).notNull(),
+  endsAt: timestamp("endsAt", { mode: "date", withTimezone: true }).notNull(),
+  createdAt: timestamp("createdAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updatedAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
-export const applications = pgTable("applications", {
+export const applications = pgTable("application", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   waveId: integer("waveId")
@@ -25,6 +40,18 @@ export const applications = pgTable("applications", {
   userId: text("userId")
     .notNull()
     .references(() => users.id),
+  createdAt: timestamp("createdAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updatedAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export const applicationsRelations = relations(applications, ({ one }) => ({
@@ -42,8 +69,23 @@ export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
   email: text("email").notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  emailVerified: timestamp("emailVerified", {
+    mode: "date",
+    withTimezone: true,
+  }),
   image: text("image"),
+  createdAt: timestamp("createdAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updatedAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export const accounts = pgTable(
@@ -75,7 +117,7 @@ export const sessions = pgTable("session", {
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  expires: timestamp("expires", { mode: "date" }).notNull(),
+  expires: timestamp("expires", { mode: "date", withTimezone: true }).notNull(),
 });
 
 export const verificationTokens = pgTable(
@@ -83,7 +125,10 @@ export const verificationTokens = pgTable(
   {
     identifier: text("identifier").notNull(),
     token: text("token").notNull(),
-    expires: timestamp("expires", { mode: "date" }).notNull(),
+    expires: timestamp("expires", {
+      mode: "date",
+      withTimezone: true,
+    }).notNull(),
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
