@@ -1,3 +1,7 @@
+import Link from "next/link";
+import { db } from "@/drizzle/db";
+import { format } from "date-fns";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,15 +10,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { db } from "@/drizzle/db";
-import { format } from "date-fns";
-import Link from "next/link";
 
 export default async function Home() {
   const waves = await db.query.waves.findMany();
 
   return (
-    <div className="flex flex-col gap-4 max-w-xl w-full">
+    <div className="flex w-full max-w-xl flex-col gap-4">
       <div className="text-2xl">Current waves</div>
       <ol className="flex flex-col gap-8">
         {waves.map((wave) => (

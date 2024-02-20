@@ -1,10 +1,12 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { createWaveAction } from "./createWaveAction";
-import { createWaveSchema } from "./createWaveSchema";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { addDays, format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -13,15 +15,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { CalendarIcon } from "lucide-react";
-import { addDays, format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
+
+import { createWaveAction } from "./createWaveAction";
+import { createWaveSchema } from "./createWaveSchema";
 
 export default function CreateWave() {
   const form = useForm<createWaveSchema>({
@@ -38,7 +40,7 @@ export default function CreateWave() {
   return (
     <Form {...form}>
       <form
-        className="flex flex-col gap-4 w-full max-w-lg"
+        className="flex w-full max-w-lg flex-col gap-4"
         onSubmit={form.handleSubmit(async (data) => {
           await createWaveAction(data);
         })}

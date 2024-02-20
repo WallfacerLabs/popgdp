@@ -1,7 +1,7 @@
+import { notFound } from "next/navigation";
 import { db } from "@/drizzle/db";
 import { applications } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
 
 export default async function Application({
   params,

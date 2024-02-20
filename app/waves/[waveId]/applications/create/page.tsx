@@ -1,5 +1,8 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,10 +13,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { createApplicationSchema } from "./createApplicationSchema";
+
 import { createApplicationAction } from "./createApplicationAction";
+import { createApplicationSchema } from "./createApplicationSchema";
 
 export default function CreateApplication({
   params,
@@ -30,7 +32,7 @@ export default function CreateApplication({
   return (
     <Form {...form}>
       <form
-        className="flex flex-col gap-4 w-full max-w-lg"
+        className="flex w-full max-w-lg flex-col gap-4"
         onSubmit={form.handleSubmit(async (data) => {
           await createApplicationAction(data, Number(params.waveId));
         })}

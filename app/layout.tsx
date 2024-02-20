@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/cn";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
+import "./globals.css";
+
+import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
+import { Button } from "@/components/ui/button";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -26,14 +28,14 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          fontSans.variable,
         )}
       >
-        <main className="flex flex-col min-h-screen items-center gap-12 px-16 py-12">
-          <div className="w-full justify-between items-center flex">
+        <main className="flex min-h-screen flex-col items-center gap-12 px-16 py-12">
+          <div className="flex w-full items-center justify-between">
             <Button
               variant="link"
-              className="text-3xl font-mono font-bold"
+              className="font-mono text-3xl font-bold"
               asChild
             >
               <Link href="/">POPGDP</Link>

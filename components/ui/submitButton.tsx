@@ -2,6 +2,7 @@
 
 import { forwardRef } from "react";
 import { useFormStatus } from "react-dom";
+
 import { Button, type ButtonProps } from "./button";
 
 type SubmitButtonProps = Omit<ButtonProps, "type" | "asChild">;
@@ -20,6 +21,6 @@ export const SubmitButton = forwardRef<HTMLButtonElement, SubmitButtonProps>(
         aria-disabled={pending}
       />
     );
-  }
+  },
 );
 SubmitButton.displayName = "SubmitButton";
