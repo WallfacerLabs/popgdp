@@ -2,9 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/drizzle/db";
 import { applications, waves } from "@/drizzle/schema";
-import { format } from "date-fns";
 import { eq } from "drizzle-orm";
 
+import { formatDate, formatDateRange } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -36,10 +36,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
         <div>
           <div>Wave {wave.id}</div>
           <div>Wave name: {wave.name}</div>
-          <div>
-            {format(wave.startsAt, "LLL dd, y")} -{" "}
-            {format(wave.endsAt, "LLL dd, y")}
-          </div>
+          <div>{formatDateRange(wave.startsAt, wave.endsAt)}</div>
         </div>
         <Button variant="secondary" asChild>
           <Link href={`/waves/${params.waveId}/applications/create`}>
@@ -63,7 +60,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
             <TableRow key={project.id}>
               <TableCell>{project.users.name}</TableCell>
               <TableCell>{project.name}</TableCell>
-              <TableCell>{format(new Date(), "LLL dd, y")}</TableCell>
+              <TableCell>{formatDate(new Date())}</TableCell>
               <TableCell>Pending</TableCell>
               <TableCell className="text-end">
                 <Button variant="secondary">
