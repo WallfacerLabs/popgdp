@@ -1,4 +1,5 @@
-import { signIn, signOut, auth } from "@/lib/auth";
+import { auth, signIn, signOut } from "@/lib/auth";
+
 import { SubmitButton } from "./submitButton";
 
 export const AccountButton = async () => {

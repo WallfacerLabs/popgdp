@@ -1,5 +1,5 @@
 import { db } from "@/drizzle/db";
-import { users, sessions, accounts } from "@/drizzle/schema";
+import { accounts, sessions, users } from "@/drizzle/schema";
 import { addDays } from "date-fns";
 
 async function globalSetup() {

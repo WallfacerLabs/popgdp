@@ -1,3 +1,10 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { db } from "@/drizzle/db";
+import { applications, waves } from "@/drizzle/schema";
+import { format } from "date-fns";
+import { eq } from "drizzle-orm";
+
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -7,12 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/drizzle/db";
-import { applications, waves } from "@/drizzle/schema";
-import { format } from "date-fns";
-import { eq } from "drizzle-orm";
-import Link from "next/link";
-import { notFound } from "next/navigation";
 
 export default async function Wave({ params }: { params: { waveId: string } }) {
   const [wave, projects] = await Promise.all([
@@ -31,7 +32,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div>
           <div>Wave {wave.id}</div>
           <div>Wave name: {wave.name}</div>
