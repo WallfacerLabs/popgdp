@@ -1,6 +1,7 @@
 import { db } from "@/drizzle/db";
 import { accounts, sessions, users } from "@/drizzle/schema";
-import { addDays } from "date-fns";
+
+import { addDays } from "@/lib/dates";
 
 async function globalSetup() {
   await db.delete(users);

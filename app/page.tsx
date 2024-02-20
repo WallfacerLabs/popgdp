@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { db } from "@/drizzle/db";
-import { format } from "date-fns";
 
+import { formatDateRange } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,8 +26,7 @@ export default async function Home() {
               </CardHeader>
               <CardContent>
                 This is a wave of grants
-                <br /> Duration: {format(wave.startsAt, "LLL dd, y")} -{" "}
-                {format(wave.endsAt, "LLL dd, y")}{" "}
+                <br /> Duration: {formatDateRange(wave.startsAt, wave.endsAt)}
               </CardContent>
               <CardFooter className="flex justify-end">
                 <Button asChild>

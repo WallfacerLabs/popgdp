@@ -1,10 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addDays, format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 
+import {
+  addDays,
+  formatDate,
+  formatDateRange,
+  getStartOfDate,
+} from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -26,13 +31,15 @@ import { createWaveAction } from "./createWaveAction";
 import { createWaveSchema } from "./createWaveSchema";
 
 export default function CreateWave() {
+  const todayDate = getStartOfDate(new Date());
+
   const form = useForm<createWaveSchema>({
     resolver: zodResolver(createWaveSchema),
     defaultValues: {
       waveName: "",
       duration: {
-        from: new Date(),
-        to: addDays(new Date(), 30),
+        from: todayDate,
+        to: addDays(todayDate, 30),
       },
     },
   });
@@ -77,11 +84,10 @@ export default function CreateWave() {
                       {field.value.from ? (
                         field.value.to ? (
                           <>
-                            {format(field.value.from, "LLL dd, y")} -{" "}
-                            {format(field.value.to, "LLL dd, y")}
+                            {formatDateRange(field.value.from, field.value.to)}
                           </>
                         ) : (
-                          format(field.value.from, "LLL dd, y")
+                          formatDate(field.value.from)
                         )
                       ) : (
                         <span>Pick a date</span>
@@ -97,7 +103,7 @@ export default function CreateWave() {
                     defaultMonth={field.value.from}
                     selected={field.value}
                     onSelect={field.onChange}
-                    disabled={(date) => date < new Date()}
+                    disabled={(date) => date < todayDate}
                   />
                 </PopoverContent>
               </Popover>
