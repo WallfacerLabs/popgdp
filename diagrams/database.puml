@@ -5,25 +5,18 @@ entity UserAccounts {
     created_at: DateTime
     updated_at: DateTime
     ethereumAddress: Text
+    is_blocked: boolean
 }
 
-'if account type is managed by ethereum address then best way will be to store it in separate tables
 entity Reviewers {
     id: ID <<generated>>
     claimed: boolean
-    --
-    ethereumAddress: Text <<FK>>/'(? depends on requirements)'/
+    ethereumAddress: Text
 }
 
 entity Moderators {
     id: ID <<generated>>
-    --
-    ethereumAddress: Text <<FK>>/'(? depends on requirements)'/
-}
-
-entity BlockedUsers {
-    blocked_user_id: ID <<FK>>
-    blocked_by_user_id: ID <<FK>>
+    ethereumAddress: Text 
 }
 
 entity Applications {
@@ -54,15 +47,12 @@ entity ApplicationCategories {
     name: Text
 }
 
-entity ApplicationSpam {
-    application_id: ID <<FK>>
-    user_id: ID <<FK>>
-}
-
 entity ApplicationValue {
     application_id: ID <<FK>>
     user_id: ID <<FK>>
-    value: Number
+    value: ContentValue
+    --
+    PrimaryKey(application_id, user_id)
 }
 
 entity Comments {
@@ -74,14 +64,15 @@ entity Comments {
     user_id: ID <<FK>>
 }
 
-entity CommentsSpam {
+entity CommentValue {
     comment_id: ID <<FK>>
     user_id: ID <<FK>>
+    value: ContentValue
 }
 
-entity CommentsHelpful {
-    comment_id: ID <<FK>>
-    user_id: ID <<FK>>
+enum ContentValue {
+    POSITIVE
+    SPAM
 }
 
 entity Reviews {
@@ -103,27 +94,21 @@ entity Wave {
   
 }
 
-Reviewers ||--o{ UserAccounts
-Moderators ||--o{ UserAccounts
-Applications ||--o{ Wave
-Applications ||--o{ UserAccounts
-Comments ||--o{ Applications
-Comments ||--o{ UserAccounts
-Reviews ||--o{ Comments
-Reviews ||--o{ Applications
-Reviews ||--o{ UserAccounts
-ApplicationContacts ||--o{ Applications
-BlockedUsers ||--o{ UserAccounts
-BlockedUsers ||--o{ UserAccounts
-Applications ||--o{ ApplicationCategories
-ApplicationSpam ||--o{ Applications
-ApplicationSpam ||--o{ UserAccounts
-CommentsSpam ||--o{ Comments
-CommentsSpam ||--o{ UserAccounts
-CommentsHelpful ||--o{ Comments
-CommentsHelpful ||--o{ UserAccounts
-ApplicationValue ||--o{ Applications
-ApplicationValue ||--o{ UserAccounts
+Reviewers ||--o| UserAccounts
+Moderators ||--o| UserAccounts
+Applications }o--|| Wave
+Applications }o--|| UserAccounts
+Comments }o--|| Applications
+Comments }o--|| UserAccounts
+Reviews ||--o| Comments
+Reviews }o--|| Applications
+Reviews }o--|| UserAccounts
+ApplicationContacts ||--|| Applications
+Applications }o--|| ApplicationCategories
+CommentValue }o--|| Comments
+CommentValue }o--|| UserAccounts
+ApplicationValue }o--|| Applications
+ApplicationValue }o--|| UserAccounts
 
 
 enum WavePhase {
@@ -133,6 +118,9 @@ enum WavePhase {
     CLOSED
 }
 
-WavePhase --o{ Wave
+WavePhase --> Wave
+
+CommentValue <-- ContentValue
+ApplicationValue <-- ContentValue
 
 @enduml
