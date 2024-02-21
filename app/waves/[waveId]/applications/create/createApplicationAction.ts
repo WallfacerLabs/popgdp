@@ -23,6 +23,7 @@ export async function createApplicationAction(
     .insert(applications)
     .values({
       name: data.projectName,
+      description: data.description,
       waveId,
       userId: session.user.id,
     })
