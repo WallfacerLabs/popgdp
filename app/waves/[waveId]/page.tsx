@@ -60,7 +60,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
             <TableRow key={project.id}>
               <TableCell>{project.users.name}</TableCell>
               <TableCell>{project.name}</TableCell>
-              <TableCell>{formatDate(new Date())}</TableCell>
+              <TableCell>{formatDate(project.createdAt)}</TableCell>
               <TableCell>Pending</TableCell>
               <TableCell className="text-end">
                 <Button variant="secondary">
