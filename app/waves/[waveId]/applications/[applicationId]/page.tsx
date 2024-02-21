@@ -2,15 +2,13 @@ import { notFound } from "next/navigation";
 import { db } from "@/drizzle/db";
 import { applications } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
-import rehypeSanitize from "rehype-sanitize";
-import rehypeStringify from "rehype-stringify";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import { unified } from "unified";
 
 import { formatDate } from "@/lib/dates";
+import { parseMarkdown } from "@/lib/parseMarkdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
+
+import { AddCommentForm } from "./addCommentForm/addCommentForm";
 
 export default async function Application({
   params,
@@ -26,6 +24,16 @@ export default async function Application({
           name: true,
         },
       },
+      comments: {
+        with: {
+          users: {
+            columns: {
+              image: true,
+              name: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -33,12 +41,10 @@ export default async function Application({
     return notFound();
   }
 
-  const applicationHtml = await unified()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypeSanitize)
-    .use(rehypeStringify)
-    .process(application.description);
+  const applicationHtml = await parseMarkdown(application.description);
+  const commentsHtml = await Promise.all(
+    application.comments.map((comment) => parseMarkdown(comment.content)),
+  );
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -56,14 +62,16 @@ export default async function Application({
             }
           />
         </Avatar>
-        <div className="my-4">
-          <div className="mb-4 flex justify-between text-gray-600">
+        <div className="my-4 w-full">
+          <div className="mb-4 flex items-baseline justify-between text-gray-600">
             <div className="font-medium">{application.users.name}</div>
             <div className="text-sm">{formatDate(application.createdAt)}</div>
           </div>
           <div className="prose max-w-none">
             <div
-              dangerouslySetInnerHTML={{ __html: applicationHtml.toString() }}
+              dangerouslySetInnerHTML={{
+                __html: applicationHtml,
+              }}
             />
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -112,6 +120,35 @@ export default async function Application({
           </div>
         </div>
       </Card>
+
+      {application.comments.map((comment, i) => (
+        <Card className="flex gap-8 px-6" key={comment.id}>
+          <Avatar className="my-6">
+            <AvatarFallback />
+
+            <AvatarImage
+              src={application.users.image || undefined}
+              alt={
+                application.users.name
+                  ? `${application.users.name} avatar`
+                  : undefined
+              }
+            />
+          </Avatar>
+
+          <div className="my-4 w-full">
+            <div className="mb-4 flex items-baseline justify-between text-gray-600">
+              <div className="font-medium">{application.users.name}</div>
+              <div className="text-sm">{formatDate(comment.createdAt)}</div>
+            </div>
+            <div className="prose max-w-none">
+              <div dangerouslySetInnerHTML={{ __html: commentsHtml[i] }} />
+            </div>
+          </div>
+        </Card>
+      ))}
+
+      <AddCommentForm />
     </div>
   );
 }

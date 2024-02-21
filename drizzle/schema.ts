@@ -55,13 +55,51 @@ export const applications = pgTable("application", {
     .defaultNow(),
 });
 
-export const applicationsRelations = relations(applications, ({ one }) => ({
-  wave: one(waves, {
-    fields: [applications.waveId],
-    references: [waves.id],
+export const applicationsRelations = relations(
+  applications,
+  ({ one, many }) => ({
+    wave: one(waves, {
+      fields: [applications.waveId],
+      references: [waves.id],
+    }),
+    users: one(users, {
+      fields: [applications.userId],
+      references: [users.id],
+    }),
+    comments: many(comments),
+  }),
+);
+
+export const comments = pgTable("comment", {
+  id: serial("id").primaryKey(),
+  content: text("content").notNull(),
+  applicationId: integer("applicationId")
+    .notNull()
+    .references(() => applications.id),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp("createdAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updatedAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
+export const commentsRelations = relations(comments, ({ one }) => ({
+  application: one(applications, {
+    fields: [comments.applicationId],
+    references: [applications.id],
   }),
   users: one(users, {
-    fields: [applications.userId],
+    fields: [comments.userId],
     references: [users.id],
   }),
 }));
