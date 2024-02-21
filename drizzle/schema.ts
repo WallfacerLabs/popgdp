@@ -34,6 +34,7 @@ export const waves = pgTable("wave", {
 export const applications = pgTable("application", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
+  description: text("description").notNull(),
   waveId: integer("waveId")
     .notNull()
     .references(() => waves.id),

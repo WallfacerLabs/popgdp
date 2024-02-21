@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
+import { Editor } from "@/components/ui/editor";
 import {
   Form,
   FormControl,
@@ -26,6 +27,7 @@ export default function CreateApplication({
     resolver: zodResolver(createApplicationSchema),
     defaultValues: {
       projectName: "",
+      description: "",
     },
   });
 
@@ -44,11 +46,24 @@ export default function CreateApplication({
           name="projectName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="waveName">Project name</FormLabel>
+              <FormLabel>Project name</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Editor onChange={field.onChange} />
+              </FormControl>
             </FormItem>
           )}
         />
