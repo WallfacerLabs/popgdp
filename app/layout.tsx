@@ -35,10 +35,12 @@ export default function RootLayout({
           <div className="flex w-full items-center justify-between">
             <Button
               variant="link"
-              className="font-mono text-3xl font-bold"
+              className="pl-0 font-mono text-3xl font-bold"
               asChild
             >
-              <Link href="/">POPGDP</Link>
+              <Link href="/">
+                <h1>POPGDP</h1>
+              </Link>
             </Button>
             <AccountButton />
           </div>
