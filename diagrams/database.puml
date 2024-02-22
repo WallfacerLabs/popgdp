@@ -68,6 +68,8 @@ entity CommentValue {
     comment_id: ID <<FK>>
     user_id: ID <<FK>>
     value: ContentValue
+    --
+    PrimaryKey(comment_id, user_id)
 }
 
 enum ContentValue {
