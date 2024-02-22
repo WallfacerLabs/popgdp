@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { db } from "@/drizzle/db";
-import { applications, waves } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { getWaveWithApplications } from "@/drizzle/queries/waves";
 
 import { formatDate, formatDateRange } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
@@ -16,15 +14,7 @@ import {
 } from "@/components/ui/table";
 
 export default async function Wave({ params }: { params: { waveId: string } }) {
-  const [wave, projects] = await Promise.all([
-    db.query.waves.findFirst({
-      where: eq(waves.id, Number(params.waveId)),
-    }),
-    db.query.applications.findMany({
-      where: eq(applications.waveId, Number(params.waveId)),
-      with: { users: { columns: { name: true } } },
-    }),
-  ]);
+  const wave = await getWaveWithApplications(Number(params.waveId));
 
   if (!wave) {
     return notFound();
@@ -56,7 +46,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {projects.map((project) => (
+          {wave.applications.map((project) => (
             <TableRow key={project.id}>
               <TableCell>{project.users.name}</TableCell>
               <TableCell>{project.name}</TableCell>

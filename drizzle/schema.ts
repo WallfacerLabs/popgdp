@@ -31,6 +31,10 @@ export const waves = pgTable("wave", {
     .defaultNow(),
 });
 
+export const wavesRelations = relations(waves, ({ many }) => ({
+  applications: many(applications),
+}));
+
 export const applications = pgTable("application", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),

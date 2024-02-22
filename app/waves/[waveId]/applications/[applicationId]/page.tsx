@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
-import { db } from "@/drizzle/db";
-import { applications } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { getApplicationWithComments } from "@/drizzle/queries/applications";
 
 import { formatDate } from "@/lib/dates";
 import { parseMarkdown } from "@/lib/parseMarkdown";
@@ -15,27 +13,9 @@ export default async function Application({
 }: {
   params: { applicationId: string };
 }) {
-  const application = await db.query.applications.findFirst({
-    where: eq(applications.id, Number(params.applicationId)),
-    with: {
-      users: {
-        columns: {
-          image: true,
-          name: true,
-        },
-      },
-      comments: {
-        with: {
-          users: {
-            columns: {
-              image: true,
-              name: true,
-            },
-          },
-        },
-      },
-    },
-  });
+  const application = await getApplicationWithComments(
+    Number(params.applicationId),
+  );
 
   if (!application) {
     return notFound();
