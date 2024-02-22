@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import Link from "next/link";
+import { AxiomWebVitals } from "next-axiom";
 
 import "./globals.css";
 
@@ -25,6 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <AxiomWebVitals />
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
