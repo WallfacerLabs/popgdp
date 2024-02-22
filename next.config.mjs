@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+import { withAxiom } from "next-axiom";
+
+const nextConfig = withAxiom({});
 
 export default nextConfig;
