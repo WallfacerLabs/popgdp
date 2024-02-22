@@ -16,7 +16,12 @@ export default async function Home() {
 
   return (
     <div className="flex w-full max-w-xl flex-col gap-4">
-      <div className="text-2xl">Current waves</div>
+      <div className="flex justify-between">
+        <div className="text-2xl">Current waves</div>
+        <Button variant="secondary">
+          <Link href="waves/create">Create wave</Link>
+        </Button>
+      </div>
       <ol className="flex flex-col gap-8">
         {waves.map((wave) => (
           <li key={wave.id}>
