@@ -59,7 +59,7 @@ export default function CreateWave() {
           name="waveName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="waveName">Wave name</FormLabel>
+              <FormLabel>Wave name</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
