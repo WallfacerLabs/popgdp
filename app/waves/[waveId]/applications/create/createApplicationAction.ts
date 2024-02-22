@@ -2,8 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { db } from "@/drizzle/db";
-import { applications } from "@/drizzle/schema";
+import { insertApplication } from "@/drizzle/queries/applications";
 
 import { auth } from "@/lib/auth";
 
@@ -19,15 +18,12 @@ export async function createApplicationAction(
     throw new Error("unauthenticated");
   }
 
-  const [{ id }] = await db
-    .insert(applications)
-    .values({
-      name: data.projectName,
-      description: data.description,
-      waveId,
-      userId: session.user.id,
-    })
-    .returning({ id: applications.id });
+  await insertApplication({
+    name: data.projectName,
+    description: data.description,
+    waveId,
+    userId: session.user.id,
+  });
 
   revalidatePath(`/waves/${waveId}`);
   redirect(`/waves/${waveId}`);

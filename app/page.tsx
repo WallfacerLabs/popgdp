@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { db } from "@/drizzle/db";
+import { getWaves } from "@/drizzle/queries/waves";
 
 import { formatDateRange } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 
 export default async function Home() {
-  const waves = await db.query.waves.findMany();
+  const waves = await getWaves();
 
   return (
     <div className="flex w-full max-w-xl flex-col gap-4">

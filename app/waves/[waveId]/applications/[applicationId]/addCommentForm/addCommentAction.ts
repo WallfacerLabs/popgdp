@@ -1,8 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { db } from "@/drizzle/db";
-import { comments } from "@/drizzle/schema";
+import { insertComment } from "@/drizzle/queries/comments";
 
 import { auth } from "@/lib/auth";
 
@@ -19,7 +18,7 @@ export async function addCommentAction(
     throw new Error("unauthenticated");
   }
 
-  await db.insert(comments).values({
+  await insertComment({
     applicationId,
     userId: session.user.id,
     content: data.comment,
