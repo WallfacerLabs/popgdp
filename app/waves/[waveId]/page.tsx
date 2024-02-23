@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getWaves, getWaveWithApplications } from "@/drizzle/queries/waves";
+import { getWaveWithApplications } from "@/drizzle/queries/waves";
 
 import { formatDate, formatDateRange } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
@@ -13,17 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export async function generateStaticParams() {
-  const waves = await getWaves();
-
-  return waves.map((wave) => ({ waveId: String(wave.id) }));
-}
-
-interface WaveProps {
-  params: Awaited<ReturnType<typeof generateStaticParams>>[number];
-}
-
-export default async function Wave({ params }: WaveProps) {
+export default async function Wave({ params }: { params: { waveId: string } }) {
   const wave = await getWaveWithApplications(Number(params.waveId));
 
   if (!wave) {
