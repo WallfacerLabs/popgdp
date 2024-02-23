@@ -13,6 +13,6 @@ export async function createWaveAction(data: createWaveSchema) {
     endsAt: data.duration.to,
   });
 
-  revalidatePath(`/waves/${id}`);
+  revalidatePath("/");
   redirect(`/waves/${id}`);
 }
