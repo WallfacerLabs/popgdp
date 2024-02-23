@@ -15,6 +15,15 @@ export const getWaveWithApplications = cache(async (id: number) => {
   return wave;
 });
 
+export const getWavesWithApplications = cache(async () => {
+  const waves = await db.query.waves.findMany({
+    columns: { id: true },
+    with: { applications: { columns: { id: true } } },
+  });
+
+  return waves;
+});
+
 export function insertWave(data: typeof waves.$inferInsert) {
   return db.insert(waves).values(data).returning({ id: waves.id });
 }

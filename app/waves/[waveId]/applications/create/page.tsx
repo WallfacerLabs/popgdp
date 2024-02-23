@@ -1,75 +1,17 @@
-"use client";
+import { getWaves } from "@/drizzle/queries/waves";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { CreateApplicationForm } from "./createApplicationForm";
 
-import { Button } from "@/components/ui/button";
-import { Editor } from "@/components/ui/editor";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+export async function generateStaticParams() {
+  const waves = await getWaves();
 
-import { createApplicationAction } from "./createApplicationAction";
-import { createApplicationSchema } from "./createApplicationSchema";
+  return waves.map((wave) => ({ waveId: String(wave.id) }));
+}
 
-export default function CreateApplication({
-  params,
-}: {
-  params: { waveId: string };
-}) {
-  const form = useForm<createApplicationSchema>({
-    resolver: zodResolver(createApplicationSchema),
-    defaultValues: {
-      projectName: "",
-      description: "",
-    },
-  });
+interface CreateApplicationProps {
+  params: Awaited<ReturnType<typeof generateStaticParams>>[number];
+}
 
-  return (
-    <Form {...form}>
-      <form
-        className="flex w-full max-w-lg flex-col gap-4"
-        onSubmit={form.handleSubmit(async (data) => {
-          await createApplicationAction(data, Number(params.waveId));
-        })}
-      >
-        <div>Create Application</div>
-
-        <FormField
-          control={form.control}
-          name="projectName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Project name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Editor onChange={field.onChange} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-
-        <Button disabled={form.formState.isSubmitting}>Create</Button>
-      </form>
-    </Form>
-  );
+export default function CreateApplication({ params }: CreateApplicationProps) {
+  return <CreateApplicationForm waveId={params.waveId} />;
 }

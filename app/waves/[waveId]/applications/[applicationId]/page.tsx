@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
 import { getApplicationWithComments } from "@/drizzle/queries/applications";
+import {
+  getWavesWithApplications,
+  getWaveWithApplications,
+} from "@/drizzle/queries/waves";
 
 import { formatDate } from "@/lib/dates";
 import { parseMarkdown } from "@/lib/parseMarkdown";
@@ -8,10 +12,21 @@ import { Card } from "@/components/ui/card";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
 
+export async function generateStaticParams() {
+  const waves = await getWavesWithApplications();
+
+  return waves.flatMap((wave) =>
+    wave.applications.map((application) => ({
+      waveId: String(wave.id),
+      applicationId: String(application.id),
+    })),
+  );
+}
+
 export default async function Application({
   params,
 }: {
-  params: { applicationId: string };
+  params: Awaited<ReturnType<typeof generateStaticParams>>[number];
 }) {
   const application = await getApplicationWithComments(
     Number(params.applicationId),
