@@ -1,31 +1,37 @@
-import { auth, signIn, signOut } from "@/lib/auth";
+"use client";
 
-import { SubmitButton } from "./submitButton";
+import { Loader2Icon } from "lucide-react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
-export const AccountButton = async () => {
-  const session = await auth();
+import { Button } from "./button";
+
+export function AccountButton() {
+  const { status, data: session } = useSession();
+
+  if (status === "loading") {
+    return (
+      <Button className="w-24" disabled>
+        <Loader2Icon className="h-4 w-4 animate-spin" />
+      </Button>
+    );
+  }
 
   if (session) {
     return (
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
+      <Button
+        className="w-24"
+        onClick={() => {
+          signOut();
         }}
       >
-        <SubmitButton>Sign out</SubmitButton>
-      </form>
+        Sign out
+      </Button>
     );
   }
 
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signIn("github");
-      }}
-    >
-      <SubmitButton>Sign in</SubmitButton>
-    </form>
+    <Button className="w-24" onClick={() => signIn("github")}>
+      Sign in
+    </Button>
   );
-};
+}
