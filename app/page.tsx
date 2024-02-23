@@ -18,7 +18,7 @@ export default async function Home() {
     <div className="flex w-full max-w-xl flex-col gap-4">
       <div className="flex justify-between">
         <div className="text-2xl">Current waves</div>
-        <Button variant="secondary">
+        <Button variant="secondary" asChild>
           <Link href="waves/create">Create wave</Link>
         </Button>
       </div>
