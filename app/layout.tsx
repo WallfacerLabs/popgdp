@@ -9,6 +9,8 @@ import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
 
+import { Providers } from "./providers";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -26,29 +28,31 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AxiomWebVitals />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-        )}
-      >
-        <main className="flex min-h-screen flex-col items-center gap-12 px-16 py-12">
-          <div className="flex w-full items-center justify-between">
-            <Button
-              variant="link"
-              className="pl-0 font-mono text-3xl font-bold"
-              asChild
-            >
-              <Link href="/">
-                <h1>POPGDP</h1>
-              </Link>
-            </Button>
-            <AccountButton />
-          </div>
-          {children}
-        </main>
-      </body>
+      <Providers>
+        <AxiomWebVitals />
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable,
+          )}
+        >
+          <main className="flex min-h-screen flex-col items-center gap-12 px-16 py-12">
+            <div className="flex w-full items-center justify-between">
+              <Button
+                variant="link"
+                className="pl-0 font-mono text-3xl font-bold"
+                asChild
+              >
+                <Link href="/">
+                  <h1>POPGDP</h1>
+                </Link>
+              </Button>
+              <AccountButton />
+            </div>
+            {children}
+          </main>
+        </body>
+      </Providers>
     </html>
   );
 }
