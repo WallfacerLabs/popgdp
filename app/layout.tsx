@@ -34,26 +34,25 @@ export default function RootLayout({
         <AxiomWebVitals />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "flex min-h-screen flex-col items-center bg-background px-16 font-sans antialiased",
             fontSans.variable,
           )}
         >
-          <main className="flex min-h-screen flex-col items-center gap-12 px-16 py-12">
-            <div className="flex w-full items-center justify-between">
-              <Button
-                variant="link"
-                className="pl-0 text-base font-bold"
-                asChild
-              >
-                <Link href="/">
-                  <Image src={logoImage} alt="Popgdp logo" />
-                  <h1 className="px-4">POPGDP</h1>
-                </Link>
-              </Button>
-              <AccountButton />
-            </div>
-            <div className="w-full max-w-[1120px]">{children}</div>
-          </main>
+          <header className="flex w-full items-center justify-between py-12">
+            <Button variant="link" className="pl-0 text-base font-bold" asChild>
+              <Link href="/">
+                <Image src={logoImage} alt="Popgdp logo" />
+                <h1 className="px-4">POPGDP</h1>
+              </Link>
+            </Button>
+            <AccountButton />
+          </header>
+
+          <main className="w-full max-w-[1120px] flex-grow">{children}</main>
+
+          <footer className="w-full max-w-[1120px] border-t p-6 text-center text-xs font-semibold">
+            © 2024 POPGDP. All rights reserved
+          </footer>
         </body>
       </Providers>
     </html>
