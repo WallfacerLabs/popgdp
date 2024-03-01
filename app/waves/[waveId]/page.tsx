@@ -25,7 +25,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
   }
 
   return (
-    <div className="w-full max-w-[1120px]">
+    <>
       <Card className="relative flex items-center">
         <CardTitle className="px-10 py-6">POPGDP</CardTitle>
         <CardContent className="px-0 py-6 pr-64 text-xs text-muted-foreground">
@@ -77,6 +77,6 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </>
   );
 }

@@ -47,7 +47,7 @@ export default function CreateWave() {
   return (
     <Form {...form}>
       <form
-        className="flex w-full max-w-lg flex-col gap-4"
+        className="flex w-full flex-col gap-4"
         onSubmit={form.handleSubmit(async (data) => {
           await createWaveAction(data);
         })}

@@ -15,7 +15,7 @@ export default async function Home() {
   const waves = await getWaves();
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-4">
+    <div className="flex w-full flex-col gap-4">
       <div className="flex justify-between">
         <div className="text-2xl">Current waves</div>
         <Button variant="secondary" asChild>
