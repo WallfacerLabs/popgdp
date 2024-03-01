@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
 
-import { formatDate, formatDateRange } from "@/lib/dates";
+import { formatDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import {
@@ -12,6 +12,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
+  TableLinkRow,
   TableRow,
 } from "@/components/ui/table";
 import globeImage from "@/app/images/globe.png";
@@ -62,14 +63,17 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
         </TableHeader>
         <TableBody>
           {wave.applications.map((project) => (
-            <TableRow key={project.id}>
+            <TableLinkRow
+              key={project.id}
+              href={`/waves/${params.waveId}/applications/${project.id}`}
+            >
               <TableCell>{project.name}</TableCell>
               <TableCell>{project.users.name}</TableCell>
               <TableCell>Entity name</TableCell>
               <TableCell>{formatDate(project.createdAt)}</TableCell>
               <TableCell>1,025,000.00 WLD</TableCell>
               <TableCell>Category</TableCell>
-            </TableRow>
+            </TableLinkRow>
           ))}
         </TableBody>
       </Table>
