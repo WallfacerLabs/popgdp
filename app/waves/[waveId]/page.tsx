@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
 
 import { formatDate } from "@/lib/dates";
+import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import {
@@ -72,7 +73,9 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
               <TableCell>Entity name</TableCell>
               <TableCell>{formatDate(project.createdAt)}</TableCell>
               <TableCell>1,025,000.00 WLD</TableCell>
-              <TableCell>Category</TableCell>
+              <TableCell>
+                <CategoryBadge>Category</CategoryBadge>
+              </TableCell>
             </TableLinkRow>
           ))}
         </TableBody>
