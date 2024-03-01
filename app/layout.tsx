@@ -5,6 +5,8 @@ import { AxiomWebVitals } from "next-axiom";
 
 import "./globals.css";
 
+import Image from "next/image";
+
 import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
@@ -40,11 +42,17 @@ export default function RootLayout({
             <div className="flex w-full items-center justify-between">
               <Button
                 variant="link"
-                className="pl-0 font-mono text-3xl font-bold"
+                className="pl-0 text-base font-bold"
                 asChild
               >
                 <Link href="/">
-                  <h1>POPGDP</h1>
+                  <Image
+                    src="/icon.svg"
+                    width={40}
+                    height={40}
+                    alt="Popgdp logo"
+                  />
+                  <h1 className="px-4">POPGDP</h1>
                 </Link>
               </Button>
               <AccountButton />
