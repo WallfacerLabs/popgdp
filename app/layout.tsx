@@ -50,7 +50,7 @@ export default function RootLayout({
 
           <main className="w-full max-w-[1120px] flex-grow">{children}</main>
 
-          <footer className="w-full max-w-[1120px] border-t p-6 text-center text-xs font-semibold">
+          <footer className="mt-36 w-full max-w-[1120px] border-t p-6 text-center text-xs font-semibold">
             © 2024 POPGDP. All rights reserved
           </footer>
         </body>
