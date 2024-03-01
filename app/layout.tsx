@@ -52,7 +52,7 @@ export default function RootLayout({
               </Button>
               <AccountButton />
             </div>
-            {children}
+            <div className="w-full max-w-[1120px]">{children}</div>
           </main>
         </body>
       </Providers>
