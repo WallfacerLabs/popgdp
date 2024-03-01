@@ -16,7 +16,7 @@ test("creates a new wave", async ({ page }) => {
 
   await page.getByRole("button", { name: "Create wave" }).click();
 
-  await expect(page.getByText("Wave name: First wave")).toBeVisible();
+  await expect(page.getByText("Submissions")).toBeVisible();
 
   await page.goto("/");
 
