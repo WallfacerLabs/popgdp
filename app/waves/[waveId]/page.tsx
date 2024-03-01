@@ -41,14 +41,10 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
       </Card>
 
       <div className="mt-8 flex items-center justify-between">
-        <div>
-          <div>Wave {wave.id}</div>
-          <div>Wave name: {wave.name}</div>
-          <div>{formatDateRange(wave.startsAt, wave.endsAt)}</div>
-        </div>
-        <Button variant="secondary" asChild>
+        <h2 className="text-2xl font-bold">Submissions</h2>
+        <Button asChild>
           <Link href={`/waves/${params.waveId}/applications/create`}>
-            Create new application
+            Apply for Grant
           </Link>
         </Button>
       </div>
@@ -56,29 +52,23 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
       <Table className="mt-8">
         <TableHeader>
           <TableRow>
-            <TableHead>Applicant</TableHead>
-            <TableHead>Project</TableHead>
+            <TableHead>Project name</TableHead>
+            <TableHead>User</TableHead>
+            <TableHead>Entity name</TableHead>
             <TableHead>Submitted</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead />
+            <TableHead>Proposed budget</TableHead>
+            <TableHead>Category</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {wave.applications.map((project) => (
             <TableRow key={project.id}>
-              <TableCell>{project.users.name}</TableCell>
               <TableCell>{project.name}</TableCell>
+              <TableCell>{project.users.name}</TableCell>
+              <TableCell>Entity name</TableCell>
               <TableCell>{formatDate(project.createdAt)}</TableCell>
-              <TableCell>Pending</TableCell>
-              <TableCell className="text-end">
-                <Button variant="secondary">
-                  <Link
-                    href={`/waves/${params.waveId}/applications/${project.id}`}
-                  >
-                    Go to
-                  </Link>
-                </Button>
-              </TableCell>
+              <TableCell>1,025,000.00 WLD</TableCell>
+              <TableCell>Category</TableCell>
             </TableRow>
           ))}
         </TableBody>
