@@ -10,8 +10,8 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
-
-import { Providers } from "./providers";
+import logoImage from "@/app/icon.svg";
+import { Providers } from "@/app/providers";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -46,12 +46,7 @@ export default function RootLayout({
                 asChild
               >
                 <Link href="/">
-                  <Image
-                    src="/icon.svg"
-                    width={40}
-                    height={40}
-                    alt="Popgdp logo"
-                  />
+                  <Image src={logoImage} alt="Popgdp logo" />
                   <h1 className="px-4">POPGDP</h1>
                 </Link>
               </Button>
