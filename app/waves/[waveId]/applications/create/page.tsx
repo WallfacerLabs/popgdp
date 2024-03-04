@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { BackButton } from "@/components/ui/backButton";
 import { Button } from "@/components/ui/button";
-import { Editor } from "@/components/ui/editor";
 import {
   Form,
   FormControl,
@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 import { createApplicationAction } from "./createApplicationAction";
 import { createApplicationSchema } from "./createApplicationSchema";
@@ -27,48 +28,114 @@ export default function CreateApplication({
     resolver: zodResolver(createApplicationSchema),
     defaultValues: {
       projectName: "",
-      description: "",
+      projectEntity: "",
+      projectDuration: "",
+      projectBudget: "",
+      summary: "",
     },
   });
 
   return (
     <Form {...form}>
       <form
-        className="flex w-full flex-col gap-4"
         onSubmit={form.handleSubmit(async (data) => {
           await createApplicationAction(data, Number(params.waveId));
         })}
       >
-        <div>Create Application</div>
+        <div className="mb-16 flex items-center gap-4">
+          <BackButton href={`/waves/${params.waveId}`} />
+          <h2 className="text-2xl font-bold">Apply for the Grant</h2>
+        </div>
 
-        <FormField
-          control={form.control}
-          name="projectName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Project name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex w-full max-w-xl flex-col gap-6">
+          <FormField
+            control={form.control}
+            name="projectName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Project name</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Enter the name of your project"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Editor onChange={field.onChange} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="projectEntity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Entity name</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Enter the name of entity responsible for project"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button disabled={form.formState.isSubmitting}>Create</Button>
+          <FormField
+            control={form.control}
+            name="projectDuration"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Proposed project duration</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Enter proposed project duration"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="projectBudget"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Proposed budget</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Enter proposed budget" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="summary"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Project summary</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Tell us about your project"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <Button
+            disabled={form.formState.isSubmitting}
+            className="mt-4 self-end px-16"
+          >
+            Create
+          </Button>
+        </div>
       </form>
     </Form>
   );
