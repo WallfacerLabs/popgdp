@@ -1,0 +1,72 @@
+name: ⭐️ Vercel Preview
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel preview
+        run: |
+          echo "VERCEL_PREVIEW_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})" >> $GITHUB_ENV
+      - name: Get Existing Comment ID
+        id: get_comment_id
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          GITHUB_API="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+          AUTH_HEADER="Authorization: token ${{ secrets.GITHUB_TOKEN }}"
+          COMMENTS=$(curl -s -H "$AUTH_HEADER" $GITHUB_API)
+          COMMENT_ID=$(echo "$COMMENTS" | jq -r '.[] | select(.body | contains("▲ Vercel deployment successful!")) | .id')
+          echo "COMMENT_ID=$COMMENT_ID" >> $GITHUB_ENV
+        continue-on-error: true
+
+      - name: Update or Post Deployment Link to PR
+        env:
+          DEPLOYMENT_URL: ${{ env.VERCEL_PREVIEW_URL }}
+          COMMENT_ID: ${{ env.COMMENT_ID }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          COMMENT="▲ Vercel deployment successful! [Preview Link]($DEPLOYMENT_URL)"
+          AUTH_HEADER="Authorization: token ${{ secrets.GITHUB_TOKEN }}"
+          if [[ -z "$COMMENT_ID" ]]; then
+            PAYLOAD="{\"body\":\"$COMMENT\"}"
+            GITHUB_API="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+            curl -s -H "$AUTH_HEADER" -d "$PAYLOAD" -X POST $GITHUB_API
+          else
+            PAYLOAD="{\"body\":\"$COMMENT\"}"
+            GITHUB_API="https://api.github.com/repos/${{ github.repository }}/issues/comments/${COMMENT_ID}"
+            curl -s -H "$AUTH_HEADER" -d "$PAYLOAD" -X PATCH $GITHUB_API
+          fi

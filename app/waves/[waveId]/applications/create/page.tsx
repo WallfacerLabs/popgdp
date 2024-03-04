@@ -1,75 +1,34 @@
-"use client";
+import { BackButton } from "@/components/ui/backButton";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-import { Button } from "@/components/ui/button";
-import { Editor } from "@/components/ui/editor";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
-import { createApplicationAction } from "./createApplicationAction";
-import { createApplicationSchema } from "./createApplicationSchema";
+import { CreateApplicationStepper } from "./stepper";
+import { GrantScoping } from "./steps/grantScoping";
+import { MainDetails } from "./steps/mainDetails";
+import { Resources } from "./steps/resources";
+import { Roadmap } from "./steps/roadmap";
+import { TeamInformation } from "./steps/teamInformation";
+import { StepsContextProvider } from "./stepsProvider";
 
 export default function CreateApplication({
   params,
 }: {
   params: { waveId: string };
 }) {
-  const form = useForm<createApplicationSchema>({
-    resolver: zodResolver(createApplicationSchema),
-    defaultValues: {
-      projectName: "",
-      description: "",
-    },
-  });
-
   return (
-    <Form {...form}>
-      <form
-        className="flex w-full flex-col gap-4"
-        onSubmit={form.handleSubmit(async (data) => {
-          await createApplicationAction(data, Number(params.waveId));
-        })}
-      >
-        <div>Create Application</div>
+    <>
+      <div className="mb-16 flex items-center gap-4">
+        <BackButton href={`/waves/${params.waveId}`} />
+        <h2 className="text-2xl font-bold">Apply for the Grant</h2>
+      </div>
 
-        <FormField
-          control={form.control}
-          name="projectName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Project name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Editor onChange={field.onChange} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-
-        <Button disabled={form.formState.isSubmitting}>Create</Button>
-      </form>
-    </Form>
+      <StepsContextProvider>
+        <CreateApplicationStepper>
+          <MainDetails />
+          <TeamInformation />
+          <GrantScoping />
+          <Roadmap />
+          <Resources />
+        </CreateApplicationStepper>
+      </StepsContextProvider>
+    </>
   );
 }
