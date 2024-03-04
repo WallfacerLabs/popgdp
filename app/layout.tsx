@@ -39,7 +39,11 @@ export default function RootLayout({
           )}
         >
           <header className="flex w-full items-center justify-between py-12">
-            <Button variant="link" className="p-0 text-base font-bold gap-4 flex items-center" asChild>
+            <Button
+              variant="link"
+              className="flex items-center gap-4 p-0 text-base font-bold"
+              asChild
+            >
               <Link href="/">
                 <Image src={logoImage} alt="Popgdp logo" />
                 <h1>POPGDP</h1>

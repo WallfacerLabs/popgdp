@@ -1,9 +1,8 @@
 import { type HTMLAttributes } from "react";
-import Image from "next/image";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/cn";
-import categoryIcon from "@/app/images/categoryIcon.svg";
+import { SunIcon } from "@/components/icons/sunIcon";
 
 const badgeVariants = cva(
   "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
@@ -38,7 +37,7 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 function CategoryBadge({ children, ...props }: BadgeProps) {
   return (
     <Badge {...props}>
-      <Image src={categoryIcon} alt="" className="mr-2" />
+      <SunIcon className="mr-1 h-3 w-3" />
       {children}
     </Badge>
   );
