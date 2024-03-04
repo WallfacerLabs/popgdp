@@ -29,7 +29,10 @@ export function CreateApplicationStepper({
       </div>
 
       <div className="flex w-full max-w-xl flex-col gap-6">
-        <span className="font-bold">{stepsConfig[currentStep].name}</span>
+        <div className="flex gap-2">
+          <span>{stepsConfig[currentStep].icon}</span>
+          <span className="font-bold">{stepsConfig[currentStep].name}</span>
+        </div>
         {children[currentStep]}
       </div>
     </div>
