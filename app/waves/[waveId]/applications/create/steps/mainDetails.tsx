@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,25 +17,33 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { useStepsDispatchContext } from "../stepsProvider";
-import { createApplicationSchema } from "./createApplicationSchema";
 
-export function MainDetails({ waveId }: { waveId: string }) {
+const mainDetailsSchema = z.object({
+  projectName: z.string(),
+  projectEntity: z.string(),
+  projectDuration: z.string(),
+  projectBudget: z.string(),
+  projectSummary: z.string(),
+});
+type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
+
+export function MainDetails() {
   const dispatch = useStepsDispatchContext();
-  const form = useForm<createApplicationSchema>({
-    resolver: zodResolver(createApplicationSchema),
+  const form = useForm<mainDetailsSchema>({
+    resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
       projectName: "",
       projectEntity: "",
       projectDuration: "",
       projectBudget: "",
-      summary: "",
-    },
+      projectSummary: "",
+    } satisfies mainDetailsSchema,
   });
 
   return (
     <Form {...form}>
       <form
-        className="flex w-full max-w-xl flex-col gap-6"
+        className="flex w-full flex-col gap-6"
         onSubmit={form.handleSubmit(async () => {
           dispatch({ type: "INCREMENT_STEP" });
         })}
@@ -106,7 +115,7 @@ export function MainDetails({ waveId }: { waveId: string }) {
 
         <FormField
           control={form.control}
-          name="summary"
+          name="projectSummary"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Project summary</FormLabel>

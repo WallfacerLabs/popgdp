@@ -27,7 +27,10 @@ export function CreateApplicationStepper({
         ))}
       </div>
 
-      {children[currentStep]}
+      <div className="flex w-full max-w-xl flex-col gap-6">
+        <span className="font-bold">{stepsConfig[currentStep].name}</span>
+        {children[currentStep]}
+      </div>
     </div>
   );
 }

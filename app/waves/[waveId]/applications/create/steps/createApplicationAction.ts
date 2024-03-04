@@ -6,10 +6,8 @@ import { insertApplication } from "@/drizzle/queries/applications";
 
 import { auth } from "@/lib/auth";
 
-import { createApplicationSchema } from "./createApplicationSchema";
-
 export async function createApplicationAction(
-  data: createApplicationSchema,
+  data: any,
   waveId: number,
 ) {
   const session = await auth();

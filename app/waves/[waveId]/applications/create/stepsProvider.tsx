@@ -12,9 +12,11 @@ interface StepsState {
   currentStep: number;
 }
 
-type StepsAction = {
-  type: "INCREMENT_STEP";
-};
+type StepsAction =
+  | {
+      type: "INCREMENT_STEP";
+    }
+  | { type: "DECREMENT_STEP" };
 
 function stepsReducer(state: StepsState, action: StepsAction): StepsState {
   switch (action.type) {
@@ -22,6 +24,12 @@ function stepsReducer(state: StepsState, action: StepsAction): StepsState {
       return {
         ...state,
         currentStep: state.currentStep + 1,
+      };
+    }
+    case "DECREMENT_STEP": {
+      return {
+        ...state,
+        currentStep: state.currentStep - 1,
       };
     }
   }
