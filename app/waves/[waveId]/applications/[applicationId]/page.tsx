@@ -1,16 +1,15 @@
 import { type ReactNode } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getApplicationWithComments } from "@/drizzle/queries/applications";
 
 import { cn } from "@/lib/cn";
 import { parseMarkdown } from "@/lib/parseMarkdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { BackButton } from "@/components/ui/backButton";
 import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import arrowLeftIcon from "@/app/images/arrowLeftIcon.svg";
 import projectPlaceholder from "@/app/images/projectPlaceholder.png";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
@@ -36,11 +35,7 @@ export default async function Application({
     <div className="flex w-full flex-col gap-4">
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button size="icon" variant="outline" className="text-sm" asChild>
-            <Link href={`/waves/${application.waveId}`}>
-              <Image src={arrowLeftIcon} alt="" />
-            </Link>
-          </Button>
+          <BackButton href={`/waves/${application.waveId}`} />
           <h2 className="text-2xl font-bold">{application.name}</h2>
           <CategoryBadge>Category</CategoryBadge>
         </div>
