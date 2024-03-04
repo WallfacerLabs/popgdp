@@ -1,11 +1,13 @@
+import { type ReactNode } from "react";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getApplicationWithComments } from "@/drizzle/queries/applications";
 
-import { formatDate } from "@/lib/dates";
+import { cn } from "@/lib/cn";
 import { parseMarkdown } from "@/lib/parseMarkdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import projectPlaceholder from "@/app/images/projectPlaceholder.png";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
 
@@ -22,7 +24,6 @@ export default async function Application({
     return notFound();
   }
 
-  const applicationHtml = await parseMarkdown(application.description);
   const commentsHtml = await Promise.all(
     application.comments.map((comment) => parseMarkdown(comment.content)),
   );
@@ -30,33 +31,58 @@ export default async function Application({
   return (
     <div className="flex w-full flex-col gap-4">
       <h2 className="text-2xl">{application.name}</h2>
-      <Card className="flex gap-8 px-6">
-        <Avatar className="my-6">
-          <AvatarFallback />
+      <div className="grid grid-cols-2 rounded-3xl border">
+        <div className="flex flex-col gap-6 p-10">
+          <ContentRow label="User submitting">
+            <div className="flex items-center gap-2">
+              <Avatar>
+                <AvatarFallback />
+                <AvatarImage
+                  src={application.users.image || undefined}
+                  alt={
+                    application.users.name
+                      ? `${application.users.name} avatar`
+                      : undefined
+                  }
+                />
+              </Avatar>
+              <div className="flex flex-col">
+                <span className="font-bold">{application.users.name}</span>
+                <span className="text-xs text-gray-600">Member</span>
+              </div>
+            </div>
+          </ContentRow>
 
-          <AvatarImage
-            src={application.users.image || undefined}
-            alt={
-              application.users.name
-                ? `${application.users.name} avatar`
-                : undefined
-            }
-          />
-        </Avatar>
-        <div className="my-4 w-full">
-          <div className="mb-4 flex items-baseline justify-between text-gray-600">
-            <div className="font-medium">{application.users.name}</div>
-            <div className="text-sm">{formatDate(application.createdAt)}</div>
-          </div>
-          <div className="prose max-w-none">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: applicationHtml,
-              }}
-            />
-          </div>
+          <Separator />
+
+          <ContentRow label="Entity name">
+            <span>Wallfacer</span>
+          </ContentRow>
+
+          <Separator />
+
+          <ContentRow label="Proposed project duration">
+            <span>3 months</span>
+          </ContentRow>
+
+          <Separator />
+
+          <ContentRow label="Proposed budget for wave">
+            <span>1,025,000.00 WLD</span>
+          </ContentRow>
+
+          <Separator />
+
+          <ContentRow label="Project summary" vertical>
+            <span>
+              Work towards decentralized governance app for Worldcoin Grants
+              using Worldcoin ID, featuring forums, committees, and voting,
+              ensuring fair, sybil-proof engagement.
+            </span>
+          </ContentRow>
         </div>
-      </Card>
+        <Image src={projectPlaceholder} alt="" />
+      </div>
 
       <Separator className="my-16" />
 
@@ -94,6 +120,28 @@ export default async function Application({
 
         <AddCommentForm />
       </div>
+    </div>
+  );
+}
+
+function ContentRow({
+  children,
+  label,
+  vertical,
+}: {
+  children: ReactNode;
+  label: string;
+  vertical?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        "grid gap-2 text-sm",
+        vertical ? "grid-cols-1" : "grid-cols-2",
+      )}
+    >
+      <span className="font-bold capitalize">{label}</span>
+      {children}
     </div>
   );
 }
