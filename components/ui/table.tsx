@@ -38,7 +38,7 @@ const TableBody = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 TableBody.displayName = "TableBody";
 
 const rowClasses =
-  "table-row border-black transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted";
+  "table-row border-black transition-colors data-[state=selected]:bg-muted";
 
 const TableRow = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
@@ -49,7 +49,7 @@ TableRow.displayName = "TableLinkRow";
 
 const TableLinkRow = forwardRef<HTMLAnchorElement, ComponentProps<typeof Link>>(
   ({ className, ...props }, ref) => (
-    <Link ref={ref} className={cn(rowClasses, className)} {...props} />
+    <Link ref={ref} className={cn(rowClasses, "hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 last:rounded-b-lg", className)} {...props} />
   ),
 );
 TableLinkRow.displayName = "TableLinkRow";
@@ -73,7 +73,7 @@ const TableCell = forwardRef<HTMLDivElement, TdHTMLAttributes<HTMLDivElement>>(
     <div
       ref={ref}
       className={cn(
-        "table-cell p-4 align-middle [&:has([role=checkbox])]:pr-0",
+        "table-cell p-4 align-middle [&:has([role=checkbox])]:pr-0 border-t",
         className,
       )}
       {...props}
