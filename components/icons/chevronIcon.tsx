@@ -1,6 +1,5 @@
 import { cn } from '@/lib/cn'
-import { iconDirections } from '@/lib/iconDirection'
-import type { IconDirection } from '@/lib/iconDirection'
+import { iconDirections, IconDirection } from '@/lib/iconDirection'
 import { ComponentPropsWithoutRef } from 'react'
 
 export const ChevronIcon = ({ direction, className, ...props }: Pick<ComponentPropsWithoutRef<'svg'>, 'className'> & IconDirection) => {

@@ -1,6 +1,5 @@
 import { cn } from '@/lib/cn'
-import type { IconDirection } from '@/lib/iconDirection'
-import { iconDirections } from '@/lib/iconDirection'
+import { iconDirections, IconDirection } from '@/lib/iconDirection'
 import { ComponentPropsWithoutRef } from 'react'
 
 export const DropArrowIcon = ({ direction, className, ...props }: Pick<ComponentPropsWithoutRef<'svg'>, 'className'> & IconDirection) => {
