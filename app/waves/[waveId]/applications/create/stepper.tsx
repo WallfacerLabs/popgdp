@@ -12,8 +12,10 @@ import { useStepsContext } from "./stepsProvider";
 export function CreateApplicationStepper({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode[];
 }) {
+  const { currentStep } = useStepsContext();
+
   return (
     <div className="flex gap-16">
       <div className="flex max-h-[420px] w-48 flex-col gap-2">
@@ -25,7 +27,7 @@ export function CreateApplicationStepper({
         ))}
       </div>
 
-      {children}
+      {children[currentStep]}
     </div>
   );
 }

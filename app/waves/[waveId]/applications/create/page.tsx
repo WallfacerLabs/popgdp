@@ -19,6 +19,7 @@ export default function CreateApplication({
       <StepsContextProvider>
         <CreateApplicationStepper>
           <MainDetails waveId={params.waveId} />
+          <div>Step 2</div>
         </CreateApplicationStepper>
       </StepsContextProvider>
     </>

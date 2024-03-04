@@ -15,10 +15,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-import { createApplicationAction } from "./createApplicationAction";
+import { useStepsDispatchContext } from "../stepsProvider";
 import { createApplicationSchema } from "./createApplicationSchema";
 
 export function MainDetails({ waveId }: { waveId: string }) {
+  const dispatch = useStepsDispatchContext();
   const form = useForm<createApplicationSchema>({
     resolver: zodResolver(createApplicationSchema),
     defaultValues: {
@@ -34,8 +35,8 @@ export function MainDetails({ waveId }: { waveId: string }) {
     <Form {...form}>
       <form
         className="flex w-full max-w-xl flex-col gap-6"
-        onSubmit={form.handleSubmit(async (data) => {
-          await createApplicationAction(data, Number(waveId));
+        onSubmit={form.handleSubmit(async () => {
+          dispatch({ type: "INCREMENT_STEP" });
         })}
       >
         <FormField
@@ -120,7 +121,7 @@ export function MainDetails({ waveId }: { waveId: string }) {
           disabled={form.formState.isSubmitting}
           className="mt-4 self-end px-16"
         >
-          Create
+          Next
         </Button>
       </form>
     </Form>
