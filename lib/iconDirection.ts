@@ -15,6 +15,4 @@ export const iconDirections = cva("origin-center", {
   },
 })
 
-iconDirections({ direction: 'up' })
-
 export type IconDirection = VariantProps<typeof iconDirections>
