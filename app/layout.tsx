@@ -34,11 +34,11 @@ export default function RootLayout({
         <AxiomWebVitals />
         <body
           className={cn(
-            "flex min-h-screen flex-col items-center bg-background px-16 font-sans antialiased",
+            "flex min-h-screen flex-col items-center bg-background font-sans antialiased",
             fontSans.variable,
           )}
         >
-          <header className="flex w-full items-center justify-between py-12">
+          <header className="mx-auto flex w-full max-w-[1384px] items-center justify-between gap-8 p-3">
             <Button
               variant="link"
               className="flex items-center gap-4 p-0 text-base font-bold"
