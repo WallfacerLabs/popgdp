@@ -1,7 +1,11 @@
 import { BackButton } from "@/components/ui/backButton";
 
 import { CreateApplicationStepper } from "./stepper";
+import { GrantScoping } from "./steps/grantScoping";
 import { MainDetails } from "./steps/mainDetails";
+import { Resources } from "./steps/resources";
+import { Roadmap } from "./steps/roadmap";
+import { TeamInformation } from "./steps/teamInformation";
 import { StepsContextProvider } from "./stepsProvider";
 
 export default function CreateApplication({
@@ -18,8 +22,11 @@ export default function CreateApplication({
 
       <StepsContextProvider>
         <CreateApplicationStepper>
-          <MainDetails waveId={params.waveId} />
-          <div>Step 2</div>
+          <MainDetails />
+          <TeamInformation />
+          <GrantScoping />
+          <Roadmap />
+          <Resources />
         </CreateApplicationStepper>
       </StepsContextProvider>
     </>
