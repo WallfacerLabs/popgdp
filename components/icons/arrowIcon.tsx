@@ -12,6 +12,6 @@ export const ArrowIcon = ({ direction, className, ...props }: Pick<ComponentProp
           fill="currentColor"
         />
       </g>
-    </svg >
+    </svg>
   )
 }
