@@ -20,7 +20,7 @@ export async function createApplicationAction(
 
   await insertApplication({
     name: data.projectName,
-    description: data.description,
+    description: data.summary,
     waveId,
     userId: session.user.id,
   });
