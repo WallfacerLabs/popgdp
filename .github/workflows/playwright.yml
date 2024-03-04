@@ -1,4 +1,4 @@
-name: 🧪 Playwright
+name: 🧪 Checks
 on:
   push:
     branches: [main]
@@ -38,6 +38,8 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
+      - name: Check prettier
+        run: pnpm prettier
       - name: Install Playwright Browsers
         run: pnpm exec playwright install chromium
       - name: Run migrations

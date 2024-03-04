@@ -4,7 +4,8 @@ import { Fragment, type ReactNode } from "react";
 import { cva } from "class-variance-authority";
 
 import { Separator } from "@/components/ui/separator";
-import { StepperIcon } from "@/app/images/icons/stepperIcon";
+import { CheckIcon } from "@/components/icons/checkIcon";
+import { StepIcon } from "@/components/icons/stepIcon";
 
 import { stepsConfig } from "./stepsConfig";
 import { useStepsContext } from "./stepsProvider";
@@ -55,12 +56,26 @@ interface StepProps {
 function StepperStep({ label, stepIndex }: StepProps) {
   const { currentStep } = useStepsContext();
 
-  const active = currentStep === stepIndex;
+  const active = stepIndex <= currentStep;
 
   return (
     <div className={stepVariants({ active })}>
-      <StepperIcon />
+      <StepperIcon stepIndex={stepIndex} />
       <span className="text-xs font-bold capitalize">{label}</span>
     </div>
   );
+}
+
+function StepperIcon({ stepIndex }: Pick<StepProps, "stepIndex">) {
+  const { currentStep } = useStepsContext();
+
+  if (stepIndex < currentStep) {
+    return (
+      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-300">
+        <CheckIcon className="h-6 w-6" />
+      </div>
+    );
+  }
+
+  return <StepIcon className="h-8 w-8" />;
 }
