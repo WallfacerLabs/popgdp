@@ -3,7 +3,6 @@
 import { ComponentPropsWithoutRef, Fragment, type ReactNode } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/cn";
 import { Separator } from "@/components/ui/separator";
 import { CheckIcon } from "@/components/icons/checkIcon";
 import { DotIcon } from "@/components/icons/dotIcon";
