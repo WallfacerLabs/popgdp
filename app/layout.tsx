@@ -10,6 +10,7 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import logoImage from "@/app/icon.svg";
 import { Providers } from "@/app/providers";
 
@@ -52,10 +53,18 @@ export default function RootLayout({
             <AccountButton />
           </header>
 
-          <main className="w-full max-w-[1120px] flex-grow">{children}</main>
+          <main className="mx-auto mt-8 w-full max-w-[1144px] flex-grow px-3">
+            {children}
+          </main>
 
-          <footer className="mt-36 w-full max-w-[1120px] border-t p-6 text-center text-xs font-semibold">
-            © 2024 POPGDP. All rights reserved
+          <footer className="mx-auto mb-6 mt-8 w-full max-w-[1144px] px-3">
+            <Separator
+              className="mb-6 w-full bg-primary opacity-10"
+              decorative
+            />
+            <p className="text-center text-xs font-semibold">
+              © 2024 POPGDP. All rights reserved
+            </p>
           </footer>
         </body>
       </Providers>
