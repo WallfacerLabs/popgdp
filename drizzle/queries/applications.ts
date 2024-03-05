@@ -1,8 +1,8 @@
 import { cache } from "react";
 import { eq } from "drizzle-orm";
 
-import { db } from "../db";
-import { applications } from "../schema";
+import { db } from "@/drizzle/db";
+import { applications } from "@/drizzle/schema";
 
 export const getApplicationWithComments = cache(async (id: number) => {
   return db.query.applications.findFirst({
