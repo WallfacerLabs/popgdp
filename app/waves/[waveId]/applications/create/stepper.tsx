@@ -24,7 +24,10 @@ export function CreateApplicationStepper({
         {stepsConfig.map(({ name }, stepIndex) => (
           <Fragment key={name}>
             <StepperStep stepIndex={stepIndex} label={name} />
-            <Separator orientation="vertical" className="mx-4 w-0.5 -translate-x-px h-12 last:hidden" />
+            <Separator
+              orientation="vertical"
+              className="mx-4 h-12 w-0.5 -translate-x-px last:hidden"
+            />
           </Fragment>
         ))}
       </div>
