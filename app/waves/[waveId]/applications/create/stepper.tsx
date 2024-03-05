@@ -81,6 +81,14 @@ function StepperIcon({ stepIndex }: Pick<StepProps, "stepIndex">) {
     );
   }
 
+  if (stepIndex === currentStep) {
+    return (
+      <StepperIconWrapper variant="pending">
+        <DotIcon className="h-6 w-6" />
+      </StepperIconWrapper>
+    );
+  }
+
   if (stepIndex > currentStep) {
     return (
       <StepperIconWrapper variant="next">
@@ -88,12 +96,6 @@ function StepperIcon({ stepIndex }: Pick<StepProps, "stepIndex">) {
       </StepperIconWrapper>
     );
   }
-
-  return (
-    <StepperIconWrapper variant="pending">
-      <DotIcon className="h-6 w-6" />
-    </StepperIconWrapper>
-  );
 }
 
 const stepperVariant = cva(
