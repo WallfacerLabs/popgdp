@@ -2,26 +2,18 @@ import { ComponentPropsWithoutRef } from "react";
 
 import { cn } from "@/lib/cn";
 
-export const StepIcon = ({
+export const DotIcon = ({
   className,
   ...props
 }: Pick<ComponentPropsWithoutRef<"svg">, "className">) => {
   return (
     <svg
       className={cn("block", className)}
-      viewBox="0 0 32 32"
+      viewBox="0 0 24 24"
       color="currentColor"
       {...props}
     >
-      <circle
-        cx="16"
-        cy="16"
-        r="15"
-        fill="#fff"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <circle cx="16" cy="16" r="5.5" fill="currentColor" />
+      <circle cx="12" cy="12" r="6" fill="currentColor" />
     </svg>
   );
 };
