@@ -8,6 +8,8 @@ import {
   type ReactNode,
 } from "react";
 
+const LOCAL_STORAGE_KEY = "stepsState";
+
 interface StepsState {
   currentStep: number;
 }
@@ -35,6 +37,34 @@ function stepsReducer(state: StepsState, action: StepsAction): StepsState {
   }
 }
 
+function localStorageStepsReducer(
+  state: StepsState,
+  action: StepsAction,
+): StepsState {
+  const newState = stepsReducer(state, action);
+
+  try {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState));
+  } catch (error) {
+    console.error("Error saving to local storage", error);
+  }
+
+  return newState;
+}
+
+function getInitialState(initialArgs: StepsState) {
+  try {
+    const localStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (localStorageValue) {
+      return JSON.parse(localStorageValue);
+    }
+  } catch (error) {
+    console.error("Error reading from local storage", error);
+  }
+
+  return initialArgs;
+}
+
 interface StepsContext {
   currentStep: number;
 }
@@ -48,7 +78,11 @@ const StepsDispatchContext = createContext<Dispatch<StepsAction>>(
 );
 
 export function StepsContextProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(stepsReducer, { currentStep: 0 });
+  const [state, dispatch] = useReducer(
+    localStorageStepsReducer,
+    { currentStep: 0 },
+    getInitialState,
+  );
 
   return (
     <StepsContext.Provider value={state}>
