@@ -1,11 +1,12 @@
 "use client";
 
-import { Fragment, type ReactNode } from "react";
-import { cva } from "class-variance-authority";
+import { ComponentPropsWithoutRef, Fragment, type ReactNode } from "react";
+import { cva, VariantProps } from "class-variance-authority";
 
+import { cn } from "@/lib/cn";
 import { Separator } from "@/components/ui/separator";
 import { CheckIcon } from "@/components/icons/checkIcon";
-import { StepIcon } from "@/components/icons/stepIcon";
+import { DotIcon } from "@/components/icons/dotIcon";
 
 import { stepsConfig } from "./stepsConfig";
 import { useStepsContext } from "./stepsProvider";
@@ -74,11 +75,49 @@ function StepperIcon({ stepIndex }: Pick<StepProps, "stepIndex">) {
 
   if (stepIndex < currentStep) {
     return (
-      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-300">
+      <StepperIconWrapper variant="success">
         <CheckIcon className="h-6 w-6" />
-      </div>
+      </StepperIconWrapper>
     );
   }
 
-  return <StepIcon className="h-8 w-8" />;
+  if (stepIndex === currentStep) {
+    return (
+      <StepperIconWrapper variant="pending">
+        <DotIcon className="h-6 w-6" />
+      </StepperIconWrapper>
+    );
+  }
+
+  if (stepIndex > currentStep) {
+    return (
+      <StepperIconWrapper variant="next">
+        <DotIcon className="h-6 w-6" />
+      </StepperIconWrapper>
+    );
+  }
 }
+
+const stepperVariant = cva(
+  "flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary text-primary",
+  {
+    defaultVariants: {
+      variant: "pending",
+    },
+    variants: {
+      variant: {
+        next: "opacity-10",
+        pending: "",
+        success: "border-green-300 bg-green-300",
+      },
+    },
+  },
+);
+
+const StepperIconWrapper = ({
+  variant,
+  children,
+}: VariantProps<typeof stepperVariant> &
+  Pick<ComponentPropsWithoutRef<"div">, "children">) => {
+  return <div className={stepperVariant({ variant })}>{children}</div>;
+};
