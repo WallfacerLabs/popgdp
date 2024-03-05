@@ -20,11 +20,11 @@ export function CreateApplicationStepper({
 
   return (
     <div className="flex gap-16">
-      <div className="flex max-h-[420px] w-48 flex-col gap-2">
+      <div className="flex h-fit w-full max-w-[138px] flex-col gap-2">
         {stepsConfig.map(({ name }, stepIndex) => (
           <Fragment key={name}>
             <StepperStep stepIndex={stepIndex} label={name} />
-            <Separator orientation="vertical" className="mx-4 last:hidden" />
+            <Separator orientation="vertical" className="mx-4 w-0.5 -translate-x-px h-12 last:hidden" />
           </Fragment>
         ))}
       </div>
@@ -43,8 +43,8 @@ export function CreateApplicationStepper({
 const stepVariants = cva("flex items-center gap-2", {
   variants: {
     active: {
-      true: "text-black",
-      false: "text-border",
+      true: "font-bold",
+      false: "",
     },
   },
   defaultVariants: {
@@ -65,7 +65,7 @@ function StepperStep({ label, stepIndex }: StepProps) {
   return (
     <div className={stepVariants({ active })}>
       <StepperIcon stepIndex={stepIndex} />
-      <span className="text-xs font-bold capitalize">{label}</span>
+      <span className="text-xs capitalize">{label}</span>
     </div>
   );
 }
@@ -99,7 +99,7 @@ function StepperIcon({ stepIndex }: Pick<StepProps, "stepIndex">) {
 }
 
 const stepperVariant = cva(
-  "flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary text-primary",
+  "flex min-h-8 min-w-8 max-h-8 max-w-8 items-center justify-center rounded-full border-2 border-primary text-primary",
   {
     defaultVariants: {
       variant: "pending",
