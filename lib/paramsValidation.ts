@@ -1,12 +1,20 @@
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { z } from "zod";
+
+function parseParams<T>(schema: z.Schema<T>, params: unknown) {
+  const result = schema.safeParse(params);
+  if (!result.success) {
+    throw notFound();
+  }
+  return result.data;
+}
 
 const waveParamsSchema = z.object({
   waveId: z.coerce.number(),
 });
 
 export function parseWaveParams(params: unknown) {
-  return waveParamsSchema.parse(params);
+  return parseParams(waveParamsSchema, params);
 }
 
 const applicationParamsSchema = waveParamsSchema.extend({
@@ -14,7 +22,7 @@ const applicationParamsSchema = waveParamsSchema.extend({
 });
 
 export function parseApplicationParams(params: unknown) {
-  return applicationParamsSchema.parse(params);
+  return parseParams(applicationParamsSchema, params);
 }
 
 export function useApplicationParams() {
