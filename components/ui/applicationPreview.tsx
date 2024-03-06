@@ -8,8 +8,8 @@ import projectPlaceholder from "@/app/images/projectPlaceholder.png";
 
 interface Application {
   users: {
-    name: string | null;
-    image: string | null;
+    name: string | null | undefined;
+    image: string | null | undefined;
   };
 }
 
