@@ -5,13 +5,11 @@ import { AxiomWebVitals } from "next-axiom";
 
 import "./globals.css";
 
-import Image from "next/image";
-
 import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import logoImage from "@/app/icon.svg";
+import { ProductIcon } from "@/components/icons/productIcon";
 import { Providers } from "@/app/providers";
 
 const fontSans = FontSans({
@@ -46,8 +44,8 @@ export default function RootLayout({
               asChild
             >
               <Link href="/">
-                <Image src={logoImage} alt="Popgdp logo" />
-                <h1>POPGDP</h1>
+                <ProductIcon className="h-10 w-10" aria-label="POPGDP logo" />
+                <h1 className="px-4">POPGDP</h1>
               </Link>
             </Button>
             <AccountButton />
