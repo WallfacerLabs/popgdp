@@ -14,19 +14,20 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 
-import { useStepsDispatchContext } from "../stepsProvider";
+import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
 const roadmapSchema = z.object({
   tbd: z.string(),
 });
-type roadmapSchema = z.infer<typeof roadmapSchema>;
+export type roadmapSchema = z.infer<typeof roadmapSchema>;
 
 export function Roadmap() {
+  const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
   const form = useForm<roadmapSchema>({
     resolver: zodResolver(roadmapSchema),
     defaultValues: {
-      tbd: "",
+      tbd: applicationData.tbd ?? "",
     } satisfies roadmapSchema,
   });
 
@@ -34,7 +35,8 @@ export function Roadmap() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async () => {
+        onSubmit={form.handleSubmit(async (payload) => {
+          dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
           dispatch({ type: "INCREMENT_STEP" });
         })}
       >

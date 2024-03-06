@@ -6,7 +6,12 @@ import { insertApplication } from "@/drizzle/queries/applications";
 
 import { auth } from "@/lib/auth";
 
-export async function createApplicationAction(data: any, waveId: number) {
+import { ApplicationData } from "../stepsProvider";
+
+export async function createApplicationAction(
+  data: ApplicationData,
+  waveId: number,
+) {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -15,7 +20,7 @@ export async function createApplicationAction(data: any, waveId: number) {
 
   await insertApplication({
     name: data.projectName,
-    description: data.summary,
+    description: data.projectSummary,
     waveId,
     userId: session.user.id,
   });

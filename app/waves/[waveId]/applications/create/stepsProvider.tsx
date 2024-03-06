@@ -8,20 +8,48 @@ import {
   type ReactNode,
 } from "react";
 
+import { type grantScopingSchema } from "./steps/grantScoping";
+import { type mainDetailsSchema } from "./steps/mainDetails";
+import { type resourcesSchema } from "./steps/resources";
+import { type roadmapSchema } from "./steps/roadmap";
+import { type teamInformationSchema } from "./steps/teamInformation";
+
 const LOCAL_STORAGE_KEY = "stepsState";
+
+export type ApplicationData = mainDetailsSchema &
+  teamInformationSchema &
+  grantScopingSchema &
+  roadmapSchema &
+  resourcesSchema;
 
 interface StepsState {
   currentStep: number;
+  applicationData: ApplicationData;
 }
 
 type StepsAction =
   | {
       type: "INCREMENT_STEP";
     }
-  | { type: "DECREMENT_STEP" };
+  | {
+      type: "DECREMENT_STEP";
+    }
+  | {
+      type: "UPDATE_APPLICATION_DATA";
+      payload: Partial<ApplicationData>;
+    };
 
 function stepsReducer(state: StepsState, action: StepsAction): StepsState {
   switch (action.type) {
+    case "UPDATE_APPLICATION_DATA": {
+      return {
+        ...state,
+        applicationData: {
+          ...state.applicationData,
+          ...action.payload,
+        },
+      };
+    }
     case "INCREMENT_STEP": {
       return {
         ...state,
@@ -65,12 +93,9 @@ function getInitialState(initialArgs: StepsState) {
   return initialArgs;
 }
 
-interface StepsContext {
-  currentStep: number;
-}
-
 const StepsContext = createContext<StepsState>({
   currentStep: 0,
+  applicationData: {} as ApplicationData,
 });
 
 const StepsDispatchContext = createContext<Dispatch<StepsAction>>(
@@ -80,7 +105,7 @@ const StepsDispatchContext = createContext<Dispatch<StepsAction>>(
 export function StepsContextProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(
     localStorageStepsReducer,
-    { currentStep: 0 },
+    { currentStep: 0, applicationData: {} as ApplicationData },
     getInitialState,
   );
 
