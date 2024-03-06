@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getApplicationWithComments } from "@/drizzle/queries/applications";
 
+import { parseApplicationParams } from "@/lib/paramsValidation";
 import { parseMarkdown } from "@/lib/parseMarkdown";
 import { ApplicationPreview } from "@/components/ui/applicationPreview";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,14 +12,9 @@ import { Separator } from "@/components/ui/separator";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
 
-export default async function Application({
-  params,
-}: {
-  params: { applicationId: string };
-}) {
-  const application = await getApplicationWithComments(
-    Number(params.applicationId),
-  );
+export default async function Application({ params }: { params: unknown }) {
+  const { applicationId } = parseApplicationParams(params);
+  const application = await getApplicationWithComments(applicationId);
 
   if (!application) {
     return notFound();
