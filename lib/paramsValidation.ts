@@ -17,6 +17,10 @@ export function parseWaveParams(params: unknown) {
   return parseParams(waveParamsSchema, params);
 }
 
+export function useWaveParams() {
+  return parseWaveParams(useParams());
+}
+
 const applicationParamsSchema = waveParamsSchema.extend({
   applicationId: z.coerce.number(),
 });

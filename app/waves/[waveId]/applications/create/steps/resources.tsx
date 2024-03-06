@@ -1,9 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useWaveParams } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,6 +24,9 @@ const resourcesSchema = z.object({
 type resourcesSchema = z.infer<typeof resourcesSchema>;
 
 export function Resources() {
+  const router = useRouter();
+  const { waveId } = useWaveParams();
+
   const dispatch = useStepsDispatchContext();
   const form = useForm<resourcesSchema>({
     resolver: zodResolver(resourcesSchema),
@@ -35,7 +40,7 @@ export function Resources() {
       <form
         className="flex w-full flex-col gap-6"
         onSubmit={form.handleSubmit(async () => {
-          dispatch({ type: "INCREMENT_STEP" });
+          router.push(`/waves/${waveId}/applications/create/preview`);
         })}
       >
         <FormField
