@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
 
 import { formatDate } from "@/lib/dates";
+import { parseWaveParams } from "@/lib/paramsValidation";
 import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
@@ -18,8 +19,10 @@ import {
 } from "@/components/ui/table";
 import globeImage from "@/app/images/globe.png";
 
-export default async function Wave({ params }: { params: { waveId: string } }) {
-  const wave = await getWaveWithApplications(Number(params.waveId));
+export default async function Wave({ params }: { params: unknown }) {
+  const { waveId } = parseWaveParams(params);
+
+  const wave = await getWaveWithApplications(waveId);
 
   if (!wave) {
     return notFound();
@@ -45,7 +48,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
       <div className="mt-8 flex items-center justify-between">
         <h2 className="text-2xl font-bold">Submissions</h2>
         <Button asChild>
-          <Link href={`/waves/${params.waveId}/applications/create`}>
+          <Link href={`/waves/${waveId}/applications/create`}>
             Apply for Grant
           </Link>
         </Button>
@@ -66,7 +69,7 @@ export default async function Wave({ params }: { params: { waveId: string } }) {
           {wave.applications.map((project) => (
             <TableLinkRow
               key={project.id}
-              href={`/waves/${params.waveId}/applications/${project.id}`}
+              href={`/waves/${waveId}/applications/${project.id}`}
             >
               <TableCell>{project.name}</TableCell>
               <TableCell>{project.users.name}</TableCell>

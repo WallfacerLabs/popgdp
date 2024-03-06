@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 
+import { parseWaveParams } from "@/lib/paramsValidation";
 import { BackButton } from "@/components/ui/backButton";
 
 const CreateApplicationForm = dynamic(
@@ -9,15 +10,13 @@ const CreateApplicationForm = dynamic(
   },
 );
 
-export default function CreateApplication({
-  params,
-}: {
-  params: { waveId: string };
-}) {
+export default function CreateApplication({ params }: { params: unknown }) {
+  const { waveId } = parseWaveParams(params);
+
   return (
     <>
       <div className="mb-16 flex items-center gap-4">
-        <BackButton href={`/waves/${params.waveId}`} />
+        <BackButton href={`/waves/${waveId}`} />
         <h2 className="text-2xl font-bold">Apply for the Grant</h2>
       </div>
 
