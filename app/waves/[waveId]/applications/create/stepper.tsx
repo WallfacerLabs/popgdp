@@ -101,15 +101,15 @@ function StepperIcon({ stepIndex }: Pick<StepProps, "stepIndex">) {
 }
 
 const stepperVariant = cva(
-  "flex min-h-8 min-w-8 max-h-8 max-w-8 items-center justify-center rounded-full border-2 border-primary text-primary",
+  "flex min-h-8 min-w-8 max-h-8 max-w-8 items-center justify-center rounded-full border-2 text-primary",
   {
     defaultVariants: {
       variant: "pending",
     },
     variants: {
       variant: {
-        next: "opacity-10",
-        pending: "",
+        next: "opacity-10 border-primary",
+        pending: "border-primary",
         success: "border-green-300 bg-green-300",
       },
     },
