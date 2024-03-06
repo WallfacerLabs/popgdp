@@ -6,7 +6,11 @@ import { Roadmap } from "./steps/roadmap";
 import { TeamInformation } from "./steps/teamInformation";
 import { StepsContextProvider } from "./stepsProvider";
 
-export function Form() {
+export interface CreateApplicationFormProps {
+  waveId: number;
+}
+
+export function Form({ waveId }: CreateApplicationFormProps) {
   return (
     <StepsContextProvider>
       <CreateApplicationStepper>
@@ -14,7 +18,7 @@ export function Form() {
         <TeamInformation />
         <GrantScoping />
         <Roadmap />
-        <Resources />
+        <Resources waveId={waveId} />
       </CreateApplicationStepper>
     </StepsContextProvider>
   );
