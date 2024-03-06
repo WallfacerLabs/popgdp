@@ -20,7 +20,7 @@ export default function CreateApplication({ params }: { params: unknown }) {
         <h2 className="text-2xl font-bold">Apply for the Grant</h2>
       </div>
 
-      <CreateApplicationForm />
+      <CreateApplicationForm waveId={waveId} />
     </>
   );
 }
