@@ -14,14 +14,16 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 
+import { CreateApplicationFormProps } from "../createApplicationForm";
 import { useStepsDispatchContext } from "../stepsProvider";
+import { createApplicationAction } from "./createApplicationAction";
 
 const resourcesSchema = z.object({
   tbd: z.string(),
 });
 type resourcesSchema = z.infer<typeof resourcesSchema>;
 
-export function Resources() {
+export function Resources({ waveId }: CreateApplicationFormProps) {
   const dispatch = useStepsDispatchContext();
   const form = useForm<resourcesSchema>({
     resolver: zodResolver(resourcesSchema),
@@ -34,8 +36,8 @@ export function Resources() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async () => {
-          dispatch({ type: "INCREMENT_STEP" });
+        onSubmit={form.handleSubmit(async (data) => {
+          await createApplicationAction(data, waveId);
         })}
       >
         <FormField
