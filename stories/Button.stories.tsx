@@ -4,9 +4,7 @@ import { Button, ButtonProps } from "@/components/ui/button";
 
 const meta = {
   title: "Example/Button",
-  component: (args: ButtonProps) => (
-    <Button {...args}>Button</Button>
-  ),
+  component: (args: ButtonProps) => <Button {...args}>Button</Button>,
 } satisfies Meta<typeof Button>;
 
 export default meta;
