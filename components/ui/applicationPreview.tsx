@@ -6,6 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import projectPlaceholder from "@/app/images/projectPlaceholder.png";
 
+import { WldAmount } from "./wldAmount";
+
 interface Application {
   users: {
     name: string | null | undefined;
@@ -52,7 +54,7 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
         <Separator />
 
         <ContentRow label="Proposed budget for wave">
-          <span>1,025,000.00 WLD</span>
+          <WldAmount amount="1,025,000.00" />
         </ContentRow>
 
         <Separator />
