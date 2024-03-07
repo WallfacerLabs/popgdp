@@ -15,6 +15,7 @@ const config: StorybookConfig = {
       builder: {
         useSWC: true,
       },
+      styles: ['@/app/global.css'],
     },
   },
   webpackFinal: async (config: any) => {
