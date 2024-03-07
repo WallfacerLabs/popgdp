@@ -71,7 +71,7 @@ function localStorageStepsReducer(
 ): StepsState {
   const newState = stepsReducer(state, action);
 
-  if (localStorage) {
+  if (typeof localStorage !== "undefined") {
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState));
     } catch (error) {
@@ -83,13 +83,15 @@ function localStorageStepsReducer(
 }
 
 function getInitialState(initialArgs: StepsState) {
-  try {
-    const localStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (localStorageValue) {
-      return JSON.parse(localStorageValue);
+  if (typeof localStorage !== "undefined") {
+    try {
+      const localStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (localStorageValue) {
+        return JSON.parse(localStorageValue);
+      }
+    } catch (error) {
+      console.error("Error reading from local storage", error);
     }
-  } catch (error) {
-    console.error("Error reading from local storage", error);
   }
 
   return initialArgs;
