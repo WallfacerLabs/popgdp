@@ -1,5 +1,5 @@
+import path from "path";
 import type { StorybookConfig } from "@storybook/nextjs";
-import path from 'path';
 
 const config: StorybookConfig = {
   stories: ["../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -15,7 +15,7 @@ const config: StorybookConfig = {
       builder: {
         useSWC: true,
       },
-      styles: ['@/app/global.css'],
+      styles: ["@/app/global.css"],
     },
   },
   webpackFinal: async (config: any) => {

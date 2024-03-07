@@ -1,7 +1,8 @@
 import "@/app/globals.css";
-import type { Preview } from "@storybook/react";
+
+import React from "react";
 import { Inter } from "next/font/google";
-import React from 'react';
+import type { Preview } from "@storybook/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,8 +24,8 @@ const preview: Preview = {
       <div className={inter.className}>
         <Story />
       </div>
-    )
-  ]
+    ),
+  ],
 };
 
 export default preview;
