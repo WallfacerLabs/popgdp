@@ -40,7 +40,7 @@ export function Editor({ onChange }: EditorProps) {
       <div className="relative">
         <RichTextPlugin
           contentEditable={
-            <ContentEditable className="prose min-h-[250px] w-full max-w-none rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+            <ContentEditable className="prose min-h-[250px] w-full max-w-none rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50" />
           }
           placeholder={
             <div className="absolute left-3 top-2 text-sm">

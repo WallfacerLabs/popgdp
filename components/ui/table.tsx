@@ -38,7 +38,7 @@ const TableBody = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 TableBody.displayName = "TableBody";
 
 const rowClasses =
-  "table-row border-black transition-colors data-[state=selected]:bg-muted";
+  "table-row border transition-colors data-[state=selected]:bg-muted";
 
 const TableRow = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
@@ -53,7 +53,7 @@ const TableLinkRow = forwardRef<HTMLAnchorElement, ComponentProps<typeof Link>>(
       ref={ref}
       className={cn(
         rowClasses,
-        "last:rounded-b-lg hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+        "last:rounded-b-lg hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
         className,
       )}
       {...props}
