@@ -71,10 +71,12 @@ function localStorageStepsReducer(
 ): StepsState {
   const newState = stepsReducer(state, action);
 
-  try {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState));
-  } catch (error) {
-    console.error("Error saving to local storage", error);
+  if (localStorage) {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState));
+    } catch (error) {
+      console.error("Error saving to local storage", error);
+    }
   }
 
   return newState;
