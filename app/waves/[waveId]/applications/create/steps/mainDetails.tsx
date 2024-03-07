@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-import { useStepsDispatchContext } from "../stepsProvider";
+import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
 const mainDetailsSchema = z.object({
   projectName: z.string(),
@@ -25,18 +25,19 @@ const mainDetailsSchema = z.object({
   projectBudget: z.string(),
   projectSummary: z.string(),
 });
-type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
+export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
 
 export function MainDetails() {
+  const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
   const form = useForm<mainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
-      projectName: "",
-      projectEntity: "",
-      projectDuration: "",
-      projectBudget: "",
-      projectSummary: "",
+      projectName: applicationData.projectName ?? "",
+      projectEntity: applicationData.projectEntity ?? "",
+      projectDuration: applicationData.projectDuration ?? "",
+      projectBudget: applicationData.projectBudget ?? "",
+      projectSummary: applicationData.projectSummary ?? "",
     } satisfies mainDetailsSchema,
   });
 
@@ -44,7 +45,8 @@ export function MainDetails() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async () => {
+        onSubmit={form.handleSubmit(async (payload) => {
+          dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
           dispatch({ type: "INCREMENT_STEP" });
         })}
       >

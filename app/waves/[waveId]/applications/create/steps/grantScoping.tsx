@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 
-import { useStepsDispatchContext } from "../stepsProvider";
+import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
 const grantScopingSchema = z.object({
   projectIdea: z.string(),
@@ -23,18 +23,19 @@ const grantScopingSchema = z.object({
   projectGoals: z.string(),
   projectRequirements: z.string(),
 });
-type grantScopingSchema = z.infer<typeof grantScopingSchema>;
+export type grantScopingSchema = z.infer<typeof grantScopingSchema>;
 
 export function GrantScoping() {
+  const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
   const form = useForm<grantScopingSchema>({
     resolver: zodResolver(grantScopingSchema),
     defaultValues: {
-      projectIdea: "",
-      projectReason: "",
-      projectState: "",
-      projectGoals: "",
-      projectRequirements: "",
+      projectIdea: applicationData.projectIdea ?? "",
+      projectReason: applicationData.projectReason ?? "",
+      projectState: applicationData.projectState ?? "",
+      projectGoals: applicationData.projectGoals ?? "",
+      projectRequirements: applicationData.projectRequirements ?? "",
     } satisfies grantScopingSchema,
   });
 
@@ -42,7 +43,8 @@ export function GrantScoping() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async () => {
+        onSubmit={form.handleSubmit(async (payload) => {
+          dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
           dispatch({ type: "INCREMENT_STEP" });
         })}
       >

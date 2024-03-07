@@ -14,19 +14,20 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 
-import { useStepsDispatchContext } from "../stepsProvider";
+import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
 const teamInformationSchema = z.object({
   teamSummary: z.string(),
 });
-type teamInformationSchema = z.infer<typeof teamInformationSchema>;
+export type teamInformationSchema = z.infer<typeof teamInformationSchema>;
 
 export function TeamInformation() {
+  const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
   const form = useForm<teamInformationSchema>({
     resolver: zodResolver(teamInformationSchema),
     defaultValues: {
-      teamSummary: "",
+      teamSummary: applicationData.teamSummary ?? "",
     } satisfies teamInformationSchema,
   });
 
@@ -34,7 +35,8 @@ export function TeamInformation() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async () => {
+        onSubmit={form.handleSubmit(async (payload) => {
+          dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
           dispatch({ type: "INCREMENT_STEP" });
         })}
       >

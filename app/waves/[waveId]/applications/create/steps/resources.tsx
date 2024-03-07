@@ -16,22 +16,23 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 
-import { useStepsDispatchContext } from "../stepsProvider";
+import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
 const resourcesSchema = z.object({
   tbd: z.string(),
 });
-type resourcesSchema = z.infer<typeof resourcesSchema>;
+export type resourcesSchema = z.infer<typeof resourcesSchema>;
 
 export function Resources() {
   const router = useRouter();
   const { waveId } = useWaveParams();
 
+  const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
   const form = useForm<resourcesSchema>({
     resolver: zodResolver(resourcesSchema),
     defaultValues: {
-      tbd: "",
+      tbd: applicationData.tbd ?? "",
     } satisfies resourcesSchema,
   });
 
@@ -39,7 +40,8 @@ export function Resources() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async () => {
+        onSubmit={form.handleSubmit(async (payload) => {
+          dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
           router.push(`/waves/${waveId}/applications/create/preview`);
         })}
       >
