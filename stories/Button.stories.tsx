@@ -5,16 +5,47 @@ import { Button, ButtonProps } from "@/components/ui/button";
 const meta = {
   title: "Example/Button",
   component: (args: ButtonProps) => (
-    <Button {...args} />
+    <Button {...args}>Button</Button>
   ),
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+const Primary: Story = {
   args: {
     variant: "default",
-    children: "Primary",
   },
 };
+
+const Secondary: Story = {
+  args: {
+    variant: "secondary",
+  },
+};
+
+const Outline: Story = {
+  args: {
+    variant: "outline",
+  },
+};
+
+const Ghost: Story = {
+  args: {
+    variant: "ghost",
+  },
+};
+
+const Link: Story = {
+  args: {
+    variant: "link",
+  },
+};
+
+const Destructive: Story = {
+  args: {
+    variant: "destructive",
+  },
+};
+
+export { Primary, Secondary, Outline, Ghost, Link, Destructive };
