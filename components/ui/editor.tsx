@@ -16,9 +16,10 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 
 interface EditorProps {
   onChange: (value: string) => void;
+  placeholder?: string;
 }
 
-export function Editor({ onChange }: EditorProps) {
+function Editor({ onChange, placeholder }: EditorProps) {
   return (
     <LexicalComposer
       initialConfig={{
@@ -43,9 +44,11 @@ export function Editor({ onChange }: EditorProps) {
             <ContentEditable className="prose min-h-[250px] w-full max-w-none rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50" />
           }
           placeholder={
-            <div className="absolute left-3 top-2 text-sm">
-              Enter some text...
-            </div>
+            placeholder ? (
+              <span className="pointer-events-none absolute left-3 top-2 select-none text-sm opacity-50">
+                {placeholder}
+              </span>
+            ) : null
           }
           ErrorBoundary={LexicalErrorBoundary}
         />
@@ -63,3 +66,5 @@ export function Editor({ onChange }: EditorProps) {
     </LexicalComposer>
   );
 }
+
+export { Editor, type EditorProps };
