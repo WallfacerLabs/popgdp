@@ -44,6 +44,7 @@ export default function PreviewApplication() {
 
       <ApplicationPreview
         application={{
+          ...applicationData,
           users: {
             image: session.user.image,
             name: session.user.name,

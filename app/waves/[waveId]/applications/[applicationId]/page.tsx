@@ -35,7 +35,23 @@ export default async function Application({ params }: { params: unknown }) {
         <Button className="px-16">Vote</Button>
       </div>
 
-      <ApplicationPreview application={application} />
+      <ApplicationPreview
+        application={{
+          users: application.users,
+          projectBudget: "1,025,000.00",
+          projectDuration: "3 months",
+          projectName: application.name,
+          projectEntity: "Wallfacer",
+          projectGoals: "To make the world a better place",
+          projectSummary: application.description,
+          projectIdea: "This is the best idea ever",
+          projectReason: "Because it's the best",
+          projectRequirements: "We need a lot of things",
+          projectState: "In progress",
+          teamSummary: "We are the best team",
+          tbd: "TBD",
+        }}
+      />
 
       <Separator className="my-16" />
 
