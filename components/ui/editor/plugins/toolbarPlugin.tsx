@@ -36,6 +36,7 @@ import { FormatUnderlineIcon } from "@/components/icons/formatUnderlineIcon";
 import { NumberListIcon } from "@/components/icons/numberListIcon";
 import { RedoArrowIcon } from "@/components/icons/redoArrowIcon";
 import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
+import { cn } from '@/lib/cn';
 
 const LowPriority = 1;
 
@@ -194,7 +195,7 @@ export default function ToolbarPlugin() {
         }}
         aria-label="Undo"
         variant="ghost"
-        className={formatButtonVariants()}
+        className={cn(formatButtonVariants(), 'ml-auto')}
       >
         <UndoArrowIcon className="h-4 w-4" />
       </Button>
