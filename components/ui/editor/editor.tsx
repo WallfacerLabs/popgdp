@@ -15,7 +15,7 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 
-import ToolbarPlugin from "./plugins/toolbarPlugin";
+import { ToolbarPlugin } from "./plugins/toolbarPlugin";
 
 interface EditorProps {
   onChange: (value: string) => void;

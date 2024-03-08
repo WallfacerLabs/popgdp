@@ -47,7 +47,7 @@ const formatButtonVariants = cva("h-6 w-6 p-0 rounded-sm transition-colors", {
   },
 });
 
-export default function ToolbarPlugin() {
+export const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);
   const [canUndo, setCanUndo] = useState(false);
@@ -241,4 +241,4 @@ export default function ToolbarPlugin() {
       </Button>
     </div>
   );
-}
+};
