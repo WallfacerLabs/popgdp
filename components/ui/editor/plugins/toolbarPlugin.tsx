@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
+import {
+  $isListNode,
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+  REMOVE_LIST_COMMAND,
+} from "@lexical/list";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { mergeRegister } from "@lexical/utils";
 import { cva } from "class-variance-authority";
@@ -8,6 +14,8 @@ import {
   $isRangeSelection,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
+  COMMAND_PRIORITY_HIGH,
+  createCommand,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   REDO_COMMAND,
@@ -17,6 +25,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { BulletListIcon } from "@/components/icons/bulletListIcon";
 import { FormatBoldIcon } from "@/components/icons/formatBoldIcon";
 import { FormatCenterIcon } from "@/components/icons/formatCenterIcon";
 import { FormatItalicIcon } from "@/components/icons/formatItalicIcon";
@@ -24,6 +33,7 @@ import { FormatJustifyIcon } from "@/components/icons/formatJustifyIcon";
 import { FormatLeftIcon } from "@/components/icons/formatLeftIcon";
 import { FormatRightIcon } from "@/components/icons/formatRightIcon";
 import { FormatUnderlineIcon } from "@/components/icons/formatUnderlineIcon";
+import { NumberListIcon } from "@/components/icons/numberListIcon";
 import { RedoArrowIcon } from "@/components/icons/redoArrowIcon";
 import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
 
@@ -32,7 +42,7 @@ const LowPriority = 1;
 const formatButtonVariants = cva("h-6 w-6 p-0 rounded-sm transition-colors", {
   variants: {
     active: {
-      true: "bg-primary text-background",
+      true: "bg-primary text-background hover:bg-primary/80 focus-visible:bg-primary/80 hover:text-background focus-visible:text-background",
       false: "bg-background text-primary",
     },
   },
@@ -172,6 +182,11 @@ export default function ToolbarPlugin() {
 
       <Separator orientation="vertical" className="mx-4 h-4" />
 
+      <ListFormat format="bullet" />
+      <ListFormat format="numbered" />
+
+      <Separator orientation="vertical" className="mx-4 h-4" />
+
       <Button
         disabled={!canUndo}
         onClick={() => {
@@ -197,3 +212,65 @@ export default function ToolbarPlugin() {
     </div>
   );
 }
+
+const FORMAT_LIST_COMMAND = createCommand<void>();
+
+interface FormatButtonProps {
+  format: "bullet" | "numbered";
+  isActive?: boolean;
+  disabled?: boolean;
+}
+
+export const ListFormat = ({
+  format,
+  isActive,
+  disabled,
+}: FormatButtonProps) => {
+  const [editor] = useLexicalComposerContext();
+  const isNumbered = format === "numbered";
+
+  useEffect(() => {
+    const unregister = editor.registerCommand(
+      FORMAT_LIST_COMMAND,
+      () => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          const anchorNode = selection.anchor.getNode();
+          const element =
+            anchorNode.getKey() === "root"
+              ? anchorNode
+              : anchorNode.getTopLevelElementOrThrow();
+          if (!$isListNode(element)) {
+            editor.dispatchCommand(
+              isNumbered
+                ? INSERT_ORDERED_LIST_COMMAND
+                : INSERT_UNORDERED_LIST_COMMAND,
+              undefined,
+            );
+          } else {
+            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+          }
+        }
+        return false;
+      },
+      COMMAND_PRIORITY_HIGH,
+    );
+    return unregister;
+  }, [editor, isNumbered]);
+
+  return (
+    <Button
+      onClick={() => editor.dispatchCommand(FORMAT_LIST_COMMAND, undefined)}
+      disabled={disabled}
+      aria-label={`Format ${isNumbered ? "numbered" : "bullet"} list`}
+      variant="ghost"
+      className={formatButtonVariants({ active: isActive })}
+    >
+      {isNumbered ? (
+        <NumberListIcon className="h-4 w-4" />
+      ) : (
+        <BulletListIcon className="h-4 w-4" />
+      )}
+    </Button>
+  );
+};
