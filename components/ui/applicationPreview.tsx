@@ -5,10 +5,11 @@ import { cn } from "@/lib/cn";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import projectPlaceholder from "@/app/images/projectPlaceholder.png";
+import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
 import { WldAmount } from "./wldAmount";
 
-interface Application {
+interface Application extends ApplicationData {
   users: {
     name: string | null | undefined;
     image: string | null | undefined;
@@ -42,29 +43,25 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
         <Separator />
 
         <ContentRow label="Entity name">
-          <span>Wallfacer</span>
+          <span>{application.projectEntity}</span>
         </ContentRow>
 
         <Separator />
 
         <ContentRow label="Proposed project duration">
-          <span>3 months</span>
+          <span>{application.projectDuration}</span>
         </ContentRow>
 
         <Separator />
 
         <ContentRow label="Proposed budget for wave">
-          <WldAmount amount="1,025,000.00" />
+          <WldAmount amount={application.projectBudget} />
         </ContentRow>
 
         <Separator />
 
         <ContentRow label="Project summary" vertical>
-          <span>
-            Work towards decentralized governance app for Worldcoin Grants using
-            Worldcoin ID, featuring forums, committees, and voting, ensuring
-            fair, sybil-proof engagement.
-          </span>
+          <span>{application.projectSummary}</span>
         </ContentRow>
       </div>
       <Image src={projectPlaceholder} alt="" />
