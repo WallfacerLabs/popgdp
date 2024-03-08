@@ -17,6 +17,15 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { FormatBoldIcon } from "@/components/icons/formatBoldIcon";
+import { FormatCenterIcon } from "@/components/icons/formatCenterIcon";
+import { FormatItalicIcon } from "@/components/icons/formatItalicIcon";
+import { FormatJustifyIcon } from "@/components/icons/formatJustifyIcon";
+import { FormatLeftIcon } from "@/components/icons/formatLeftIcon";
+import { FormatRightIcon } from "@/components/icons/formatRightIcon";
+import { FormatUnderlineIcon } from "@/components/icons/formatUnderlineIcon";
+import { RedoArrowIcon } from "@/components/icons/redoArrowIcon";
+import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
 
 const LowPriority = 1;
 
@@ -94,7 +103,7 @@ export default function ToolbarPlugin() {
         variant="ghost"
         className={formatButtonVariants({ active: isBold })}
       >
-        B
+        <FormatBoldIcon className="h-4 w-4" />
       </Button>
       <Button
         onClick={() => {
@@ -104,7 +113,7 @@ export default function ToolbarPlugin() {
         variant="ghost"
         className={formatButtonVariants({ active: isItalic })}
       >
-        I
+        <FormatItalicIcon className="h-4 w-4" />
       </Button>
       <Button
         onClick={() => {
@@ -114,10 +123,21 @@ export default function ToolbarPlugin() {
         variant="ghost"
         className={formatButtonVariants({ active: isUnderline })}
       >
-        U
+        <FormatUnderlineIcon className="h-4 w-4" />
       </Button>
 
       <Separator orientation="vertical" className="mx-4 h-4" />
+
+      <Button
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+        }}
+        aria-label="Left Align"
+        variant="ghost"
+        className={formatButtonVariants()}
+      >
+        <FormatLeftIcon className="h-4 w-4" />
+      </Button>
 
       <Button
         onClick={() => {
@@ -127,7 +147,7 @@ export default function ToolbarPlugin() {
         variant="ghost"
         className={formatButtonVariants()}
       >
-        C
+        <FormatCenterIcon className="h-4 w-4" />
       </Button>
       <Button
         onClick={() => {
@@ -137,7 +157,7 @@ export default function ToolbarPlugin() {
         variant="ghost"
         className={formatButtonVariants()}
       >
-        R
+        <FormatRightIcon className="h-4 w-4" />
       </Button>
       <Button
         onClick={() => {
@@ -147,7 +167,7 @@ export default function ToolbarPlugin() {
         variant="ghost"
         className={formatButtonVariants()}
       >
-        J
+        <FormatJustifyIcon className="h-4 w-4" />
       </Button>
 
       <Separator orientation="vertical" className="mx-4 h-4" />
@@ -161,7 +181,7 @@ export default function ToolbarPlugin() {
         variant="ghost"
         className={formatButtonVariants()}
       >
-        (
+        <UndoArrowIcon className="h-4 w-4" />
       </Button>
       <Button
         disabled={!canRedo}
@@ -172,7 +192,7 @@ export default function ToolbarPlugin() {
         variant="ghost"
         className={formatButtonVariants()}
       >
-        )
+        <RedoArrowIcon className="h-4 w-4" />
       </Button>
     </div>
   );
