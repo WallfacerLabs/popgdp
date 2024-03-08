@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import { Inter } from "next/font/google";
 import Link from "next/link";
 import { AxiomWebVitals } from "next-axiom";
 
@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { ProductIcon } from "@/components/icons/productIcon";
 import { Providers } from "@/app/providers";
 
-const fontSans = FontSans({
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -34,7 +34,7 @@ export default function RootLayout({
         <body
           className={cn(
             "flex min-h-screen flex-col items-center bg-background font-sans antialiased",
-            fontSans.variable,
+            inter.variable,
           )}
         >
           <header className="mx-auto flex w-full max-w-[1384px] items-center justify-between gap-8 p-3">
