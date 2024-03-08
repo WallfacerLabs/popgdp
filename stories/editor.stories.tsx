@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Editor, EditorProps } from "@/components/ui/editor";
+import { Editor, EditorProps } from "@/components/ui/editor/editor";
 
 const meta = {
   title: "UI/Editor",

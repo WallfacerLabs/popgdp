@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { useApplicationParams } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
-import { Editor } from "@/components/ui/editor";
+import { Editor } from "@/components/ui/editor/editor";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 
 import { addCommentAction } from "./addCommentAction";
