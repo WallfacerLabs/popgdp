@@ -16,7 +16,7 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 
 interface EditorProps {
   onChange: (value: string) => void;
-  placeholder?: string
+  placeholder?: string;
 }
 
 function Editor({ onChange, placeholder }: EditorProps) {
@@ -45,7 +45,7 @@ function Editor({ onChange, placeholder }: EditorProps) {
           }
           placeholder={
             placeholder ? (
-              <span className="absolute left-3 top-2 text-sm opacity-50 pointer-events-none select-none">
+              <span className="pointer-events-none absolute left-3 top-2 select-none text-sm opacity-50">
                 {placeholder}
               </span>
             ) : null
@@ -67,4 +67,4 @@ function Editor({ onChange, placeholder }: EditorProps) {
   );
 }
 
-export { Editor, type EditorProps }
+export { Editor, type EditorProps };
