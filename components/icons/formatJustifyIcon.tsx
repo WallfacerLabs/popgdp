@@ -9,7 +9,7 @@ export const FormatJustifyIcon = ({
   return (
     <svg
       className={cn("block", className)}
-      viewBox="0 0 24 24"
+      viewBox="0 -960 960 960"
       color="currentColor"
       {...props}
     >
