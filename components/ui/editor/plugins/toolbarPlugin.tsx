@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import * as React from "react";
 import {
-  $isListNode,
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
-  REMOVE_LIST_COMMAND,
+  insertList,
 } from "@lexical/list";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { mergeRegister } from "@lexical/utils";
@@ -14,8 +12,7 @@ import {
   $isRangeSelection,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
-  COMMAND_PRIORITY_HIGH,
-  createCommand,
+  COMMAND_PRIORITY_LOW,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   REDO_COMMAND,
@@ -23,6 +20,7 @@ import {
   UNDO_COMMAND,
 } from "lexical";
 
+import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { BulletListIcon } from "@/components/icons/bulletListIcon";
@@ -36,9 +34,6 @@ import { FormatUnderlineIcon } from "@/components/icons/formatUnderlineIcon";
 import { NumberListIcon } from "@/components/icons/numberListIcon";
 import { RedoArrowIcon } from "@/components/icons/redoArrowIcon";
 import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
-import { cn } from '@/lib/cn';
-
-const LowPriority = 1;
 
 const formatButtonVariants = cva("h-6 w-6 p-0 rounded-sm transition-colors", {
   variants: {
@@ -83,7 +78,23 @@ export default function ToolbarPlugin() {
           updateToolbar();
           return false;
         },
-        LowPriority,
+        COMMAND_PRIORITY_LOW,
+      ),
+      editor.registerCommand(
+        INSERT_UNORDERED_LIST_COMMAND,
+        () => {
+          insertList(editor, "bullet");
+          return true;
+        },
+        COMMAND_PRIORITY_LOW,
+      ),
+      editor.registerCommand(
+        INSERT_ORDERED_LIST_COMMAND,
+        () => {
+          insertList(editor, "number");
+          return true;
+        },
+        COMMAND_PRIORITY_LOW,
       ),
       editor.registerCommand(
         CAN_UNDO_COMMAND,
@@ -91,7 +102,7 @@ export default function ToolbarPlugin() {
           setCanUndo(payload);
           return false;
         },
-        LowPriority,
+        COMMAND_PRIORITY_LOW,
       ),
       editor.registerCommand(
         CAN_REDO_COMMAND,
@@ -99,7 +110,7 @@ export default function ToolbarPlugin() {
           setCanRedo(payload);
           return false;
         },
-        LowPriority,
+        COMMAND_PRIORITY_LOW,
       ),
     );
   }, [editor, updateToolbar]);
@@ -183,8 +194,26 @@ export default function ToolbarPlugin() {
 
       <Separator orientation="vertical" className="mx-4 h-4" />
 
-      <ListFormat format="bullet" />
-      <ListFormat format="numbered" />
+      <Button
+        onClick={() => {
+          editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+        }}
+        aria-label="Unordered List"
+        variant="ghost"
+        className={formatButtonVariants()}
+      >
+        <BulletListIcon className="h-4 w-4" />
+      </Button>
+      <Button
+        onClick={() => {
+          editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+        }}
+        aria-label="Ordered List"
+        variant="ghost"
+        className={formatButtonVariants()}
+      >
+        <NumberListIcon className="h-4 w-4" />
+      </Button>
 
       <Separator orientation="vertical" className="mx-4 h-4" />
 
@@ -195,7 +224,7 @@ export default function ToolbarPlugin() {
         }}
         aria-label="Undo"
         variant="ghost"
-        className={cn(formatButtonVariants(), 'ml-auto')}
+        className={cn(formatButtonVariants(), "ml-auto")}
       >
         <UndoArrowIcon className="h-4 w-4" />
       </Button>
@@ -213,65 +242,3 @@ export default function ToolbarPlugin() {
     </div>
   );
 }
-
-const FORMAT_LIST_COMMAND = createCommand<void>();
-
-interface FormatButtonProps {
-  format: "bullet" | "numbered";
-  isActive?: boolean;
-  disabled?: boolean;
-}
-
-export const ListFormat = ({
-  format,
-  isActive,
-  disabled,
-}: FormatButtonProps) => {
-  const [editor] = useLexicalComposerContext();
-  const isNumbered = format === "numbered";
-
-  useEffect(() => {
-    const unregister = editor.registerCommand(
-      FORMAT_LIST_COMMAND,
-      () => {
-        const selection = $getSelection();
-        if ($isRangeSelection(selection)) {
-          const anchorNode = selection.anchor.getNode();
-          const element =
-            anchorNode.getKey() === "root"
-              ? anchorNode
-              : anchorNode.getTopLevelElementOrThrow();
-          if (!$isListNode(element)) {
-            editor.dispatchCommand(
-              isNumbered
-                ? INSERT_ORDERED_LIST_COMMAND
-                : INSERT_UNORDERED_LIST_COMMAND,
-              undefined,
-            );
-          } else {
-            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
-          }
-        }
-        return false;
-      },
-      COMMAND_PRIORITY_HIGH,
-    );
-    return unregister;
-  }, [editor, isNumbered]);
-
-  return (
-    <Button
-      onClick={() => editor.dispatchCommand(FORMAT_LIST_COMMAND, undefined)}
-      disabled={disabled}
-      aria-label={`Format ${isNumbered ? "numbered" : "bullet"} list`}
-      variant="ghost"
-      className={formatButtonVariants({ active: isActive })}
-    >
-      {isNumbered ? (
-        <NumberListIcon className="h-4 w-4" />
-      ) : (
-        <BulletListIcon className="h-4 w-4" />
-      )}
-    </Button>
-  );
-};
