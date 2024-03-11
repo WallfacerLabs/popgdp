@@ -5,6 +5,7 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
@@ -12,6 +13,7 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 
 import { getInitialConfig } from "./config/editorConfig";
 import { ToolbarPlugin } from "./plugins/toolbarPlugin";
+import { AutoLinkPlugin } from './plugins/autoLinkPlugin';
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -40,6 +42,8 @@ function Editor({ onChange, placeholder }: EditorProps) {
         </div>
       </div>
       <HistoryPlugin />
+      <LinkPlugin />
+      <AutoLinkPlugin />
       <ListPlugin />
       <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
       <OnChangePlugin
