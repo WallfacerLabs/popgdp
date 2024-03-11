@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
-const mainDetailsSchema = z.object({
+export const mainDetailsSchema = z.object({
   projectName: z.string(),
   projectEntity: z.string(),
   projectDuration: z.string(),

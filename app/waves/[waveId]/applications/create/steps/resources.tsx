@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
-const resourcesSchema = z.object({
+export const resourcesSchema = z.object({
   tbd: z.string(),
 });
 export type resourcesSchema = z.infer<typeof resourcesSchema>;

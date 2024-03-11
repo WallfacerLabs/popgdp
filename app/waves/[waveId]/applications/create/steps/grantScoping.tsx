@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
-const grantScopingSchema = z.object({
+export const grantScopingSchema = z.object({
   projectIdea: z.string(),
   projectReason: z.string(),
   projectState: z.string(),
