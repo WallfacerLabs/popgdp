@@ -4,7 +4,7 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import projectPlaceholder from "@/app/images/projectPlaceholder.png";
+import projectPlaceholder from "@/app/images/projectPlaceholder.jpg";
 import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
 import { CampaignIcon } from "../icons/campaignIcon";
@@ -28,7 +28,7 @@ interface ApplicationPreviewProps {
 export function ApplicationPreview({ application }: ApplicationPreviewProps) {
   return (
     <div>
-      <div className="grid grid-cols-2 rounded-3xl border">
+      <div className="grid grid-cols-2 overflow-hidden rounded-3xl border">
         <div className="flex flex-col gap-6 p-10">
           <ContentRow label="User submitting">
             <div className="flex items-center gap-2">
@@ -70,7 +70,11 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
             {application.projectSummary}
           </ContentRow>
         </div>
-        <Image src={projectPlaceholder} alt="" />
+        <Image
+          src={projectPlaceholder}
+          alt=""
+          className="rounded-l-[inherit]"
+        />
       </div>
       <section className="mt-16">
         <Tabs
