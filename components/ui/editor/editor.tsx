@@ -1,20 +1,16 @@
 "use client";
 
-import { CodeNode } from "@lexical/code";
-import { LinkNode } from "@lexical/link";
-import { ListItemNode, ListNode } from "@lexical/list";
 import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 
+import { getInitialConfig } from "./config/editorConfig";
 import { ToolbarPlugin } from "./plugins/toolbarPlugin";
 
 interface EditorProps {
@@ -24,23 +20,7 @@ interface EditorProps {
 
 function Editor({ onChange, placeholder }: EditorProps) {
   return (
-    <LexicalComposer
-      initialConfig={{
-        namespace: "Editor",
-        onError(error) {
-          console.error(error);
-        },
-        nodes: [
-          HorizontalRuleNode,
-          CodeNode,
-          HeadingNode,
-          LinkNode,
-          ListNode,
-          ListItemNode,
-          QuoteNode,
-        ],
-      }}
-    >
+    <LexicalComposer initialConfig={getInitialConfig({ namespace: "Editor" })}>
       <div className="rounded-md border shadow-sm transition-colors focus-within:border-primary">
         <ToolbarPlugin />
         <div className="relative">
