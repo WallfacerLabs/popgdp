@@ -45,6 +45,9 @@ const config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        link: {
+          DEFAULT: "hsl(var(--link))",
+        },
         green: {
           DEFAULT: "hsl(var(--green))",
         },
