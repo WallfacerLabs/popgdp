@@ -5,15 +5,15 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
+import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 
 import { getInitialConfig } from "./config/editorConfig";
+import { AutoLinkPlugin } from "./plugins/autoLinkPlugin";
 import { ToolbarPlugin } from "./plugins/toolbarPlugin";
-import { AutoLinkPlugin } from './plugins/autoLinkPlugin';
 
 interface EditorProps {
   onChange: (value: string) => void;

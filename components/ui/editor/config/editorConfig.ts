@@ -25,7 +25,7 @@ export const getInitialConfig = ({
       ul: "list-disc",
       ol: "list-decimal",
     },
-    link: "text-link underline"
+    link: "text-link underline",
   },
   onError(error) {
     console.error(error);
