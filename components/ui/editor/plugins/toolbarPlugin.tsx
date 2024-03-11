@@ -1,17 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
   insertList,
 } from "@lexical/list";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { mergeRegister } from "@lexical/utils";
+import { $findMatchingParent, mergeRegister } from "@lexical/utils";
 import { cva } from "class-variance-authority";
 import {
   $getSelection,
   $isRangeSelection,
+  $isRootOrShadowRoot,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
+  COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_LOW,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
@@ -49,9 +51,11 @@ const formatButtonVariants = cva("h-6 w-6 p-0 rounded-sm transition-colors", {
 
 export const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
-  const toolbarRef = useRef(null);
+  const [activeEditor, setActiveEditor] = useState(editor);
+
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
+
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
@@ -59,6 +63,19 @@ export const ToolbarPlugin = () => {
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
+      const anchorNode = selection.anchor.getNode();
+      let element =
+        anchorNode.getKey() === "root"
+          ? anchorNode
+          : $findMatchingParent(anchorNode, (e) => {
+              const parent = e.getParent();
+              return parent !== null && $isRootOrShadowRoot(parent);
+            });
+
+      if (element === null) {
+        element = anchorNode.getTopLevelElementOrThrow();
+      }
+
       setIsBold(selection.hasFormat("bold"));
       setIsItalic(selection.hasFormat("italic"));
       setIsUnderline(selection.hasFormat("underline"));
@@ -67,7 +84,7 @@ export const ToolbarPlugin = () => {
 
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({ editorState }) => {
+      activeEditor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
           updateToolbar();
         });
@@ -76,9 +93,10 @@ export const ToolbarPlugin = () => {
         SELECTION_CHANGE_COMMAND,
         (_payload, newEditor) => {
           updateToolbar();
+          setActiveEditor(newEditor);
           return false;
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_CRITICAL,
       ),
       editor.registerCommand(
         INSERT_UNORDERED_LIST_COMMAND,
@@ -113,10 +131,10 @@ export const ToolbarPlugin = () => {
         COMMAND_PRIORITY_LOW,
       ),
     );
-  }, [editor, updateToolbar]);
+  }, [editor, activeEditor, updateToolbar]);
 
   return (
-    <div className="flex items-center gap-0.5 px-4 py-2" ref={toolbarRef}>
+    <div className="flex items-center gap-0.5 px-4 py-2">
       <Button
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
