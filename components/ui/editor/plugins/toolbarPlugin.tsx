@@ -32,7 +32,6 @@ import { FormatItalicIcon } from "@/components/icons/formatItalicIcon";
 import { FormatJustifyIcon } from "@/components/icons/formatJustifyIcon";
 import { FormatLeftIcon } from "@/components/icons/formatLeftIcon";
 import { FormatRightIcon } from "@/components/icons/formatRightIcon";
-import { FormatUnderlineIcon } from "@/components/icons/formatUnderlineIcon";
 import { NumberListIcon } from "@/components/icons/numberListIcon";
 import { RedoArrowIcon } from "@/components/icons/redoArrowIcon";
 import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
@@ -58,7 +57,6 @@ export const ToolbarPlugin = () => {
 
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
-  const [isUnderline, setIsUnderline] = useState(false);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -78,7 +76,6 @@ export const ToolbarPlugin = () => {
 
       setIsBold(selection.hasFormat("bold"));
       setIsItalic(selection.hasFormat("italic"));
-      setIsUnderline(selection.hasFormat("underline"));
     }
   }, []);
 
@@ -156,17 +153,6 @@ export const ToolbarPlugin = () => {
         className={formatButtonVariants({ active: isItalic })}
       >
         <FormatItalicIcon className="h-4 w-4" />
-      </Button>
-      <Button
-        type="button"
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-        }}
-        aria-label="Format Underline"
-        variant="ghost"
-        className={formatButtonVariants({ active: isUnderline })}
-      >
-        <FormatUnderlineIcon className="h-4 w-4" />
       </Button>
 
       <Separator orientation="vertical" className="mx-4 h-4" />
