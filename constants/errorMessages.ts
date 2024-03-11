@@ -8,4 +8,5 @@ export const errorMessages = {
   maxLength(fieldName: string, length: number) {
     return `${fieldName} must be at most ${length} characters long`;
   },
+  invalidUrl: "Invalid URL",
 };
