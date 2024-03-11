@@ -136,6 +136,7 @@ export const ToolbarPlugin = () => {
   return (
     <div className="flex items-center gap-0.5 px-4 py-2">
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
         }}
@@ -146,6 +147,7 @@ export const ToolbarPlugin = () => {
         <FormatBoldIcon className="h-4 w-4" />
       </Button>
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
         }}
@@ -156,6 +158,7 @@ export const ToolbarPlugin = () => {
         <FormatItalicIcon className="h-4 w-4" />
       </Button>
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
         }}
@@ -169,6 +172,7 @@ export const ToolbarPlugin = () => {
       <Separator orientation="vertical" className="mx-4 h-4" />
 
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
         }}
@@ -180,6 +184,7 @@ export const ToolbarPlugin = () => {
       </Button>
 
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
         }}
@@ -190,6 +195,7 @@ export const ToolbarPlugin = () => {
         <FormatCenterIcon className="h-4 w-4" />
       </Button>
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
         }}
@@ -200,6 +206,7 @@ export const ToolbarPlugin = () => {
         <FormatRightIcon className="h-4 w-4" />
       </Button>
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
         }}
@@ -213,6 +220,7 @@ export const ToolbarPlugin = () => {
       <Separator orientation="vertical" className="mx-4 h-4" />
 
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
         }}
@@ -223,6 +231,7 @@ export const ToolbarPlugin = () => {
         <BulletListIcon className="h-4 w-4" />
       </Button>
       <Button
+        type="button"
         onClick={() => {
           editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
         }}
@@ -236,6 +245,7 @@ export const ToolbarPlugin = () => {
       <Separator orientation="vertical" className="mx-4 h-4" />
 
       <Button
+        type="button"
         disabled={!canUndo}
         onClick={() => {
           editor.dispatchCommand(UNDO_COMMAND, undefined);
@@ -247,6 +257,7 @@ export const ToolbarPlugin = () => {
         <UndoArrowIcon className="h-4 w-4" />
       </Button>
       <Button
+        type="button"
         disabled={!canRedo}
         onClick={() => {
           editor.dispatchCommand(REDO_COMMAND, undefined);
