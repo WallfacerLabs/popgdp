@@ -7,25 +7,28 @@ import {
   type Dispatch,
   type ReactNode,
 } from "react";
+import { z } from "zod";
 
-import { type grantScopingSchema } from "./steps/grantScoping";
-import { type mainDetailsSchema } from "./steps/mainDetails";
-import { type resourcesSchema } from "./steps/resources";
-import { type roadmapSchema } from "./steps/roadmap";
-import { type teamInformationSchema } from "./steps/teamInformation";
+import { grantScopingSchema } from "./steps/grantScoping";
+import { mainDetailsSchema } from "./steps/mainDetails";
+import { resourcesSchema } from "./steps/resources";
+import { roadmapSchema } from "./steps/roadmap";
+import { teamInformationSchema } from "./steps/teamInformation";
 
 const LOCAL_STORAGE_KEY = "stepsState";
 
-export type ApplicationData = mainDetailsSchema &
-  teamInformationSchema &
-  grantScopingSchema &
-  roadmapSchema &
-  resourcesSchema;
+const applicationDataSchema = mainDetailsSchema
+  .merge(teamInformationSchema)
+  .merge(grantScopingSchema)
+  .merge(roadmapSchema)
+  .merge(resourcesSchema);
+export type ApplicationData = z.infer<typeof applicationDataSchema>;
 
-interface StepsState {
-  currentStep: number;
-  applicationData: ApplicationData;
-}
+const stepsStateSchema = z.object({
+  currentStep: z.number(),
+  applicationData: applicationDataSchema,
+});
+type StepsState = z.infer<typeof stepsStateSchema>;
 
 type StepsAction =
   | {
@@ -82,12 +85,12 @@ function localStorageStepsReducer(
   return newState;
 }
 
-function getInitialState(initialArgs: StepsState) {
+function getInitialState(initialArgs: StepsState): StepsState {
   if (typeof localStorage !== "undefined") {
     try {
       const localStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (localStorageValue) {
-        return JSON.parse(localStorageValue);
+        return stepsStateSchema.parse(JSON.parse(localStorageValue));
       }
     } catch (error) {
       console.error("Error reading from local storage", error);

@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
-const roadmapSchema = z.object({
+export const roadmapSchema = z.object({
   tbd: z.string(),
 });
 export type roadmapSchema = z.infer<typeof roadmapSchema>;

@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
-const teamInformationSchema = z.object({
+export const teamInformationSchema = z.object({
   teamSummary: z.string(),
 });
 export type teamInformationSchema = z.infer<typeof teamInformationSchema>;
