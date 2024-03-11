@@ -13,6 +13,7 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 
 import { getInitialConfig } from "./config/editorConfig";
 import { AutoLinkPlugin } from "./plugins/autoLinkPlugin";
+import { FloatingLinkEditorPlugin } from "./plugins/linkEditorPlugin";
 import { ToolbarPlugin } from "./plugins/toolbarPlugin";
 
 interface EditorProps {
@@ -45,6 +46,10 @@ function Editor({ onChange, placeholder }: EditorProps) {
       <LinkPlugin />
       <AutoLinkPlugin />
       <ListPlugin />
+      <FloatingLinkEditorPlugin
+        isLinkEditMode={isLinkEditMode}
+        setIsLinkEditMode={setIsLinkEditMode}
+      />
       <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
       <OnChangePlugin
         onChange={(editor) => {

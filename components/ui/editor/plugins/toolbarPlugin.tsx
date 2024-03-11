@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { TOGGLE_LINK_COMMAND } from "@lexical/link";
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -21,6 +22,7 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from "lexical";
+import { DotIcon } from "lucide-react";
 
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
@@ -36,17 +38,20 @@ import { NumberListIcon } from "@/components/icons/numberListIcon";
 import { RedoArrowIcon } from "@/components/icons/redoArrowIcon";
 import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
 
-const formatButtonVariants = cva("h-6 w-6 p-0 rounded-sm transition-colors", {
-  variants: {
-    active: {
-      true: "bg-primary text-background hover:bg-primary/80 focus-visible:bg-primary/80 hover:text-background focus-visible:text-background",
-      false: "bg-background text-primary",
+export const formatButtonVariants = cva(
+  "h-6 w-6 p-0 rounded-sm transition-colors",
+  {
+    variants: {
+      active: {
+        true: "bg-primary text-background hover:bg-primary/80 focus-visible:bg-primary/80 hover:text-background focus-visible:text-background",
+        false: "bg-background text-primary",
+      },
+    },
+    defaultVariants: {
+      active: false,
     },
   },
-  defaultVariants: {
-    active: false,
-  },
-});
+);
 
 export const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
@@ -57,6 +62,15 @@ export const ToolbarPlugin = () => {
 
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
+  const [isLink, setIsLink] = useState(false);
+
+  const insertLink = useCallback(() => {
+    if (!isLink) {
+      editor.dispatchCommand(TOGGLE_LINK_COMMAND, "https://");
+    } else {
+      editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+    }
+  }, [editor, isLink]);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -66,9 +80,9 @@ export const ToolbarPlugin = () => {
         anchorNode.getKey() === "root"
           ? anchorNode
           : $findMatchingParent(anchorNode, (e) => {
-              const parent = e.getParent();
-              return parent !== null && $isRootOrShadowRoot(parent);
-            });
+            const parent = e.getParent();
+            return parent !== null && $isRootOrShadowRoot(parent);
+          });
 
       if (element === null) {
         element = anchorNode.getTopLevelElementOrThrow();
@@ -153,6 +167,16 @@ export const ToolbarPlugin = () => {
         className={formatButtonVariants({ active: isItalic })}
       >
         <FormatItalicIcon className="h-4 w-4" />
+      </Button>
+
+      <Button
+        type="button"
+        onClick={insertLink}
+        aria-label="Insert link"
+        variant="ghost"
+        className={formatButtonVariants({ active: isLink })}
+      >
+        <DotIcon className="h-4 w-4" />
       </Button>
 
       <Separator orientation="vertical" className="mx-4 h-4" />
