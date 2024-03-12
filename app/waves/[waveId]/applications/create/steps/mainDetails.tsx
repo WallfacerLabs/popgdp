@@ -20,7 +20,7 @@ import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 import { uploadImage } from "./uploadImageAction";
 
 export const mainDetailsSchema = z.object({
-  projectImageId: z.string(),
+  projectImageId: z.string().optional(),
   projectName: z.string(),
   projectEntity: z.string(),
   projectDuration: z.string(),
