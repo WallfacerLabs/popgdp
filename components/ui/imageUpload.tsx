@@ -24,7 +24,7 @@ const imageUploadVariants = cva(
   },
 );
 
-export interface ImageUploadProps extends HTMLAttributes<HTMLInputElement> {
+interface ImageUploadProps extends HTMLAttributes<HTMLInputElement> {
   placeholder?: string;
 }
 
