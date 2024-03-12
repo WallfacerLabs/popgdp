@@ -23,6 +23,7 @@ import {
 } from "lexical";
 
 import { cn } from "@/lib/cn";
+import { getLinkNode } from "@/lib/getLinkNode";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { BulletListIcon } from "@/components/icons/bulletListIcon";
@@ -36,17 +37,22 @@ import { NumberListIcon } from "@/components/icons/numberListIcon";
 import { RedoArrowIcon } from "@/components/icons/redoArrowIcon";
 import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
 
-const formatButtonVariants = cva("h-6 w-6 p-0 rounded-sm transition-colors", {
-  variants: {
-    active: {
-      true: "bg-primary text-background hover:bg-primary/80 focus-visible:bg-primary/80 hover:text-background focus-visible:text-background",
-      false: "bg-background text-primary",
+import { LinkEditorPlugin } from "./linkEditorPlugin/linkEditorPlugin";
+
+export const formatButtonVariants = cva(
+  "h-6 w-6 p-0 rounded-sm transition-colors",
+  {
+    variants: {
+      active: {
+        true: "bg-primary text-background hover:bg-primary/80 focus-visible:bg-primary/80 hover:text-background focus-visible:text-background",
+        false: "bg-background text-primary",
+      },
+    },
+    defaultVariants: {
+      active: false,
     },
   },
-  defaultVariants: {
-    active: false,
-  },
-});
+);
 
 export const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
@@ -57,6 +63,7 @@ export const ToolbarPlugin = () => {
 
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
+  const [isLink, setIsLink] = useState(false);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -76,6 +83,9 @@ export const ToolbarPlugin = () => {
 
       setIsBold(selection.hasFormat("bold"));
       setIsItalic(selection.hasFormat("italic"));
+
+      const linkNode = getLinkNode(selection);
+      setIsLink(!!linkNode);
     }
   }, []);
 
@@ -154,6 +164,8 @@ export const ToolbarPlugin = () => {
       >
         <FormatItalicIcon className="h-4 w-4" />
       </Button>
+
+      <LinkEditorPlugin isLink={isLink} />
 
       <Separator orientation="vertical" className="mx-4 h-4" />
 
