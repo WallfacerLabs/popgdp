@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS "comment" (
 --> statement-breakpoint
 ALTER TABLE "application" DROP CONSTRAINT "application_waveId_wave_id_fk";
 --> statement-breakpoint
-ALTER TABLE "application" ADD COLUMN "description" text NOT NULL;--> statement-breakpoint
+ALTER TABLE "application" ADD COLUMN IF NOT EXISTS "description" text NOT NULL;--> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "application" ADD CONSTRAINT "application_waveId_wave_id_fk" FOREIGN KEY ("waveId") REFERENCES "wave"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
