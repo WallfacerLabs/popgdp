@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { PageTitle } from "@/components/ui/pageTitle";
 import {
   Popover,
   PopoverContent,
@@ -52,7 +53,7 @@ export default function CreateWave() {
           await createWaveAction(data);
         })}
       >
-        <div className="pb-2">Create new wave</div>
+        <PageTitle>Create new wave</PageTitle>
 
         <FormField
           control={form.control}

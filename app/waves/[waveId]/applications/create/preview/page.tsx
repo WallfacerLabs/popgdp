@@ -7,6 +7,7 @@ import { ApplicationPreview } from "@/components/ui/applicationPreview";
 import { BackButton } from "@/components/ui/backButton";
 import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PageTitle } from "@/components/ui/pageTitle";
 
 import { createApplicationAction } from "../steps/createApplicationAction";
 import { useStepsContext } from "../stepsProvider";
@@ -26,7 +27,7 @@ export default function PreviewApplication() {
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <BackButton href={`/waves/${waveId}/applications/create`} />
-          <h2 className="text-2xl font-bold">{applicationData.projectName}</h2>
+          <PageTitle>{applicationData.projectName}</PageTitle>
           <CategoryBadge>Category</CategoryBadge>
         </div>
         <div className="flex gap-4">
