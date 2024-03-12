@@ -17,8 +17,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
+import { uploadImage } from "./uploadImageAction";
 
 export const mainDetailsSchema = z.object({
+  projectImageId: z.string(),
   projectName: z.string(),
   projectEntity: z.string(),
   projectDuration: z.string(),
@@ -33,6 +35,7 @@ export function MainDetails() {
   const form = useForm<mainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
+      projectImageId: applicationData.projectImageId ?? "",
       projectName: applicationData.projectName ?? "",
       projectEntity: applicationData.projectEntity ?? "",
       projectDuration: applicationData.projectDuration ?? "",
@@ -50,6 +53,34 @@ export function MainDetails() {
           dispatch({ type: "INCREMENT_STEP" });
         })}
       >
+        <Input
+          type="file"
+          onChange={async (a) => {
+            const file = a.target.files?.[0];
+            if (file) {
+              const formData = new FormData();
+              formData.append("image", file);
+              const imageId = await uploadImage(formData);
+              form.setValue("projectImageId", String(imageId), {
+                shouldValidate: true,
+              });
+            }
+          }}
+        />
+
+        <FormField
+          control={form.control}
+          name="projectImageId"
+          render={({ field }) => (
+            <FormItem className="hidden">
+              <FormControl>
+                <Input {...field} type="hidden" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="projectName"
