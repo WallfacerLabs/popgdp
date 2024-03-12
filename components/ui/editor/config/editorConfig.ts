@@ -19,7 +19,6 @@ export const getInitialConfig = ({
     text: {
       bold: "font-bold",
       italic: "italic",
-      underline: "underline",
     },
     list: {
       ul: "list-disc",
