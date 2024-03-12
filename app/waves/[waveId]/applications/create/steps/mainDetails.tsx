@@ -13,6 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { ImageUpload } from "@/components/ui/imageUpload";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -53,10 +54,11 @@ export function MainDetails() {
           dispatch({ type: "INCREMENT_STEP" });
         })}
       >
-        <Input
-          type="file"
-          onChange={async (a) => {
-            const file = a.target.files?.[0];
+        <ImageUpload
+          imageId={form.watch("projectImageId")}
+          placeholder="Upload cover image"
+          onChange={async (event) => {
+            const file = event.target.files?.[0];
             if (file) {
               const formData = new FormData();
               formData.append("image", file);
