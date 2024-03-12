@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { TOGGLE_LINK_COMMAND } from "@lexical/link";
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -22,9 +21,9 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from "lexical";
-import { DotIcon } from "lucide-react";
 
 import { cn } from "@/lib/cn";
+import { getLinkNode } from "@/lib/getLinkNode";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { BulletListIcon } from "@/components/icons/bulletListIcon";
@@ -37,6 +36,8 @@ import { FormatRightIcon } from "@/components/icons/formatRightIcon";
 import { NumberListIcon } from "@/components/icons/numberListIcon";
 import { RedoArrowIcon } from "@/components/icons/redoArrowIcon";
 import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
+
+import { LinkEditorPlugin } from "./linkEditorPlugin/linkEditorPlugin";
 
 export const formatButtonVariants = cva(
   "h-6 w-6 p-0 rounded-sm transition-colors",
@@ -64,14 +65,6 @@ export const ToolbarPlugin = () => {
   const [isItalic, setIsItalic] = useState(false);
   const [isLink, setIsLink] = useState(false);
 
-  const insertLink = useCallback(() => {
-    if (!isLink) {
-      editor.dispatchCommand(TOGGLE_LINK_COMMAND, "https://");
-    } else {
-      editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
-    }
-  }, [editor, isLink]);
-
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -90,6 +83,9 @@ export const ToolbarPlugin = () => {
 
       setIsBold(selection.hasFormat("bold"));
       setIsItalic(selection.hasFormat("italic"));
+
+      const linkNode = getLinkNode(selection);
+      setIsLink(!!linkNode);
     }
   }, []);
 
@@ -169,15 +165,7 @@ export const ToolbarPlugin = () => {
         <FormatItalicIcon className="h-4 w-4" />
       </Button>
 
-      <Button
-        type="button"
-        onClick={insertLink}
-        aria-label="Insert link"
-        variant="ghost"
-        className={formatButtonVariants({ active: isLink })}
-      >
-        <DotIcon className="h-4 w-4" />
-      </Button>
+      <LinkEditorPlugin isLink={isLink} />
 
       <Separator orientation="vertical" className="mx-4 h-4" />
 
