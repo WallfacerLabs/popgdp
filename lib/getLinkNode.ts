@@ -1,7 +1,7 @@
 import { $isLinkNode, LinkNode } from "@lexical/link";
 import { $isRangeSelection, BaseSelection } from "lexical";
 
-export function $getLinkNode(selection: BaseSelection | null) {
+export function getLinkNode(selection: BaseSelection | null) {
   let linkNode: LinkNode | null = null;
   if ($isRangeSelection(selection)) {
     const anchorNode = selection.anchor.getNode();
