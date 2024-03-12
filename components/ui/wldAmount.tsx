@@ -1,4 +1,4 @@
-import { WorldcoinIcon } from "../icons/worldcoinIcon";
+import { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
 
 export function WldAmount({ amount }: { amount: string }) {
   return (
