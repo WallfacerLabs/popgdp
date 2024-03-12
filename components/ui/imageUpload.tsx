@@ -65,7 +65,7 @@ const Preview = ({ imageId }: Pick<ImageUploadProps, "imageId">) => {
       width={444}
       height={348}
       alt=""
-      className="radius-[inherit] h-full w-full object-cover p-0.5"
+      className="h-full w-full rounded-[inherit] object-cover p-0.5"
     />
   );
 };
