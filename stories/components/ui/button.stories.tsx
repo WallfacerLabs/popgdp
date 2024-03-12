@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>;
 
 const Primary: Story = {
   args: {
-    variant: "default",
+    variant: "primary",
   },
 };
 
