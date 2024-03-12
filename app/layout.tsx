@@ -38,16 +38,18 @@ export default function RootLayout({
           )}
         >
           <header className="mx-auto flex w-full max-w-[1384px] items-center justify-between gap-8 p-3">
-            <Button
-              variant="link"
-              className="flex items-center gap-4 p-0 text-base font-bold"
-              asChild
-            >
-              <Link href="/">
-                <ProductIcon className="h-10 w-10" aria-label="POPGDP logo" />
-                <h1 className="px-4">POPGDP</h1>
-              </Link>
-            </Button>
+            <label className="flex items-center gap-1.5">
+              <ProductIcon className="h-10 w-10" aria-label="POPGDP logo" />
+              <Button
+                variant="link"
+                className="font-bold before:bg-primary/0"
+                asChild
+              >
+                <Link href="/">
+                  <h1 className="px-4">POPGDP</h1>
+                </Link>
+              </Button>
+            </label>
             <AccountButton />
           </header>
 

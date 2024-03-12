@@ -148,7 +148,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
         }}
         aria-label="Format Bold"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants({ active: isBold })}
       >
         <FormatBoldIcon className="h-4 w-4" />
@@ -159,7 +159,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
         }}
         aria-label="Format Italics"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants({ active: isItalic })}
       >
         <FormatItalicIcon className="h-4 w-4" />
@@ -175,7 +175,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
         }}
         aria-label="Left Align"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants()}
       >
         <FormatLeftIcon className="h-4 w-4" />
@@ -187,7 +187,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
         }}
         aria-label="Center Align"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants()}
       >
         <FormatCenterIcon className="h-4 w-4" />
@@ -198,7 +198,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
         }}
         aria-label="Right Align"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants()}
       >
         <FormatRightIcon className="h-4 w-4" />
@@ -209,7 +209,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
         }}
         aria-label="Justify Align"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants()}
       >
         <FormatJustifyIcon className="h-4 w-4" />
@@ -223,7 +223,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
         }}
         aria-label="Unordered List"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants()}
       >
         <BulletListIcon className="h-4 w-4" />
@@ -234,7 +234,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
         }}
         aria-label="Ordered List"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants()}
       >
         <NumberListIcon className="h-4 w-4" />
@@ -249,7 +249,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(UNDO_COMMAND, undefined);
         }}
         aria-label="Undo"
-        variant="ghost"
+        variant="outline"
         className={cn(formatButtonVariants(), "ml-auto")}
       >
         <UndoArrowIcon className="h-4 w-4" />
@@ -261,7 +261,7 @@ export const ToolbarPlugin = () => {
           editor.dispatchCommand(REDO_COMMAND, undefined);
         }}
         aria-label="Redo"
-        variant="ghost"
+        variant="outline"
         className={formatButtonVariants()}
       >
         <RedoArrowIcon className="h-4 w-4" />
