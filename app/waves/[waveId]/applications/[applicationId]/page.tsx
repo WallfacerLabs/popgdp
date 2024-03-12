@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BackButton } from "@/components/ui/backButton";
 import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PageTitle } from "@/components/ui/pageTitle";
 import { Separator } from "@/components/ui/separator";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
@@ -29,7 +30,7 @@ export default async function Application({ params }: { params: unknown }) {
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <BackButton href={`/waves/${application.waveId}`} />
-          <h2 className="text-2xl font-bold">{application.name}</h2>
+          <PageTitle>{application.name}</PageTitle>
           <CategoryBadge>Category</CategoryBadge>
         </div>
         <Button className="px-16">Vote</Button>

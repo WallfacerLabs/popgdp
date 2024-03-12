@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PageTitle } from "@/components/ui/pageTitle";
 
 export default async function Home() {
   const waves = await getWaves();
@@ -17,7 +18,7 @@ export default async function Home() {
   return (
     <div className="flex w-full flex-col gap-4">
       <div className="flex justify-between">
-        <div className="text-2xl">Current waves</div>
+        <PageTitle>Current waves</PageTitle>
         <Button variant="secondary" asChild>
           <Link href="waves/create">Create wave</Link>
         </Button>

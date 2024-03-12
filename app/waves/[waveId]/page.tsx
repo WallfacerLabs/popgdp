@@ -8,6 +8,7 @@ import { parseWaveParams } from "@/lib/paramsValidation";
 import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { PageTitle } from "@/components/ui/pageTitle";
 import {
   Table,
   TableBody,
@@ -37,7 +38,7 @@ export default async function Wave({ params }: { params: unknown }) {
           POPGDP is <b>Proof of Personhood based Grant Distribution Platform</b>
           . In its first version it is designed to help Worldcoin Foundation
           review and distribute WLD grants to applicants by sourcing additional
-          “signal” from World ID holders. 
+          “signal” from World ID holders.
         </CardContent>
         <Image
           src={globeImage}
@@ -47,7 +48,7 @@ export default async function Wave({ params }: { params: unknown }) {
       </Card>
 
       <div className="mt-8 flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Submissions</h2>
+        <PageTitle>Submissions</PageTitle>
         <Button asChild>
           <Link href={`/waves/${waveId}/applications/create`}>
             Apply for Grant
