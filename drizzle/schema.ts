@@ -41,10 +41,10 @@ export const applications = pgTable("application", {
   description: text("description").notNull(),
   waveId: integer("waveId")
     .notNull()
-    .references(() => waves.id, {onDelete: 'cascade'}),
+    .references(() => waves.id, { onDelete: "cascade" }),
   userId: text("userId")
     .notNull()
-    .references(() => users.id, {onDelete: 'cascade'}),
+    .references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,
@@ -79,10 +79,10 @@ export const comments = pgTable("comment", {
   content: text("content").notNull(),
   applicationId: integer("applicationId")
     .notNull()
-    .references(() => applications.id, {onDelete: 'cascade'}),
+    .references(() => applications.id, { onDelete: "cascade" }),
   userId: text("userId")
     .notNull()
-    .references(() => users.id, {onDelete: 'cascade'}),
+    .references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,
