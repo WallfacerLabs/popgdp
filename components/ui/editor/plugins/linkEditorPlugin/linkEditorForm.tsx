@@ -78,7 +78,7 @@ export const LinkEditorForm = ({
         <div className="flex items-center gap-2">
           <PopoverClose asChild>
             <Button
-              variant="secondary"
+              variant="outline"
               type="button"
               onClick={() => editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)}
             >
