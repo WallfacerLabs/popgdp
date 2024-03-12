@@ -15,6 +15,13 @@
       "when": 1710238299128,
       "tag": "0001_strange_morph",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1710243011035,
+      "tag": "0002_goofy_captain_cross",
+      "breakpoints": true
     }
   ]
 }

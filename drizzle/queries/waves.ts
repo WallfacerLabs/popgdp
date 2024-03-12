@@ -1,8 +1,7 @@
 import { cache } from "react";
+import { db } from "@/drizzle/db";
+import { waves } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
-
-import { db } from "../db";
-import { waves } from "../schema";
 
 export const getWaves = cache(async () => db.query.waves.findMany());
 

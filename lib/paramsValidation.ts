@@ -32,3 +32,11 @@ export function parseApplicationParams(params: unknown) {
 export function useApplicationParams() {
   return parseApplicationParams(useParams());
 }
+
+const imageParamsSchema = z.object({
+  imageId: z.coerce.number(),
+});
+
+export function parseImageParams(params: unknown) {
+  return parseParams(imageParamsSchema, params);
+}

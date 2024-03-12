@@ -1,6 +1,7 @@
 import type { AdapterAccount } from "@auth/core/adapters";
 import { relations } from "drizzle-orm";
 import {
+  customType,
   integer,
   pgTable,
   primaryKey,
@@ -8,6 +9,12 @@ import {
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
+
+const bytea = customType<{ data: Buffer }>({
+  dataType() {
+    return "bytea";
+  },
+});
 
 export const waves = pgTable("wave", {
   id: serial("id").primaryKey(),
@@ -117,6 +124,26 @@ export const users = pgTable("user", {
     withTimezone: true,
   }),
   image: text("image"),
+  createdAt: timestamp("createdAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updatedAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
+export const images = pgTable("image", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  content: bytea("content").notNull(),
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,

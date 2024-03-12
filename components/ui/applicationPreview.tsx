@@ -70,11 +70,21 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
             {application.projectSummary}
           </ContentRow>
         </div>
-        <Image
-          src={projectPlaceholder}
-          alt=""
-          className="rounded-l-[inherit]"
-        />
+        {application.projectImageId ? (
+          <Image
+            src={`/api/images/${application.projectImageId}`}
+            width={1088}
+            height={984}
+            alt=""
+            className="rounded-l-[inherit]"
+          />
+        ) : (
+          <Image
+            src={projectPlaceholder}
+            alt=""
+            className="rounded-l-[inherit]"
+          />
+        )}
       </div>
       <section className="mt-16">
         <Tabs
