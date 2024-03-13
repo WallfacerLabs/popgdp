@@ -26,12 +26,9 @@ export const {
       issuer: "https://id.worldcoin.org",
       clientId: process.env.WLD_CLIENT_ID,
       clientSecret: process.env.WLD_CLIENT_SECRET,
-      profile(profile) {
+      profile() {
         return {
-          id: profile.sub,
-          name: profile.sub,
-          credentialType:
-            profile["https://id.worldcoin.org/v1"].credential_type,
+          id: "id",
         };
       },
     },
