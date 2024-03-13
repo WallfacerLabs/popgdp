@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { ChangeEventHandler, HTMLAttributes } from "react";
+import Image from "next/image";
 
-import { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/cn";
+import { Input } from "@/components/ui/input";
+import { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
 
 interface ImageUploadProps extends HTMLAttributes<HTMLInputElement> {
   placeholder?: string;
