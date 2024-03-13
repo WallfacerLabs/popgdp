@@ -16,6 +16,7 @@ import {
   Form,
   FormControl,
   FormField,
+  FormFooter,
   FormItem,
   FormLabel,
   FormMessage,
@@ -48,7 +49,7 @@ export function CreateWaveForm() {
   return (
     <Form {...form}>
       <form
-        className="flex w-full flex-col gap-4"
+        className="flex w-full flex-col gap-6"
         onSubmit={form.handleSubmit(async (data) => {
           await createWaveAction(data);
         })}
@@ -112,8 +113,9 @@ export function CreateWaveForm() {
             </FormItem>
           )}
         />
-
-        <Button disabled={form.formState.isSubmitting}>Create wave</Button>
+        <FormFooter className="justify-end">
+          <Button disabled={form.formState.isSubmitting}>Create wave</Button>
+        </FormFooter>
       </form>
     </Form>
   );

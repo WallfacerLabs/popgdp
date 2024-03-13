@@ -9,6 +9,7 @@ import {
   Form,
   FormControl,
   FormField,
+  FormFooter,
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
@@ -54,10 +55,9 @@ export function TeamInformation() {
           )}
         />
 
-        <div className="flex justify-between">
+        <FormFooter>
           <Button
             disabled={form.formState.isSubmitting}
-            className="mt-4 self-end px-16"
             variant="secondary"
             type="button"
             onClick={() => dispatch({ type: "DECREMENT_STEP" })}
@@ -68,12 +68,11 @@ export function TeamInformation() {
 
           <Button
             disabled={form.formState.isSubmitting}
-            className="mt-4 self-end px-16"
           >
             Next
             <ArrowIcon direction="right" className="h-4 w-4" />
           </Button>
-        </div>
+        </FormFooter>
       </form>
     </Form>
   );
