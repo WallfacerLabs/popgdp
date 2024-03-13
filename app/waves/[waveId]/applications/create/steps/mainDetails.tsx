@@ -21,12 +21,12 @@ import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 import { uploadImage } from "./uploadImageAction";
 
 export const mainDetailsSchema = z.object({
-  projectImageId: z.string().optional(),
-  projectName: z.string(),
-  projectEntity: z.string(),
-  projectDuration: z.string(),
-  projectBudget: z.string(),
-  projectSummary: z.string(),
+  imageId: z.string().optional(),
+  name: z.string(),
+  entityName: z.string(),
+  duration: z.string(),
+  budget: z.string(),
+  summary: z.string(),
 });
 export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
 
@@ -36,12 +36,12 @@ export function MainDetails() {
   const form = useForm<mainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
-      projectImageId: applicationData.projectImageId ?? "",
-      projectName: applicationData.projectName ?? "",
-      projectEntity: applicationData.projectEntity ?? "",
-      projectDuration: applicationData.projectDuration ?? "",
-      projectBudget: applicationData.projectBudget ?? "",
-      projectSummary: applicationData.projectSummary ?? "",
+      imageId: applicationData.imageId ?? "",
+      name: applicationData.name ?? "",
+      entityName: applicationData.entityName ?? "",
+      duration: applicationData.duration ?? "",
+      budget: applicationData.budget ?? "",
+      summary: applicationData.summary ?? "",
     } satisfies mainDetailsSchema,
   });
 
@@ -55,7 +55,7 @@ export function MainDetails() {
         })}
       >
         <ImageUpload
-          imageId={form.watch("projectImageId")}
+          imageId={form.watch("imageId")}
           placeholder="Upload cover image"
           onChange={async (event) => {
             const file = event.target.files?.[0];
@@ -63,7 +63,7 @@ export function MainDetails() {
               const formData = new FormData();
               formData.append("image", file);
               const imageId = await uploadImage(formData);
-              form.setValue("projectImageId", String(imageId), {
+              form.setValue("imageId", imageId, {
                 shouldValidate: true,
               });
             }
@@ -72,7 +72,7 @@ export function MainDetails() {
 
         <FormField
           control={form.control}
-          name="projectImageId"
+          name="imageId"
           render={({ field }) => (
             <FormItem className="hidden">
               <FormControl>
@@ -85,7 +85,7 @@ export function MainDetails() {
 
         <FormField
           control={form.control}
-          name="projectName"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Project name</FormLabel>
@@ -102,7 +102,7 @@ export function MainDetails() {
 
         <FormField
           control={form.control}
-          name="projectEntity"
+          name="entityName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Entity name</FormLabel>
@@ -119,7 +119,7 @@ export function MainDetails() {
 
         <FormField
           control={form.control}
-          name="projectDuration"
+          name="duration"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Proposed project duration</FormLabel>
@@ -136,7 +136,7 @@ export function MainDetails() {
 
         <FormField
           control={form.control}
-          name="projectBudget"
+          name="budget"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Proposed budget</FormLabel>
@@ -150,7 +150,7 @@ export function MainDetails() {
 
         <FormField
           control={form.control}
-          name="projectSummary"
+          name="summary"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Project summary</FormLabel>

@@ -7,10 +7,10 @@ import {
 } from "@/drizzle/queries/applicationValues";
 import { type Session } from "next-auth";
 
-interface UpvoteActionPayload {
+import { ApplicationParamsSchema } from "@/lib/paramsValidation";
+
+interface UpvoteActionPayload extends ApplicationParamsSchema {
   session: Session | null;
-  waveId: number;
-  applicationId: number;
   isUpvoted: boolean;
 }
 

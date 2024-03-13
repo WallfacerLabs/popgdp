@@ -10,7 +10,7 @@ import { auth } from "@/lib/auth";
 import { ApplicationData } from "../stepsProvider";
 
 export async function createApplicationAction(
-  data: ApplicationData,
+  application: ApplicationData,
   waveId: number,
 ) {
   const session = await auth();
@@ -20,23 +20,23 @@ export async function createApplicationAction(
   }
 
   await insertApplication({
-    name: data.projectName,
-    summary: data.projectSummary,
-    entityName: data.projectEntity,
-    duration: data.projectDuration,
-    budget: data.projectBudget,
+    name: application.name,
+    summary: application.summary,
+    entityName: application.entityName,
+    duration: application.duration,
+    budget: application.budget,
 
-    teamSummary: data.teamSummary,
+    teamSummary: application.teamSummary,
 
-    idea: data.projectIdea,
-    reason: data.projectReason,
-    state: data.projectState,
-    goals: data.projectGoals,
-    requirements: data.projectRequirements,
+    idea: application.idea,
+    reason: application.reason,
+    state: application.state,
+    goals: application.goals,
+    requirements: application.requirements,
 
-    tbd: data.tbd,
+    tbd: application.tbd,
 
-    imageId: data.projectImageId ? parseInt(data.projectImageId) : undefined,
+    imageId: application.imageId || undefined,
     waveId,
     userId: session.user.id,
   });

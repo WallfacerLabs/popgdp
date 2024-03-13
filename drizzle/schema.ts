@@ -9,6 +9,7 @@ import {
   serial,
   text,
   timestamp,
+  uuid,
 } from "drizzle-orm/pg-core";
 
 const bytea = customType<{ data: Buffer }>({
@@ -46,7 +47,7 @@ export const wavesRelations = relations(waves, ({ many }) => ({
 }));
 
 export const applications = pgTable("application", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
   summary: text("summary").notNull(),
   entityName: text("entityName").notNull(),
@@ -63,7 +64,7 @@ export const applications = pgTable("application", {
 
   tbd: text("tbd").notNull(),
 
-  imageId: integer("imageId").references(() => images.id, {
+  imageId: uuid("imageId").references(() => images.id, {
     onDelete: "cascade",
   }),
   waveId: integer("waveId")
@@ -102,9 +103,9 @@ export const applicationsRelations = relations(
 );
 
 export const comments = pgTable("comment", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   content: text("content").notNull(),
-  applicationId: integer("applicationId")
+  applicationId: uuid("applicationId")
     .notNull()
     .references(() => applications.id, { onDelete: "cascade" }),
   userId: text("userId")
@@ -138,7 +139,7 @@ export const commentsRelations = relations(comments, ({ one }) => ({
 export const applicationValues = pgTable(
   "applicationValue",
   {
-    applicationId: integer("applicationId")
+    applicationId: uuid("applicationId")
       .notNull()
       .references(() => applications.id, { onDelete: "cascade" }),
     userId: text("userId")
@@ -175,7 +176,7 @@ export const users = pgTable("user", {
 });
 
 export const images = pgTable("image", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),

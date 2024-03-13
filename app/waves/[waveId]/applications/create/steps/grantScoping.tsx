@@ -17,11 +17,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
 export const grantScopingSchema = z.object({
-  projectIdea: z.string(),
-  projectReason: z.string(),
-  projectState: z.string(),
-  projectGoals: z.string(),
-  projectRequirements: z.string(),
+  idea: z.string(),
+  reason: z.string(),
+  state: z.string(),
+  goals: z.string(),
+  requirements: z.string(),
 });
 export type grantScopingSchema = z.infer<typeof grantScopingSchema>;
 
@@ -31,11 +31,11 @@ export function GrantScoping() {
   const form = useForm<grantScopingSchema>({
     resolver: zodResolver(grantScopingSchema),
     defaultValues: {
-      projectIdea: applicationData.projectIdea ?? "",
-      projectReason: applicationData.projectReason ?? "",
-      projectState: applicationData.projectState ?? "",
-      projectGoals: applicationData.projectGoals ?? "",
-      projectRequirements: applicationData.projectRequirements ?? "",
+      idea: applicationData.idea ?? "",
+      reason: applicationData.reason ?? "",
+      state: applicationData.state ?? "",
+      goals: applicationData.goals ?? "",
+      requirements: applicationData.requirements ?? "",
     } satisfies grantScopingSchema,
   });
 
@@ -50,7 +50,7 @@ export function GrantScoping() {
       >
         <FormField
           control={form.control}
-          name="projectIdea"
+          name="idea"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Project idea</FormLabel>
@@ -63,7 +63,7 @@ export function GrantScoping() {
 
         <FormField
           control={form.control}
-          name="projectReason"
+          name="reason"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Why this & why now</FormLabel>
@@ -79,7 +79,7 @@ export function GrantScoping() {
 
         <FormField
           control={form.control}
-          name="projectState"
+          name="state"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Current state</FormLabel>
@@ -95,7 +95,7 @@ export function GrantScoping() {
 
         <FormField
           control={form.control}
-          name="projectGoals"
+          name="goals"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Project goals</FormLabel>
@@ -111,7 +111,7 @@ export function GrantScoping() {
 
         <FormField
           control={form.control}
-          name="projectRequirements"
+          name="requirements"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Requirements</FormLabel>

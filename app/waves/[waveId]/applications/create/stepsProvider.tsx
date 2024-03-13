@@ -92,9 +92,7 @@ function getInitialState(initialArgs: StepsState): StepsState {
       if (localStorageValue) {
         return stepsStateSchema.parse(JSON.parse(localStorageValue));
       }
-    } catch (error) {
-      console.error("Error reading from local storage", error);
-    }
+    } catch {}
   }
 
   return initialArgs;
