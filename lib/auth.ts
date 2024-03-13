@@ -18,6 +18,11 @@ export const {
       name: "Worldcoin",
       type: "oauth",
       wellKnown: "https://id.worldcoin.org/.well-known/openid-configuration",
+      authorization: {
+        params: {
+          scope: "openid",
+        },
+      },
       issuer: "https://id.worldcoin.org",
       clientId: process.env.WLD_CLIENT_ID,
       clientSecret: process.env.WLD_CLIENT_SECRET,
