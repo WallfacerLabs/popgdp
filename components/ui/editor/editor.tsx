@@ -23,7 +23,7 @@ interface EditorProps {
 function Editor({ onChange, placeholder }: EditorProps) {
   return (
     <LexicalComposer initialConfig={getInitialConfig({ namespace: "Editor" })}>
-      <div className="rounded-md border shadow-sm transition-colors focus-within:border-primary">
+      <div className="rounded-3xl border shadow-sm transition-colors focus-within:border-primary">
         <ToolbarPlugin />
         <div className="relative">
           <RichTextPlugin

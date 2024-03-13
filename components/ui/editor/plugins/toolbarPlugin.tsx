@@ -39,7 +39,7 @@ import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
 import { LinkEditorPlugin } from "./linkEditorPlugin/linkEditorPlugin";
 
 export const formatButtonVariants = cva(
-  "h-6 w-6 p-0 rounded-sm transition-colors border-transparent",
+  "h-6 w-6 p-0 rounded transition-colors border-transparent",
   {
     variants: {
       active: {
