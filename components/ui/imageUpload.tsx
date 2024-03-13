@@ -6,10 +6,10 @@ import { Input } from "@/components/ui/input";
 import { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
 
 interface ImageUploadProps extends HTMLAttributes<HTMLInputElement> {
-  placeholder?: string;
+  placeholder: string;
   disabled?: boolean;
   imageId: string | undefined;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const ImageUpload = ({
