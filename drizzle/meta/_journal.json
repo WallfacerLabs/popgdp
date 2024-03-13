@@ -29,6 +29,13 @@
       "when": 1710323308778,
       "tag": "0003_handy_nehzno",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1710336671089,
+      "tag": "0004_wide_vivisector",
+      "breakpoints": true
     }
   ]
 }

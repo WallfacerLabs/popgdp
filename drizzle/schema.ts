@@ -48,7 +48,24 @@ export const wavesRelations = relations(waves, ({ many }) => ({
 export const applications = pgTable("application", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  description: text("description").notNull(),
+  summary: text("summary").notNull(),
+  entityName: text("entityName").notNull(),
+  duration: text("duration").notNull(),
+  budget: text("budget").notNull(),
+
+  teamSummary: text("teamSummary").notNull(),
+
+  idea: text("idea").notNull(),
+  reason: text("reason").notNull(),
+  state: text("state").notNull(),
+  goals: text("goals").notNull(),
+  requirements: text("requirements").notNull(),
+
+  tbd: text("tbd").notNull(),
+
+  imageId: integer("imageId").references(() => images.id, {
+    onDelete: "cascade",
+  }),
   waveId: integer("waveId")
     .notNull()
     .references(() => waves.id, { onDelete: "cascade" }),
