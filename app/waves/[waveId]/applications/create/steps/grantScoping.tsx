@@ -13,6 +13,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { ArrowIcon } from "@/components/icons/arrowIcon";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
@@ -133,6 +134,7 @@ export function GrantScoping() {
             type="button"
             onClick={() => dispatch({ type: "DECREMENT_STEP" })}
           >
+            <ArrowIcon direction="left" className="h-4 w-4" />
             Back
           </Button>
 
@@ -141,6 +143,7 @@ export function GrantScoping() {
             className="mt-4 self-end px-16"
           >
             Next
+            <ArrowIcon direction="right" className="h-4 w-4" />
           </Button>
         </div>
       </form>

@@ -16,6 +16,7 @@ import {
 import { ImageUpload } from "@/components/ui/imageUpload";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ArrowIcon } from "@/components/icons/arrowIcon";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 import { uploadImage } from "./uploadImageAction";
@@ -166,6 +167,7 @@ export function MainDetails() {
           className="mt-4 self-end px-16"
         >
           Next
+          <ArrowIcon direction="right" className="h-4 w-4" />
         </Button>
       </form>
     </Form>
