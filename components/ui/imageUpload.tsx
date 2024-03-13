@@ -1,19 +1,22 @@
 import { ChangeEventHandler, HTMLAttributes } from "react";
+import Image from "next/image";
 
 import { cn } from "@/lib/cn";
 import { Input } from "@/components/ui/input";
 import { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
 
 interface ImageUploadProps extends HTMLAttributes<HTMLInputElement> {
-  placeholder?: string;
+  placeholder: string;
   disabled?: boolean;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  imageId: string | undefined;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const ImageUpload = ({
   className,
   placeholder,
   disabled,
+  imageId,
   onChange,
 }: ImageUploadProps) => {
   return (
@@ -25,11 +28,10 @@ export const ImageUpload = ({
         className,
       )}
     >
-      <UploadCloudIcon className="h-6 w-6 text-border transition-colors group-[&:has(input:focus):not(:has(input:disabled))]:text-primary group-[&:hover:not(:has(input:disabled))]:text-primary" />
-      {placeholder && (
-        <span className="text-sm font-bold group-[&:has(input:disabled)]:opacity-50">
-          {placeholder}
-        </span>
+      {imageId ? (
+        <Preview imageId={imageId} />
+      ) : (
+        <Placeholder placeholder={placeholder} />
       )}
       <Input
         type="file"
@@ -38,5 +40,32 @@ export const ImageUpload = ({
         className="-z-1 disabled:opacity:0 absolute h-0 w-0 overflow-hidden border-0 p-0 opacity-0"
       />
     </label>
+  );
+};
+
+const Placeholder = ({
+  placeholder,
+}: Pick<ImageUploadProps, "placeholder">) => {
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+      <UploadCloudIcon className="h-6 w-6 text-border transition-colors group-[&:has(input:focus):not(:has(input:disabled))]:text-primary group-[&:hover:not(:has(input:disabled))]:text-primary" />
+      {placeholder && (
+        <span className="text-sm font-bold group-[&:has(input:disabled)]:opacity-50">
+          {placeholder}
+        </span>
+      )}
+    </div>
+  );
+};
+
+const Preview = ({ imageId }: Pick<ImageUploadProps, "imageId">) => {
+  return (
+    <Image
+      src={`/api/images/${imageId}`}
+      width={444}
+      height={348}
+      alt=""
+      className="h-full w-full rounded-[inherit] object-cover p-0.5"
+    />
   );
 };
