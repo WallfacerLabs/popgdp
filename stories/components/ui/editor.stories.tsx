@@ -14,12 +14,13 @@ type Story = StoryObj<typeof meta>;
 const EditorStory: Story = {
   args: {
     placeholder: "Enter your text here...",
+    clear: false,
   },
   render: (args: EditorProps) => {
     const [markdown, setMarkdown] = useState<string>("");
     return (
       <div className="flex flex-col gap-4">
-        <Editor onChange={setMarkdown} placeholder={args.placeholder} />
+        <Editor {...args} onChange={setMarkdown} />
         <div>
           <h3>Markdown output:</h3>
           {markdown.split("\n").map((line, i) => (
