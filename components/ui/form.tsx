@@ -172,6 +172,22 @@ const FormMessage = forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
+const FormFooter = ({
+  className,
+  children,
+}: HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "mt-4 flex flex-wrap justify-between gap-x-6 gap-y-4",
+      "[&>button]:basis-40",
+      className,
+    )}
+  >
+    {children}
+  </div>
+);
+FormFooter.displayName = "FormFooter";
+
 export {
   useFormField,
   Form,
@@ -181,4 +197,5 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  FormFooter,
 };
