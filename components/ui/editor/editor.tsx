@@ -1,6 +1,8 @@
 "use client";
 
+import { ComponentProps } from "react";
 import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
+import { ClearEditorPlugin } from "@lexical/react/LexicalClearEditorPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -13,14 +15,16 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 
 import { getInitialConfig } from "./config/editorConfig";
 import { AutoLinkPlugin } from "./plugins/autoLinkPlugin";
+import { ClearEditorOnSubmitPlugin } from "./plugins/ClearEditorOnSubmitPlugin";
 import { ToolbarPlugin } from "./plugins/toolbarPlugin";
 
 interface EditorProps {
+  clear: ComponentProps<typeof ClearEditorOnSubmitPlugin>["clear"];
   onChange: (value: string) => void;
   placeholder?: string;
 }
 
-function Editor({ onChange, placeholder }: EditorProps) {
+function Editor({ clear, onChange, placeholder }: EditorProps) {
   return (
     <LexicalComposer initialConfig={getInitialConfig({ namespace: "Editor" })}>
       <div className="rounded-3xl border shadow-sm transition-colors focus-within:border-primary">
@@ -54,6 +58,8 @@ function Editor({ onChange, placeholder }: EditorProps) {
           });
         }}
       />
+      <ClearEditorPlugin />
+      <ClearEditorOnSubmitPlugin clear={clear} />
     </LexicalComposer>
   );
 }
