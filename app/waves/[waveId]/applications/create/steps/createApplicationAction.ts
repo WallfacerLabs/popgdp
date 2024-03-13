@@ -21,7 +21,22 @@ export async function createApplicationAction(
 
   await insertApplication({
     name: data.projectName,
-    description: data.projectSummary,
+    summary: data.projectSummary,
+    entityName: data.projectEntity,
+    duration: data.projectDuration,
+    budget: data.projectBudget,
+
+    teamSummary: data.teamSummary,
+
+    idea: data.projectIdea,
+    reason: data.projectReason,
+    state: data.projectState,
+    goals: data.projectGoals,
+    requirements: data.projectRequirements,
+
+    tbd: data.tbd,
+
+    imageId: data.projectImageId ? parseInt(data.projectImageId) : undefined,
     waveId,
     userId: session.user.id,
   });

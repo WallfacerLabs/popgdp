@@ -39,18 +39,19 @@ export default async function Application({ params }: { params: unknown }) {
       <ApplicationPreview
         application={{
           users: application.users,
-          projectBudget: "1,025,000.00",
-          projectDuration: "3 months",
+          projectBudget: application.budget,
+          projectDuration: application.duration,
           projectName: application.name,
-          projectEntity: "Wallfacer",
-          projectGoals: "To make the world a better place",
-          projectSummary: application.description,
-          projectIdea: "This is the best idea ever",
-          projectReason: "Because it's the best",
-          projectRequirements: "We need a lot of things",
-          projectState: "In progress",
-          teamSummary: "We are the best team",
-          tbd: "TBD",
+          projectEntity: application.entityName,
+          projectGoals: application.goals,
+          projectSummary: application.summary,
+          projectIdea: application.idea,
+          projectReason: application.reason,
+          projectRequirements: application.requirements,
+          projectState: application.state,
+          projectImageId: String(application.imageId),
+          teamSummary: application.teamSummary,
+          tbd: application.tbd,
         }}
       />
 
