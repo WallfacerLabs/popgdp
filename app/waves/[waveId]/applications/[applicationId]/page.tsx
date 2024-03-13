@@ -64,7 +64,7 @@ export default async function Application({ params }: { params: unknown }) {
         </div>
 
         {application.comments.map((comment, i) => (
-          <div className="flex items-center gap-4" key={comment.id}>
+          <div className="flex gap-3" key={comment.id}>
             <Avatar>
               <AvatarFallback />
 
@@ -78,13 +78,15 @@ export default async function Application({ params }: { params: unknown }) {
               />
             </Avatar>
 
-            <div className="flex w-full flex-col justify-between">
+            <div className="flex w-full flex-col justify-between gap-1">
+              <span className="text-sm font-bold">
+                {application.users.name}
+              </span>
+
               <div
                 className="prose prose-sm max-w-none"
                 dangerouslySetInnerHTML={{ __html: commentsHtml[i] }}
               />
-
-              <div className="text-sm font-bold">{application.users.name}</div>
             </div>
           </div>
         ))}
