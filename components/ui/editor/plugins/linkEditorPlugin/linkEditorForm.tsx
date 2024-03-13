@@ -8,6 +8,7 @@ import {
   Form,
   FormControl,
   FormField,
+  FormFooter,
   FormItem,
   FormLabel,
   FormMessage,
@@ -75,7 +76,7 @@ export const LinkEditorForm = ({
           )}
         />
 
-        <div className="flex items-center gap-2">
+        <FormFooter className="mt-0 gap-x-2 gap-y-2 [&>button]:grow [&>button]:basis-auto">
           <PopoverClose asChild>
             <Button
               variant="outline"
@@ -86,7 +87,7 @@ export const LinkEditorForm = ({
             </Button>
           </PopoverClose>
           <Button>Apply</Button>
-        </div>
+        </FormFooter>
       </form>
     </Form>
   );
