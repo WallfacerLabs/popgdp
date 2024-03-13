@@ -14,6 +14,7 @@ import {
   FormFooter,
   FormItem,
 } from "@/components/ui/form";
+import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
 import { addCommentAction } from "./addCommentAction";
 import { addCommentSchema } from "./addCommentSchema";
@@ -31,7 +32,6 @@ export function AddCommentForm() {
 
   return (
     <Form {...form}>
-      <h2>Add new comment</h2>
       <form
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(async (data) => {
@@ -52,7 +52,14 @@ export function AddCommentForm() {
           )}
         />
         <FormFooter className="mt-0">
-          <Button disabled={form.formState.isSubmitting}>Add comment</Button>
+          <Button
+            variant="secondary"
+            className="self-end"
+            disabled={form.formState.isSubmitting}
+          >
+            Add comment
+            <AddCommentIcon className="h-4 w-4" />
+          </Button>
         </FormFooter>
       </form>
     </Form>
