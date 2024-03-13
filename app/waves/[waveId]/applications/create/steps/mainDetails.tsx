@@ -9,6 +9,7 @@ import {
   Form,
   FormControl,
   FormField,
+  FormFooter,
   FormItem,
   FormLabel,
   FormMessage,
@@ -162,13 +163,15 @@ export function MainDetails() {
           )}
         />
 
-        <Button
-          disabled={form.formState.isSubmitting}
-          className="mt-4 self-end px-16"
-        >
-          Next
-          <ArrowIcon direction="right" className="h-4 w-4" />
-        </Button>
+        <FormFooter>
+          <Button
+            disabled={form.formState.isSubmitting}
+            className="justify-end"
+          >
+            Next
+            <ArrowIcon direction="right" className="h-4 w-4" />
+          </Button>
+        </FormFooter>
       </form>
     </Form>
   );
