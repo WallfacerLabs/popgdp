@@ -5,22 +5,21 @@ import {
   deleteApplicationValue,
   insertApplicationValue,
 } from "@/drizzle/queries/applicationValues";
-
-import { auth } from "@/lib/auth";
+import { type Session } from "next-auth";
 
 interface UpvoteActionPayload {
+  session: Session | null;
   waveId: number;
   applicationId: number;
   isUpvoted: boolean;
 }
 
 export async function upvoteAction({
+  session,
   applicationId,
   waveId,
   isUpvoted,
 }: UpvoteActionPayload) {
-  const session = await auth();
-
   if (!session?.user?.id) {
     throw new Error("Unauthorized");
   }

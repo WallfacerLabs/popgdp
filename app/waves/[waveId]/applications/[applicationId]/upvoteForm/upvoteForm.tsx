@@ -23,7 +23,7 @@ export async function UpvoteForm({ applicationId, waveId }: UpvoteFormProps) {
     <form
       action={async () => {
         "use server";
-        await upvoteAction({ applicationId, waveId, isUpvoted });
+        await upvoteAction({ session, applicationId, waveId, isUpvoted });
       }}
     >
       <Button
