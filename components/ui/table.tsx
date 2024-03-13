@@ -14,7 +14,7 @@ const Table = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     <div
       ref={ref}
       className={cn(
-        "relative table w-full caption-bottom overflow-auto rounded-lg border text-xs",
+        "relative table w-full caption-bottom overflow-auto rounded-2xl border text-xs",
         className,
       )}
       {...props}
