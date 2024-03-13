@@ -5,13 +5,12 @@ import { UnauthenticatedError } from "@/constants/errors";
 import { insertComment } from "@/drizzle/queries/comments";
 
 import { auth } from "@/lib/auth";
+import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 import { addCommentSchema } from "./addCommentSchema";
 
-interface AddCommentActionPayload {
+interface AddCommentActionPayload extends ApplicationParamsSchema {
   data: addCommentSchema;
-  applicationId: number;
-  waveId: number;
 }
 
 export async function addCommentAction({

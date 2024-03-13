@@ -3,8 +3,13 @@ import { db } from "@/drizzle/db";
 import { applicationValues } from "@/drizzle/schema";
 import { and, eq } from "drizzle-orm";
 
+type ApplicationValueQuery = {
+  applicationId: (typeof applicationValues.$inferSelect)["applicationId"];
+  userId: (typeof applicationValues.$inferSelect)["userId"] | undefined;
+};
+
 export const getApplicationValue = cache(
-  async (query: { applicationId: number; userId: string | undefined }) => {
+  async (query: ApplicationValueQuery) => {
     if (!query.userId) {
       return undefined;
     }

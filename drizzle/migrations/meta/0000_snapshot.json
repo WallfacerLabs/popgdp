@@ -1,6 +1,6 @@
 {
-  "id": "d7358c40-7e6d-4c41-9cd7-f677dad17f61",
-  "prevId": "1ab083de-2621-45af-b913-10cbb7691fff",
+  "id": "86927b63-5106-4e97-aa02-446dec771817",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -108,7 +108,7 @@
       "columns": {
         "applicationId": {
           "name": "applicationId",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -171,9 +171,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
@@ -249,7 +250,7 @@
         },
         "imageId": {
           "name": "imageId",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
@@ -331,9 +332,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "content": {
           "name": "content",
@@ -343,7 +345,7 @@
         },
         "applicationId": {
           "name": "applicationId",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -406,9 +408,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "userId": {
           "name": "userId",

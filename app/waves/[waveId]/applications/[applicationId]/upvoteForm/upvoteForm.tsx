@@ -1,14 +1,12 @@
 import { getApplicationValue } from "@/drizzle/queries/applicationValues";
 
 import { auth } from "@/lib/auth";
+import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 
 import { upvoteAction } from "./upvoteAction";
 
-interface UpvoteFormProps {
-  applicationId: number;
-  waveId: number;
-}
+type UpvoteFormProps = ApplicationParamsSchema;
 
 export async function UpvoteForm({ applicationId, waveId }: UpvoteFormProps) {
   const session = await auth();

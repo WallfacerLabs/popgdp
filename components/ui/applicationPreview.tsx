@@ -48,31 +48,29 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
 
           <Separator />
 
-          <ContentRow label="Entity name">
-            {application.projectEntity}
-          </ContentRow>
+          <ContentRow label="Entity name">{application.entityName}</ContentRow>
 
           <Separator />
 
           <ContentRow label="Proposed project duration">
-            {application.projectDuration}
+            {application.duration}
           </ContentRow>
 
           <Separator />
 
           <ContentRow label="Proposed budget for wave">
-            <WldAmount amount={application.projectBudget} />
+            <WldAmount amount={application.budget} />
           </ContentRow>
 
           <Separator />
 
           <ContentRow label="Project summary" vertical>
-            {application.projectSummary}
+            {application.summary}
           </ContentRow>
         </div>
-        {application.projectImageId ? (
+        {application.imageId ? (
           <Image
-            src={`/api/images/${application.projectImageId}`}
+            src={`/api/images/${application.imageId}`}
             width={1088}
             height={984}
             alt=""
@@ -111,16 +109,16 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
           </TabContainer>
           <TabContainer index={1}>
             <ContentRow label="Project idea:" vertical>
-              {application.projectIdea}
+              {application.idea}
             </ContentRow>
             <ContentRow label="Why this & why now:" vertical>
-              {application.projectReason}
+              {application.reason}
             </ContentRow>
             <ContentRow label="Project goals:" vertical>
-              {application.projectGoals}
+              {application.goals}
             </ContentRow>
             <ContentRow label="Project requirements:" vertical>
-              {application.projectRequirements}
+              {application.requirements}
             </ContentRow>
           </TabContainer>
           <TabContainer index={2}>

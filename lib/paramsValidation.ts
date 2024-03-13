@@ -22,8 +22,10 @@ export function useWaveParams() {
 }
 
 const applicationParamsSchema = waveParamsSchema.extend({
-  applicationId: z.coerce.number(),
+  applicationId: z.string(),
 });
+
+export type ApplicationParamsSchema = z.infer<typeof applicationParamsSchema>;
 
 export function parseApplicationParams(params: unknown) {
   return parseParams(applicationParamsSchema, params);
@@ -34,7 +36,7 @@ export function useApplicationParams() {
 }
 
 const imageParamsSchema = z.object({
-  imageId: z.coerce.number(),
+  imageId: z.string(),
 });
 
 export function parseImageParams(params: unknown) {

@@ -8,6 +8,7 @@ import { BackButton } from "@/components/ui/backButton";
 import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
+import { Unauthenticated } from "@/components/ui/unauthenticated";
 
 import { createApplicationAction } from "../steps/createApplicationAction";
 import { useStepsContext } from "../stepsProvider";
@@ -19,7 +20,7 @@ export default function PreviewApplication() {
   const { applicationData } = useStepsContext();
 
   if (!session?.user) {
-    return null;
+    return <Unauthenticated />;
   }
 
   return (
@@ -27,7 +28,7 @@ export default function PreviewApplication() {
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <BackButton href={`/waves/${waveId}/applications/create`} />
-          <PageTitle>{applicationData.projectName}</PageTitle>
+          <PageTitle>{applicationData.name}</PageTitle>
           <CategoryBadge>Category</CategoryBadge>
         </div>
         <div className="flex gap-4">
