@@ -6,7 +6,20 @@ test.beforeEach(async () => {
   await db.delete(waves);
 });
 
-test("creates a new wave", async ({ page }) => {
+test("cannot access page if not authenticated", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("link", { name: "Create wave" }).click();
+
+  await expect(page.getByText("Unauthenticated")).toBeVisible();
+});
+
+test("creates a new wave", async ({ browser }) => {
+  const context = await browser.newContext({
+    storageState: "./tests/e2e/.auth/member.json",
+  });
+  const page = await context.newPage();
+
   await page.goto("/");
 
   await page.getByRole("link", { name: "Create wave" }).click();

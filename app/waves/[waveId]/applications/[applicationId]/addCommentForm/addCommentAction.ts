@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { UnauthenticatedError } from "@/constants/errors";
 import { insertComment } from "@/drizzle/queries/comments";
 
 import { auth } from "@/lib/auth";
@@ -15,7 +16,7 @@ export async function addCommentAction(
   const session = await auth();
 
   if (!session?.user?.id) {
-    throw new Error("unauthenticated");
+    throw new UnauthenticatedError();
   }
 
   await insertComment({

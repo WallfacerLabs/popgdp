@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { UnauthenticatedError } from "@/constants/errors";
 import { insertApplication } from "@/drizzle/queries/applications";
 
 import { auth } from "@/lib/auth";
@@ -15,7 +16,7 @@ export async function createApplicationAction(
   const session = await auth();
 
   if (!session?.user?.id) {
-    throw new Error("unauthenticated");
+    throw new UnauthenticatedError();
   }
 
   await insertApplication({
