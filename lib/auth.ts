@@ -31,7 +31,7 @@ export const {
           id: profile.sub,
           name: profile.sub,
           credentialType:
-            profile["https://id.worldcoin.org/beta"].credential_type,
+            profile["https://id.worldcoin.org/v1"].credential_type,
         };
       },
     },
