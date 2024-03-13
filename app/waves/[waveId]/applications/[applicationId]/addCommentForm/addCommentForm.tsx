@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -13,6 +14,7 @@ import { addCommentSchema } from "./addCommentSchema";
 
 export function AddCommentForm() {
   const { waveId, applicationId } = useApplicationParams();
+  const [clearEditor, setClearEditor] = useState<boolean>(false);
 
   const form = useForm<addCommentSchema>({
     resolver: zodResolver(addCommentSchema),
@@ -27,7 +29,10 @@ export function AddCommentForm() {
       <form
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(async (data) => {
+          setClearEditor(true);
           await addCommentAction({ data, waveId, applicationId });
+          setClearEditor(false);
+          form.reset();
         })}
       >
         <FormField
@@ -36,7 +41,7 @@ export function AddCommentForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Editor onChange={field.onChange} />
+                <Editor onChange={field.onChange} clear={clearEditor} />
               </FormControl>
             </FormItem>
           )}
