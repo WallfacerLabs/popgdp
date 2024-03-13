@@ -10,7 +10,7 @@ export const {
   auth,
   handlers: { GET, POST },
 } = NextAuth({
-  adapter: DrizzleAdapter(db),
+  // adapter: DrizzleAdapter(db),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,
