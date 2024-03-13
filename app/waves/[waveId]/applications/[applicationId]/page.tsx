@@ -7,14 +7,14 @@ import { ApplicationPreview } from "@/components/ui/applicationPreview";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BackButton } from "@/components/ui/backButton";
 import { CategoryBadge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { Separator } from "@/components/ui/separator";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
+import { UpvoteForm } from "./upvoteForm/upvoteForm";
 
 export default async function Application({ params }: { params: unknown }) {
-  const { applicationId } = parseApplicationParams(params);
+  const { applicationId, waveId } = parseApplicationParams(params);
   const application = await getApplicationWithComments(applicationId);
 
   if (!application) {
@@ -33,7 +33,7 @@ export default async function Application({ params }: { params: unknown }) {
           <PageTitle>{application.name}</PageTitle>
           <CategoryBadge>Category</CategoryBadge>
         </div>
-        <Button className="px-16">Vote</Button>
+        <UpvoteForm applicationId={applicationId} waveId={waveId} />
       </div>
 
       <ApplicationPreview
