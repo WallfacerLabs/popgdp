@@ -8,11 +8,17 @@ import { auth } from "@/lib/auth";
 
 import { addCommentSchema } from "./addCommentSchema";
 
-export async function addCommentAction(
-  data: addCommentSchema,
-  applicationId: number,
-  waveId: number,
-) {
+interface AddCommentActionPayload {
+  data: addCommentSchema;
+  applicationId: number;
+  waveId: number;
+}
+
+export async function addCommentAction({
+  data,
+  applicationId,
+  waveId,
+}: AddCommentActionPayload) {
   const session = await auth();
 
   if (!session?.user?.id) {

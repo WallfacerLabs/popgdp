@@ -27,7 +27,7 @@ export function AddCommentForm() {
       <form
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(async (data) => {
-          await addCommentAction(data, waveId, applicationId);
+          await addCommentAction({ data, waveId, applicationId });
         })}
       >
         <FormField
