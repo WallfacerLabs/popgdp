@@ -66,9 +66,7 @@ export function TeamInformation() {
             Back
           </Button>
 
-          <Button
-            disabled={form.formState.isSubmitting}
-          >
+          <Button disabled={form.formState.isSubmitting}>
             Next
             <ArrowIcon direction="right" className="h-4 w-4" />
           </Button>
