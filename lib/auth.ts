@@ -21,7 +21,11 @@ export const {
       type: "oauth",
       wellKnown: "https://id.worldcoin.org/.well-known/openid-configuration",
       authorization: {
-        params: { scope: "openid", url: "https://id.worldcoin.org/authorize" },
+        params: {
+          scope: "openid",
+          url: "https://id.worldcoin.org/authorize",
+          response_type: "id_token",
+        },
       },
       issuer: "https://id.worldcoin.org",
       clientId: process.env.WLD_CLIENT_ID,
