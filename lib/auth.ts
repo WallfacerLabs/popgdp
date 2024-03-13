@@ -1,6 +1,7 @@
 import { db } from "@/drizzle/db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
+import x from "next-auth/providers/azure-ad-b2c";
 import GithubProvider from "next-auth/providers/github";
 
 export const {
@@ -20,21 +21,9 @@ export const {
       name: "Worldcoin",
       type: "oauth",
       wellKnown: "https://id.worldcoin.org/.well-known/openid-configuration",
-      authorization: {
-        params: {
-          scope: "openid",
-          url: "https://id.worldcoin.org/authorize",
-          response_type: "id_token",
-        },
-      },
       issuer: "https://id.worldcoin.org",
       clientId: process.env.WLD_CLIENT_ID,
       clientSecret: process.env.WLD_CLIENT_SECRET,
-      profile() {
-        return {
-          id: "id",
-        };
-      },
     },
   ],
   secret: process.env.NEXTAUTH_SECRET,
