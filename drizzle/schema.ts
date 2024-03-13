@@ -3,6 +3,7 @@ import { relations } from "drizzle-orm";
 import {
   customType,
   integer,
+  pgEnum,
   pgTable,
   primaryKey,
   serial,
@@ -15,6 +16,8 @@ const bytea = customType<{ data: Buffer }>({
     return "bytea";
   },
 });
+
+export const contentValueEnum = pgEnum("contentValue", ["positive"]);
 
 export const waves = pgTable("wave", {
   id: serial("id").primaryKey(),
@@ -114,6 +117,22 @@ export const commentsRelations = relations(comments, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export const applicationValues = pgTable(
+  "applicationValue",
+  {
+    applicationId: integer("applicationId")
+      .notNull()
+      .references(() => applications.id, { onDelete: "cascade" }),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    value: contentValueEnum("value").notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.applicationId, table.userId] }),
+  }),
+);
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
