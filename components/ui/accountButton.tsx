@@ -30,7 +30,7 @@ export function AccountButton() {
   }
 
   return (
-    <Button className="w-24" onClick={() => signIn("github")}>
+    <Button className="w-24" onClick={() => signIn("worldcoin")}>
       Sign in
     </Button>
   );
