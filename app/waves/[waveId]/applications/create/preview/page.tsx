@@ -31,7 +31,7 @@ export default function PreviewApplication() {
           <CategoryBadge>Category</CategoryBadge>
         </div>
         <div className="flex gap-4">
-          <Button variant="outline">Save as draft</Button>
+          <Button variant="secondary">Save as draft</Button>
           <Button
             className="px-14"
             onClick={async () => {

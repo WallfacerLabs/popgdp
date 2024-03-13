@@ -28,22 +28,10 @@ const Outline: Story = {
   },
 };
 
-const Ghost: Story = {
-  args: {
-    variant: "ghost",
-  },
-};
-
 const Link: Story = {
   args: {
     variant: "link",
   },
 };
 
-const Destructive: Story = {
-  args: {
-    variant: "destructive",
-  },
-};
-
-export { Primary, Secondary, Outline, Ghost, Link, Destructive };
+export { Primary, Secondary, Outline, Link };

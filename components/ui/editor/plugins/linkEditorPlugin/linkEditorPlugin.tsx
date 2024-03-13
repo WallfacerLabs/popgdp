@@ -105,7 +105,7 @@ export const LinkEditorPlugin = ({ isLink }: LinkEditorPluginProps) => {
             editor.dispatchCommand(OPEN_LINK_EDITOR_COMMAND, undefined)
           }
           aria-label="Insert link"
-          variant="ghost"
+          variant="outline"
           className={formatButtonVariants({ active: isLink })}
         >
           <LinkIcon className="h-4 w-4" />

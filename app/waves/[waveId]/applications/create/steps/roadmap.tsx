@@ -57,7 +57,7 @@ export function Roadmap() {
           <Button
             disabled={form.formState.isSubmitting}
             className="mt-4 self-end px-16"
-            variant="outline"
+            variant="secondary"
             type="button"
             onClick={() => dispatch({ type: "DECREMENT_STEP" })}
           >
