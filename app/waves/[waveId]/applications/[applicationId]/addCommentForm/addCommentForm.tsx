@@ -13,6 +13,7 @@ import {
   FormField,
   FormFooter,
   FormItem,
+  FormMessage,
 } from "@/components/ui/form";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
@@ -48,6 +49,7 @@ export function AddCommentForm() {
               <FormControl>
                 <Editor onChange={field.onChange} key={editorKey} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
