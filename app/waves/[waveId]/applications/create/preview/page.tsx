@@ -11,14 +11,14 @@ import { PageTitle } from "@/components/ui/pageTitle";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
 import { createApplicationAction } from "../steps/createApplicationAction";
-import { useStepsContext } from "../stepsProvider";
+import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
 export default function PreviewApplication() {
   const { waveId } = useWaveParams();
   const { data: session } = useSession();
 
   const { applicationData } = useStepsContext();
-
+  const dispatch = useStepsDispatchContext();
   if (!session?.user) {
     return <Unauthenticated />;
   }
@@ -37,6 +37,7 @@ export default function PreviewApplication() {
             className="px-14"
             onClick={async () => {
               await createApplicationAction(applicationData, waveId);
+              dispatch({ type: "RESET_STEPS" });
             }}
           >
             Submit

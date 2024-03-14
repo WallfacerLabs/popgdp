@@ -45,7 +45,6 @@ export function Resources() {
         onSubmit={form.handleSubmit(async (payload) => {
           dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
           router.push(`/waves/${waveId}/applications/create/preview`);
-          dispatch({ type: "RESET_STEPS" });
         })}
       >
         <FormField
