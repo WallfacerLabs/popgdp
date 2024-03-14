@@ -99,8 +99,33 @@ export const applicationsRelations = relations(
       references: [users.id],
     }),
     comments: many(comments),
+    members: many(members),
   }),
 );
+
+export const members = pgTable("member", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  applicationId: uuid("applicationId")
+    .notNull()
+    .references(() => applications.id, { onDelete: "cascade" }),
+  imageId: uuid("imageId").references(() => images.id, {
+    onDelete: "cascade",
+  }),
+  name: text("name").notNull(),
+  position: text("position").notNull(),
+  createdAt: timestamp("createdAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updatedAt", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
 
 export const comments = pgTable("comment", {
   id: uuid("id").defaultRandom().primaryKey(),
