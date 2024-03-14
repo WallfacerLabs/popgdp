@@ -40,6 +40,9 @@ type StepsAction =
   | {
       type: "UPDATE_APPLICATION_DATA";
       payload: Partial<ApplicationData>;
+    }
+  | {
+      type: "RESET_STEPS";
     };
 
 function stepsReducer(state: StepsState, action: StepsAction): StepsState {
@@ -64,6 +67,9 @@ function stepsReducer(state: StepsState, action: StepsAction): StepsState {
         ...state,
         currentStep: state.currentStep - 1,
       };
+    }
+    case "RESET_STEPS": {
+      return initialStepsState;
     }
   }
 }
@@ -98,10 +104,12 @@ function getInitialState(initialArgs: StepsState): StepsState {
   return initialArgs;
 }
 
-const StepsContext = createContext<StepsState>({
+const initialStepsState: StepsState = {
   currentStep: 0,
   applicationData: {} as ApplicationData,
-});
+};
+
+const StepsContext = createContext<StepsState>(initialStepsState);
 
 const StepsDispatchContext = createContext<Dispatch<StepsAction>>(
   null as any as Dispatch<StepsAction>,
@@ -110,7 +118,7 @@ const StepsDispatchContext = createContext<Dispatch<StepsAction>>(
 export function StepsContextProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(
     localStorageStepsReducer,
-    { currentStep: 0, applicationData: {} as ApplicationData },
+    initialStepsState,
     getInitialState,
   );
 
