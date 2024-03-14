@@ -35,6 +35,7 @@ export const ImageUpload = ({
       )}
       <Input
         type="file"
+        accept="image/*"
         disabled={disabled}
         onChange={onChange}
         className="-z-1 disabled:opacity:0 absolute h-0 w-0 overflow-hidden border-0 p-0 opacity-0"
