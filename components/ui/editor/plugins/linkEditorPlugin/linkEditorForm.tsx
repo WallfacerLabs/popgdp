@@ -35,8 +35,8 @@ export const LinkEditorForm = ({
   const form = useForm<EditorLinkSchemaType>({
     resolver: zodResolver(editorLinkSchema),
     defaultValues: {
-      linkText: initialLinkText,
-      linkUrl: initialLinkUrl,
+      linkText: initialLinkText ?? "",
+      linkUrl: initialLinkUrl ?? "",
     },
   });
 
@@ -44,9 +44,12 @@ export const LinkEditorForm = ({
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-4"
-        onSubmit={form.handleSubmit(({ linkText, linkUrl }) => {
-          editor.dispatchCommand(command, { linkText, linkUrl });
-        })}
+        onSubmit={(event) => {
+          form.handleSubmit(({ linkText, linkUrl }) => {
+            editor.dispatchCommand(command, { linkText, linkUrl });
+          })(event);
+          event.stopPropagation();
+        }}
       >
         <FormField
           control={form.control}
