@@ -5,11 +5,15 @@ import { cn } from "@/lib/cn";
 import { Input } from "@/components/ui/input";
 import { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
 
+import { TrashIcon } from "../icons/trashIcon";
+import { Button } from "./button";
+
 interface ImageUploadProps extends HTMLAttributes<HTMLInputElement> {
   placeholder: string;
   disabled?: boolean;
   imageId: string | undefined;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  onRemove?: () => void;
 }
 
 export const ImageUpload = ({
@@ -18,29 +22,46 @@ export const ImageUpload = ({
   disabled,
   imageId,
   onChange,
+  onRemove,
 }: ImageUploadProps) => {
   return (
-    <label
+    <div
       className={cn(
-        "group relative flex h-full max-h-44 min-h-44 w-full max-w-56 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl border border-dashed text-center transition-colors",
+        "group relative flex h-full max-h-44 min-h-44 w-full max-w-56 flex-col items-center justify-center gap-2 rounded-3xl border border-dashed text-center transition-colors",
         "[&:has(input:focus):not(:has(input:disabled))]:border-primary [&:hover:not(:has(input:disabled))]:border-primary",
-        "[&:has(input:disabled)]:cursor-not-allowed [&:has(input:disabled)]:opacity-50",
+        "[&:has(input:disabled)]:opacity-50",
         className,
       )}
     >
-      {imageId ? (
-        <Preview imageId={imageId} />
-      ) : (
-        <Placeholder placeholder={placeholder} />
+      <label
+        className={cn(
+          "h-full w-full cursor-pointer rounded-[inherit] [&:has(input:disabled)]:cursor-not-allowed",
+          className,
+        )}
+      >
+        {imageId ? (
+          <Preview imageId={imageId} />
+        ) : (
+          <Placeholder placeholder={placeholder} />
+        )}
+        <Input
+          type="file"
+          disabled={disabled}
+          onChange={onChange}
+          className="-z-1 disabled:opacity:0 absolute h-0 w-0 overflow-hidden border-0 p-0 opacity-0"
+        />
+      </label>
+      {imageId && (
+        <Button
+          type="button"
+          variant="outline"
+          className="absolute bottom-2 right-2 h-6 w-6 p-0"
+          onClick={onRemove}
+        >
+          <TrashIcon className="h-4 w-4" />
+        </Button>
       )}
-      <Input
-        type="file"
-        accept="image/*"
-        disabled={disabled}
-        onChange={onChange}
-        className="-z-1 disabled:opacity:0 absolute h-0 w-0 overflow-hidden border-0 p-0 opacity-0"
-      />
-    </label>
+    </div>
   );
 };
 
