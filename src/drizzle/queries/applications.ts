@@ -29,6 +29,10 @@ export const getApplicationWithComments = cache(
   },
 );
 
+export type ApplicationWithComments = NonNullable<
+  Awaited<ReturnType<typeof getApplicationWithComments>>
+>;
+
 export function insertApplication(data: typeof applications.$inferInsert) {
   return db.insert(applications).values(data);
 }

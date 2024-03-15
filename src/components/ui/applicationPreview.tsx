@@ -3,7 +3,6 @@ import Image from "next/image";
 import projectPlaceholder from "@/images/projectPlaceholder.jpg";
 
 import { cn } from "@/lib/cn";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { CampaignIcon } from "@/components/icons/campaignIcon";
 import { ClockIcon } from "@/components/icons/clockIcon";
@@ -12,6 +11,7 @@ import { TeamIcon } from "@/components/icons/teamIcon";
 import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
+import { UserAvatar } from "./userAvatar";
 import { WldAmount } from "./wldAmount";
 
 interface Application extends ApplicationData {
@@ -32,13 +32,10 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
         <div className="flex flex-col gap-6 p-10">
           <ContentRow label="User submitting">
             <div className="flex items-center gap-2">
-              <Avatar>
-                <AvatarFallback />
-                <AvatarImage
-                  src={application.users.image || undefined}
-                  alt={`${application.users.name} avatar`}
-                />
-              </Avatar>
+              <UserAvatar
+                name={application.users.name}
+                image={application.users.image}
+              />
               <div className="flex flex-col">
                 <span className="font-bold">{application.users.name}</span>
                 <span className="text-xs text-gray-600">Member</span>
