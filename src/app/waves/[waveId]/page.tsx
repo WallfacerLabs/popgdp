@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
+import globeImage from "@/images/globe.png";
 
 import { formatDate } from "@/lib/dates";
 import { parseWaveParams } from "@/lib/paramsValidation";
@@ -19,7 +20,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { WldAmount } from "@/components/ui/wldAmount";
-import globeImage from "@/app/images/globe.png";
 
 export default async function Wave({ params }: { params: unknown }) {
   const { waveId } = parseWaveParams(params);
