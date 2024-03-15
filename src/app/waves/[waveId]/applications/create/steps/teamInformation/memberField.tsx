@@ -18,14 +18,12 @@ import { teamInformationSchema } from "./teamInformation";
 
 interface MemberFieldProps {
   form: UseFormReturn<teamInformationSchema>;
-  id: string;
   index: number;
   appendMember: UseFieldArrayAppend<teamInformationSchema>;
 }
 
 export const MemberField = ({
   form,
-  id,
   index,
   appendMember,
 }: MemberFieldProps) => {
@@ -53,7 +51,7 @@ export const MemberField = ({
   }
 
   return (
-    <li key={id} className="flex items-end gap-4">
+    <li className="flex items-end gap-4">
       <AvatarUpload
         ref={avatarUploadRef}
         imageId={form.watch(`members.${index}.imageId`)}

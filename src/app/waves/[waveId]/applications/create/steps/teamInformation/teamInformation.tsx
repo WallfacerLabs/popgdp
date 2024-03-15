@@ -87,7 +87,6 @@ export function TeamInformation() {
                 <MemberField
                   key={field.id}
                   form={form}
-                  id={field.id}
                   index={index}
                   appendMember={appendMember}
                 />
