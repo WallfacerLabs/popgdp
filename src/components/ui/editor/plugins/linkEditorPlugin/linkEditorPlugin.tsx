@@ -12,8 +12,8 @@ import {
   LexicalCommand,
 } from "lexical";
 
-import { getLinkNode } from "@/lib/getLinkNode";
 import { Button } from "@/components/ui/button";
+import { getLinkNode } from "@/components/ui/editor/utils/getLinkNode";
 import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { LinkIcon } from "@/components/icons/linkIcon";
 

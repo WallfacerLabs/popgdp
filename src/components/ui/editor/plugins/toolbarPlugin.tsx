@@ -22,8 +22,8 @@ import {
   UNDO_COMMAND,
 } from "lexical";
 
-import { getLinkNode } from "@/lib/getLinkNode";
 import { Button, ButtonProps } from "@/components/ui/button";
+import { getLinkNode } from "@/components/ui/editor/utils/getLinkNode";
 import { Separator } from "@/components/ui/separator";
 import { BulletListIcon } from "@/components/icons/bulletListIcon";
 import { FormatBoldIcon } from "@/components/icons/formatBoldIcon";
