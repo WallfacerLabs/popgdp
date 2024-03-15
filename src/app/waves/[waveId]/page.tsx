@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
 import globeImage from "@/images/globe.png";
+import { z } from "zod";
 
 import { formatDate } from "@/lib/dates";
 import { parseWaveParams } from "@/lib/paramsValidation";
@@ -10,6 +11,7 @@ import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { PageTitle } from "@/components/ui/pageTitle";
+import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import {
   Table,
   TableBody,
@@ -21,14 +23,35 @@ import {
 } from "@/components/ui/table";
 import { WldAmount } from "@/components/ui/wldAmount";
 
-export default async function Wave({ params }: { params: unknown }) {
+const PAGE_SIZE = 10;
+
+const searchParamsSchema = z.object({
+  page: z.coerce.number().optional().default(1),
+});
+
+export default async function Wave({
+  params,
+  searchParams,
+}: {
+  params: unknown;
+  searchParams: unknown;
+}) {
   const { waveId } = parseWaveParams(params);
+  const { page } = searchParamsSchema.parse(searchParams);
 
   const wave = await getWaveWithApplications(waveId);
 
   if (!wave) {
     return notFound();
   }
+
+  const applicationsCount = wave.applications.length;
+  const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
+
+  const currentPageApplications = wave.applications.slice(
+    (page - 1) * PAGE_SIZE,
+    page * PAGE_SIZE,
+  );
 
   return (
     <>
@@ -68,7 +91,7 @@ export default async function Wave({ params }: { params: unknown }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {wave.applications.map((project) => (
+          {currentPageApplications.map((project) => (
             <TableLinkRow
               key={project.id}
               href={`/waves/${waveId}/applications/${project.id}`}
@@ -87,6 +110,8 @@ export default async function Wave({ params }: { params: unknown }) {
           ))}
         </TableBody>
       </Table>
+
+      <TablePagination currentPage={page} totalPages={totalPages} />
     </>
   );
 }
