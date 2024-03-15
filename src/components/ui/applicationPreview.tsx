@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import Image from "next/image";
+import projectPlaceholder from "@/images/projectPlaceholder.jpg";
 
 import { cn } from "@/lib/cn";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -8,7 +9,6 @@ import { CampaignIcon } from "@/components/icons/campaignIcon";
 import { ClockIcon } from "@/components/icons/clockIcon";
 import { CloudIcon } from "@/components/icons/cloudIcon";
 import { TeamIcon } from "@/components/icons/teamIcon";
-import projectPlaceholder from "@/app/images/projectPlaceholder.jpg";
 import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
