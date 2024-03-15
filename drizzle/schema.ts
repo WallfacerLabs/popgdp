@@ -127,6 +127,17 @@ export const members = pgTable("member", {
     .defaultNow(),
 });
 
+export const membersRelations = relations(members, ({ one }) => ({
+  application: one(applications, {
+    fields: [members.applicationId],
+    references: [applications.id],
+  }),
+  images: one(images, {
+    fields: [members.imageId],
+    references: [images.id],
+  }),
+}));
+
 export const comments = pgTable("comment", {
   id: uuid("id").defaultRandom().primaryKey(),
   content: text("content").notNull(),
