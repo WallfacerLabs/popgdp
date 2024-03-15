@@ -1,5 +1,6 @@
 "use client";
 
+import { ChangeEvent, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -47,6 +48,29 @@ export function MainDetails() {
     } satisfies mainDetailsSchema,
   });
 
+  const imageUploadRef = useRef<HTMLInputElement>(null);
+
+  async function onImageChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+      const imageId = await uploadImage(formData);
+      form.setValue("imageId", imageId, {
+        shouldValidate: true,
+      });
+    }
+  }
+
+  function onImageRemove() {
+    form.setValue("imageId", "", {
+      shouldValidate: true,
+    });
+    if (imageUploadRef.current) {
+      imageUploadRef.current.value = "";
+    }
+  }
+
   return (
     <Form {...form}>
       <form
@@ -57,19 +81,11 @@ export function MainDetails() {
         })}
       >
         <ImageUpload
+          ref={imageUploadRef}
           imageId={form.watch("imageId")}
           placeholder="Upload cover image"
-          onChange={async (event) => {
-            const file = event.target.files?.[0];
-            if (file) {
-              const formData = new FormData();
-              formData.append("image", file);
-              const imageId = await uploadImage(formData);
-              form.setValue("imageId", imageId, {
-                shouldValidate: true,
-              });
-            }
-          }}
+          onChange={onImageChange}
+          onRemove={onImageRemove}
         />
 
         <FormField
