@@ -13,7 +13,7 @@ import { grantScopingSchema } from "./steps/grantScoping";
 import { mainDetailsSchema } from "./steps/mainDetails";
 import { resourcesSchema } from "./steps/resources";
 import { roadmapSchema } from "./steps/roadmap";
-import { teamInformationSchema } from "./steps/teamInformation";
+import { teamInformationSchema } from "./steps/teamInformation/teamInformation";
 
 const LOCAL_STORAGE_KEY = "stepsState";
 
