@@ -2,10 +2,10 @@
 
 import { UseFieldArrayRemove } from "react-hook-form";
 
-import { CrossIcon } from "@/components/icons/crossIcon";
 import { Button } from "@/components/ui/button";
+import { UserAvatar } from "@/components/ui/userAvatar";
+import { CrossIcon } from "@/components/icons/crossIcon";
 
-import { UserAvatar } from '@/components/ui/userAvatar';
 import { teamInformationSchema } from "./teamInformation";
 
 interface MemberPreviewProps {
