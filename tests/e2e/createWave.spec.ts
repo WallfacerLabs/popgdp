@@ -2,6 +2,8 @@ import { db } from "@/drizzle/db";
 import { waves } from "@/drizzle/schema";
 import { expect, test } from "@playwright/test";
 
+import { getPageWithLoggedUser } from "./utils/getPageWithLoggedUser";
+
 test.beforeEach(async () => {
   await db.delete(waves);
 });
@@ -15,10 +17,7 @@ test("cannot access page if not authenticated", async ({ page }) => {
 });
 
 test("creates a new wave", async ({ browser }) => {
-  const context = await browser.newContext({
-    storageState: "./tests/e2e/.auth/member.json",
-  });
-  const page = await context.newPage();
+  const page = await getPageWithLoggedUser(browser);
 
   await page.goto("/");
 

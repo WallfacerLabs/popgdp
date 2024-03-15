@@ -73,10 +73,16 @@ export default async function Wave({ params }: { params: unknown }) {
               key={project.id}
               href={`/waves/${waveId}/applications/${project.id}`}
             >
-              <TableCell>{project.name}</TableCell>
+              <TableCell>
+                <span className="font-bold">{project.name}</span>
+              </TableCell>
               <TableCell>{project.users.name}</TableCell>
               <TableCell>Entity name</TableCell>
-              <TableCell>{formatDate(project.createdAt)}</TableCell>
+              <TableCell>
+                <span className="opacity-60">
+                  {formatDate(project.createdAt)}
+                </span>
+              </TableCell>
               <TableCell>
                 <WldAmount amount="1,025,000.00" />
               </TableCell>
