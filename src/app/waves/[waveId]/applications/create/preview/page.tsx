@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 
 import { useWaveParams } from "@/lib/paramsValidation";
-import { ApplicationPreview } from "@/components/ui/applicationPreview";
+import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
 import { BackButton } from "@/components/ui/backButton";
 import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

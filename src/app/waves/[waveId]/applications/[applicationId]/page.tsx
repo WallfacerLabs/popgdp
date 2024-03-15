@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getApplicationWithComments } from "@/drizzle/queries/applications";
 
 import { parseApplicationParams } from "@/lib/paramsValidation";
-import { ApplicationPreview } from "@/components/ui/applicationPreview";
+import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
 import { BackButton } from "@/components/ui/backButton";
 import { CategoryBadge } from "@/components/ui/badge";
 import { PageTitle } from "@/components/ui/pageTitle";

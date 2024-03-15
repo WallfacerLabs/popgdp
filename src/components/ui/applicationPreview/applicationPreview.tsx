@@ -10,9 +10,9 @@ import { CloudIcon } from "@/components/icons/cloudIcon";
 import { TeamIcon } from "@/components/icons/teamIcon";
 import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
-import { UserAvatar } from "./userAvatar";
-import { WldAmount } from "./wldAmount";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../tabs";
+import { UserAvatar } from "../userAvatar";
+import { WldAmount } from "../wldAmount";
 
 interface Application extends ApplicationData {
   users: {
@@ -81,7 +81,7 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
           />
         )}
       </div>
-      <section className="mt-16">
+      <section className="mt-16 border border-[red]">
         <Tabs
           defaultValue={TABS_CONFIG[0].key}
           className="flex gap-20"
