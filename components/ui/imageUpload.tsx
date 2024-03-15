@@ -27,12 +27,7 @@ export const ImageUpload = forwardRef<HTMLInputElement, ImageUploadProps>(
           className,
         )}
       >
-        <label
-          className={cn(
-            "h-full w-full cursor-pointer rounded-[inherit] [&:has(input:disabled)]:cursor-not-allowed",
-            className,
-          )}
-        >
+        <label className="h-full w-full cursor-pointer rounded-[inherit] [&:has(input:disabled)]:cursor-not-allowed">
           {imageId ? (
             <Preview imageId={imageId} />
           ) : (
