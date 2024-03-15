@@ -28,7 +28,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { CheckIcon } from "@/components/icons/checkIcon";
 import { CrossIcon } from "@/components/icons/crossIcon";
-import { useStepsContext, useStepsDispatchContext } from '@/app/waves/[waveId]/applications/create/stepsProvider';
+import {
+  useStepsContext,
+  useStepsDispatchContext,
+} from "@/app/waves/[waveId]/applications/create/stepsProvider";
+
+import { uploadImage } from "../uploadImageAction";
 
 export const teamInformationSchema = z.object({
   teamSummary: z.string(),
@@ -49,7 +54,9 @@ export function TeamInformation() {
     resolver: zodResolver(teamInformationSchema),
     defaultValues: {
       teamSummary: applicationData.teamSummary ?? "",
-      members: applicationData.members ?? [{ imageId: "", name: "", position: "" }]
+      members: applicationData.members ?? [
+        { imageId: "", name: "", position: "" },
+      ],
     } satisfies teamInformationSchema,
   });
 
