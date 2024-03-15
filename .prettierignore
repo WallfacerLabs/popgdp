@@ -1,2 +1,2 @@
-drizzle/migrations/meta
+src/drizzle/migrations/meta
 pnpm-lock.yaml
