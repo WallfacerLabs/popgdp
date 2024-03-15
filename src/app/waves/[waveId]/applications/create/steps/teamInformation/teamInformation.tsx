@@ -28,9 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { CheckIcon } from "@/components/icons/checkIcon";
 import { CrossIcon } from "@/components/icons/crossIcon";
-
-import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
-import { uploadImage } from "./uploadImageAction";
+import { useStepsContext, useStepsDispatchContext } from '@/app/waves/[waveId]/applications/create/stepsProvider';
 
 export const teamInformationSchema = z.object({
   teamSummary: z.string(),
