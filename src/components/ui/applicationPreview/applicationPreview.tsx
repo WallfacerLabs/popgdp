@@ -4,8 +4,15 @@ import projectPlaceholder from "@/images/projectPlaceholder.jpg";
 
 import { cn } from "@/lib/cn";
 import { Separator } from "@/components/ui/separator";
+import { ChevronIcon } from "@/components/icons/chevronIcon";
 import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../accordion";
 import { UserAvatar } from "../userAvatar";
 import { WldAmount } from "../wldAmount";
 import { ApplicationDetails } from "./applicationDetails";
@@ -77,7 +84,28 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
           />
         )}
       </div>
-      <ApplicationDetails application={application} />
+      <section>
+        <Accordion
+          title="Application details"
+          type="multiple"
+          className="mt-16"
+        >
+          <AccordionItem value="applicationDetails" className="flex flex-col">
+            <AccordionTrigger className="group min-w-40">
+              <span className="group-data-[state=open]:hidden">
+                Show details
+              </span>
+              <span className="group-data-[state=closed]:hidden">
+                Hide details
+              </span>
+              <ChevronIcon direction="down" className="ml-auto h-4 w-4" />
+            </AccordionTrigger>
+            <AccordionContent className="mt-8">
+              <ApplicationDetails application={application} />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </section>
     </div>
   );
 }
