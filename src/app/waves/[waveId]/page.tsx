@@ -76,7 +76,11 @@ export default async function Wave({ params }: { params: unknown }) {
               <TableCell>{project.name}</TableCell>
               <TableCell>{project.users.name}</TableCell>
               <TableCell>Entity name</TableCell>
-              <TableCell>{formatDate(project.createdAt)}</TableCell>
+              <TableCell>
+                <span className="opacity-60">
+                  {formatDate(project.createdAt)}
+                </span>
+              </TableCell>
               <TableCell>
                 <WldAmount amount="1,025,000.00" />
               </TableCell>
