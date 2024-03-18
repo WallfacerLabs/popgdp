@@ -1,11 +1,11 @@
-import { HTMLAttributes } from "react";
-import Image from "next/image";
 import projectPlaceholder from "@/images/projectPlaceholder.jpg";
+import Image from "next/image";
+import { HTMLAttributes } from "react";
 
-import { cn } from "@/lib/cn";
-import { Separator } from "@/components/ui/separator";
-import { ChevronIcon } from "@/components/icons/chevronIcon";
 import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
+import { ChevronIcon } from "@/components/icons/chevronIcon";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/cn";
 
 import {
   Accordion,
@@ -13,7 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../accordion";
-import { UserAvatar } from "../userAvatar";
+import { UserPreview } from '../userPreview';
 import { WldAmount } from "../wldAmount";
 import { ApplicationDetails } from "./applicationDetails";
 
@@ -34,16 +34,7 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
       <div className="grid grid-cols-2 overflow-hidden rounded-3xl border">
         <div className="flex flex-col gap-6 p-10">
           <ContentRow label="User submitting">
-            <div className="flex items-center gap-2">
-              <UserAvatar
-                name={application.users.name}
-                image={application.users.image}
-              />
-              <div className="flex flex-col">
-                <span className="font-bold">{application.users.name}</span>
-                <span className="text-xs text-gray-600">Member</span>
-              </div>
-            </div>
+            <UserPreview image={application.users.image} name={application.users.name} role="Member" />
           </ContentRow>
 
           <Separator />
