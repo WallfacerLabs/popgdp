@@ -72,7 +72,7 @@ export async function Comment({ comment, isReview }: CommentProps) {
   );
 }
 
-const commentContainerVariants = cva("rounded-2xl px-2 pt-2 pb-4", {
+const commentContainerVariants = cva("rounded-2xl p-2 pb-4", {
   variants: {
     isReview: {
       true: "bg-orange/50",
