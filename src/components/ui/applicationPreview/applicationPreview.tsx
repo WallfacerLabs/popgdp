@@ -63,21 +63,17 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
             {application.summary}
           </ContentRow>
         </div>
-        {application.imageId ? (
-          <Image
-            src={`/api/images/${application.imageId}`}
-            width={1088}
-            height={984}
-            alt=""
-            className="rounded-l-[inherit]"
-          />
-        ) : (
-          <Image
-            src={projectPlaceholder}
-            alt=""
-            className="rounded-l-[inherit]"
-          />
-        )}
+        <Image
+          src={
+            application.imageId
+              ? `/api/images/${application.imageId}`
+              : projectPlaceholder
+          }
+          width={1088}
+          height={1024}
+          alt={`${application.name} cover image`}
+          className="ml-auto max-h-[512px] max-w-[544px] rounded-l-[inherit] rounded-r-2xl object-contain object-right-top"
+        />
       </div>
       <section>
         <Accordion
