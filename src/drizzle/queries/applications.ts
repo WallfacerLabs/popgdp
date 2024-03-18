@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { db } from "@/drizzle/db";
-import { applications } from "@/drizzle/schema";
+import { applications, members } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
 export const getApplicationWithComments = cache(
@@ -40,6 +40,22 @@ export type ApplicationWithComments = NonNullable<
   Awaited<ReturnType<typeof getApplicationWithComments>>
 >;
 
-export function insertApplication(data: typeof applications.$inferInsert) {
-  return db.insert(applications).values(data);
+type MemberInsertData = Omit<typeof members.$inferInsert, "applicationId">;
+
+export function insertApplication(
+  applicationData: typeof applications.$inferInsert,
+  membersData: MemberInsertData[],
+) {
+  return db.transaction(async (db) => {
+    const [{ applicationId }] = await db
+      .insert(applications)
+      .values(applicationData)
+      .returning({ applicationId: applications.id });
+    await Promise.all(
+      membersData.map((memberData) =>
+        db.insert(members).values({ ...memberData, applicationId }),
+      ),
+    );
+    return applicationId;
+  });
 }
