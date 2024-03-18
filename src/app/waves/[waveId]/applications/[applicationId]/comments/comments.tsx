@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { ApplicationWithComments } from "@/drizzle/queries/applications";
 import { cva, VariantProps } from "class-variance-authority";
 
@@ -23,14 +24,10 @@ export async function Comments({ comments }: CommentsProps) {
 
       <div>
         {comments.map((comment, i) => (
-          <>
-            <Comment
-              comment={comment}
-              key={comment.id}
-              isReview={i % 2 === 0}
-            />
+          <Fragment key={comment.id}>
+            <Comment comment={comment} isReview={i % 2 === 0} />
             <Separator className="my-6 last:hidden" />
-          </>
+          </Fragment>
         ))}
       </div>
 
