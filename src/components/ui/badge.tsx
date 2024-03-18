@@ -5,20 +5,22 @@ import { cn } from "@/lib/cn";
 import { SunIcon } from "@/components/icons/sunIcon";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+  cn(
+    "inline-flex items-center rounded-full px-2 py-1 min-h-6 gap-1 text-xs font-semibold",
+    "[&>svg]:w-3 [&>svg]:h-3",
+  ),
   {
     variants: {
       variant: {
-        primary: "border-transparent bg-green-300 text-primary",
-        orange: "border-transparent bg-orange",
-        secondary: "border-transparent bg-secondary text-secondary-foreground",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground",
-        outline: "text-foreground",
+        green: "bg-green",
+        orange: "bg-orange",
+        destructive: "bg-destructive",
+        blue: "bg-blue",
+        pink: "bg-pink",
       },
     },
     defaultVariants: {
-      variant: "primary",
+      variant: "green",
     },
   },
 );
@@ -42,4 +44,4 @@ function CategoryBadge({ children, ...props }: BadgeProps) {
   );
 }
 
-export { Badge, CategoryBadge, badgeVariants };
+export { Badge, badgeVariants, CategoryBadge };
