@@ -46,7 +46,7 @@ export async function Comment({ comment, isReview }: CommentProps) {
   return (
     <div className={commentContainerVariants({ isReview })}>
       {isReview && (
-        <Badge variant="orange" className="mb-3">
+        <Badge variant="orange" className="mb-3 flex w-fit">
           Review
         </Badge>
       )}
