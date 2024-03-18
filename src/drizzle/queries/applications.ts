@@ -42,11 +42,11 @@ export type ApplicationWithComments = NonNullable<
 
 type MemberInsertData = Omit<typeof members.$inferInsert, "applicationId">;
 
-export async function insertApplication(
+export function insertApplication(
   applicationData: typeof applications.$inferInsert,
   membersData: MemberInsertData[],
 ) {
-  const applicationId = await db.transaction(async (db) => {
+  return db.transaction(async (db) => {
     const [{ applicationId }] = await db
       .insert(applications)
       .values(applicationData)
@@ -58,6 +58,4 @@ export async function insertApplication(
     );
     return applicationId;
   });
-
-  return applicationId;
 }
