@@ -59,10 +59,10 @@ export const ApplicationDetails = ({
       </TabsList>
       <TabContainer index={0}>
         <ContentRow label="Team summary:">{application.teamSummary}</ContentRow>
-        <ContentRow label="Members:">
-          <ul className="flex flex-col gap-2">
-            {application.members.length > 0 &&
-              application.members.map(({ imageId, name, position }, index) => (
+        {application.members.length > 0 && (
+          <ContentRow label="Members:">
+            <ul className="flex flex-col gap-2">
+              {application.members.map(({ imageId, name, position }, index) => (
                 <li key={name + index}>
                   <UserPreview
                     image={`/api/images/${imageId}`}
@@ -71,8 +71,9 @@ export const ApplicationDetails = ({
                   />
                 </li>
               ))}
-          </ul>
-        </ContentRow>
+            </ul>
+          </ContentRow>
+        )}
       </TabContainer>
       <TabContainer index={1}>
         <ContentRow label="Project idea:">{application.idea}</ContentRow>
