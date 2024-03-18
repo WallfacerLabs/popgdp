@@ -18,7 +18,7 @@ const bytea = customType<{ data: Buffer }>({
   },
 });
 
-export const contentValueEnum = pgEnum("contentValue", ["positive"]);
+export const contentValueEnum = pgEnum("contentValue", ["positive", "spam"]);
 
 export const waves = pgTable("wave", {
   id: serial("id").primaryKey(),
