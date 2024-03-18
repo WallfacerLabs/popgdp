@@ -62,7 +62,7 @@ export async function Comment({ comment, isReview }: CommentProps) {
             <span className="font-bold">{comment.users.name}</span>
 
             <span className="text-foreground/60">Member</span>
-            <span className="bg-yell  text-foreground/60">
+            <span className="text-foreground/60">
               {formatDate(comment.createdAt)}
             </span>
           </div>
