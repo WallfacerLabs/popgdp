@@ -1,11 +1,11 @@
-import projectPlaceholder from "@/images/projectPlaceholder.jpg";
-import Image from "next/image";
 import { HTMLAttributes } from "react";
+import Image from "next/image";
+import projectPlaceholder from "@/images/projectPlaceholder.jpg";
 
-import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
-import { ChevronIcon } from "@/components/icons/chevronIcon";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/cn";
+import { Separator } from "@/components/ui/separator";
+import { ChevronIcon } from "@/components/icons/chevronIcon";
+import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
 import {
   Accordion,
@@ -13,7 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../accordion";
-import { UserPreview } from '../userPreview';
+import { UserPreview } from "../userPreview";
 import { WldAmount } from "../wldAmount";
 import { ApplicationDetails } from "./applicationDetails";
 
@@ -34,7 +34,11 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
       <div className="grid grid-cols-2 overflow-hidden rounded-3xl border">
         <div className="flex flex-col gap-6 p-10">
           <ContentRow label="User submitting">
-            <UserPreview image={application.users.image} name={application.users.name} role="Member" />
+            <UserPreview
+              image={application.users.image}
+              name={application.users.name}
+              role="Member"
+            />
           </ContentRow>
 
           <Separator />

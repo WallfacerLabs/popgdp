@@ -2,10 +2,10 @@
 
 import { UseFieldArrayRemove } from "react-hook-form";
 
-import { CrossIcon } from "@/components/icons/crossIcon";
 import { Button } from "@/components/ui/button";
+import { UserPreview } from "@/components/ui/userPreview";
+import { CrossIcon } from "@/components/icons/crossIcon";
 
-import { UserPreview } from '@/components/ui/userPreview';
 import { teamInformationSchema } from "./teamInformation";
 
 interface MemberPreviewProps {
@@ -22,7 +22,11 @@ export const MemberPreview = ({
   const { imageId, name, position } = member;
   return (
     <li className="flex w-full items-center gap-4">
-      <UserPreview image={`/api/images/${imageId}`} name={name} role={position} />
+      <UserPreview
+        image={`/api/images/${imageId}`}
+        name={name}
+        role={position}
+      />
       <Button
         type="button"
         variant="outline"

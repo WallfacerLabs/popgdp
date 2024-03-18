@@ -1,5 +1,4 @@
-
-import { UserIcon } from '../icons/userIcon';
+import { UserIcon } from "../icons/userIcon";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
 interface UserAvatarProps {
