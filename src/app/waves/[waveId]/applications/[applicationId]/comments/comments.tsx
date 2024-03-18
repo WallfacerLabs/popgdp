@@ -5,35 +5,71 @@ import { cva } from "class-variance-authority";
 import { formatDate } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserAvatar } from "@/components/ui/userAvatar";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
 import { parseMarkdown } from "./parseMarkdown";
+
+const SECTIONS = {
+  discussion: "Discussion",
+  reviews: "Reviews",
+} as const;
 
 interface CommentsProps {
   comments: ApplicationWithComments["comments"];
 }
 
 export async function Comments({ comments }: CommentsProps) {
+  const reviews = comments.filter((comment) => comment.reviews?.isReview);
+
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex items-start gap-1">
-        <h3 className="text-xl font-bold">Comments</h3>
-        <span className="text-sm">({comments.length})</span>
-      </div>
-
-      <div>
-        {comments.map((comment, i) => (
-          <Fragment key={comment.id}>
-            <Comment comment={comment} />
-            <Separator className="my-6 last:hidden" />
-          </Fragment>
-        ))}
-      </div>
+      <Tabs defaultValue={SECTIONS.discussion}>
+        <TabsList className="mb-8 justify-start gap-6">
+          <SectionButton
+            section={SECTIONS.discussion}
+            elementsAmount={comments.length}
+          />
+          <SectionButton
+            section={SECTIONS.reviews}
+            elementsAmount={reviews.length}
+          />
+        </TabsList>
+        <TabsContent value={SECTIONS.discussion}>
+          <CommentsList comments={comments} />
+        </TabsContent>
+        <TabsContent value={SECTIONS.reviews}>
+          <CommentsList comments={reviews} />
+        </TabsContent>
+      </Tabs>
 
       <AddCommentForm />
     </div>
   );
+}
+
+interface SectionButtonProps {
+  section: (typeof SECTIONS)[keyof typeof SECTIONS];
+  elementsAmount: number;
+}
+
+function SectionButton({ section, elementsAmount }: SectionButtonProps) {
+  return (
+    <TabsTrigger value={section} className="flex items-start gap-1">
+      <h3 className="text-xl font-bold">{section}</h3>
+      <span className="text-sm text-foreground/60">({elementsAmount})</span>
+    </TabsTrigger>
+  );
+}
+
+function CommentsList({ comments }: CommentsProps) {
+  return comments.map((comment) => (
+    <Fragment key={comment.id}>
+      <Comment comment={comment} />
+      <Separator className="my-6 last:hidden" />
+    </Fragment>
+  ));
 }
 
 interface CommentProps {
