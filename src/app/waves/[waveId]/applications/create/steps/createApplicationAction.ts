@@ -19,27 +19,30 @@ export async function createApplicationAction(
     throw new UnauthenticatedError();
   }
 
-  await insertApplication({
-    name: application.name,
-    summary: application.summary,
-    entityName: application.entityName,
-    duration: application.duration,
-    budget: application.budget,
+  await insertApplication(
+    {
+      name: application.name,
+      summary: application.summary,
+      entityName: application.entityName,
+      duration: application.duration,
+      budget: application.budget,
 
-    teamSummary: application.teamSummary,
+      teamSummary: application.teamSummary,
 
-    idea: application.idea,
-    reason: application.reason,
-    state: application.state,
-    goals: application.goals,
-    requirements: application.requirements,
+      idea: application.idea,
+      reason: application.reason,
+      state: application.state,
+      goals: application.goals,
+      requirements: application.requirements,
 
-    tbd: application.tbd,
+      tbd: application.tbd,
 
-    imageId: application.imageId || undefined,
-    waveId,
-    userId: session.user.id,
-  });
+      imageId: application.imageId || undefined,
+      waveId,
+      userId: session.user.id,
+    },
+    application.members,
+  );
 
   revalidatePath(`/waves/${waveId}`);
   redirect(`/waves/${waveId}`);
