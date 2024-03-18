@@ -7,6 +7,7 @@ import { TeamIcon } from "@/components/icons/teamIcon";
 import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../tabs";
+import { UserPreview } from "../userPreview";
 
 const TABS_CONFIG = [
   {
@@ -58,6 +59,20 @@ export const ApplicationDetails = ({
       </TabsList>
       <TabContainer index={0}>
         <ContentRow label="Team summary:">{application.teamSummary}</ContentRow>
+        <ContentRow label="Members:">
+          <ul className="flex flex-col gap-2">
+            {application.members.length > 0 &&
+              application.members.map(({ imageId, name, position }, index) => (
+                <li key={name + index}>
+                  <UserPreview
+                    image={`/api/images/${imageId}`}
+                    name={name}
+                    role={position}
+                  />
+                </li>
+              ))}
+          </ul>
+        </ContentRow>
       </TabContainer>
       <TabContainer index={1}>
         <ContentRow label="Project idea:">{application.idea}</ContentRow>
