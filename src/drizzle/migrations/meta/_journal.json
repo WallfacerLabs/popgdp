@@ -15,6 +15,13 @@
       "when": 1710427717751,
       "tag": "0001_nervous_firedrake",
       "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1710774936542,
+      "tag": "0002_good_shocker",
+      "breakpoints": false
     }
   ]
 }

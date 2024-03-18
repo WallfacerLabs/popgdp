@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { db } from "@/drizzle/db";
 import { applications, members } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export const getApplicationWithComments = cache(
   async (id: (typeof applications.$inferSelect)["id"]) => {
@@ -20,6 +20,11 @@ export const getApplicationWithComments = cache(
               columns: {
                 image: true,
                 name: true,
+              },
+            },
+            reviews: {
+              extras: {
+                isReview: sql<boolean>`true`.as("isReview"),
               },
             },
           },

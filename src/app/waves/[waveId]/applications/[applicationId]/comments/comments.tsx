@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { ApplicationWithComments } from "@/drizzle/queries/applications";
-import { cva, VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 
 import { formatDate } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
@@ -25,7 +25,7 @@ export async function Comments({ comments }: CommentsProps) {
       <div>
         {comments.map((comment, i) => (
           <Fragment key={comment.id}>
-            <Comment comment={comment} isReview={i % 2 === 0} />
+            <Comment comment={comment} />
             <Separator className="my-6 last:hidden" />
           </Fragment>
         ))}
@@ -36,12 +36,14 @@ export async function Comments({ comments }: CommentsProps) {
   );
 }
 
-interface CommentProps extends VariantProps<typeof commentContainerVariants> {
+interface CommentProps {
   comment: ApplicationWithComments["comments"][number];
 }
 
-export async function Comment({ comment, isReview }: CommentProps) {
+export async function Comment({ comment }: CommentProps) {
   const commentHtml = await parseMarkdown(comment.content);
+
+  const isReview = comment.reviews?.isReview;
 
   return (
     <div className={commentContainerVariants({ isReview })}>
