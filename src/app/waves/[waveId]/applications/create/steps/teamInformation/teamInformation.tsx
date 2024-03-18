@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -15,11 +15,23 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
+import {
+  useStepsContext,
+  useStepsDispatchContext,
+} from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
-import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
+import { MemberField } from "./memberField";
+import { MemberPreview } from "./memberPreview";
 
 export const teamInformationSchema = z.object({
   teamSummary: z.string(),
+  members: z.array(
+    z.object({
+      imageId: z.string().optional(),
+      name: z.string(),
+      position: z.string(),
+    }),
+  ),
 });
 export type teamInformationSchema = z.infer<typeof teamInformationSchema>;
 
@@ -30,7 +42,19 @@ export function TeamInformation() {
     resolver: zodResolver(teamInformationSchema),
     defaultValues: {
       teamSummary: applicationData.teamSummary ?? "",
+      members: applicationData.members ?? [
+        { imageId: "", name: "", position: "" },
+      ],
     } satisfies teamInformationSchema,
+  });
+
+  const {
+    fields: memberFields,
+    append: appendMember,
+    remove: removeMember,
+  } = useFieldArray({
+    control: form.control,
+    name: "members",
   });
 
   return (
@@ -54,6 +78,29 @@ export function TeamInformation() {
             </FormItem>
           )}
         />
+
+        <div className="space-y-2">
+          <FormLabel>Members</FormLabel>
+          <ul className="flex flex-col gap-4 rounded-3xl border p-6">
+            {memberFields.map((field, index, array) =>
+              index === array.length - 1 ? (
+                <MemberField
+                  key={field.id}
+                  form={form}
+                  index={index}
+                  appendMember={appendMember}
+                />
+              ) : (
+                <MemberPreview
+                  key={field.id}
+                  member={field}
+                  removeMember={removeMember}
+                  index={index}
+                />
+              ),
+            )}
+          </ul>
+        </div>
 
         <FormFooter>
           <Button

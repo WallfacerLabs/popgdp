@@ -24,6 +24,13 @@ export const getApplicationWithComments = cache(
             },
           },
         },
+        members: {
+          columns: {
+            imageId: true,
+            name: true,
+            position: true,
+          },
+        },
       },
     });
   },

@@ -34,6 +34,10 @@ export default async function Application({ params }: { params: unknown }) {
         application={{
           ...application,
           imageId: application.imageId ?? undefined,
+          members: application.members.map((member) => ({
+            ...member,
+            imageId: member.imageId ?? undefined,
+          })),
         }}
       />
 
