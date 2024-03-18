@@ -53,7 +53,11 @@ export function insertApplication(
       .returning({ applicationId: applications.id });
     await Promise.all(
       membersData.map((memberData) =>
-        db.insert(members).values({ ...memberData, applicationId }),
+        db.insert(members).values({
+          ...memberData,
+          imageId: memberData.imageId || undefined,
+          applicationId,
+        }),
       ),
     );
     return applicationId;
