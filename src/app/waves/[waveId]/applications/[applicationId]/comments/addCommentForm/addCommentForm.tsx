@@ -17,7 +17,11 @@ import {
 } from "@/components/ui/form";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
-import { addCommentAction } from "./addCommentAction";
+import {
+  addCommentAction,
+  addReviewAction,
+  type AddCommentActionPayload,
+} from "./addCommentAction";
 import { addCommentSchema } from "./addCommentSchema";
 
 export function AddCommentForm() {
@@ -31,16 +35,18 @@ export function AddCommentForm() {
     },
   });
 
+  const handleSubmit = (
+    action: (payload: AddCommentActionPayload) => Promise<void>,
+  ) =>
+    form.handleSubmit(async (data) => {
+      await action({ data, waveId, applicationId });
+      setEditorKey((prev) => prev + 1);
+      form.reset();
+    });
+
   return (
     <Form {...form}>
-      <form
-        className="flex flex-col gap-4"
-        onSubmit={form.handleSubmit(async (data) => {
-          await addCommentAction({ data, waveId, applicationId });
-          setEditorKey((prev) => prev + 1);
-          form.reset();
-        })}
-      >
+      <form className="flex flex-col gap-4">
         <FormField
           control={form.control}
           name="comment"
@@ -53,13 +59,24 @@ export function AddCommentForm() {
             </FormItem>
           )}
         />
-        <FormFooter className="mt-0">
+        <FormFooter className="mt-0 justify-start">
           <Button
             variant="secondary"
             className="self-end"
             disabled={form.formState.isSubmitting}
+            onClick={handleSubmit(addCommentAction)}
           >
             Add comment
+            <AddCommentIcon className="h-4 w-4" />
+          </Button>
+
+          <Button
+            variant="secondary"
+            className="self-end"
+            disabled={form.formState.isSubmitting}
+            onClick={handleSubmit(addReviewAction)}
+          >
+            Add review
             <AddCommentIcon className="h-4 w-4" />
           </Button>
         </FormFooter>

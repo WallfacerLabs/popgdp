@@ -170,6 +170,42 @@ export const commentsRelations = relations(comments, ({ one }) => ({
     fields: [comments.userId],
     references: [users.id],
   }),
+  reviews: one(reviews),
+}));
+
+export const reviews = pgTable(
+  "review",
+  {
+    commentId: uuid("commentId")
+      .notNull()
+      .references(() => comments.id, { onDelete: "cascade" }),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    applicationId: uuid("applicationId")
+      .notNull()
+      .references(() => applications.id, { onDelete: "cascade" }),
+  },
+  (table) => ({
+    pk: primaryKey({
+      columns: [table.userId, table.applicationId],
+    }),
+  }),
+);
+
+export const reviewsRelations = relations(reviews, ({ one }) => ({
+  comments: one(comments, {
+    fields: [reviews.commentId],
+    references: [comments.id],
+  }),
+  users: one(users, {
+    fields: [reviews.userId],
+    references: [users.id],
+  }),
+  application: one(applications, {
+    fields: [reviews.applicationId],
+    references: [applications.id],
+  }),
 }));
 
 export const applicationValues = pgTable(
