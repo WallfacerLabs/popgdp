@@ -58,7 +58,9 @@ function SectionButton({ section, elementsAmount }: SectionButtonProps) {
   return (
     <TabsTrigger value={section} className="flex items-start gap-1">
       <h3 className="text-xl font-bold">{section}</h3>
-      <span className="text-sm text-foreground/60">({elementsAmount})</span>
+      <span className="text-sm font-normal text-foreground/60">
+        ({elementsAmount})
+      </span>
     </TabsTrigger>
   );
 }
