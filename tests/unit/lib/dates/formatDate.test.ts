@@ -14,6 +14,14 @@ describe("lib/dates", () => {
     });
   });
 
+  describe("formatTime", () => {
+    test("should correctly format a Date object into a time string", () => {
+      expect(formatDate(new Date("2022-01-01 00:00:00"))).toBe(
+        "Jan 01, 22, 00:00",
+      );
+    });
+  });
+
   describe("formatDateRange", () => {
     test("should format a date range", () => {
       expect(
