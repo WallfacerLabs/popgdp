@@ -28,7 +28,13 @@ export const getApplicationValue = cache(
 export function insertApplicationValue(
   data: typeof applicationValues.$inferInsert,
 ) {
-  return db.insert(applicationValues).values(data);
+  return db
+    .insert(applicationValues)
+    .values(data)
+    .onConflictDoUpdate({
+      target: [applicationValues.userId, applicationValues.applicationId],
+      set: { value: data.value },
+    });
 }
 
 export function deleteApplicationValue(

@@ -5,36 +5,39 @@ import {
   deleteApplicationValue,
   insertApplicationValue,
 } from "@/drizzle/queries/applicationValues";
+import { applicationValues } from "@/drizzle/schema";
 import { type Session } from "next-auth";
 
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
-interface UpvoteActionPayload extends ApplicationParamsSchema {
+interface ApplicationValueActionPayload extends ApplicationParamsSchema {
   session: Session | null;
-  isUpvoted: boolean;
+  isChecked: boolean;
+  value: (typeof applicationValues.$inferInsert)["value"];
 }
 
-export async function upvoteAction({
+export async function applicationValueAction({
   session,
   applicationId,
   waveId,
-  isUpvoted,
-}: UpvoteActionPayload) {
+  isChecked,
+  value,
+}: ApplicationValueActionPayload) {
   if (!session?.user?.id) {
     throw new Error("Unauthorized");
   }
 
-  if (isUpvoted) {
+  if (isChecked) {
     await deleteApplicationValue({
       applicationId,
       userId: session.user.id,
-      value: "positive",
+      value,
     });
   } else {
     await insertApplicationValue({
       applicationId,
       userId: session.user.id,
-      value: "positive",
+      value,
     });
   }
 
