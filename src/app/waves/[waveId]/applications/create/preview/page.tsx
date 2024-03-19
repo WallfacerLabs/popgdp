@@ -9,6 +9,7 @@ import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
+import { SaveIcon } from "@/components/icons/saveIcon";
 
 import { createApplicationAction } from "../steps/createApplicationAction";
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
@@ -32,7 +33,10 @@ export default function PreviewApplication() {
           <CategoryBadge>Category</CategoryBadge>
         </div>
         <div className="flex gap-4">
-          <Button variant="secondary">Save as draft</Button>
+          <Button variant="secondary">
+            Save as draft
+            <SaveIcon />
+          </Button>
           <Button
             className="px-14"
             onClick={async () => {
