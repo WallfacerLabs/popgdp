@@ -89,7 +89,7 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
               <span className="group-data-[state=closed]:hidden">
                 Hide details
               </span>
-              <ChevronIcon direction="down" className="ml-auto h-4 w-4" />
+              <ChevronIcon direction="down" className="ml-auto" />
             </AccordionTrigger>
             <AccordionContent className="mt-8">
               <ApplicationDetails application={application} />

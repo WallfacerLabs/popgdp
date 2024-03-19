@@ -108,7 +108,7 @@ export const LinkEditorPlugin = ({ isLink }: LinkEditorPluginProps) => {
           variant="outline"
           className={formatButtonVariants({ active: isLink })}
         >
-          <LinkIcon className="h-4 w-4" />
+          <LinkIcon />
         </Button>
       </PopoverTrigger>
       <PopoverContent>

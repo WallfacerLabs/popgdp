@@ -182,7 +182,7 @@ export function MainDetails() {
         <FormFooter className="justify-end">
           <Button disabled={form.formState.isSubmitting}>
             Next
-            <ArrowIcon direction="right" className="h-4 w-4" />
+            <ArrowIcon direction="right" />
           </Button>
         </FormFooter>
       </form>

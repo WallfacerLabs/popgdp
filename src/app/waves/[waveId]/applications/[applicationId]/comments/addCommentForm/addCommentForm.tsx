@@ -68,7 +68,7 @@ export function AddCommentForm() {
             onClick={handleSubmit(addCommentAction)}
           >
             Add comment
-            <AddCommentIcon className="h-4 w-4" />
+            <AddCommentIcon />
           </Button>
 
           <Button
@@ -78,7 +78,7 @@ export function AddCommentForm() {
             onClick={handleSubmit(addReviewAction)}
           >
             Add review
-            <AssignmentIcon className="h-4 w-4" />
+            <AssignmentIcon />
           </Button>
         </FormFooter>
       </form>

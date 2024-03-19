@@ -148,7 +148,7 @@ export const ToolbarPlugin = () => {
         aria-label="Format Bold"
         isActive={isBold}
       >
-        <FormatBoldIcon className="h-4 w-4" />
+        <FormatBoldIcon />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => {
@@ -157,7 +157,7 @@ export const ToolbarPlugin = () => {
         aria-label="Format Italics"
         isActive={isItalic}
       >
-        <FormatItalicIcon className="h-4 w-4" />
+        <FormatItalicIcon />
       </ToolbarButton>
 
       <LinkEditorPlugin isLink={isLink} />
@@ -170,7 +170,7 @@ export const ToolbarPlugin = () => {
         }}
         aria-label="Left Align"
       >
-        <FormatLeftIcon className="h-4 w-4" />
+        <FormatLeftIcon />
       </ToolbarButton>
 
       <ToolbarButton
@@ -179,7 +179,7 @@ export const ToolbarPlugin = () => {
         }}
         aria-label="Center Align"
       >
-        <FormatCenterIcon className="h-4 w-4" />
+        <FormatCenterIcon />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => {
@@ -187,7 +187,7 @@ export const ToolbarPlugin = () => {
         }}
         aria-label="Right Align"
       >
-        <FormatRightIcon className="h-4 w-4" />
+        <FormatRightIcon />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => {
@@ -195,7 +195,7 @@ export const ToolbarPlugin = () => {
         }}
         aria-label="Justify Align"
       >
-        <FormatJustifyIcon className="h-4 w-4" />
+        <FormatJustifyIcon />
       </ToolbarButton>
 
       <Separator orientation="vertical" className="mx-4 h-4" />
@@ -206,7 +206,7 @@ export const ToolbarPlugin = () => {
         }}
         aria-label="Unordered List"
       >
-        <BulletListIcon className="h-4 w-4" />
+        <BulletListIcon />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => {
@@ -214,7 +214,7 @@ export const ToolbarPlugin = () => {
         }}
         aria-label="Ordered List"
       >
-        <NumberListIcon className="h-4 w-4" />
+        <NumberListIcon />
       </ToolbarButton>
 
       <Separator orientation="vertical" className="mx-4 h-4" />
@@ -227,7 +227,7 @@ export const ToolbarPlugin = () => {
         aria-label="Undo"
         className="ml-auto"
       >
-        <UndoArrowIcon className="h-4 w-4" />
+        <UndoArrowIcon />
       </ToolbarButton>
       <ToolbarButton
         disabled={!canRedo}
@@ -236,7 +236,7 @@ export const ToolbarPlugin = () => {
         }}
         aria-label="Redo"
       >
-        <RedoArrowIcon className="h-4 w-4" />
+        <RedoArrowIcon />
       </ToolbarButton>
     </div>
   );

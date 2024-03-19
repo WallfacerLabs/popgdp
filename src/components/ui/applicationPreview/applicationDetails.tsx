@@ -52,7 +52,7 @@ export const ApplicationDetails = ({
             key={key}
             className="flex items-center gap-1"
           >
-            <span className="h-4 w-4"> {icon}</span>
+            {icon}
             {label}
           </TabsTrigger>
         ))}
