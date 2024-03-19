@@ -8,6 +8,19 @@ export function formatDate(date: Date) {
   return dateFormatter.format(date);
 }
 
+const timeFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "2-digit",
+  month: "short",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false,
+});
+
+export function formatTime(date: Date) {
+  return timeFormatter.format(date);
+}
+
 export function formatDateRange(from: Date, to: Date) {
   return `${formatDate(from)} - ${formatDate(to)}`;
 }
