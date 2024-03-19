@@ -38,6 +38,7 @@ const TabsTrigger = forwardRef<
       "before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:rounded-full before:bg-primary before:transition-all",
       "data-[state=active]:before:scale-x-100 [&:not(:disabled):not([data-state=active])]:hover:before:scale-x-50 [&:not(:disabled):not([data-state=active])]:focus-visible:before:scale-x-50",
       "disabled:cursor-not-allowed disabled:opacity-50",
+      "[&>svg]:h-4 [&>svg]:w-4",
       className,
     )}
     {...props}
