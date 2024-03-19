@@ -15,13 +15,13 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
+import { PlusCircleIcon } from "@/components/icons/plusCircleIcon";
 import {
   useStepsContext,
   useStepsDispatchContext,
 } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
 import { MemberField } from "./memberField";
-import { MemberPreview } from "./memberPreview";
 
 export const teamInformationSchema = z.object({
   teamSummary: z.string(),
@@ -42,9 +42,7 @@ export function TeamInformation() {
     resolver: zodResolver(teamInformationSchema),
     defaultValues: {
       teamSummary: applicationData.teamSummary ?? "",
-      members: applicationData.members ?? [
-        { imageId: "", name: "", position: "" },
-      ],
+      members: applicationData.members ?? [],
     } satisfies teamInformationSchema,
   });
 
@@ -61,7 +59,14 @@ export function TeamInformation() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async (payload) => {
+        onSubmit={form.handleSubmit(async ({ teamSummary, members }) => {
+          const payload = {
+            teamSummary,
+            members: members.filter(
+              ({ imageId, name, position }) =>
+                imageId !== "" && name !== "" && position !== "",
+            ),
+          };
           dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
           dispatch({ type: "INCREMENT_STEP" });
         })}
@@ -81,25 +86,29 @@ export function TeamInformation() {
 
         <div className="space-y-2">
           <FormLabel>Members</FormLabel>
-          <ul className="flex flex-col gap-4 rounded-3xl border p-6">
-            {memberFields.map((field, index, array) =>
-              index === array.length - 1 ? (
+          {memberFields.length > 0 && (
+            <ul className="flex flex-col gap-4 rounded-3xl border p-4">
+              {memberFields.map((field, index, array) => (
                 <MemberField
                   key={field.id}
                   form={form}
                   index={index}
-                  appendMember={appendMember}
-                />
-              ) : (
-                <MemberPreview
-                  key={field.id}
-                  member={field}
                   removeMember={removeMember}
-                  index={index}
                 />
-              ),
-            )}
-          </ul>
+              ))}
+            </ul>
+          )}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={() =>
+              appendMember({ imageId: "", name: "", position: "" })
+            }
+          >
+            <PlusCircleIcon className="h-4 w-4" />
+            Add member
+          </Button>
         </div>
 
         <FormFooter>
