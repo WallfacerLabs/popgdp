@@ -7,22 +7,30 @@ import { Separator } from "@/components/ui/separator";
 import { CheckIcon } from "@/components/icons/checkIcon";
 import { DotIcon } from "@/components/icons/dotIcon";
 
-import { stepsConfig } from "./stepsConfig";
-import { useStepsContext } from "./stepsProvider";
+type StepsConfig = Array<{
+  name: string;
+  icon: JSX.Element;
+}>;
 
-export function CreateApplicationStepper({
+export function Stepper({
   children,
+  currentStep,
+  stepsConfig,
 }: {
   children: ReactNode[];
+  currentStep: number;
+  stepsConfig: StepsConfig;
 }) {
-  const { currentStep } = useStepsContext();
-
   return (
     <div className="flex gap-16">
       <div className="flex h-fit w-full max-w-[138px] flex-col gap-2">
         {stepsConfig.map(({ name }, stepIndex) => (
           <Fragment key={name}>
-            <StepperStep stepIndex={stepIndex} label={name} />
+            <StepperStep
+              stepIndex={stepIndex}
+              label={name}
+              currentStep={currentStep}
+            />
             <Separator
               orientation="vertical"
               className="mx-4 h-12 w-0.5 -translate-x-px last:hidden"
@@ -57,24 +65,24 @@ const stepVariants = cva("flex items-center gap-2", {
 interface StepProps {
   label: string;
   stepIndex: number;
+  currentStep: number;
 }
 
-function StepperStep({ label, stepIndex }: StepProps) {
-  const { currentStep } = useStepsContext();
-
+function StepperStep({ label, stepIndex, currentStep }: StepProps) {
   const active = stepIndex <= currentStep;
 
   return (
     <div className={stepVariants({ active })}>
-      <StepperIcon stepIndex={stepIndex} />
+      <StepperIcon stepIndex={stepIndex} currentStep={currentStep} />
       <span className="text-xs capitalize">{label}</span>
     </div>
   );
 }
 
-function StepperIcon({ stepIndex }: Pick<StepProps, "stepIndex">) {
-  const { currentStep } = useStepsContext();
-
+function StepperIcon({
+  stepIndex,
+  currentStep,
+}: Pick<StepProps, "stepIndex" | "currentStep">) {
   if (stepIndex < currentStep) {
     return (
       <StepperIconWrapper variant="success">
