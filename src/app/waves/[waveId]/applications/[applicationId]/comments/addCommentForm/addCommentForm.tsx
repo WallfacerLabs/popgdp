@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
+import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 
 import {
   addCommentAction,
@@ -77,7 +78,7 @@ export function AddCommentForm() {
             onClick={handleSubmit(addReviewAction)}
           >
             Add review
-            <AddCommentIcon className="h-4 w-4" />
+            <AssignmentIcon className="h-4 w-4" />
           </Button>
         </FormFooter>
       </form>
