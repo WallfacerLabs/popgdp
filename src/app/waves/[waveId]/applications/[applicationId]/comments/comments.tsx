@@ -100,8 +100,9 @@ export async function Comment({ comment }: CommentProps) {
 
           <div className="mt-4 flex items-center gap-2 text-sm">
             <span className="font-bold">{comment.users.name}</span>
-
+            <Separator className="h-0.5 w-0.5 rounded-full bg-primary opacity-60" />
             <span className="text-foreground/60">Member</span>
+            <Separator className="h-0.5 w-0.5 rounded-full bg-primary opacity-60" />
             <span className="text-foreground/60">
               {formatDate(comment.createdAt)}
             </span>
