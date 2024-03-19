@@ -116,8 +116,9 @@ export default async function Wave({
           ))}
         </TableBody>
       </Table>
-
-      <TablePagination currentPage={page} totalPages={totalPages} />
+      {totalPages > 1 && (
+        <TablePagination currentPage={page} totalPages={totalPages} />
+      )}
     </>
   );
 }
