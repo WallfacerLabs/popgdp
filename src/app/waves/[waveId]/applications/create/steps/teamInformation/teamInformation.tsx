@@ -106,7 +106,7 @@ export function TeamInformation() {
               appendMember({ imageId: "", name: "", position: "" })
             }
           >
-            <PlusCircleIcon className="h-4 w-4" />
+            <PlusCircleIcon />
             Add member
           </Button>
         </div>
