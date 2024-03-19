@@ -172,6 +172,26 @@ const FormMessage = forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
+interface FormCounterProps
+  extends Pick<HTMLAttributes<HTMLSpanElement>, "className"> {
+  current: number;
+  limit: number;
+}
+
+const FormCounter = ({ current, limit, className }: FormCounterProps) => {
+  return (
+    <span
+      className={cn(
+        "!-mb-3 !mt-0 ml-auto mr-6 block w-fit -translate-y-1/2 rounded bg-background px-1 text-xs leading-none text-primary/40",
+        className,
+      )}
+    >
+      {current}/{limit}
+    </span>
+  );
+};
+FormCounter.displayName = "FormCounter";
+
 const FormFooter = ({
   className,
   children,
@@ -189,13 +209,14 @@ const FormFooter = ({
 FormFooter.displayName = "FormFooter";
 
 export {
-  useFormField,
   Form,
-  FormItem,
-  FormLabel,
   FormControl,
+  FormCounter,
   FormDescription,
-  FormMessage,
   FormField,
   FormFooter,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
 };
