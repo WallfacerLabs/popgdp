@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { ApplicationWithComments } from "@/drizzle/queries/applications";
 import { cva } from "class-variance-authority";
 
-import { formatDate } from "@/lib/dates";
+import { formatTime } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -103,7 +103,7 @@ export async function Comment({ comment }: CommentProps) {
 
             <span className="text-foreground/60">Member</span>
             <span className="text-foreground/60">
-              {formatDate(comment.createdAt)}
+              {formatTime(comment.createdAt)}
             </span>
           </div>
         </div>
