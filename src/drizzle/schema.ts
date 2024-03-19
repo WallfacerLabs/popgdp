@@ -171,7 +171,27 @@ export const commentsRelations = relations(comments, ({ one }) => ({
     references: [users.id],
   }),
   reviews: one(reviews),
+  commentValues: one(commentValues, {
+    fields: [comments.id],
+    references: [commentValues.commentId],
+  }),
 }));
+
+export const commentValues = pgTable(
+  "commentValue",
+  {
+    commentId: uuid("commentId")
+      .notNull()
+      .references(() => comments.id, { onDelete: "cascade" }),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    value: contentValueEnum("value").notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.commentId, table.userId] }),
+  }),
+);
 
 export const reviews = pgTable(
   "review",

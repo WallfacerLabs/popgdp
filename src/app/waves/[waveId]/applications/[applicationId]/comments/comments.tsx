@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserAvatar } from "@/components/ui/userAvatar";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
+import { CommentValueForm } from "./commentValue/commentValueForm";
 import { parseMarkdown } from "./parseMarkdown";
 
 const SECTIONS = {
@@ -18,9 +19,10 @@ const SECTIONS = {
 
 interface CommentsProps {
   comments: ApplicationWithComments["comments"];
+  waveId: number;
 }
 
-export async function Comments({ comments }: CommentsProps) {
+export async function Comments({ comments, waveId }: CommentsProps) {
   const reviews = comments.filter((comment) => comment.reviews?.isReview);
 
   return (
@@ -37,10 +39,10 @@ export async function Comments({ comments }: CommentsProps) {
           />
         </TabsList>
         <TabsContent value={SECTIONS.discussion}>
-          <CommentsList comments={comments} />
+          <CommentsList comments={comments} waveId={waveId} />
         </TabsContent>
         <TabsContent value={SECTIONS.reviews}>
-          <CommentsList comments={reviews} />
+          <CommentsList comments={reviews} waveId={waveId} />
         </TabsContent>
       </Tabs>
 
@@ -65,10 +67,10 @@ function SectionButton({ section, elementsAmount }: SectionButtonProps) {
   );
 }
 
-function CommentsList({ comments }: CommentsProps) {
+function CommentsList({ comments, waveId }: CommentsProps) {
   return comments.map((comment) => (
     <Fragment key={comment.id}>
-      <Comment comment={comment} />
+      <Comment comment={comment} waveId={waveId} />
       <Separator className="my-6 last:hidden" />
     </Fragment>
   ));
@@ -76,9 +78,10 @@ function CommentsList({ comments }: CommentsProps) {
 
 interface CommentProps {
   comment: ApplicationWithComments["comments"][number];
+  waveId: number;
 }
 
-export async function Comment({ comment }: CommentProps) {
+export async function Comment({ comment, waveId }: CommentProps) {
   const commentHtml = await parseMarkdown(comment.content);
 
   const isReview = comment.reviews?.isReview;
@@ -106,6 +109,11 @@ export async function Comment({ comment }: CommentProps) {
             <span className="text-foreground/60">
               {formatTime(comment.createdAt)}
             </span>
+            <CommentValueForm
+              applicationId={comment.applicationId}
+              waveId={waveId}
+              commentId={comment.id}
+            />
           </div>
         </div>
       </div>
