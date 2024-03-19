@@ -43,7 +43,7 @@ export default async function Application({ params }: { params: unknown }) {
 
       <Separator className="my-16" />
 
-      <Comments comments={application.comments} />
+      <Comments comments={application.comments} waveId={waveId} />
     </div>
   );
 }
