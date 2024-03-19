@@ -26,13 +26,13 @@ export default async function CreateApplication({
   const { waveId } = parseWaveParams(params);
 
   return (
-    <>
-      <div className="mb-16 flex items-center gap-4">
+    <div className="flex flex-col gap-14">
+      <div className="flex items-center gap-4">
         <BackButton href={`/waves/${waveId}`} />
         <PageTitle>Apply for the Grant</PageTitle>
       </div>
 
       <CreateApplicationForm />
-    </>
+    </div>
   );
 }
