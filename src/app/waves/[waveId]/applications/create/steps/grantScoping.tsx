@@ -134,13 +134,13 @@ export function GrantScoping() {
             type="button"
             onClick={() => dispatch({ type: "DECREMENT_STEP" })}
           >
-            <ArrowIcon direction="left" className="h-4 w-4" />
+            <ArrowIcon direction="left" />
             Back
           </Button>
 
           <Button disabled={form.formState.isSubmitting}>
             Next
-            <ArrowIcon direction="right" className="h-4 w-4" />
+            <ArrowIcon direction="right" />
           </Button>
         </FormFooter>
       </form>

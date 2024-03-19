@@ -8,7 +8,7 @@ export function BackButton({ href }: { href: string }) {
   return (
     <Button size="icon" variant="outline" className="text-sm" asChild>
       <Link href={href}>
-        <ArrowIcon direction="left" className="h-4 w-4" />
+        <ArrowIcon direction="left" />
       </Link>
     </Button>
   );

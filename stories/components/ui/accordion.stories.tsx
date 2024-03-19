@@ -61,14 +61,14 @@ const WithArrow: Story = {
       <AccordionItem value="first">
         <AccordionTrigger>
           First item
-          <ChevronDown className="h-4 w-4" />
+          <ChevronDown />
         </AccordionTrigger>
         <AccordionContent>First content</AccordionContent>
       </AccordionItem>
       <AccordionItem value="second">
         <AccordionTrigger>
           Second item
-          <ChevronDown className="h-4 w-4" />
+          <ChevronDown />
         </AccordionTrigger>
         <AccordionContent>Second content</AccordionContent>
       </AccordionItem>

@@ -69,7 +69,7 @@ const PaginationPrevious = ({
   ...props
 }: ComponentProps<typeof PaginationLink>) => (
   <PaginationLink aria-label="Go to previous page" size="icon" {...props}>
-    <ChevronLeft className="h-4 w-4" />
+    <ChevronLeft />
   </PaginationLink>
 );
 PaginationPrevious.displayName = "PaginationPrevious";
@@ -79,7 +79,7 @@ const PaginationNext = ({
   ...props
 }: ComponentProps<typeof PaginationLink>) => (
   <PaginationLink aria-label="Go to next page" size="icon" {...props}>
-    <ChevronRight className="h-4 w-4" />
+    <ChevronRight />
   </PaginationLink>
 );
 PaginationNext.displayName = "PaginationNext";

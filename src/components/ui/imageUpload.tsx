@@ -48,7 +48,7 @@ export const ImageUpload = forwardRef<HTMLInputElement, ImageUploadProps>(
             className="absolute bottom-2 right-2 h-6 w-6 p-0"
             onClick={onRemove}
           >
-            <TrashIcon className="h-4 w-4" />
+            <TrashIcon />
           </Button>
         )}
       </div>

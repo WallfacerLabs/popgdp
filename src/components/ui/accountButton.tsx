@@ -11,7 +11,7 @@ export function AccountButton() {
   if (status === "loading") {
     return (
       <Button className="w-24" disabled>
-        <Loader2Icon className="h-4 w-4 animate-spin" />
+        <Loader2Icon className="animate-spin" />
       </Button>
     );
   }

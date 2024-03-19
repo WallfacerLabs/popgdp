@@ -40,7 +40,7 @@ export const AvatarUpload = forwardRef<HTMLInputElement, AvatarUploadProps>(
             className="absolute bottom-0 right-0 h-6 w-6 translate-x-1/4 translate-y-1/4 p-0 opacity-70 transition-all hover:opacity-100 focus-visible:opacity-100"
             onClick={onRemove}
           >
-            <CrossIcon className="h-4 w-4" />
+            <CrossIcon />
           </Button>
         )}
       </div>
