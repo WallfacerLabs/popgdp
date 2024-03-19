@@ -84,7 +84,7 @@ export function TeamInformation() {
           )}
         />
 
-        <div className="space-y-2">
+        <div>
           <FormLabel>Members</FormLabel>
           {memberFields.length > 0 && (
             <ul className="flex flex-col gap-4 rounded-3xl border p-4">
@@ -101,7 +101,7 @@ export function TeamInformation() {
           <Button
             type="button"
             variant="outline"
-            className="w-full"
+            className="mt-2 w-full"
             onClick={() =>
               appendMember({ imageId: "", name: "", position: "" })
             }
