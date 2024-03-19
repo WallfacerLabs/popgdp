@@ -44,7 +44,7 @@ export default function RootLayout({
               asChild
             >
               <Link href="/">
-                <ProductIcon className="h-10 w-10" aria-label="POPGDP logo" />
+                <ProductIcon className="!h-10 !w-10" aria-label="POPGDP logo" />
                 <h1 className="px-3">POPGDP</h1>
               </Link>
             </Button>
