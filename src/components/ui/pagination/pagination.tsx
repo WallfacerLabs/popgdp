@@ -1,9 +1,10 @@
 import { forwardRef, type ComponentProps } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 
 import { cn } from "@/lib/cn";
 import { Button, ButtonProps } from "@/components/ui/button";
+import { ChevronIcon } from "@/components/icons/chevronIcon";
 
 const Pagination = ({ className, ...props }: ComponentProps<"nav">) => (
   <nav
@@ -69,7 +70,7 @@ const PaginationPrevious = ({
   ...props
 }: ComponentProps<typeof PaginationLink>) => (
   <PaginationLink aria-label="Go to previous page" size="icon" {...props}>
-    <ChevronLeft className="h-4 w-4" />
+    <ChevronIcon direction="left" className="h-4 w-4" />
   </PaginationLink>
 );
 PaginationPrevious.displayName = "PaginationPrevious";
@@ -79,7 +80,7 @@ const PaginationNext = ({
   ...props
 }: ComponentProps<typeof PaginationLink>) => (
   <PaginationLink aria-label="Go to next page" size="icon" {...props}>
-    <ChevronRight className="h-4 w-4" />
+    <ChevronIcon className="h-4 w-4" />
   </PaginationLink>
 );
 PaginationNext.displayName = "PaginationNext";

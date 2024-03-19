@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ChevronDown } from "lucide-react";
 
 import {
   Accordion,
@@ -7,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ChevronIcon } from "@/components/icons/chevronIcon";
 
 const meta = {
   title: "UI/Accordion",
@@ -61,14 +61,14 @@ const WithArrow: Story = {
       <AccordionItem value="first">
         <AccordionTrigger>
           First item
-          <ChevronDown className="h-4 w-4" />
+          <ChevronIcon direction="down" className="h-4 w-4" />
         </AccordionTrigger>
         <AccordionContent>First content</AccordionContent>
       </AccordionItem>
       <AccordionItem value="second">
         <AccordionTrigger>
           Second item
-          <ChevronDown className="h-4 w-4" />
+          <ChevronIcon direction="down" className="h-4 w-4" />
         </AccordionTrigger>
         <AccordionContent>Second content</AccordionContent>
       </AccordionItem>
