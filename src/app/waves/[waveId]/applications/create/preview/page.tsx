@@ -24,8 +24,8 @@ export default function PreviewApplication() {
   }
 
   return (
-    <div className="flex w-full flex-col gap-4">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="flex flex-col gap-8">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <BackButton href={`/waves/${waveId}/applications/create`} />
           <PageTitle>{applicationData.name}</PageTitle>
