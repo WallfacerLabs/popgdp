@@ -173,21 +173,16 @@ const FormMessage = forwardRef<
 FormMessage.displayName = "FormMessage";
 
 interface FormCounterProps
-  extends Pick<HTMLAttributes<HTMLSpanElement>, "className"> {
+  extends Pick<HTMLAttributes<HTMLParagraphElement>, "className"> {
   current: number;
   limit: number;
 }
 
 const FormCounter = ({ current, limit, className }: FormCounterProps) => {
   return (
-    <span
-      className={cn(
-        "!-mb-3 !mt-0 ml-auto mr-6 block w-fit -translate-y-1/2 rounded bg-background px-1 text-xs leading-none text-primary/40",
-        className,
-      )}
-    >
+    <p className={cn("!mt-0 ml-auto mr-4 w-fit text-xs opacity-60", className)}>
       {current}/{limit}
-    </span>
+    </p>
   );
 };
 FormCounter.displayName = "FormCounter";
