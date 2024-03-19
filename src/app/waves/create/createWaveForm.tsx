@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -28,6 +27,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { CalendarIcon } from "@/components/icons/calendarIcon";
 
 import { createWaveAction } from "./createWaveAction";
 import { createWaveSchema } from "./createWaveSchema";

@@ -1,7 +1,8 @@
 "use client";
 
-import { Loader2Icon } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
+
+import { ProgressIcon } from "@/components/icons/progressIcon";
 
 import { Button } from "./button";
 
@@ -11,7 +12,7 @@ export function AccountButton() {
   if (status === "loading") {
     return (
       <Button className="w-24" disabled>
-        <Loader2Icon className="animate-spin" />
+        <ProgressIcon className="animate-spin" />
       </Button>
     );
   }
