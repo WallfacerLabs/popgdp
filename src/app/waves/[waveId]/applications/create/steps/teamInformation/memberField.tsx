@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef } from "react";
-import { UseFieldArrayAppend, UseFormReturn } from "react-hook-form";
+import { UseFieldArrayRemove, UseFormReturn } from "react-hook-form";
 
 import { AvatarUpload } from "@/components/ui/avatarUpload";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { CheckIcon } from "@/components/icons/checkIcon";
+import { CrossIcon } from "@/components/icons/crossIcon";
 
 import { uploadImage } from "../uploadImageAction";
 import { teamInformationSchema } from "./teamInformation";
@@ -19,13 +19,13 @@ import { teamInformationSchema } from "./teamInformation";
 interface MemberFieldProps {
   form: UseFormReturn<teamInformationSchema>;
   index: number;
-  appendMember: UseFieldArrayAppend<teamInformationSchema>;
+  removeMember: UseFieldArrayRemove;
 }
 
 export const MemberField = ({
   form,
   index,
-  appendMember,
+  removeMember,
 }: MemberFieldProps) => {
   const avatarUploadRef = useRef<HTMLInputElement>(null);
 
@@ -101,9 +101,9 @@ export const MemberField = ({
         type="button"
         variant="outline"
         className="ml-auto h-10 w-10 p-0"
-        onClick={() => appendMember({ imageId: "", name: "", position: "" })}
+        onClick={() => removeMember(index)}
       >
-        <CheckIcon className="h-6 w-6" />
+        <CrossIcon className="h-6 w-6" />
       </Button>
     </li>
   );
