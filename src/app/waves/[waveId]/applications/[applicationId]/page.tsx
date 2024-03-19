@@ -8,8 +8,8 @@ import { CategoryBadge } from "@/components/ui/badge";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { Separator } from "@/components/ui/separator";
 
+import { ApplicationValueForm } from "./applicationValue/applicationValueForm";
 import { Comments } from "./comments/comments";
-import { UpvoteForm } from "./upvoteForm/upvoteForm";
 
 export default async function Application({ params }: { params: unknown }) {
   const { applicationId, waveId } = parseApplicationParams(params);
@@ -27,7 +27,7 @@ export default async function Application({ params }: { params: unknown }) {
           <PageTitle>{application.name}</PageTitle>
           <CategoryBadge>Category</CategoryBadge>
         </div>
-        <UpvoteForm applicationId={applicationId} waveId={waveId} />
+        <ApplicationValueForm applicationId={applicationId} waveId={waveId} />
       </div>
 
       <ApplicationPreview
