@@ -19,7 +19,7 @@ import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
 export const roadmapSchema = z.object({
-  tbd: z.string(),
+  tbdb: z.string(),
 });
 export type roadmapSchema = z.infer<typeof roadmapSchema>;
 
@@ -29,7 +29,7 @@ export function Roadmap() {
   const form = useForm<roadmapSchema>({
     resolver: zodResolver(roadmapSchema),
     defaultValues: {
-      tbd: applicationData.tbd ?? "",
+      tbdb: applicationData.tbdb ?? "",
     } satisfies roadmapSchema,
   });
 
@@ -44,7 +44,7 @@ export function Roadmap() {
       >
         <FormField
           control={form.control}
-          name="tbd"
+          name="tbdb"
           render={({ field }) => (
             <FormItem>
               <FormLabel>TBD</FormLabel>

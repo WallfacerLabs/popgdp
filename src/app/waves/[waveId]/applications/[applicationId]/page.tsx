@@ -33,6 +33,7 @@ export default async function Application({ params }: { params: unknown }) {
       <ApplicationPreview
         application={{
           ...application,
+          tbdb: application.tbd,
           imageId: application.imageId ?? undefined,
           members: application.members.map((member) => ({
             ...member,
