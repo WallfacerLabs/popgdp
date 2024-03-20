@@ -12,13 +12,18 @@ import { Unauthenticated } from "@/components/ui/unauthenticated";
 import { SaveIcon } from "@/components/icons/saveIcon";
 
 import { createApplicationAction } from "../steps/createApplicationAction";
-import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
+import {
+  applicationDataSchema,
+  useStepsContext,
+  useStepsDispatchContext,
+} from "../stepsProvider";
 
 export default function PreviewApplication() {
   const { waveId } = useWaveParams();
   const { data: session } = useSession();
 
   const { applicationData } = useStepsContext();
+  const validatedApplicationData = applicationDataSchema.parse(applicationData);
   const dispatch = useStepsDispatchContext();
   if (!session?.user) {
     return <Unauthenticated />;
@@ -40,7 +45,7 @@ export default function PreviewApplication() {
           <Button
             className="px-14"
             onClick={async () => {
-              await createApplicationAction(applicationData, waveId);
+              await createApplicationAction(validatedApplicationData, waveId);
               dispatch({ type: "RESET_STEPS" });
             }}
           >
@@ -51,7 +56,7 @@ export default function PreviewApplication() {
 
       <ApplicationPreview
         application={{
-          ...applicationData,
+          ...validatedApplicationData,
           user: {
             image: session.user.image,
             name: session.user.name,
