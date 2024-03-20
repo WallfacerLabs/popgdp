@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, useRef } from "react";
+import { positiveNumberSchema } from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,7 +29,7 @@ export const mainDetailsSchema = z.object({
   name: z.string(),
   entityName: z.string(),
   duration: z.string(),
-  budget: z.string(),
+  budget: positiveNumberSchema("Project budget"),
   summary: z.string(),
 });
 export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;

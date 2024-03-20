@@ -107,7 +107,7 @@ export default async function Wave({
                 </span>
               </TableCell>
               <TableCell>
-                <WldAmount amount="1,025,000.00" />
+                <WldAmount amount={1_025_000.0} />
               </TableCell>
               <TableCell>
                 <CategoryBadge>Category</CategoryBadge>

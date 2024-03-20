@@ -11,5 +11,11 @@ export const errorMessages = {
   nonEmptyString(fieldName: string) {
     return `${fieldName} cannot be empty`;
   },
+  number(fieldName: string) {
+    return `${fieldName} must be a valid number`;
+  },
+  positiveNumber(fieldName: string) {
+    return `${fieldName} must be a positive number`;
+  },
   invalidUrl: "Invalid URL",
 };
