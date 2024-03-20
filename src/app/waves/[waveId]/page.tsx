@@ -99,7 +99,7 @@ export default async function Wave({
               <TableCell>
                 <span className="font-bold">{project.name}</span>
               </TableCell>
-              <TableCell>{project.users.name}</TableCell>
+              <TableCell>{project.user.name}</TableCell>
               <TableCell>Entity name</TableCell>
               <TableCell>
                 <span className="opacity-60">

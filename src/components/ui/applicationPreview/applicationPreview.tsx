@@ -18,7 +18,7 @@ import { WldAmount } from "../wldAmount";
 import { ApplicationDetails } from "./applicationDetails";
 
 export interface Application extends ApplicationData {
-  users: {
+  user: {
     name: string | null | undefined;
     image: string | null | undefined;
   };
@@ -35,8 +35,8 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
         <div className="flex flex-col gap-6 p-10">
           <ContentRow label="User submitting">
             <UserPreview
-              image={application.users.image}
-              name={application.users.name}
+              image={application.user.image}
+              name={application.user.name}
               role="Member"
             />
           </ContentRow>

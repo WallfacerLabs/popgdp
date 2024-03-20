@@ -1,23 +1,23 @@
 import { db } from "@/drizzle/db";
-import { accounts, sessions, users } from "@/drizzle/schema";
+import { Account, Session, User } from "@/drizzle/schema";
 
 import { addDays } from "@/lib/dates";
 
 async function globalSetup() {
-  await db.delete(users);
+  await db.delete(User);
 
   const [{ userId }] = await db
-    .insert(users)
+    .insert(User)
     .values({ id: "regularUserId", email: "regularUser@email.com" })
-    .returning({ userId: users.id });
+    .returning({ userId: User.id });
 
-  await db.insert(sessions).values({
+  await db.insert(Session).values({
     userId,
     sessionToken: "regularUserSession",
     expires: addDays(new Date(), 180),
   });
 
-  await db.insert(accounts).values({
+  await db.insert(Account).values({
     userId,
     provider: "mock",
     providerAccountId: "mockId",

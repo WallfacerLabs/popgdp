@@ -1,14 +1,14 @@
 import { cache } from "react";
 import { db } from "@/drizzle/db";
-import { applications, members } from "@/drizzle/schema";
+import { Application, Member } from "@/drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 
 export const getApplicationWithComments = cache(
-  async (id: (typeof applications.$inferSelect)["id"]) => {
-    return db.query.applications.findFirst({
-      where: eq(applications.id, id),
+  async (id: (typeof Application.$inferSelect)["id"]) => {
+    return db.query.Application.findFirst({
+      where: eq(Application.id, id),
       with: {
-        users: {
+        user: {
           columns: {
             image: true,
             name: true,
@@ -16,13 +16,13 @@ export const getApplicationWithComments = cache(
         },
         comments: {
           with: {
-            users: {
+            user: {
               columns: {
                 image: true,
                 name: true,
               },
             },
-            reviews: {
+            review: {
               extras: {
                 isReview: sql<boolean>`true`.as("isReview"),
               },
@@ -45,20 +45,20 @@ export type ApplicationWithComments = NonNullable<
   Awaited<ReturnType<typeof getApplicationWithComments>>
 >;
 
-type MemberInsertData = Omit<typeof members.$inferInsert, "applicationId">;
+type MemberInsertData = Omit<typeof Member.$inferInsert, "applicationId">;
 
 export function insertApplication(
-  applicationData: typeof applications.$inferInsert,
+  applicationData: typeof Application.$inferInsert,
   membersData: MemberInsertData[],
 ) {
   return db.transaction(async (db) => {
     const [{ applicationId }] = await db
-      .insert(applications)
+      .insert(Application)
       .values(applicationData)
-      .returning({ applicationId: applications.id });
+      .returning({ applicationId: Application.id });
     await Promise.all(
       membersData.map((memberData) =>
-        db.insert(members).values({
+        db.insert(Member).values({
           ...memberData,
           imageId: memberData.imageId || undefined,
           applicationId,

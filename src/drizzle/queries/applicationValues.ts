@@ -1,11 +1,11 @@
 import { cache } from "react";
 import { db } from "@/drizzle/db";
-import { applicationValues } from "@/drizzle/schema";
+import { ApplicationValue } from "@/drizzle/schema";
 import { and, eq } from "drizzle-orm";
 
 type ApplicationValueQuery = {
-  applicationId: (typeof applicationValues.$inferSelect)["applicationId"];
-  userId: (typeof applicationValues.$inferSelect)["userId"] | undefined;
+  applicationId: (typeof ApplicationValue.$inferSelect)["applicationId"];
+  userId: (typeof ApplicationValue.$inferSelect)["userId"] | undefined;
 };
 
 export const getApplicationValue = cache(
@@ -14,10 +14,10 @@ export const getApplicationValue = cache(
       return undefined;
     }
 
-    const result = await db.query.applicationValues.findFirst({
+    const result = await db.query.ApplicationValue.findFirst({
       where: and(
-        eq(applicationValues.applicationId, query.applicationId),
-        eq(applicationValues.userId, query.userId),
+        eq(ApplicationValue.applicationId, query.applicationId),
+        eq(ApplicationValue.userId, query.userId),
       ),
     });
 
@@ -26,26 +26,26 @@ export const getApplicationValue = cache(
 );
 
 export function insertApplicationValue(
-  data: typeof applicationValues.$inferInsert,
+  data: typeof ApplicationValue.$inferInsert,
 ) {
   return db
-    .insert(applicationValues)
+    .insert(ApplicationValue)
     .values(data)
     .onConflictDoUpdate({
-      target: [applicationValues.userId, applicationValues.applicationId],
+      target: [ApplicationValue.userId, ApplicationValue.applicationId],
       set: { value: data.value },
     });
 }
 
 export function deleteApplicationValue(
-  query: typeof applicationValues.$inferSelect,
+  query: typeof ApplicationValue.$inferSelect,
 ) {
   return db
-    .delete(applicationValues)
+    .delete(ApplicationValue)
     .where(
       and(
-        eq(applicationValues.applicationId, query.applicationId),
-        eq(applicationValues.userId, query.userId),
+        eq(ApplicationValue.applicationId, query.applicationId),
+        eq(ApplicationValue.userId, query.userId),
       ),
     );
 }
