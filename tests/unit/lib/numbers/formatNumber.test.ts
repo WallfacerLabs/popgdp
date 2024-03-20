@@ -16,7 +16,7 @@ describe("utils/formatNumber", () => {
   });
 
   test("should format large number", () => {
-    expect(formatNumber(1000000)).toBe("1M");
+    expect(formatNumber(1_000_000)).toBe("1,000,000");
   });
 
   test("should format small number", () => {
@@ -35,17 +35,17 @@ describe("utils/formatNumber", () => {
 
   test("should format number with default config", () => {
     const result = formatNumber(1234.5678);
-    expect(result).toBe("1.23K");
+    expect(result).toBe("1,234.56");
   });
 
   test("should format number with custom maximumFractionDigits", () => {
     const result = formatNumber(1234.5678, { maximumFractionDigits: 3 });
-    expect(result).toBe("1.234K");
+    expect(result).toBe("1,234.567");
   });
 
   test("should format number with custom minimumFractionDigits", () => {
     const result = formatNumber(1234, { minimumFractionDigits: 3 });
-    expect(result).toBe("1.234K");
+    expect(result).toBe("1,234.000");
   });
 
   test("should format number with both custom maximumFractionDigits and minimumFractionDigits", () => {
@@ -53,7 +53,7 @@ describe("utils/formatNumber", () => {
       maximumFractionDigits: 3,
       minimumFractionDigits: 2,
     });
-    expect(result).toBe("1.234K");
+    expect(result).toBe("1,234.50");
   });
 
   test("should format number with zero fraction digits", () => {
@@ -61,6 +61,6 @@ describe("utils/formatNumber", () => {
       maximumFractionDigits: 0,
       minimumFractionDigits: 0,
     });
-    expect(result).toBe("1K");
+    expect(result).toBe("1,234");
   });
 });
