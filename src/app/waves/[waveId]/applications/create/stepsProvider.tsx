@@ -21,7 +21,8 @@ const applicationDataSchema = mainDetailsSchema
   .merge(teamInformationSchema)
   .merge(grantScopingSchema)
   .merge(roadmapSchema)
-  .merge(resourcesSchema);
+  .merge(resourcesSchema)
+  .partial();
 export type ApplicationData = z.infer<typeof applicationDataSchema>;
 
 const stepsStateSchema = z.object({
@@ -98,7 +99,9 @@ function getInitialState(initialArgs: StepsState): StepsState {
       if (localStorageValue) {
         return stepsStateSchema.parse(JSON.parse(localStorageValue));
       }
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return initialArgs;
