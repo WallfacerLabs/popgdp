@@ -112,6 +112,13 @@ const FormLabel = forwardRef<
 });
 FormLabel.displayName = "FormLabel";
 
+const FormRequired = ({
+  className,
+}: Pick<HTMLAttributes<HTMLSpanElement>, "className">) => {
+  return <span className={cn("ml-1 text-destructive", className)}>*</span>;
+};
+FormRequired.displayName = "FormRequired";
+
 const FormControl = forwardRef<
   ElementRef<typeof Slot>,
   ComponentPropsWithoutRef<typeof Slot>
@@ -221,6 +228,7 @@ export {
   FormFooter,
   FormItem,
   FormLabel,
+  FormRequired,
   FormMessage,
   useFormField,
 };
