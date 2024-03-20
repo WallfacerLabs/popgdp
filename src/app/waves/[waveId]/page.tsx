@@ -100,7 +100,7 @@ export default async function Wave({
                 <span className="font-bold">{project.name}</span>
               </TableCell>
               <TableCell>{project.user.name}</TableCell>
-              <TableCell>Entity name</TableCell>
+              <TableCell>{project.entityName}</TableCell>
               <TableCell>
                 <span className="opacity-60">
                   {formatDate(project.createdAt)}
