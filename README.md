@@ -19,6 +19,12 @@ Otherwise you can use any postgres database you have access to. Just make sure t
 You will also need to setup github oauth for authentication. You can do that [here](https://github.com/settings/developers)
 Set callback url to `http://localhost:3000/api/auth/callback/github` and set the client id and client secret in the `.env` file.
 
+To setup the database run migrations with:
+
+```bash
+pnpm drizzle:migrate
+```
+
 Then to start a local server run:
 
 ```bash
