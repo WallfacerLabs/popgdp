@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { ClockIcon } from "@/components/icons/clockIcon";
+import { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 import { uploadImage } from "./uploadImageAction";
@@ -162,9 +163,19 @@ export function MainDetails() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Proposed budget</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter proposed budget" />
-              </FormControl>
+              <FormHint
+                className="[&>input]:pr-20"
+                rightHint={
+                  <div className="flex items-center gap-1">
+                    <WorldcoinIcon />
+                    <span className="opacity-60">WLD</span>
+                  </div>
+                }
+              >
+                <FormControl>
+                  <Input {...field} placeholder="Enter proposed budget" />
+                </FormControl>
+              </FormHint>
               <FormMessage />
             </FormItem>
           )}
