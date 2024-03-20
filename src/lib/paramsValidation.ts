@@ -13,6 +13,8 @@ const waveParamsSchema = z.object({
   waveId: z.coerce.number(),
 });
 
+export type WaveParamsSchema = z.infer<typeof waveParamsSchema>;
+
 export function parseWaveParams(params: unknown) {
   return parseParams(waveParamsSchema, params);
 }
