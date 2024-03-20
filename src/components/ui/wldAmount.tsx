@@ -1,5 +1,5 @@
+import { formatNumber } from "@/lib/numbers";
 import { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
-import { formatNumber } from '@/lib/numbers';
 
 export function WldAmount({ amount }: { amount: number }) {
   return (
