@@ -14,7 +14,6 @@ export function formatNumber(
   const formatterConfig = {
     ...fractionsConfig,
     compactDisplay: "short",
-    notation: "compact",
     roundingMode: "floor",
   } as Intl.NumberFormatOptions;
   const formatter = new Intl.NumberFormat("en-US", formatterConfig);
