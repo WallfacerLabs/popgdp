@@ -4,10 +4,9 @@ import { auth } from "@/lib/auth";
 import { parseWaveParams } from "@/lib/paramsValidation";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
-const PreviewApplication = dynamic(
-  () => import("./applicationPreview").then((mod) => mod.PreviewApplication),
-  { ssr: false },
-);
+const PreviewApplication = dynamic(() => import("./applicationPreview"), {
+  ssr: false,
+});
 
 export default async function PreviewApplicationPage({
   params,
