@@ -1,11 +1,11 @@
 import { cache } from "react";
 import { db } from "@/drizzle/db";
-import { commentValues } from "@/drizzle/schema";
+import { CommentValue } from "@/drizzle/schema";
 import { and, eq } from "drizzle-orm";
 
 type CommentValueQuery = {
-  commentId: (typeof commentValues.$inferSelect)["commentId"];
-  userId: (typeof commentValues.$inferSelect)["userId"] | undefined;
+  commentId: (typeof CommentValue.$inferSelect)["commentId"];
+  userId: (typeof CommentValue.$inferSelect)["userId"] | undefined;
 };
 
 export const getCommentValue = cache(async (query: CommentValueQuery) => {
@@ -13,33 +13,33 @@ export const getCommentValue = cache(async (query: CommentValueQuery) => {
     return undefined;
   }
 
-  const result = await db.query.commentValues.findFirst({
+  const result = await db.query.CommentValue.findFirst({
     where: and(
-      eq(commentValues.commentId, query.commentId),
-      eq(commentValues.userId, query.userId),
+      eq(CommentValue.commentId, query.commentId),
+      eq(CommentValue.userId, query.userId),
     ),
   });
 
   return result?.value;
 });
 
-export function insertCommentValue(data: typeof commentValues.$inferInsert) {
+export function insertCommentValue(data: typeof CommentValue.$inferInsert) {
   return db
-    .insert(commentValues)
+    .insert(CommentValue)
     .values(data)
     .onConflictDoUpdate({
-      target: [commentValues.userId, commentValues.commentId],
+      target: [CommentValue.userId, CommentValue.commentId],
       set: { value: data.value },
     });
 }
 
-export function deleteCommentValue(query: typeof commentValues.$inferSelect) {
+export function deleteCommentValue(query: typeof CommentValue.$inferSelect) {
   return db
-    .delete(commentValues)
+    .delete(CommentValue)
     .where(
       and(
-        eq(commentValues.commentId, query.commentId),
-        eq(commentValues.userId, query.userId),
+        eq(CommentValue.commentId, query.commentId),
+        eq(CommentValue.userId, query.userId),
       ),
     );
 }

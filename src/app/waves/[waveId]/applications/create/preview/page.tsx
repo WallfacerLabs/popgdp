@@ -52,7 +52,7 @@ export default function PreviewApplication() {
       <ApplicationPreview
         application={{
           ...applicationData,
-          users: {
+          user: {
             image: session.user.image,
             name: session.user.name,
           },

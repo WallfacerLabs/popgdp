@@ -5,7 +5,7 @@ import {
   deleteApplicationValue,
   insertApplicationValue,
 } from "@/drizzle/queries/applicationValues";
-import { applicationValues } from "@/drizzle/schema";
+import { ApplicationValue } from "@/drizzle/schema";
 import { type Session } from "next-auth";
 
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
@@ -13,7 +13,7 @@ import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 interface ApplicationValueActionPayload extends ApplicationParamsSchema {
   session: Session | null;
   isChecked: boolean;
-  value: (typeof applicationValues.$inferInsert)["value"];
+  value: (typeof ApplicationValue.$inferInsert)["value"];
 }
 
 export async function applicationValueAction({
