@@ -12,6 +12,7 @@ import {
   FormControl,
   FormField,
   FormFooter,
+  FormHint,
   FormItem,
   FormLabel,
   FormMessage,
@@ -20,6 +21,8 @@ import { ImageUpload } from "@/components/ui/imageUpload";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
+import { ClockIcon } from "@/components/icons/clockIcon";
+import { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 import { uploadImage } from "./uploadImageAction";
@@ -142,12 +145,14 @@ export function MainDetails() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Proposed project duration</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Enter proposed project duration"
-                />
-              </FormControl>
+              <FormHint leftHint={<ClockIcon />}>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Enter proposed project duration"
+                  />
+                </FormControl>
+              </FormHint>
               <FormMessage />
             </FormItem>
           )}
@@ -159,9 +164,19 @@ export function MainDetails() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Proposed budget</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter proposed budget" />
-              </FormControl>
+              <FormHint
+                className="[&>input]:pr-20"
+                rightHint={
+                  <div className="flex items-center gap-1">
+                    <WorldcoinIcon />
+                    <span className="opacity-60">WLD</span>
+                  </div>
+                }
+              >
+                <FormControl>
+                  <Input {...field} placeholder="Enter proposed budget" />
+                </FormControl>
+              </FormHint>
               <FormMessage />
             </FormItem>
           )}

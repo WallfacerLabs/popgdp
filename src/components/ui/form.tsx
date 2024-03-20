@@ -1,6 +1,7 @@
 import {
   createContext,
   forwardRef,
+  ReactNode,
   useContext,
   useId,
   type ComponentPropsWithoutRef,
@@ -117,6 +118,36 @@ const FormLabel = forwardRef<
 });
 FormLabel.displayName = "FormLabel";
 
+interface FormHintProps {
+  leftHint?: ReactNode;
+  rightHint?: ReactNode;
+}
+
+const FormHint = ({
+  leftHint,
+  rightHint,
+  className,
+  children,
+}: FormHintProps &
+  Pick<HTMLAttributes<HTMLDivElement>, "className" | "children">) => {
+  return (
+    <div
+      className={cn(
+        "relative flex items-center text-sm",
+        "[&_svg]:h-4 [&_svg]:w-4",
+        leftHint && "[&>input]:pl-10",
+        rightHint && "[&>input]:pr-10",
+        className,
+      )}
+    >
+      {leftHint && <div className="absolute left-4">{leftHint}</div>}
+      {children}
+      {rightHint && <div className=" absolute right-4">{rightHint}</div>}
+    </div>
+  );
+};
+FormHint.displayName = "FormHint";
+
 const FormControl = forwardRef<
   ElementRef<typeof Slot>,
   ComponentPropsWithoutRef<typeof Slot>
@@ -226,6 +257,7 @@ export {
   FormFooter,
   FormItem,
   FormLabel,
+  FormHint,
   FormMessage,
   useFormField,
 };
