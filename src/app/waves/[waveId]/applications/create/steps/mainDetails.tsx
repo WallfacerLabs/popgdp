@@ -44,9 +44,9 @@ export function MainDetails() {
       name: applicationData.name ?? "",
       entityName: applicationData.entityName ?? "",
       duration: applicationData.duration ?? "",
-      budget: applicationData.budget ?? "",
+      budget: String(applicationData.budget) ?? "",
       summary: applicationData.summary ?? "",
-    } satisfies mainDetailsSchema,
+    } satisfies Record<keyof mainDetailsSchema, string> as any,
   });
 
   const imageUploadRef = useRef<HTMLInputElement>(null);
