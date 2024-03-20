@@ -7,7 +7,8 @@ import { PageTitle } from "@/components/ui/pageTitle";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
 const CreateApplicationForm = dynamic(
-  () => import("./createApplicationForm").then((mod) => mod.Form),
+  () =>
+    import("./createApplicationForm").then((mod) => mod.CreateApplicationForm),
   {
     ssr: false,
   },

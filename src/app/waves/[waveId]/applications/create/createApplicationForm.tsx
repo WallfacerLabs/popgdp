@@ -34,7 +34,7 @@ const stepsConfig = [
   },
 ];
 
-export function Form() {
+export function CreateApplicationForm() {
   const { currentStep } = useStepsContext();
 
   return (
