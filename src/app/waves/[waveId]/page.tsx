@@ -107,7 +107,7 @@ export default async function Wave({
                 </span>
               </TableCell>
               <TableCell>
-                <WldAmount amount={1_025_000.0} />
+                <WldAmount amount={project.budget} />
               </TableCell>
               <TableCell>
                 <CategoryBadge>Category</CategoryBadge>
