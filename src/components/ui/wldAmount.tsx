@@ -1,6 +1,6 @@
 import { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
 
-export function WldAmount({ amount }: { amount: string }) {
+export function WldAmount({ amount }: { amount: number }) {
   return (
     <div className="flex items-center">
       <span className="font-bold">{amount}</span>
