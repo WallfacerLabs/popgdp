@@ -11,6 +11,7 @@ import {
   FormControl,
   FormField,
   FormFooter,
+  FormHint,
   FormItem,
   FormLabel,
   FormMessage,
@@ -19,6 +20,7 @@ import { ImageUpload } from "@/components/ui/imageUpload";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
+import { ClockIcon } from "@/components/icons/clockIcon";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 import { uploadImage } from "./uploadImageAction";
@@ -141,12 +143,14 @@ export function MainDetails() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Proposed project duration</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Enter proposed project duration"
-                />
-              </FormControl>
+              <FormHint leftHint={<ClockIcon />}>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Enter proposed project duration"
+                  />
+                </FormControl>
+              </FormHint>
               <FormMessage />
             </FormItem>
           )}
