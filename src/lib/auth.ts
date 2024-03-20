@@ -9,7 +9,7 @@ export const {
   auth,
   handlers: { GET, POST },
 } = NextAuth({
-  trustHost: process.env.PLAYWRIGHT === "true",
+  trustHost: true,
   adapter: DrizzleAdapter(db),
   providers: [
     GithubProvider({
