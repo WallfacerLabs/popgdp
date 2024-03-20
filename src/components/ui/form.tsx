@@ -84,7 +84,7 @@ const FormItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 
     return (
       <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={className} {...props} />
+        <div ref={ref} className={cn("group", className)} {...props} />
       </FormItemContext.Provider>
     );
   },
@@ -94,7 +94,7 @@ FormItem.displayName = "FormItem";
 const FormLabel = forwardRef<
   ElementRef<typeof LabelPrimitive.Root>,
   ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => {
+>(({ children, className, ...props }, ref) => {
   const { error, formItemId } = useFormField();
 
   return (
@@ -107,7 +107,12 @@ const FormLabel = forwardRef<
       )}
       htmlFor={formItemId}
       {...props}
-    />
+    >
+      {children}
+      <span className="ml-1 hidden text-destructive group-aria-[required=true]:inline-block">
+        *
+      </span>
+    </Label>
   );
 });
 FormLabel.displayName = "FormLabel";
