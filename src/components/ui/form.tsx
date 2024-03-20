@@ -1,6 +1,7 @@
 import {
   createContext,
   forwardRef,
+  ReactNode,
   useContext,
   useId,
   type ComponentPropsWithoutRef,
@@ -84,7 +85,7 @@ const FormItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 
     return (
       <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={className} {...props} />
+        <div ref={ref} className={cn("group", className)} {...props} />
       </FormItemContext.Provider>
     );
   },
@@ -94,7 +95,7 @@ FormItem.displayName = "FormItem";
 const FormLabel = forwardRef<
   ElementRef<typeof LabelPrimitive.Root>,
   ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => {
+>(({ children, className, ...props }, ref) => {
   const { error, formItemId } = useFormField();
 
   return (
@@ -107,10 +108,45 @@ const FormLabel = forwardRef<
       )}
       htmlFor={formItemId}
       {...props}
-    />
+    >
+      {children}
+      <span className="ml-1 hidden text-destructive group-aria-[required=true]:inline-block">
+        *
+      </span>
+    </Label>
   );
 });
 FormLabel.displayName = "FormLabel";
+
+interface FormHintProps {
+  leftHint?: ReactNode;
+  rightHint?: ReactNode;
+}
+
+const FormHint = ({
+  leftHint,
+  rightHint,
+  className,
+  children,
+}: FormHintProps &
+  Pick<HTMLAttributes<HTMLDivElement>, "className" | "children">) => {
+  return (
+    <div
+      className={cn(
+        "relative flex items-center text-sm",
+        "[&_svg]:h-4 [&_svg]:w-4",
+        leftHint && "[&>input]:pl-10",
+        rightHint && "[&>input]:pr-10",
+        className,
+      )}
+    >
+      {leftHint && <div className="absolute left-4">{leftHint}</div>}
+      {children}
+      {rightHint && <div className=" absolute right-4">{rightHint}</div>}
+    </div>
+  );
+};
+FormHint.displayName = "FormHint";
 
 const FormControl = forwardRef<
   ElementRef<typeof Slot>,
@@ -221,6 +257,7 @@ export {
   FormFooter,
   FormItem,
   FormLabel,
+  FormHint,
   FormMessage,
   useFormField,
 };

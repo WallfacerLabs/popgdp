@@ -1,68 +1,23 @@
-"use client";
+import dynamic from "next/dynamic";
 
-import { useSession } from "next-auth/react";
-
-import { useWaveParams } from "@/lib/paramsValidation";
-import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
-import { BackButton } from "@/components/ui/backButton";
-import { CategoryBadge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { auth } from "@/lib/auth";
+import { parseWaveParams } from "@/lib/paramsValidation";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
-import { SaveIcon } from "@/components/icons/saveIcon";
 
-import { createApplicationAction } from "../steps/createApplicationAction";
-import {
-  applicationDataSchema,
-  useStepsContext,
-  useStepsDispatchContext,
-} from "../stepsProvider";
+const PreviewApplication = dynamic(() => import("./applicationPreview"), {
+  ssr: false,
+});
 
-export default function PreviewApplication() {
-  const { waveId } = useWaveParams();
-  const { data: session } = useSession();
-
-  const { applicationData } = useStepsContext();
-  const validatedApplicationData = applicationDataSchema.parse(applicationData);
-  const dispatch = useStepsDispatchContext();
-  if (!session?.user) {
+export default async function PreviewApplicationPage({
+  params,
+}: {
+  params: unknown;
+}) {
+  const { waveId } = parseWaveParams(params);
+  const session = await auth();
+  if (!session?.user?.id) {
     return <Unauthenticated />;
   }
 
-  return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <BackButton href={`/waves/${waveId}/applications/create`} />
-          <PageTitle>{applicationData.name}</PageTitle>
-          <CategoryBadge>Category</CategoryBadge>
-        </div>
-        <div className="flex gap-4">
-          <Button variant="secondary">
-            Save as draft
-            <SaveIcon />
-          </Button>
-          <Button
-            className="px-14"
-            onClick={async () => {
-              await createApplicationAction(validatedApplicationData, waveId);
-              dispatch({ type: "RESET_STEPS" });
-            }}
-          >
-            Submit
-          </Button>
-        </div>
-      </div>
-
-      <ApplicationPreview
-        application={{
-          ...validatedApplicationData,
-          user: {
-            image: session.user.image,
-            name: session.user.name,
-          },
-        }}
-      />
-    </div>
-  );
+  return <PreviewApplication waveId={waveId} user={session.user} />;
 }

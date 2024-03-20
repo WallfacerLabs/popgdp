@@ -6,13 +6,9 @@ import { BackButton } from "@/components/ui/backButton";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
-const CreateApplicationForm = dynamic(
-  () =>
-    import("./createApplicationForm").then((mod) => mod.CreateApplicationForm),
-  {
-    ssr: false,
-  },
-);
+const CreateApplicationForm = dynamic(() => import("./createApplicationForm"), {
+  ssr: false,
+});
 
 export default async function CreateApplication({
   params,
