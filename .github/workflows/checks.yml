@@ -9,6 +9,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
+      PLAYWRIGHT: true
       DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
     services:
       postgres:
