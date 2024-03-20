@@ -27,5 +27,5 @@ export const specificLengthStringSchema = (
     .string()
     .max(max, { message: errorMessages.maxLength(fieldName, max) })
     .trim()
-    .min(min, { message: errorMessages.minLength(fieldName, min) })
+    .min(min, { message: errorMessages.minLength(fieldName, min) });
 };
