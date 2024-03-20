@@ -47,7 +47,7 @@ export function MainDetails() {
       name: applicationData.name ?? "",
       entityName: applicationData.entityName ?? "",
       duration: applicationData.duration ?? "",
-      budget: String(applicationData.budget) ?? "",
+      budget: applicationData.budget ? applicationData.budget.toString() : "",
       summary: applicationData.summary ?? "",
     } satisfies Record<keyof mainDetailsSchema, string> as any,
   });
