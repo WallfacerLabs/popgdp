@@ -29,7 +29,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "pnpm dev",
+    command: "pnpm start",
     url: baseURL,
     reuseExistingServer: !process.env.CI,
   },
