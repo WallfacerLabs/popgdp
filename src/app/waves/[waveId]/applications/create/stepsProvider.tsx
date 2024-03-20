@@ -17,7 +17,7 @@ import { teamInformationSchema } from "./steps/teamInformation/teamInformation";
 
 const LOCAL_STORAGE_KEY = "stepsState";
 
-const applicationDataSchema = mainDetailsSchema
+export const applicationDataSchema = mainDetailsSchema
   .merge(teamInformationSchema)
   .merge(grantScopingSchema)
   .merge(roadmapSchema)
@@ -26,7 +26,7 @@ export type ApplicationData = z.infer<typeof applicationDataSchema>;
 
 const stepsStateSchema = z.object({
   currentStep: z.number(),
-  applicationData: applicationDataSchema,
+  applicationData: applicationDataSchema.partial(),
 });
 type StepsState = z.infer<typeof stepsStateSchema>;
 
@@ -98,7 +98,9 @@ function getInitialState(initialArgs: StepsState): StepsState {
       if (localStorageValue) {
         return stepsStateSchema.parse(JSON.parse(localStorageValue));
       }
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return initialArgs;
