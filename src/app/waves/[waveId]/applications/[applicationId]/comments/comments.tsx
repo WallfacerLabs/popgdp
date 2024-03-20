@@ -23,7 +23,7 @@ interface CommentsProps {
 }
 
 export async function Comments({ comments, waveId }: CommentsProps) {
-  const reviews = comments.filter((comment) => comment.reviews?.isReview);
+  const reviews = comments.filter((comment) => comment.review?.isReview);
 
   return (
     <div className="flex flex-col gap-8">
@@ -84,7 +84,7 @@ interface CommentProps {
 export async function Comment({ comment, waveId }: CommentProps) {
   const commentHtml = await parseMarkdown(comment.content);
 
-  const isReview = comment.reviews?.isReview;
+  const isReview = comment.review?.isReview;
 
   return (
     <div className={commentContainerVariants({ isReview })}>
@@ -94,7 +94,7 @@ export async function Comment({ comment, waveId }: CommentProps) {
         </Badge>
       )}
       <div className="flex gap-3">
-        <UserAvatar name={comment.users.name} image={comment.users.image} />
+        <UserAvatar name={comment.user.name} image={comment.user.image} />
         <div className="flex w-full flex-col justify-between gap-1">
           <div
             className="prose prose-sm max-w-none"
@@ -102,7 +102,7 @@ export async function Comment({ comment, waveId }: CommentProps) {
           />
 
           <div className="mt-4 flex items-center gap-2 text-sm">
-            <span className="font-bold">{comment.users.name}</span>
+            <span className="font-bold">{comment.user.name}</span>
             <Separator className="h-0.5 w-0.5 rounded-full bg-primary opacity-60" />
             <span className="text-foreground/60">Member</span>
             <Separator className="h-0.5 w-0.5 rounded-full bg-primary opacity-60" />

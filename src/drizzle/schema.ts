@@ -18,9 +18,11 @@ const bytea = customType<{ data: Buffer }>({
   },
 });
 
-export const contentValueEnum = pgEnum("contentValue", ["positive", "spam"]);
+const contentValues = ["positive", "spam"] as const;
+export const contentValueEnum = pgEnum("contentValue", contentValues);
+export type ContentValueEnum = (typeof contentValues)[number];
 
-export const waves = pgTable("wave", {
+export const Wave = pgTable("wave", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   startsAt: timestamp("startsAt", {
@@ -42,11 +44,11 @@ export const waves = pgTable("wave", {
     .defaultNow(),
 });
 
-export const wavesRelations = relations(waves, ({ many }) => ({
-  applications: many(applications),
+export const WaveRelations = relations(Wave, ({ many }) => ({
+  applications: many(Application),
 }));
 
-export const applications = pgTable("application", {
+export const Application = pgTable("application", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
   summary: text("summary").notNull(),
@@ -64,15 +66,15 @@ export const applications = pgTable("application", {
 
   tbd: text("tbd").notNull(),
 
-  imageId: uuid("imageId").references(() => images.id, {
+  imageId: uuid("imageId").references(() => Image.id, {
     onDelete: "cascade",
   }),
   waveId: integer("waveId")
     .notNull()
-    .references(() => waves.id, { onDelete: "cascade" }),
+    .references(() => Wave.id, { onDelete: "cascade" }),
   userId: text("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => User.id, { onDelete: "cascade" }),
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,
@@ -87,28 +89,25 @@ export const applications = pgTable("application", {
     .defaultNow(),
 });
 
-export const applicationsRelations = relations(
-  applications,
-  ({ one, many }) => ({
-    wave: one(waves, {
-      fields: [applications.waveId],
-      references: [waves.id],
-    }),
-    users: one(users, {
-      fields: [applications.userId],
-      references: [users.id],
-    }),
-    comments: many(comments),
-    members: many(members),
+export const ApplicationRelations = relations(Application, ({ one, many }) => ({
+  wave: one(Wave, {
+    fields: [Application.waveId],
+    references: [Wave.id],
   }),
-);
+  user: one(User, {
+    fields: [Application.userId],
+    references: [User.id],
+  }),
+  comments: many(Comment),
+  members: many(Member),
+}));
 
-export const members = pgTable("member", {
+export const Member = pgTable("member", {
   id: uuid("id").defaultRandom().primaryKey(),
   applicationId: uuid("applicationId")
     .notNull()
-    .references(() => applications.id, { onDelete: "cascade" }),
-  imageId: uuid("imageId").references(() => images.id, {
+    .references(() => Application.id, { onDelete: "cascade" }),
+  imageId: uuid("imageId").references(() => Image.id, {
     onDelete: "cascade",
   }),
   name: text("name").notNull(),
@@ -127,26 +126,26 @@ export const members = pgTable("member", {
     .defaultNow(),
 });
 
-export const membersRelations = relations(members, ({ one }) => ({
-  application: one(applications, {
-    fields: [members.applicationId],
-    references: [applications.id],
+export const MemberRelations = relations(Member, ({ one }) => ({
+  application: one(Application, {
+    fields: [Member.applicationId],
+    references: [Application.id],
   }),
-  images: one(images, {
-    fields: [members.imageId],
-    references: [images.id],
+  image: one(Image, {
+    fields: [Member.imageId],
+    references: [Image.id],
   }),
 }));
 
-export const comments = pgTable("comment", {
+export const Comment = pgTable("comment", {
   id: uuid("id").defaultRandom().primaryKey(),
   content: text("content").notNull(),
   applicationId: uuid("applicationId")
     .notNull()
-    .references(() => applications.id, { onDelete: "cascade" }),
+    .references(() => Application.id, { onDelete: "cascade" }),
   userId: text("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => User.id, { onDelete: "cascade" }),
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,
@@ -161,31 +160,31 @@ export const comments = pgTable("comment", {
     .defaultNow(),
 });
 
-export const commentsRelations = relations(comments, ({ one }) => ({
-  application: one(applications, {
-    fields: [comments.applicationId],
-    references: [applications.id],
+export const CommentRelations = relations(Comment, ({ one }) => ({
+  application: one(Application, {
+    fields: [Comment.applicationId],
+    references: [Application.id],
   }),
-  users: one(users, {
-    fields: [comments.userId],
-    references: [users.id],
+  user: one(User, {
+    fields: [Comment.userId],
+    references: [User.id],
   }),
-  reviews: one(reviews),
-  commentValues: one(commentValues, {
-    fields: [comments.id],
-    references: [commentValues.commentId],
+  review: one(Review),
+  commentValue: one(CommentValue, {
+    fields: [Comment.id],
+    references: [CommentValue.commentId],
   }),
 }));
 
-export const commentValues = pgTable(
+export const CommentValue = pgTable(
   "commentValue",
   {
     commentId: uuid("commentId")
       .notNull()
-      .references(() => comments.id, { onDelete: "cascade" }),
+      .references(() => Comment.id, { onDelete: "cascade" }),
     userId: text("userId")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => User.id, { onDelete: "cascade" }),
     value: contentValueEnum("value").notNull(),
   },
   (table) => ({
@@ -193,18 +192,18 @@ export const commentValues = pgTable(
   }),
 );
 
-export const reviews = pgTable(
+export const Review = pgTable(
   "review",
   {
     commentId: uuid("commentId")
       .notNull()
-      .references(() => comments.id, { onDelete: "cascade" }),
+      .references(() => Comment.id, { onDelete: "cascade" }),
     userId: text("userId")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => User.id, { onDelete: "cascade" }),
     applicationId: uuid("applicationId")
       .notNull()
-      .references(() => applications.id, { onDelete: "cascade" }),
+      .references(() => Application.id, { onDelete: "cascade" }),
   },
   (table) => ({
     pk: primaryKey({
@@ -213,30 +212,30 @@ export const reviews = pgTable(
   }),
 );
 
-export const reviewsRelations = relations(reviews, ({ one }) => ({
-  comments: one(comments, {
-    fields: [reviews.commentId],
-    references: [comments.id],
+export const ReviewRelations = relations(Review, ({ one }) => ({
+  comment: one(Comment, {
+    fields: [Review.commentId],
+    references: [Comment.id],
   }),
-  users: one(users, {
-    fields: [reviews.userId],
-    references: [users.id],
+  user: one(User, {
+    fields: [Review.userId],
+    references: [User.id],
   }),
-  application: one(applications, {
-    fields: [reviews.applicationId],
-    references: [applications.id],
+  application: one(Application, {
+    fields: [Review.applicationId],
+    references: [Application.id],
   }),
 }));
 
-export const applicationValues = pgTable(
+export const ApplicationValue = pgTable(
   "applicationValue",
   {
     applicationId: uuid("applicationId")
       .notNull()
-      .references(() => applications.id, { onDelete: "cascade" }),
+      .references(() => Application.id, { onDelete: "cascade" }),
     userId: text("userId")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => User.id, { onDelete: "cascade" }),
     value: contentValueEnum("value").notNull(),
   },
   (table) => ({
@@ -244,7 +243,7 @@ export const applicationValues = pgTable(
   }),
 );
 
-export const users = pgTable("user", {
+export const User = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
   email: text("email").notNull(),
@@ -267,11 +266,11 @@ export const users = pgTable("user", {
     .defaultNow(),
 });
 
-export const images = pgTable("image", {
+export const Image = pgTable("image", {
   id: uuid("id").defaultRandom().primaryKey(),
   userId: text("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => User.id, { onDelete: "cascade" }),
   content: bytea("content").notNull(),
   createdAt: timestamp("createdAt", {
     mode: "date",
@@ -287,12 +286,12 @@ export const images = pgTable("image", {
     .defaultNow(),
 });
 
-export const accounts = pgTable(
+export const Account = pgTable(
   "account",
   {
     userId: text("userId")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => User.id, { onDelete: "cascade" }),
     type: text("type").$type<AdapterAccount["type"]>().notNull(),
     provider: text("provider").notNull(),
     providerAccountId: text("providerAccountId").notNull(),
@@ -311,15 +310,15 @@ export const accounts = pgTable(
   }),
 );
 
-export const sessions = pgTable("session", {
+export const Session = pgTable("session", {
   sessionToken: text("sessionToken").notNull().primaryKey(),
   userId: text("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => User.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date", withTimezone: true }).notNull(),
 });
 
-export const verificationTokens = pgTable(
+export const VerificationToken = pgTable(
   "verificationToken",
   {
     identifier: text("identifier").notNull(),

@@ -1,11 +1,11 @@
 import { db } from "@/drizzle/db";
-import { waves } from "@/drizzle/schema";
+import { Wave } from "@/drizzle/schema";
 import { expect, test } from "@playwright/test";
 
 import { getPageWithLoggedUser } from "./utils/getPageWithLoggedUser";
 
 test.beforeEach(async () => {
-  await db.delete(waves);
+  await db.delete(Wave);
 });
 
 test("cannot access page if not authenticated", async ({ page }) => {

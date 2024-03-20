@@ -5,7 +5,7 @@ import {
   deleteCommentValue,
   insertCommentValue,
 } from "@/drizzle/queries/commentValues";
-import { commentValues } from "@/drizzle/schema";
+import { CommentValue } from "@/drizzle/schema";
 import { type Session } from "next-auth";
 
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
@@ -14,7 +14,7 @@ interface CommentValueActionPayload extends ApplicationParamsSchema {
   commentId: string;
   session: Session | null;
   isChecked: boolean;
-  value: (typeof commentValues.$inferInsert)["value"];
+  value: (typeof CommentValue.$inferInsert)["value"];
 }
 
 export async function commentValueAction({
