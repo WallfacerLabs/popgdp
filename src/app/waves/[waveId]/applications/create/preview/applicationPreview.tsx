@@ -22,7 +22,10 @@ interface PreviewApplicationProps extends WaveParamsSchema {
   user: User;
 }
 
-export function PreviewApplication({ waveId, user }: PreviewApplicationProps) {
+export default function PreviewApplication({
+  waveId,
+  user,
+}: PreviewApplicationProps) {
   const router = useRouter();
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
