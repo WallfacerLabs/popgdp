@@ -251,6 +251,7 @@ export {
   FormFooter,
   FormItem,
   FormLabel,
+  FormHint,
   FormMessage,
   useFormField,
 };
