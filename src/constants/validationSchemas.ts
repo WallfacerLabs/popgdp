@@ -17,3 +17,15 @@ export const positiveNumberSchema = (fieldName: string) => {
     message: errorMessages.positiveNumber(fieldName),
   });
 };
+
+export const specificLengthStringSchema = (
+  fieldName: string,
+  min: number,
+  max: number,
+) => {
+  return z
+    .string()
+    .max(max, { message: errorMessages.maxLength(fieldName, max) })
+    .trim()
+    .min(min, { message: errorMessages.minLength(fieldName, min) });
+};
