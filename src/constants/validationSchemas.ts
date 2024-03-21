@@ -20,8 +20,7 @@ export const positiveNumberSchema = (fieldName: string) => {
 
 export const specificLengthStringSchema = (
   fieldName: string,
-  min: number,
-  max: number,
+  { min, max }: { min: number; max: number },
 ) => {
   return z
     .string()
