@@ -37,11 +37,7 @@ const FORM_FIELD_PARAMS = {
 
 export const mainDetailsSchema = z.object({
   imageId: z.string().optional(),
-  name: specificLengthStringSchema(
-    "Project name",
-    FORM_FIELD_PARAMS.name.min,
-    FORM_FIELD_PARAMS.name.max,
-  ),
+  name: specificLengthStringSchema("Project name", FORM_FIELD_PARAMS.name),
   entityName: z.string(),
   duration: z.string(),
   budget: positiveNumberSchema("Project budget"),

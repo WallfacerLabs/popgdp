@@ -4,9 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { insertWave } from "@/drizzle/queries/waves";
 
-import { createWaveSchema } from "./createWaveSchema";
-
-export async function createWaveAction(data: createWaveSchema) {
+export async function createWaveAction(data: any) {
   const [{ id }] = await insertWave({
     name: data.waveName,
     startsAt: data.duration.from,
