@@ -188,6 +188,21 @@ const FormDescription = forwardRef<
 });
 FormDescription.displayName = "FormDescription";
 
+const FormMessages = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn("flex gap-4 [&>p]:mt-0.5 [&>span]:mt-0.5", className)}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  },
+);
+FormMessages.displayName = "FormMessages";
+
 const FormMessage = forwardRef<
   HTMLParagraphElement,
   HTMLAttributes<HTMLParagraphElement>
@@ -204,11 +219,7 @@ const FormMessage = forwardRef<
       data-role="message"
       ref={ref}
       id={formMessageId}
-      className={cn(
-        "text-sm font-medium text-destructive",
-        "[input+&]:mt-0.5 [textarea+&]:mt-0.5",
-        className,
-      )}
+      className={cn("text-xs font-medium text-destructive", className)}
       {...props}
     >
       {body}
@@ -226,10 +237,7 @@ interface FormCounterProps
 const FormCounter = ({ current, limit, className }: FormCounterProps) => {
   return (
     <p
-      className={cn(
-        "group !mt-0 ml-auto mr-4 w-fit text-xs opacity-60",
-        className,
-      )}
+      className={cn("group ml-auto mr-4 w-fit text-xs opacity-60", className)}
       data-overlimit={current > limit}
     >
       <span className="transition-colors group-data-[overlimit=true]:text-destructive">
@@ -267,6 +275,7 @@ export {
   FormHint,
   FormItem,
   FormLabel,
+  FormMessages,
   FormMessage,
   useFormField,
 };
