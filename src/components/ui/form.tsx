@@ -225,8 +225,17 @@ interface FormCounterProps
 
 const FormCounter = ({ current, limit, className }: FormCounterProps) => {
   return (
-    <p className={cn("!mt-0 ml-auto mr-4 w-fit text-xs opacity-60", className)}>
-      {current}/{limit}
+    <p
+      className={cn(
+        "group !mt-0 ml-auto mr-4 w-fit text-xs opacity-60",
+        className,
+      )}
+      data-overlimit={current > limit}
+    >
+      <span className="transition-colors group-data-[overlimit=true]:text-destructive">
+        {current}
+      </span>
+      /{limit}
     </p>
   );
 };
@@ -255,9 +264,9 @@ export {
   FormDescription,
   FormField,
   FormFooter,
+  FormHint,
   FormItem,
   FormLabel,
-  FormHint,
   FormMessage,
   useFormField,
 };
