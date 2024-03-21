@@ -102,7 +102,7 @@ const FormLabel = forwardRef<
     <Label
       ref={ref}
       className={cn(
-        "mb-0.5 block text-xs font-bold",
+        "mb-0.5 block w-fit text-xs font-bold",
         error && "text-destructive",
         className,
       )}
