@@ -14,6 +14,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           "file:border-0 file:bg-transparent file:text-sm file:font-medium",
           "focus-visible:border-primary focus-visible:outline-none",
           "disabled:cursor-not-allowed disabled:opacity-50",
+          "aria-[invalid=true]:border-destructive",
           className,
         )}
         ref={ref}
