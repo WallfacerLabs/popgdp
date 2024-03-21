@@ -20,6 +20,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormMessages,
 } from "@/components/ui/form";
 import { ImageUpload } from "@/components/ui/imageUpload";
 import { Input } from "@/components/ui/input";
@@ -129,11 +130,13 @@ export function MainDetails() {
                   placeholder="Enter the name of your project"
                 />
               </FormControl>
-              <FormCounter
-                current={field.value.length}
-                limit={FORM_FIELD_PARAMS.name.max}
-              />
-              <FormMessage />
+              <FormMessages>
+                <FormMessage />
+                <FormCounter
+                  current={field.value.length}
+                  limit={FORM_FIELD_PARAMS.name.max}
+                />
+              </FormMessages>
             </FormItem>
           )}
         />
