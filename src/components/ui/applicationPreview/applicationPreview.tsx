@@ -72,7 +72,7 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
           width={1088}
           height={1024}
           alt={`${application.name} cover image`}
-          className="ml-auto max-h-[512px] w-auto max-w-[544px] rounded-l-[inherit] rounded-r-2xl object-contain object-right-top"
+          className="ml-auto max-h-[512px] w-auto max-w-[544px] rounded-l-[inherit] rounded-tr-2xl object-contain object-right-top"
         />
       </div>
       <Accordion title="Application details" type="multiple">
