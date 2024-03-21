@@ -1,7 +1,10 @@
 "use client";
 
 import { ChangeEvent, useRef } from "react";
-import { positiveNumberSchema } from "@/constants/validationSchemas";
+import {
+  positiveNumberSchema,
+  specificLengthStringSchema,
+} from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormCounter,
   FormField,
   FormFooter,
   FormHint,
@@ -27,9 +31,17 @@ import { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 import { uploadImage } from "./uploadImageAction";
 
+const FORM_FIELD_PARAMS = {
+  name: { min: 1, max: 20 },
+};
+
 export const mainDetailsSchema = z.object({
   imageId: z.string().optional(),
-  name: z.string(),
+  name: specificLengthStringSchema(
+    "Project name",
+    FORM_FIELD_PARAMS.name.min,
+    FORM_FIELD_PARAMS.name.max,
+  ),
   entityName: z.string(),
   duration: z.string(),
   budget: positiveNumberSchema("Project budget"),
@@ -117,6 +129,10 @@ export function MainDetails() {
                   placeholder="Enter the name of your project"
                 />
               </FormControl>
+              <FormCounter
+                current={field.value.length}
+                limit={FORM_FIELD_PARAMS.name.max}
+              />
               <FormMessage />
             </FormItem>
           )}
