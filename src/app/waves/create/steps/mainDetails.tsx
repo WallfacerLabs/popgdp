@@ -20,8 +20,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 
-import { createWaveAction } from "../createWaveAction";
-
 const FORM_FIELD_PARAMS = {
   waveName: {
     min: 3,
@@ -56,9 +54,7 @@ export function MainDetails() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async (data) => {
-          await createWaveAction(data);
-        })}
+        onSubmit={form.handleSubmit(async (data) => {})}
       >
         <FormField
           control={form.control}

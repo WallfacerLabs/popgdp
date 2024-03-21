@@ -29,8 +29,6 @@ import {
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { CalendarIcon } from "@/components/icons/calendarIcon";
 
-import { createWaveAction } from "../createWaveAction";
-
 export const timelineSchema = z.object({
   openStartDate: z.date(),
   denoisingStartDate: z.date(),
@@ -49,9 +47,7 @@ export function Timeline() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async (data) => {
-          await createWaveAction(data);
-        })}
+        onSubmit={form.handleSubmit(async (data) => {})}
       >
         <div className="grid grid-cols-2 gap-y-8 rounded-2xl border p-6">
           <CalendarField
