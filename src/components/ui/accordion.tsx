@@ -27,13 +27,11 @@ const AccordionTrigger = forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "relative flex items-center justify-between rounded transition-all",
-        "before:absolute before:bottom-0 before:h-0.5 before:w-full before:rounded-sm before:bg-primary/10 before:transition-colors",
-        "hover:before:bg-primary focus-visible:before:bg-primary",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex items-center justify-between transition-all",
+        "focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
         "[&>svg]:h-4 [&>svg]:w-4",
         "[&>svg]:transition-transform [&>svg]:duration-200",
-        "[&[data-state=open]>svg]:rotate-180 [&[data-state=open]]:before:bg-primary",
+        "[&[data-state=open]>svg]:rotate-180",
         className,
       )}
       {...props}

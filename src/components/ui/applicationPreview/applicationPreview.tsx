@@ -4,7 +4,7 @@ import projectPlaceholder from "@/images/projectPlaceholder.jpg";
 
 import { cn } from "@/lib/cn";
 import { Separator } from "@/components/ui/separator";
-import { ChevronIcon } from "@/components/icons/chevronIcon";
+import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
 import {
@@ -30,8 +30,8 @@ interface ApplicationPreviewProps {
 
 export function ApplicationPreview({ application }: ApplicationPreviewProps) {
   return (
-    <div>
-      <div className="grid grid-cols-2 overflow-hidden rounded-3xl border">
+    <div className="overflow-hidden rounded-3xl border">
+      <div className="grid grid-cols-2">
         <div className="flex flex-col gap-6 p-10">
           <ContentRow label="User submitting">
             <UserPreview
@@ -72,31 +72,25 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
           width={1088}
           height={1024}
           alt={`${application.name} cover image`}
-          className="ml-auto max-h-[512px] w-auto max-w-[544px] rounded-l-[inherit] rounded-r-2xl object-contain object-right-top"
+          className="ml-auto max-h-[512px] w-auto max-w-[544px] rounded-l-[inherit] rounded-tr-2xl object-contain object-right-top"
         />
       </div>
-      <section>
-        <Accordion
-          title="Application details"
-          type="multiple"
-          className="mt-16"
-        >
-          <AccordionItem value="applicationDetails" className="flex flex-col">
-            <AccordionTrigger className="group min-w-40">
-              <span className="group-data-[state=open]:hidden">
-                Show details
-              </span>
-              <span className="group-data-[state=closed]:hidden">
-                Hide details
-              </span>
-              <ChevronIcon direction="down" className="ml-auto" />
-            </AccordionTrigger>
-            <AccordionContent className="mt-8">
+      <Accordion title="Application details" type="multiple">
+        <AccordionItem value="applicationDetails" className="flex flex-col">
+          <AccordionTrigger className="group w-full justify-center gap-1 border-t p-4 font-bold hover:bg-border focus-visible:bg-border">
+            Show
+            <span className="group-data-[state=open]:hidden">more</span>
+            <span className="group-data-[state=closed]:hidden">less</span>
+            details
+            <ArrowIcon direction="down" />
+          </AccordionTrigger>
+          <AccordionContent className="border-t p-10 pt-4">
+            <div className="flex flex-col gap-4">
               <ApplicationDetails application={application} />
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </section>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }
