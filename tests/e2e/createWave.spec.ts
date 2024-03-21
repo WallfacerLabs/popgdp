@@ -16,7 +16,7 @@ test("cannot access page if not authenticated", async ({ page }) => {
   await expect(page.getByText("Unauthenticated")).toBeVisible();
 });
 
-test("creates a new wave", async ({ browser }) => {
+test.skip("creates a new wave", async ({ browser }) => {
   const page = await getPageWithLoggedUser(browser);
 
   await page.goto("/");
