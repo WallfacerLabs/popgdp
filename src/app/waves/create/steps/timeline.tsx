@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useForm,
@@ -35,6 +36,7 @@ import {
 import { timelineSchema } from "./timeline.schema";
 
 export function Timeline() {
+  const router = useRouter();
   const { waveData } = useWaveStepsContext();
   const dispatch = useWaveStepsDispatchContext();
 
@@ -54,6 +56,7 @@ export function Timeline() {
         className="flex w-full flex-col gap-6"
         onSubmit={form.handleSubmit(async (payload) => {
           dispatch({ type: "UPDATE_WAVE_DATA", payload });
+          router.push("/waves/create/preview");
         })}
       >
         <div className="grid grid-cols-2 gap-y-8 rounded-2xl border p-6">

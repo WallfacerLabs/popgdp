@@ -31,8 +31,8 @@ export function MainDetails() {
   const form = useForm<mainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
-      waveName: waveData.waveName ?? "",
-      waveSummary: waveData.waveSummary ?? "",
+      name: waveData.name ?? "",
+      summary: waveData.summary ?? "",
     },
   });
 
@@ -47,7 +47,7 @@ export function MainDetails() {
       >
         <FormField
           control={form.control}
-          name="waveName"
+          name="name"
           render={({ field }) => (
             <FormItem aria-required>
               <FormLabel>Wave name</FormLabel>
@@ -65,7 +65,7 @@ export function MainDetails() {
 
         <FormField
           control={form.control}
-          name="waveSummary"
+          name="summary"
           render={({ field }) => (
             <FormItem aria-required>
               <FormLabel>Wave summary</FormLabel>

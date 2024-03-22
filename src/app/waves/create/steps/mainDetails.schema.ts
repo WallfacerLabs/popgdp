@@ -2,21 +2,21 @@ import { specificLengthStringSchema } from "@/constants/validationSchemas";
 import { z } from "zod";
 
 export const FORM_FIELD_PARAMS = {
-  waveName: {
+  name: {
     min: 3,
     max: 20,
   },
-  waveSummary: {
+  summary: {
     min: 3,
     max: 160,
   },
-};
+} as const;
 
 export const mainDetailsSchema = z.object({
-  waveName: specificLengthStringSchema("Wave name", FORM_FIELD_PARAMS.waveName),
-  waveSummary: specificLengthStringSchema(
+  name: specificLengthStringSchema("Wave name", FORM_FIELD_PARAMS.name),
+  summary: specificLengthStringSchema(
     "Wave summary",
-    FORM_FIELD_PARAMS.waveSummary,
+    FORM_FIELD_PARAMS.summary,
   ),
 });
 
