@@ -7,8 +7,8 @@ import { mainDetailsSchema } from "@/app/waves/create/steps/mainDetails.schema";
 type ValidationError = SafeParseError<mainDetailsSchema>;
 
 const validData: mainDetailsSchema = {
-  waveName: "First wave",
-  waveSummary: "This is the first wave",
+  name: "First wave",
+  summary: "This is the first wave",
 };
 
 describe("/app/waves/create/steps/mainDetailsSchema", () => {
@@ -22,7 +22,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
     it("at least 3 characters", () => {
       const validationResult = mainDetailsSchema.safeParse({
         ...validData,
-        waveName: "",
+        name: "",
       } satisfies mainDetailsSchema) as ValidationError;
 
       expect(validationResult.success).toBe(false);
@@ -34,7 +34,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
     it("at most 20 characters", () => {
       const validationResult = mainDetailsSchema.safeParse({
         ...validData,
-        waveName: "a".repeat(21),
+        name: "a".repeat(21),
       } satisfies mainDetailsSchema) as ValidationError;
 
       expect(validationResult.success).toBe(false);
@@ -48,7 +48,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
     it("at least 3 characters", () => {
       const validationResult = mainDetailsSchema.safeParse({
         ...validData,
-        waveSummary: "",
+        summary: "",
       } satisfies mainDetailsSchema) as ValidationError;
 
       expect(validationResult.success).toBe(false);
@@ -60,7 +60,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
     it("at most 160 characters", () => {
       const validationResult = mainDetailsSchema.safeParse({
         ...validData,
-        waveSummary: "a".repeat(161),
+        summary: "a".repeat(161),
       } satisfies mainDetailsSchema) as ValidationError;
 
       expect(validationResult.success).toBe(false);
