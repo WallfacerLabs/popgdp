@@ -9,13 +9,17 @@ import {
 } from "react";
 import { z } from "zod";
 
+import {
+  getLocalStorageValue,
+  LOCAL_STORAGE_KEYS,
+  saveToLocalStorage,
+} from "@/lib/localStorage";
+
 import { grantScopingSchema } from "./steps/grantScoping";
 import { mainDetailsSchema } from "./steps/mainDetails";
 import { resourcesSchema } from "./steps/resources";
 import { roadmapSchema } from "./steps/roadmap";
 import { teamInformationSchema } from "./steps/teamInformation/teamInformation";
-
-const LOCAL_STORAGE_KEY = "stepsState";
 
 export const applicationDataSchema = mainDetailsSchema
   .merge(teamInformationSchema)
@@ -40,9 +44,6 @@ type StepsAction =
   | {
       type: "UPDATE_APPLICATION_DATA";
       payload: Partial<ApplicationData>;
-    }
-  | {
-      type: "RESET_STEPS";
     };
 
 function stepsReducer(state: StepsState, action: StepsAction): StepsState {
@@ -68,9 +69,6 @@ function stepsReducer(state: StepsState, action: StepsAction): StepsState {
         currentStep: state.currentStep - 1,
       };
     }
-    case "RESET_STEPS": {
-      return initialStepsState;
-    }
   }
 }
 
@@ -79,31 +77,16 @@ function localStorageStepsReducer(
   action: StepsAction,
 ): StepsState {
   const newState = stepsReducer(state, action);
-
-  if (typeof localStorage !== "undefined") {
-    try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState));
-    } catch (error) {
-      console.error("Error saving to local storage", error);
-    }
-  }
-
+  saveToLocalStorage(LOCAL_STORAGE_KEYS.applicationStepsData, newState);
   return newState;
 }
 
 function getInitialState(initialArgs: StepsState): StepsState {
-  if (typeof localStorage !== "undefined") {
-    try {
-      const localStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (localStorageValue) {
-        return stepsStateSchema.parse(JSON.parse(localStorageValue));
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  return initialArgs;
+  return getLocalStorageValue(
+    stepsStateSchema,
+    LOCAL_STORAGE_KEYS.applicationStepsData,
+    initialArgs,
+  );
 }
 
 const initialStepsState: StepsState = {

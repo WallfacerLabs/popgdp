@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { UnauthenticatedError } from "@/constants/errors";
 import {
   deleteApplicationValue,
   insertApplicationValue,
@@ -24,7 +25,7 @@ export async function applicationValueAction({
   value,
 }: ApplicationValueActionPayload) {
   if (!session?.user?.id) {
-    throw new Error("Unauthorized");
+    throw new UnauthenticatedError();
   }
 
   if (isChecked) {
