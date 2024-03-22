@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
+import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/dates";
 import { BackButton } from "@/components/ui/backButton";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -54,7 +55,7 @@ export default function PreviewApplication() {
           <CardDescription>{validatedWaveData.summary}</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-4 gap-y-8 rounded-2xl border p-6">
+          <ul className="grid grid-cols-4 gap-y-8 rounded-2xl border p-6">
             <StagePreview title="Open" date={validatedWaveData.openStartDate} />
             <StagePreview
               title="Denoising"
@@ -65,7 +66,7 @@ export default function PreviewApplication() {
               date={validatedWaveData.assesmentStartDate}
             />
             <StagePreview title="Close" date={validatedWaveData.closeDate} />
-          </div>
+          </ul>
         </CardContent>
       </Card>
     </div>
@@ -79,17 +80,19 @@ interface StagePreviewProps {
 
 function StagePreview({ title, date }: StagePreviewProps) {
   return (
-    <div>
-      <div className="mb-4 font-bold">{title}</div>
+    <li>
+      <h4 className="mb-4 font-bold">{title}</h4>
       <div
-        className={buttonVariants({
-          variant: "outline",
-          className: "h-12 w-40 justify-start gap-2 hover:bg-transparent",
-        })}
+        className={cn(
+          buttonVariants({
+            variant: "outline",
+          }),
+          "h-12 w-40 justify-start gap-2 hover:bg-transparent",
+        )}
       >
         <CalendarIcon className="h-6 w-6" />
         {formatDate(date)}
       </div>
-    </div>
+    </li>
   );
 }
