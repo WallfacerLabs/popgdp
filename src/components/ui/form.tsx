@@ -178,7 +178,7 @@ const FormDescription = forwardRef<
   const { formDescriptionId } = useFormField();
 
   return (
-    <p
+    <div
       ref={ref}
       id={formDescriptionId}
       className={cn("text-sm text-muted-foreground", className)}
@@ -193,7 +193,7 @@ const FormMessages = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     return (
       <div
         ref={ref}
-        className={cn("flex gap-4 [&>p]:mt-0.5 [&>span]:mt-0.5", className)}
+        className={cn("flex gap-4 [&>*]:mt-0.5", className)}
         {...props}
       >
         {children}
