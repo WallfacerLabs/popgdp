@@ -1,12 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import {
-  addDays,
-  formatDate,
-  formatDateRange,
-  formatTime,
-  getStartOfDate,
-} from "@/lib/dates";
+import { addDays, formatDate, formatTime, getStartOfDate } from "@/lib/dates";
 
 describe("lib/dates", () => {
   describe("formatDate", () => {
@@ -20,17 +14,6 @@ describe("lib/dates", () => {
       expect(formatTime(new Date("2022-01-01 00:00:00"))).toBe(
         "Jan 01, 22, 00:00",
       );
-    });
-  });
-
-  describe("formatDateRange", () => {
-    test("should format a date range", () => {
-      expect(
-        formatDateRange(
-          new Date("2022-01-01 00:00:00"),
-          new Date("2022-01-02 00:00:00"),
-        ),
-      ).toBe("Jan 01, 2022 - Jan 02, 2022");
     });
   });
 

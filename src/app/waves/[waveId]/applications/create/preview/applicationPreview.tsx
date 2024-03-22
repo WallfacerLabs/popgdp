@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { User } from "next-auth";
 
+import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
 import { BackButton } from "@/components/ui/backButton";
@@ -12,11 +13,7 @@ import { PageTitle } from "@/components/ui/pageTitle";
 import { SaveIcon } from "@/components/icons/saveIcon";
 
 import { createApplicationAction } from "../steps/createApplicationAction";
-import {
-  applicationDataSchema,
-  useStepsContext,
-  useStepsDispatchContext,
-} from "../stepsProvider";
+import { applicationDataSchema, useStepsContext } from "../stepsProvider";
 
 interface PreviewApplicationProps extends WaveParamsSchema {
   user: User;
@@ -28,7 +25,6 @@ export default function PreviewApplication({
 }: PreviewApplicationProps) {
   const router = useRouter();
   const { applicationData } = useStepsContext();
-  const dispatch = useStepsDispatchContext();
   const validationResult = applicationDataSchema.safeParse(applicationData);
   if (!validationResult.success) {
     router.replace(`/waves/${waveId}/applications/create`);
@@ -53,7 +49,7 @@ export default function PreviewApplication({
             className="px-14"
             onClick={async () => {
               await createApplicationAction(validatedApplicationData, waveId);
-              dispatch({ type: "RESET_STEPS" });
+              localStorage.removeItem(LOCAL_STORAGE_KEYS.applicationStepsData);
             }}
           >
             Submit

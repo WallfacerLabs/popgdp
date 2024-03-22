@@ -25,11 +25,25 @@ export type ContentValueEnum = (typeof contentValues)[number];
 export const Wave = pgTable("wave", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  startsAt: timestamp("startsAt", {
+  summary: text("summary").notNull(),
+
+  openStartDate: timestamp("openStartDate", {
     mode: "date",
     withTimezone: true,
   }).notNull(),
-  endsAt: timestamp("endsAt", { mode: "date", withTimezone: true }).notNull(),
+  denoisingStartDate: timestamp("denoisingStartDate", {
+    mode: "date",
+    withTimezone: true,
+  }).notNull(),
+  assesmentStartDate: timestamp("assesmentStartDate", {
+    mode: "date",
+    withTimezone: true,
+  }).notNull(),
+  closeDate: timestamp("closeDate", {
+    mode: "date",
+    withTimezone: true,
+  }).notNull(),
+
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,

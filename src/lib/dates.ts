@@ -21,10 +21,6 @@ export function formatTime(date: Date) {
   return timeFormatter.format(date);
 }
 
-export function formatDateRange(from: Date, to: Date) {
-  return `${formatDate(from)} - ${formatDate(to)}`;
-}
-
 export function getStartOfDate(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }

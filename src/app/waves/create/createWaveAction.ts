@@ -2,13 +2,26 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { UnauthenticatedError } from "@/constants/errors";
 import { insertWave } from "@/drizzle/queries/waves";
 
-export async function createWaveAction(data: any) {
+import { auth } from "@/lib/auth";
+
+import { WaveData } from "./stepsProvider";
+
+export async function createWaveAction(data: WaveData) {
+  const session = await auth();
+  if (!session) {
+    throw new UnauthenticatedError();
+  }
+
   const [{ id }] = await insertWave({
-    name: data.waveName,
-    startsAt: data.duration.from,
-    endsAt: data.duration.to,
+    name: data.name,
+    summary: data.summary,
+    openStartDate: data.openStartDate,
+    denoisingStartDate: data.denoisingStartDate,
+    assesmentStartDate: data.assesmentStartDate,
+    closeDate: data.closeDate,
   });
 
   revalidatePath("/");

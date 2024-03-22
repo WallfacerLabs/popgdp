@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getWaves } from "@/drizzle/queries/waves";
 
-import { formatDateRange } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,10 +29,7 @@ export default async function Home() {
               <CardHeader>
                 <CardTitle>{wave.name}</CardTitle>
               </CardHeader>
-              <CardContent>
-                This is a wave of grants
-                <br /> Duration: {formatDateRange(wave.startsAt, wave.endsAt)}
-              </CardContent>
+              <CardContent>This is a wave of grants</CardContent>
               <CardFooter className="flex justify-end">
                 <Button asChild>
                   <Link href={`/waves/${wave.id}`}>Go to details</Link>

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/dates";
+import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
 import { BackButton } from "@/components/ui/backButton";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -16,16 +17,12 @@ import {
 import { PageTitle } from "@/components/ui/pageTitle";
 import { CalendarIcon } from "@/components/icons/calendarIcon";
 
-import {
-  useWaveStepsContext,
-  useWaveStepsDispatchContext,
-  waveDataSchema,
-} from "../stepsProvider";
+import { createWaveAction } from "../createWaveAction";
+import { useWaveStepsContext, waveDataSchema } from "../stepsProvider";
 
 export default function PreviewApplication() {
   const router = useRouter();
   const { waveData } = useWaveStepsContext();
-  const dispatch = useWaveStepsDispatchContext();
   const validationResult = waveDataSchema.safeParse(waveData);
   if (!validationResult.success) {
     router.replace("/waves/create");
@@ -43,7 +40,8 @@ export default function PreviewApplication() {
         <Button
           className="px-14"
           onClick={async () => {
-            dispatch({ type: "RESET_STEPS" });
+            await createWaveAction(validatedWaveData);
+            localStorage.removeItem(LOCAL_STORAGE_KEYS.waveStepsData);
           }}
         >
           Submit
