@@ -7,7 +7,6 @@ import {
   type FieldPath,
   type FieldValues,
 } from "react-hook-form";
-import { z } from "zod";
 
 import { formatDate, getStartOfDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
@@ -33,15 +32,7 @@ import {
   useWaveStepsContext,
   useWaveStepsDispatchContext,
 } from "../stepsProvider";
-
-export const timelineSchema = z.object({
-  openStartDate: z.coerce.date(),
-  denoisingStartDate: z.coerce.date(),
-  assesmentStartDate: z.coerce.date(),
-  closeDate: z.coerce.date(),
-});
-
-export type timelineSchema = z.infer<typeof timelineSchema>;
+import { timelineSchema } from "./timeline.schema";
 
 export function Timeline() {
   const { waveData } = useWaveStepsContext();

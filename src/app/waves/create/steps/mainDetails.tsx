@@ -1,9 +1,7 @@
 "use client";
 
-import { specificLengthStringSchema } from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,27 +22,7 @@ import {
   useWaveStepsContext,
   useWaveStepsDispatchContext,
 } from "../stepsProvider";
-
-const FORM_FIELD_PARAMS = {
-  waveName: {
-    min: 3,
-    max: 20,
-  },
-  waveSummary: {
-    min: 3,
-    max: 160,
-  },
-};
-
-export const mainDetailsSchema = z.object({
-  waveName: specificLengthStringSchema("Wave name", FORM_FIELD_PARAMS.waveName),
-  waveSummary: specificLengthStringSchema(
-    "Wave summary",
-    FORM_FIELD_PARAMS.waveSummary,
-  ),
-});
-
-export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
+import { FORM_FIELD_PARAMS, mainDetailsSchema } from "./mainDetails.schema";
 
 export function MainDetails() {
   const { waveData } = useWaveStepsContext();
