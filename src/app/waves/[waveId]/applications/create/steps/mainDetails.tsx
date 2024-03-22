@@ -33,16 +33,21 @@ import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 import { uploadImage } from "./uploadImageAction";
 
 const FORM_FIELD_PARAMS = {
-  name: { min: 1, max: 20 },
+  name: { min: 1, max: 36 },
+  entityName: { min: 1, max: 36 },
+  summary: { min: 1, max: 160 },
 };
 
 export const mainDetailsSchema = z.object({
   imageId: z.string().optional(),
   name: specificLengthStringSchema("Project name", FORM_FIELD_PARAMS.name),
-  entityName: z.string(),
+  entityName: specificLengthStringSchema(
+    "Entity name",
+    FORM_FIELD_PARAMS.entityName,
+  ),
   duration: z.string(),
   budget: positiveNumberSchema("Project budget"),
-  summary: z.string(),
+  summary: specificLengthStringSchema("Entity name", FORM_FIELD_PARAMS.summary),
 });
 export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
 
@@ -118,7 +123,7 @@ export function MainDetails() {
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Project name</FormLabel>
               <FormControl>
                 <Input
@@ -141,7 +146,7 @@ export function MainDetails() {
           control={form.control}
           name="entityName"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Entity name</FormLabel>
               <FormControl>
                 <Input
@@ -149,7 +154,13 @@ export function MainDetails() {
                   placeholder="Enter the name of entity responsible for project"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessages>
+                <FormMessage />
+                <FormCounter
+                  current={field.value.length}
+                  limit={FORM_FIELD_PARAMS.entityName.max}
+                />
+              </FormMessages>
             </FormItem>
           )}
         />
@@ -177,7 +188,7 @@ export function MainDetails() {
           control={form.control}
           name="budget"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Proposed budget</FormLabel>
               <FormHint
                 className="[&>input]:pr-20"
@@ -192,7 +203,9 @@ export function MainDetails() {
                   <Input {...field} placeholder="Enter proposed budget" />
                 </FormControl>
               </FormHint>
-              <FormMessage />
+              <FormMessages>
+                <FormMessage />
+              </FormMessages>
             </FormItem>
           )}
         />
@@ -201,11 +214,18 @@ export function MainDetails() {
           control={form.control}
           name="summary"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Project summary</FormLabel>
               <FormControl>
                 <Textarea {...field} placeholder="Tell us about your project" />
               </FormControl>
+              <FormMessages>
+                <FormMessage />
+                <FormCounter
+                  current={field.value.length}
+                  limit={FORM_FIELD_PARAMS.summary.max}
+                />
+              </FormMessages>
             </FormItem>
           )}
         />
