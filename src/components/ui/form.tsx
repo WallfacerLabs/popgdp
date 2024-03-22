@@ -14,6 +14,7 @@ import {
   Controller,
   FormProvider,
   useFormContext,
+  useWatch,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
@@ -230,18 +231,22 @@ FormMessage.displayName = "FormMessage";
 
 interface FormCounterProps
   extends Pick<HTMLAttributes<HTMLParagraphElement>, "className"> {
-  current: number;
   limit: number;
 }
 
-const FormCounter = ({ current, limit, className }: FormCounterProps) => {
+const FormCounter = ({ limit, className }: FormCounterProps) => {
+  const { name } = useFormField();
+  const value = useWatch({ name });
+
+  const currentLength = value.length;
+
   return (
     <p
       className={cn("group ml-auto mr-4 w-fit text-xs opacity-60", className)}
-      data-overlimit={current > limit}
+      data-overlimit={currentLength > limit}
     >
       <span className="transition-colors group-data-[overlimit=true]:text-destructive">
-        {current}
+        {currentLength}
       </span>
       /{limit}
     </p>
