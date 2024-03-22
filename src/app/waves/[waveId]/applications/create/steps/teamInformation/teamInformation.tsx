@@ -96,7 +96,6 @@ export function TeamInformation() {
                 <FormMessage />
                 <FormCounter
                   className="col-start-2"
-                  current={field.value.length}
                   limit={FORM_FIELD_PARAMS.teamSummary.max}
                 />
                 <FormDescription className="col-span-2">
