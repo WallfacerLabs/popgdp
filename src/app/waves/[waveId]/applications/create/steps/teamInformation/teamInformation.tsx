@@ -1,5 +1,6 @@
 "use client";
 
+import { specificLengthStringSchema } from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,11 +9,13 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormCounter,
   FormDescription,
   FormField,
   FormFooter,
   FormItem,
   FormLabel,
+  FormMessage,
   FormMessages,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,8 +28,15 @@ import {
 
 import { MemberField } from "./memberField";
 
+const FORM_FIELD_PARAMS = {
+  teamSummary: { min: 1, max: 280 },
+};
+
 export const teamInformationSchema = z.object({
-  teamSummary: z.string(),
+  teamSummary: specificLengthStringSchema(
+    "Team summary",
+    FORM_FIELD_PARAMS.teamSummary,
+  ),
   members: z.array(
     z.object({
       imageId: z.string().optional(),
@@ -77,13 +87,19 @@ export function TeamInformation() {
           control={form.control}
           name="teamSummary"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Team summary</FormLabel>
               <FormControl>
                 <Textarea {...field} placeholder="Tell us about your team" />
               </FormControl>
-              <FormMessages>
-                <FormDescription>
+              <FormMessages className="grid grid-cols-[1fr_auto]">
+                <FormMessage />
+                <FormCounter
+                  className="col-start-2"
+                  current={field.value.length}
+                  limit={FORM_FIELD_PARAMS.teamSummary.max}
+                />
+                <FormDescription className="col-span-2">
                   <p>Tell us about your team.</p>
                   <ul className="list-disc pl-4">
                     <li>Humanize your company</li>
