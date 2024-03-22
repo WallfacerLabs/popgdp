@@ -1,5 +1,6 @@
 "use client";
 
+import { specificLengthStringSchema } from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,22 +9,42 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormCounter,
   FormField,
   FormFooter,
   FormItem,
   FormLabel,
+  FormMessage,
+  FormMessages,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 
+const FORM_FIELD_PARAMS = {
+  projectIdea: { min: 1, max: 500 },
+  reason: { min: 1, max: 500 },
+  state: { min: 1, max: 500 },
+  goals: { min: 1, max: 500 },
+  requirements: { min: 1, max: 500 },
+};
+
 export const grantScopingSchema = z.object({
-  idea: z.string(),
-  reason: z.string(),
-  state: z.string(),
-  goals: z.string(),
-  requirements: z.string(),
+  idea: specificLengthStringSchema(
+    "Project idea",
+    FORM_FIELD_PARAMS.projectIdea,
+  ),
+  reason: specificLengthStringSchema(
+    "Project reason",
+    FORM_FIELD_PARAMS.reason,
+  ),
+  state: specificLengthStringSchema("Project state", FORM_FIELD_PARAMS.state),
+  goals: specificLengthStringSchema("Project goals", FORM_FIELD_PARAMS.goals),
+  requirements: specificLengthStringSchema(
+    "Project requirements",
+    FORM_FIELD_PARAMS.requirements,
+  ),
 });
 export type grantScopingSchema = z.infer<typeof grantScopingSchema>;
 
@@ -54,11 +75,15 @@ export function GrantScoping() {
           control={form.control}
           name="idea"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Project idea</FormLabel>
               <FormControl>
                 <Textarea {...field} placeholder="Tell us about your project" />
               </FormControl>
+              <FormMessages>
+                <FormMessage />
+                <FormCounter limit={FORM_FIELD_PARAMS.projectIdea.max} />
+              </FormMessages>
             </FormItem>
           )}
         />
@@ -67,7 +92,7 @@ export function GrantScoping() {
           control={form.control}
           name="reason"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Why this & why now</FormLabel>
               <FormControl>
                 <Textarea
@@ -75,6 +100,10 @@ export function GrantScoping() {
                   placeholder="Tell us about why this and why now"
                 />
               </FormControl>
+              <FormMessages>
+                <FormMessage />
+                <FormCounter limit={FORM_FIELD_PARAMS.reason.max} />
+              </FormMessages>
             </FormItem>
           )}
         />
@@ -83,7 +112,7 @@ export function GrantScoping() {
           control={form.control}
           name="state"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Current state</FormLabel>
               <FormControl>
                 <Textarea
@@ -91,6 +120,10 @@ export function GrantScoping() {
                   placeholder="Tell us what is the current state of your project"
                 />
               </FormControl>
+              <FormMessages>
+                <FormMessage />
+                <FormCounter limit={FORM_FIELD_PARAMS.state.max} />
+              </FormMessages>
             </FormItem>
           )}
         />
@@ -99,7 +132,7 @@ export function GrantScoping() {
           control={form.control}
           name="goals"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Project goals</FormLabel>
               <FormControl>
                 <Textarea
@@ -107,6 +140,10 @@ export function GrantScoping() {
                   placeholder="Tell us what are the goals of your project"
                 />
               </FormControl>
+              <FormMessages>
+                <FormMessage />
+                <FormCounter limit={FORM_FIELD_PARAMS.goals.max} />
+              </FormMessages>
             </FormItem>
           )}
         />
@@ -115,7 +152,7 @@ export function GrantScoping() {
           control={form.control}
           name="requirements"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Requirements</FormLabel>
               <FormControl>
                 <Textarea
@@ -123,6 +160,10 @@ export function GrantScoping() {
                   placeholder="Tell us what are the requirements of your project"
                 />
               </FormControl>
+              <FormMessages>
+                <FormMessage />
+                <FormCounter limit={FORM_FIELD_PARAMS.requirements.max} />
+              </FormMessages>
             </FormItem>
           )}
         />
