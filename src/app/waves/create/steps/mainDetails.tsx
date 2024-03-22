@@ -1,9 +1,7 @@
 "use client";
 
-import { specificLengthStringSchema } from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,33 +18,21 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 
-const FORM_FIELD_PARAMS = {
-  waveName: {
-    min: 3,
-    max: 20,
-  },
-  waveSummary: {
-    min: 3,
-    max: 160,
-  },
-};
-
-export const mainDetailsSchema = z.object({
-  waveName: specificLengthStringSchema("Wave name", FORM_FIELD_PARAMS.waveName),
-  waveSummary: specificLengthStringSchema(
-    "Wave summary",
-    FORM_FIELD_PARAMS.waveSummary,
-  ),
-});
-
-export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
+import {
+  useWaveStepsContext,
+  useWaveStepsDispatchContext,
+} from "../stepsProvider";
+import { FORM_FIELD_PARAMS, mainDetailsSchema } from "./mainDetails.schema";
 
 export function MainDetails() {
+  const { waveData } = useWaveStepsContext();
+  const dispatch = useWaveStepsDispatchContext();
+
   const form = useForm<mainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
-      waveName: "",
-      waveSummary: "",
+      waveName: waveData.waveName ?? "",
+      waveSummary: waveData.waveSummary ?? "",
     },
   });
 
@@ -54,7 +40,10 @@ export function MainDetails() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async (data) => {})}
+        onSubmit={form.handleSubmit(async (data) => {
+          dispatch({ type: "UPDATE_WAVE_DATA", payload: data });
+          dispatch({ type: "INCREMENT_STEP" });
+        })}
       >
         <FormField
           control={form.control}

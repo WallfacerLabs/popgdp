@@ -2,7 +2,7 @@ import { errorMessages } from "@/constants/errorMessages";
 import { describe, expect, it } from "vitest";
 import { SafeParseError } from "zod";
 
-import { mainDetailsSchema } from "@/app/waves/create/steps/mainDetails";
+import { mainDetailsSchema } from "@/app/waves/create/steps/mainDetails.schema";
 
 type ValidationError = SafeParseError<mainDetailsSchema>;
 

@@ -1,11 +1,12 @@
-import { BackButton } from "@/components/ui/backButton";
-import { PageTitle } from "@/components/ui/pageTitle";
+"use client";
+
 import { Stepper } from "@/components/ui/stepper";
 import { ClockIcon } from "@/components/icons/clockIcon";
 import { ComputerIcon } from "@/components/icons/computerIcon";
 
 import { MainDetails } from "./steps/mainDetails";
 import { Timeline } from "./steps/timeline";
+import { useWaveStepsContext } from "./stepsProvider";
 
 const stepsConfig = [
   { name: "Main details", icon: <ComputerIcon className="h-6 w-6" /> },
@@ -15,17 +16,13 @@ const stepsConfig = [
   },
 ];
 
-export function CreateWaveForm() {
+export default function CreateWaveForm() {
+  const { currentStep } = useWaveStepsContext();
+
   return (
-    <>
-      <div className="mb-16 flex items-center gap-4">
-        <BackButton href="/" />
-        <PageTitle>Create new wave</PageTitle>
-      </div>
-      <Stepper currentStep={1} stepsConfig={stepsConfig}>
-        <MainDetails />
-        <Timeline />
-      </Stepper>
-    </>
+    <Stepper currentStep={currentStep} stepsConfig={stepsConfig}>
+      <MainDetails />
+      <Timeline />
+    </Stepper>
   );
 }
