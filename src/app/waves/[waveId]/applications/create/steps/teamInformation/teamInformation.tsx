@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormFooter,
   FormItem,
   FormLabel,
+  FormMessages,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
@@ -80,6 +82,16 @@ export function TeamInformation() {
               <FormControl>
                 <Textarea {...field} placeholder="Tell us about your team" />
               </FormControl>
+              <FormMessages>
+                <FormDescription>
+                  <p>Tell us about your team.</p>
+                  <ul className="list-disc pl-4">
+                    <li>Humanize your company</li>
+                    <li>Increase transparency</li>
+                    <li>Emphasize your organization’s strengths</li>
+                  </ul>
+                </FormDescription>
+              </FormMessages>
             </FormItem>
           )}
         />
