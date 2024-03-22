@@ -9,8 +9,8 @@ import {
 } from "react";
 import { z } from "zod";
 
-import { mainDetailsSchema } from "./steps/mainDetails";
-import { timelineSchema } from "./steps/timeline";
+import { mainDetailsSchema } from "./steps/mainDetails.schema";
+import { timelineSchema } from "./steps/timeline.schema";
 
 const LOCAL_STORAGE_KEY = "waveStepsState";
 
