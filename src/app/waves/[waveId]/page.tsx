@@ -55,9 +55,9 @@ export default async function Wave({
 
   return (
     <>
-      <Card className="relative flex items-center">
-        <CardTitle className="px-10 py-6">POPGDP</CardTitle>
-        <CardContent className="px-0 py-6 pr-64 text-xs text-muted-foreground">
+      <Card className="relative flex-row items-center gap-x-10 py-6 pl-10 pr-64">
+        <CardTitle>POPGDP</CardTitle>
+        <CardContent className="text-xs text-muted-foreground">
           POPGDP is <b>Proof of Personhood based Grant Distribution Platform</b>
           . In its first version it is designed to help Worldcoin Foundation
           review and distribute WLD grants to applicants by sourcing additional
