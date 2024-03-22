@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
 const WavePreview = dynamic(() => import("./wavePreview"), {
@@ -8,8 +8,8 @@ const WavePreview = dynamic(() => import("./wavePreview"), {
 });
 
 export default async function PreviewApplicationPage() {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return <Unauthenticated />;
   }
 

@@ -1,21 +1,23 @@
-import { db } from "@/drizzle/db";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import NextAuth from "next-auth";
-import GithubProvider from "next-auth/providers/github";
+import { getSession } from "@auth0/nextjs-auth0";
+import { z } from "zod";
 
-export const {
-  signIn,
-  signOut,
-  auth,
-  handlers: { GET, POST },
-} = NextAuth({
-  trustHost: true,
-  adapter: DrizzleAdapter(db),
-  providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-  ],
-  secret: process.env.NEXTAUTH_SECRET,
+export const userSchema = z.object({
+  sid: z.string().brand("sessionUserId"),
 });
+
+export type UserId = z.infer<typeof userSchema>["sid"];
+
+export async function getUserId(): Promise<UserId | undefined> {
+  const session = await getSession();
+
+  if (!session) {
+    return undefined;
+  }
+
+  const user = userSchema.safeParse(session.user);
+  if (!user.success) {
+    return undefined;
+  }
+
+  return user.data.sid;
+}

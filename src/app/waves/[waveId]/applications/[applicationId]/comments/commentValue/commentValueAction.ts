@@ -6,39 +6,39 @@ import {
   insertCommentValue,
 } from "@/drizzle/queries/commentValues";
 import { CommentValue } from "@/drizzle/schema";
-import { type Session } from "next-auth";
 
+import { type UserId } from "@/lib/auth";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 interface CommentValueActionPayload extends ApplicationParamsSchema {
   commentId: string;
-  session: Session | null;
+  userId: UserId | undefined;
   isChecked: boolean;
   value: (typeof CommentValue.$inferInsert)["value"];
 }
 
 export async function commentValueAction({
   applicationId,
-  session,
+  userId,
   commentId,
   waveId,
   isChecked,
   value,
 }: CommentValueActionPayload) {
-  if (!session?.user?.id) {
+  if (!userId) {
     throw new Error("Unauthorized");
   }
 
   if (isChecked) {
     await deleteCommentValue({
       commentId,
-      userId: session.user.id,
+      userId,
       value,
     });
   } else {
     await insertCommentValue({
       commentId,
-      userId: session.user.id,
+      userId,
       value,
     });
   }

@@ -5,13 +5,13 @@ import { redirect } from "next/navigation";
 import { UnauthenticatedError } from "@/constants/errors";
 import { insertWave } from "@/drizzle/queries/waves";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 
 import { WaveData } from "./stepsProvider";
 
 export async function createWaveAction(data: WaveData) {
-  const session = await auth();
-  if (!session) {
+  const userId = await getUserId();
+  if (!userId) {
     throw new UnauthenticatedError();
   }
 

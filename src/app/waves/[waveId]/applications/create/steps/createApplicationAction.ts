@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { UnauthenticatedError } from "@/constants/errors";
 import { insertApplication } from "@/drizzle/queries/applications";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 
 import { ApplicationData } from "../stepsProvider";
 
@@ -13,9 +13,9 @@ export async function createApplicationAction(
   application: ApplicationData,
   waveId: number,
 ) {
-  const session = await auth();
+  const userId = await getUserId();
 
-  if (!session?.user?.id) {
+  if (!userId) {
     throw new UnauthenticatedError();
   }
 
@@ -39,7 +39,7 @@ export async function createApplicationAction(
 
       imageId: application.imageId || undefined,
       waveId,
-      userId: session.user.id,
+      userId,
     },
     application.members,
   );

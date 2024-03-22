@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 import { BackButton } from "@/components/ui/backButton";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
@@ -10,9 +10,9 @@ const CreateWaveForm = dynamic(() => import("./createWaveForm"), {
 });
 
 export default async function CreateWave() {
-  const session = await auth();
+  const userId = await getUserId();
 
-  if (!session?.user?.id) {
+  if (!userId) {
     return <Unauthenticated />;
   }
 
