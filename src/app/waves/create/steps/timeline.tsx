@@ -29,25 +29,41 @@ import {
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { CalendarIcon } from "@/components/icons/calendarIcon";
 
+import {
+  useWaveStepsContext,
+  useWaveStepsDispatchContext,
+} from "../stepsProvider";
+
 export const timelineSchema = z.object({
-  openStartDate: z.date(),
-  denoisingStartDate: z.date(),
-  assesmentStartDate: z.date(),
-  closeDate: z.date(),
+  openStartDate: z.coerce.date(),
+  denoisingStartDate: z.coerce.date(),
+  assesmentStartDate: z.coerce.date(),
+  closeDate: z.coerce.date(),
 });
 
 export type timelineSchema = z.infer<typeof timelineSchema>;
 
 export function Timeline() {
+  const { waveData } = useWaveStepsContext();
+  const dispatch = useWaveStepsDispatchContext();
+
   const form = useForm<timelineSchema>({
     resolver: zodResolver(timelineSchema),
+    defaultValues: {
+      openStartDate: waveData.openStartDate ?? undefined,
+      denoisingStartDate: waveData.denoisingStartDate ?? undefined,
+      assesmentStartDate: waveData.assesmentStartDate ?? undefined,
+      closeDate: waveData.closeDate ?? undefined,
+    },
   });
 
   return (
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async (data) => {})}
+        onSubmit={form.handleSubmit(async (payload) => {
+          dispatch({ type: "UPDATE_WAVE_DATA", payload });
+        })}
       >
         <div className="grid grid-cols-2 gap-y-8 rounded-2xl border p-6">
           <CalendarField
@@ -78,6 +94,7 @@ export function Timeline() {
             disabled={form.formState.isSubmitting}
             variant="secondary"
             type="button"
+            onClick={() => dispatch({ type: "DECREMENT_STEP" })}
           >
             <ArrowIcon direction="left" />
             Back

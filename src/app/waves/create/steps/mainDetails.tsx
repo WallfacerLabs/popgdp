@@ -20,6 +20,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 
+import {
+  useWaveStepsContext,
+  useWaveStepsDispatchContext,
+} from "../stepsProvider";
+
 const FORM_FIELD_PARAMS = {
   waveName: {
     min: 3,
@@ -42,11 +47,14 @@ export const mainDetailsSchema = z.object({
 export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
 
 export function MainDetails() {
+  const { waveData } = useWaveStepsContext();
+  const dispatch = useWaveStepsDispatchContext();
+
   const form = useForm<mainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
-      waveName: "",
-      waveSummary: "",
+      waveName: waveData.waveName ?? "",
+      waveSummary: waveData.waveSummary ?? "",
     },
   });
 
@@ -54,7 +62,10 @@ export function MainDetails() {
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async (data) => {})}
+        onSubmit={form.handleSubmit(async (data) => {
+          dispatch({ type: "UPDATE_WAVE_DATA", payload: data });
+          dispatch({ type: "INCREMENT_STEP" });
+        })}
       >
         <FormField
           control={form.control}
