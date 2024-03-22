@@ -133,10 +133,7 @@ export function MainDetails() {
               </FormControl>
               <FormMessages>
                 <FormMessage />
-                <FormCounter
-                  current={field.value.length}
-                  limit={FORM_FIELD_PARAMS.name.max}
-                />
+                <FormCounter limit={FORM_FIELD_PARAMS.name.max} />
               </FormMessages>
             </FormItem>
           )}
@@ -156,10 +153,7 @@ export function MainDetails() {
               </FormControl>
               <FormMessages>
                 <FormMessage />
-                <FormCounter
-                  current={field.value.length}
-                  limit={FORM_FIELD_PARAMS.entityName.max}
-                />
+                <FormCounter limit={FORM_FIELD_PARAMS.entityName.max} />
               </FormMessages>
             </FormItem>
           )}
@@ -221,10 +215,7 @@ export function MainDetails() {
               </FormControl>
               <FormMessages>
                 <FormMessage />
-                <FormCounter
-                  current={field.value.length}
-                  limit={FORM_FIELD_PARAMS.summary.max}
-                />
+                <FormCounter limit={FORM_FIELD_PARAMS.summary.max} />
               </FormMessages>
             </FormItem>
           )}

@@ -54,10 +54,7 @@ export function MainDetails() {
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormCounter
-                current={field.value.length}
-                limit={FORM_FIELD_PARAMS[field.name].max}
-              />
+              <FormCounter limit={FORM_FIELD_PARAMS[field.name].max} />
               <FormMessage />
             </FormItem>
           )}
@@ -72,10 +69,7 @@ export function MainDetails() {
               <FormControl>
                 <Textarea {...field} />
               </FormControl>
-              <FormCounter
-                current={field.value.length}
-                limit={FORM_FIELD_PARAMS[field.name].max}
-              />
+              <FormCounter limit={FORM_FIELD_PARAMS[field.name].max} />
               <FormMessage />
             </FormItem>
           )}
