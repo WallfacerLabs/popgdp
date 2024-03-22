@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { User } from "next-auth";
 
 import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
@@ -15,14 +14,7 @@ import { SaveIcon } from "@/components/icons/saveIcon";
 import { createApplicationAction } from "../steps/createApplicationAction";
 import { applicationDataSchema, useStepsContext } from "../stepsProvider";
 
-interface PreviewApplicationProps extends WaveParamsSchema {
-  user: User;
-}
-
-export default function PreviewApplication({
-  waveId,
-  user,
-}: PreviewApplicationProps) {
+export default function PreviewApplication({ waveId }: WaveParamsSchema) {
   const router = useRouter();
   const { applicationData } = useStepsContext();
   const validationResult = applicationDataSchema.safeParse(applicationData);
@@ -61,8 +53,8 @@ export default function PreviewApplication({
         application={{
           ...validatedApplicationData,
           user: {
-            image: user.image,
-            name: user.name,
+            image: undefined,
+            name: undefined,
           },
         }}
       />

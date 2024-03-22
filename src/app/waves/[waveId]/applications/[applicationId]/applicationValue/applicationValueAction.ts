@@ -7,37 +7,37 @@ import {
   insertApplicationValue,
 } from "@/drizzle/queries/applicationValues";
 import { ApplicationValue } from "@/drizzle/schema";
-import { type Session } from "next-auth";
 
+import { type UserId } from "@/lib/auth";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 interface ApplicationValueActionPayload extends ApplicationParamsSchema {
-  session: Session | null;
+  userId: UserId | undefined;
   isChecked: boolean;
   value: (typeof ApplicationValue.$inferInsert)["value"];
 }
 
 export async function applicationValueAction({
-  session,
+  userId,
   applicationId,
   waveId,
   isChecked,
   value,
 }: ApplicationValueActionPayload) {
-  if (!session?.user?.id) {
+  if (!userId) {
     throw new UnauthenticatedError();
   }
 
   if (isChecked) {
     await deleteApplicationValue({
       applicationId,
-      userId: session.user.id,
+      userId,
       value,
     });
   } else {
     await insertApplicationValue({
       applicationId,
-      userId: session.user.id,
+      userId,
       value,
     });
   }

@@ -3,19 +3,19 @@
 import { UnauthenticatedError } from "@/constants/errors";
 import { insertImage } from "@/drizzle/queries/images";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 
 export async function uploadImage(data: FormData) {
-  const session = await auth();
+  const userId = await getUserId();
 
-  if (!session?.user?.id) {
+  if (!userId) {
     throw new UnauthenticatedError();
   }
 
   const image = data.get("image") as File;
 
   const [{ id }] = await insertImage({
-    userId: session.user.id,
+    userId,
     content: Buffer.from(await image.arrayBuffer()),
   });
 

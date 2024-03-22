@@ -1,6 +1,6 @@
 import { getCommentValue } from "@/drizzle/queries/commentValues";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 
@@ -15,10 +15,10 @@ export async function CommentValueForm({
   waveId,
   commentId,
 }: CommentValueFormProps) {
-  const session = await auth();
+  const userId = await getUserId();
   const applicationValue = await getCommentValue({
     commentId,
-    userId: session?.user?.id,
+    userId,
   });
 
   const isUpvoted = applicationValue === "positive";
@@ -32,7 +32,7 @@ export async function CommentValueForm({
           "use server";
           await commentValueAction({
             commentId,
-            session,
+            userId,
             applicationId,
             waveId,
             isChecked: isSpam,
@@ -44,12 +44,12 @@ export async function CommentValueForm({
       </Button>
       <Button
         variant="outline"
-        disabled={!session?.user?.id}
+        disabled={!userId}
         formAction={async () => {
           "use server";
           await commentValueAction({
             commentId,
-            session,
+            userId,
             applicationId,
             waveId,
             isChecked: isUpvoted,

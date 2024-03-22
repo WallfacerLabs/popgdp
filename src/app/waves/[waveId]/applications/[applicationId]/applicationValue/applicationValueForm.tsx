@@ -1,6 +1,6 @@
 import { getApplicationValue } from "@/drizzle/queries/applicationValues";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 
@@ -12,10 +12,10 @@ export async function ApplicationValueForm({
   applicationId,
   waveId,
 }: ApplicationValueFormProps) {
-  const session = await auth();
+  const userId = await getUserId();
   const applicationValue = await getApplicationValue({
     applicationId,
-    userId: session?.user?.id,
+    userId,
   });
 
   const isUpvoted = applicationValue === "positive";
@@ -28,7 +28,7 @@ export async function ApplicationValueForm({
         formAction={async () => {
           "use server";
           await applicationValueAction({
-            session,
+            userId,
             applicationId,
             waveId,
             isChecked: isSpam,
@@ -41,11 +41,11 @@ export async function ApplicationValueForm({
       <Button
         className="px-16"
         variant={isUpvoted ? "secondary" : "primary"}
-        disabled={!session?.user?.id}
+        disabled={!userId}
         formAction={async () => {
           "use server";
           await applicationValueAction({
-            session,
+            userId,
             applicationId,
             waveId,
             isChecked: isUpvoted,

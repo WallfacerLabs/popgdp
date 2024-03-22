@@ -1,38 +1,21 @@
-"use client";
-
-import { signIn, signOut, useSession } from "next-auth/react";
-
-import { ProgressIcon } from "@/components/icons/progressIcon";
+import { getSession } from "@auth0/nextjs-auth0";
 
 import { Button } from "./button";
 
-export function AccountButton() {
-  const { status, data: session } = useSession();
-
-  if (status === "loading") {
-    return (
-      <Button className="w-24" disabled>
-        <ProgressIcon className="animate-spin" />
-      </Button>
-    );
-  }
+export async function AccountButton() {
+  const session = await getSession();
 
   if (session) {
     return (
-      <Button
-        className="w-24"
-        onClick={() => {
-          signOut();
-        }}
-      >
-        Sign out
+      <Button className="w-24" asChild>
+        <a href="/api/auth/logout">Sign out</a>
       </Button>
     );
   }
 
   return (
-    <Button className="w-24" onClick={() => signIn("github")}>
-      Sign in
+    <Button className="w-24" asChild>
+      <a href="/api/auth/login">Sign in</a>
     </Button>
   );
 }

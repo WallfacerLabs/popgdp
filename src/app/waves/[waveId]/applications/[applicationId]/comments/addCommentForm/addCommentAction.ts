@@ -7,7 +7,7 @@ import {
   insertCommentAsReview,
 } from "@/drizzle/queries/comments";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 import { addCommentSchema } from "./addCommentSchema";
@@ -21,15 +21,15 @@ export async function addCommentAction({
   applicationId,
   waveId,
 }: AddCommentActionPayload) {
-  const session = await auth();
+  const userId = await getUserId();
 
-  if (!session?.user?.id) {
+  if (!userId) {
     throw new UnauthenticatedError();
   }
 
   await insertComment({
     applicationId,
-    userId: session.user.id,
+    userId,
     content: data.comment,
   });
 
@@ -41,15 +41,15 @@ export async function addReviewAction({
   applicationId,
   waveId,
 }: AddCommentActionPayload) {
-  const session = await auth();
+  const userId = await getUserId();
 
-  if (!session?.user?.id) {
+  if (!userId) {
     throw new UnauthenticatedError();
   }
 
   await insertCommentAsReview({
     applicationId,
-    userId: session.user.id,
+    userId,
     content: data.comment,
   });
 

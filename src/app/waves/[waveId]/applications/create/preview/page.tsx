@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-import { auth } from "@/lib/auth";
+import { getUserId } from "@/lib/auth";
 import { parseWaveParams } from "@/lib/paramsValidation";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
@@ -14,10 +14,10 @@ export default async function PreviewApplicationPage({
   params: unknown;
 }) {
   const { waveId } = parseWaveParams(params);
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return <Unauthenticated />;
   }
 
-  return <PreviewApplication waveId={waveId} user={session.user} />;
+  return <PreviewApplication waveId={waveId} />;
 }
