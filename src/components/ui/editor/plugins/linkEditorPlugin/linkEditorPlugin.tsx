@@ -111,7 +111,7 @@ export const LinkEditorPlugin = ({ isLink }: LinkEditorPluginProps) => {
           <LinkIcon />
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="w-72">
         <LinkEditorForm
           editor={editor}
           command={currentCommand}
