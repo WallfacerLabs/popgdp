@@ -16,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
-import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 
 import {
   addCommentAction,
@@ -24,6 +23,7 @@ import {
   type AddCommentActionPayload,
 } from "./addCommentAction";
 import { addCommentSchema } from "./addCommentSchema";
+import { AddReviewDialog } from "./addReviewDialog";
 
 export function AddCommentForm() {
   const { waveId, applicationId } = useApplicationParams();
@@ -71,15 +71,10 @@ export function AddCommentForm() {
             <AddCommentIcon />
           </Button>
 
-          <Button
-            variant="secondary"
-            className="self-end"
-            disabled={form.formState.isSubmitting}
-            onClick={handleSubmit(addReviewAction)}
-          >
-            Add review
-            <AssignmentIcon />
-          </Button>
+          <AddReviewDialog
+            isSubmitting={form.formState.isSubmitting}
+            onSubmit={handleSubmit(addReviewAction)}
+          />
         </FormFooter>
       </form>
     </Form>
