@@ -28,7 +28,7 @@ export async function Comments({ comments, waveId }: CommentsProps) {
   return (
     <div className="flex flex-col gap-8">
       <Tabs defaultValue={SECTIONS.discussion}>
-        <TabsList className="mb-8 justify-start gap-6">
+        <TabsList className="justify-start gap-6">
           <SectionButton
             section={SECTIONS.discussion}
             elementsAmount={comments.length}
