@@ -48,7 +48,7 @@ export async function CommentValueForm({
         <ErrorCircleIcon />
         {isSpam ? "Marked as SPAM" : "SPAM"}
       </Button>
-      <Separator orientation="vertical" className="h-8" />
+      <Separator orientation="vertical" className="h-8 bg-primary opacity-10" />
       <Button
         variant="link"
         className="h-8 p-2 py-0 font-bold before:bg-primary/0"
