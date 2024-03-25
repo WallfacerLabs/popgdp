@@ -3,6 +3,9 @@ import { getCommentValue } from "@/drizzle/queries/commentValues";
 import { getUserId } from "@/lib/auth";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
+import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
 import { commentValueAction } from "./commentValueAction";
 
@@ -25,9 +28,11 @@ export async function CommentValueForm({
   const isSpam = applicationValue === "spam";
 
   return (
-    <form className="ml-auto flex gap-4">
+    <form className="ml-auto flex items-center gap-2">
       <Button
-        variant="outline"
+        variant="link"
+        className="h-8 p-2 py-0 font-bold before:bg-primary/0"
+        aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
         formAction={async () => {
           "use server";
           await commentValueAction({
@@ -40,10 +45,14 @@ export async function CommentValueForm({
           });
         }}
       >
-        {isSpam ? "Marked as SPAM" : "Report SPAM"}
+        <ErrorCircleIcon />
+        {isSpam ? "Marked as SPAM" : "SPAM"}
       </Button>
+      <Separator orientation="vertical" className="h-8" />
       <Button
-        variant="outline"
+        variant="link"
+        className="h-8 p-2 py-0 font-bold before:bg-primary/0"
+        aria-label={isSpam ? "Unmark as helpful" : "Mark as helpful"}
         disabled={!userId}
         formAction={async () => {
           "use server";
@@ -57,7 +66,8 @@ export async function CommentValueForm({
           });
         }}
       >
-        {isUpvoted ? "Upvoted" : "Upvote"}
+        <ThumbUpIcon />
+        {isUpvoted ? "Marked as helpful" : "Helpful"}
       </Button>
     </form>
   );
