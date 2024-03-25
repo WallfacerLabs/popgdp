@@ -1,7 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import {
+  useFieldArray,
+  UseFieldArrayRemove,
+  useForm,
+  useFormContext,
+} from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,10 +18,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormMessages,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
+import { CrossIcon } from "@/components/icons/crossIcon";
+import { PlusCircleIcon } from "@/components/icons/plusCircleIcon";
+import { PlusIcon } from "@/components/icons/plusIcon";
 
 import {
   useWaveStepsContext,
@@ -33,7 +47,17 @@ export function MainDetails() {
     defaultValues: {
       name: waveData.name ?? "",
       summary: waveData.summary ?? "",
+      categories: waveData.categories ?? [{ name: "", description: "" }],
     },
+  });
+
+  const {
+    fields: categoryFields,
+    append: appendCategory,
+    remove: removeCategory,
+  } = useFieldArray({
+    control: form.control,
+    name: "categories",
   });
 
   return (
@@ -74,6 +98,33 @@ export function MainDetails() {
             </FormItem>
           )}
         />
+
+        <fieldset aria-required className="group">
+          <FormLabel className="mb-4">
+            Set categories for upcoming wave
+          </FormLabel>
+          <ul className="flex flex-col gap-4">
+            {categoryFields.map((_, index) => (
+              <CategoryField
+                index={index}
+                removeCategory={removeCategory}
+                key={index}
+              />
+            ))}
+          </ul>
+          <Button
+            type="button"
+            variant="outline"
+            className="mt-2 w-full"
+            onClick={() =>
+              appendCategory({ icon: "", description: "", name: "" })
+            }
+          >
+            <PlusCircleIcon />
+            Add member
+          </Button>
+        </fieldset>
+
         <FormFooter className="justify-end">
           <Button disabled={form.formState.isSubmitting}>
             Next
@@ -82,5 +133,84 @@ export function MainDetails() {
         </FormFooter>
       </form>
     </Form>
+  );
+}
+
+interface CategoryFieldProps {
+  index: number;
+  removeCategory: UseFieldArrayRemove;
+}
+
+function CategoryField({ index, removeCategory }: CategoryFieldProps) {
+  const form = useFormContext<mainDetailsSchema>();
+
+  return (
+    <li className="relative rounded-3xl border p-6">
+      <div className="flex items-center gap-4">
+        <FormField
+          name={`categories.${index}.icon`}
+          control={form.control}
+          render={() => (
+            <FormItem>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="rounded-full"
+                    >
+                      <PlusIcon />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent>Icons</PopoverContent>
+              </Popover>
+            </FormItem>
+          )}
+        />
+        <FormField
+          name={`categories.${index}.name`}
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>#{index + 1} Category</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessages>
+                <FormMessage />
+                <FormCounter limit={FORM_FIELD_PARAMS.category.name.max} />
+              </FormMessages>
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <FormField
+        name={`categories.${index}.description`}
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="mt-2 w-full">
+            <FormLabel>Category description</FormLabel>
+            <FormControl>
+              <Textarea {...field} />
+            </FormControl>
+            <FormMessages>
+              <FormMessage />
+              <FormCounter limit={FORM_FIELD_PARAMS.category.description.max} />
+            </FormMessages>
+          </FormItem>
+        )}
+      />
+      <Button
+        size="icon"
+        className="absolute right-0 top-0 h-8 w-8 -translate-y-1/3 translate-x-1/3 rounded-full"
+        variant="outline"
+        onClick={() => removeCategory(index)}
+      >
+        <CrossIcon />
+      </Button>
+    </li>
   );
 }
