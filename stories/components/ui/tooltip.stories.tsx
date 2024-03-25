@@ -6,6 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { InfoCircleIcon } from "@/components/icons/infoCircleIcon";
 
 const meta = {
   title: "UI/Tooltip",
@@ -18,7 +19,9 @@ const Default: Story = {
   render: () => (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>Tooltip trigger</TooltipTrigger>
+        <TooltipTrigger>
+          <InfoCircleIcon className="h-4 w-4" />
+        </TooltipTrigger>
         <TooltipContent>Tooltip content</TooltipContent>
       </Tooltip>
     </TooltipProvider>
