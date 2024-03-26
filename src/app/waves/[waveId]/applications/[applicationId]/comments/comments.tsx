@@ -28,22 +28,30 @@ export async function Comments({ comments, waveId }: CommentsProps) {
   return (
     <div className="flex flex-col gap-8">
       <Tabs defaultValue={SECTIONS.discussion}>
-        <TabsList className="justify-start gap-6">
-          <SectionButton
-            section={SECTIONS.discussion}
-            elementsAmount={comments.length}
-          />
-          <SectionButton
-            section={SECTIONS.reviews}
-            elementsAmount={reviews.length}
-          />
-        </TabsList>
-        <TabsContent value={SECTIONS.discussion}>
-          <CommentsList comments={comments} waveId={waveId} />
-        </TabsContent>
-        <TabsContent value={SECTIONS.reviews}>
-          <CommentsList comments={reviews} waveId={waveId} />
-        </TabsContent>
+        <section>
+          <TabsList className="justify-start gap-6">
+            <SectionButton
+              section={SECTIONS.discussion}
+              elementsAmount={comments.length}
+            />
+            <SectionButton
+              section={SECTIONS.reviews}
+              elementsAmount={reviews.length}
+            />
+          </TabsList>
+          <TabsContent
+            value={SECTIONS.discussion}
+            className="[&:not(:empty)]:mt-8"
+          >
+            <CommentsList comments={comments} waveId={waveId} />
+          </TabsContent>
+          <TabsContent
+            value={SECTIONS.reviews}
+            className="[&:not(:empty)]:mt-8"
+          >
+            <CommentsList comments={reviews} waveId={waveId} />
+          </TabsContent>
+        </section>
       </Tabs>
 
       <AddCommentForm />
@@ -87,7 +95,7 @@ export async function Comment({ comment, waveId }: CommentProps) {
   const isReview = comment.review?.isReview;
 
   return (
-    <div className={commentContainerVariants({ isReview })}>
+    <article className={commentContainerVariants({ isReview })}>
       {isReview && (
         <Badge variant="orange" className="mb-3 flex w-fit">
           Review
@@ -117,7 +125,7 @@ export async function Comment({ comment, waveId }: CommentProps) {
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
