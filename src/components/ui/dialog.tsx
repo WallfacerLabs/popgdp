@@ -54,7 +54,7 @@ const DialogContent = forwardRef<
       <DialogPrimitive.Close asChild>
         <Button
           variant="outline"
-          className="absolute right-2 top-2 h-8 w-8 rounded-full p-0 text-destructive"
+          className="absolute right-2 top-2 h-8 w-8 rounded-full p-0 text-red"
         >
           <CrossIcon className="h-4 w-4" />
           <span className="sr-only">Close</span>

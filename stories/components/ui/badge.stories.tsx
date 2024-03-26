@@ -22,9 +22,9 @@ const Orange: Story = {
   },
 };
 
-const Destructive: Story = {
+const Red: Story = {
   args: {
-    variant: "destructive",
+    variant: "red",
   },
 };
 
@@ -40,4 +40,10 @@ const Pink: Story = {
   },
 };
 
-export { Green, Orange, Destructive, Blue, Pink };
+const Purple: Story = {
+  args: {
+    variant: "purple",
+  },
+};
+
+export { Green, Orange, Red, Blue, Pink, Purple };

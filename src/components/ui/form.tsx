@@ -104,14 +104,14 @@ const FormLabel = forwardRef<
       ref={ref}
       className={cn(
         "mb-0.5 block w-fit text-xs font-bold",
-        error && "text-destructive",
+        error && "text-red",
         className,
       )}
       htmlFor={formItemId}
       {...props}
     >
       {children}
-      <span className="ml-1 hidden text-destructive group-aria-[required=true]:inline-block">
+      <span className="ml-1 hidden text-red group-aria-[required=true]:inline-block">
         *
       </span>
     </Label>
@@ -220,7 +220,7 @@ const FormMessage = forwardRef<
       data-role="message"
       ref={ref}
       id={formMessageId}
-      className={cn("text-xs font-medium text-destructive", className)}
+      className={cn("text-xs font-medium text-red", className)}
       {...props}
     >
       {body}
@@ -245,7 +245,7 @@ const FormCounter = ({ limit, className }: FormCounterProps) => {
       className={cn("group ml-auto mr-4 w-fit text-xs opacity-60", className)}
       data-overlimit={currentLength > limit}
     >
-      <span className="transition-colors group-data-[overlimit=true]:text-destructive">
+      <span className="transition-colors group-data-[overlimit=true]:text-red">
         {currentLength}
       </span>
       /{limit}

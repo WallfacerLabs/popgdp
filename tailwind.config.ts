@@ -36,12 +36,11 @@ const config = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
         link: {
           DEFAULT: "hsl(var(--link))",
+        },
+        red: {
+          DEFAULT: "hsl(var(--red))",
         },
         green: {
           DEFAULT: "hsl(var(--green))",
@@ -54,6 +53,9 @@ const config = {
         },
         pink: {
           DEFAULT: "hsl(var(--pink))",
+        },
+        purple: {
+          DEFAULT: "hsl(var(--purple))",
         },
       },
       keyframes: {

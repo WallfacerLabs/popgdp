@@ -14,9 +14,10 @@ const badgeVariants = cva(
       variant: {
         green: "bg-green",
         orange: "bg-orange",
-        destructive: "bg-destructive",
+        red: "bg-red",
         blue: "bg-blue",
         pink: "bg-pink",
+        purple: "bg-purple",
       },
     },
     defaultVariants: {
