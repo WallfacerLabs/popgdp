@@ -16,10 +16,9 @@
     --accent: 0 0% 96%;
     --accent-foreground: 0 0% 15%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
     --link: 208 100% 47%;
+
+    --red: 0 89% 74%;
 
     --green: 147 71% 73%;
 
@@ -28,6 +27,8 @@
     --blue: 208 100% 84%;
 
     --pink: 327 94% 81%;
+
+    --purple: 266 100% 85%;
 
     --background: 0 0% 100%;
     --foreground: 0 0% 15%;
