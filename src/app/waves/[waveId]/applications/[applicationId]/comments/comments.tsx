@@ -142,17 +142,14 @@ export async function Comment({ comment, waveId }: CommentProps) {
   );
 }
 
-const commentContainerVariants = cva(
-  "flex flex-col gap-3 rounded-2xl p-2 pb-4",
-  {
-    variants: {
-      isReview: {
-        true: "bg-orange/50",
-        false: "",
-      },
-    },
-    defaultVariants: {
-      isReview: false,
+const commentContainerVariants = cva("flex flex-col gap-3 rounded-2xl p-2", {
+  variants: {
+    isReview: {
+      true: "bg-orange/50",
+      false: "",
     },
   },
-);
+  defaultVariants: {
+    isReview: false,
+  },
+});
