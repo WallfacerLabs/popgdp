@@ -57,6 +57,13 @@
       "when": 1711128755049,
       "tag": "0007_lowly_korg",
       "breakpoints": false
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1711457444214,
+      "tag": "0008_cooing_black_bolt",
+      "breakpoints": false
     }
   ]
 }

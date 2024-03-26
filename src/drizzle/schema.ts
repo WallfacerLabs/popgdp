@@ -159,6 +159,7 @@ export const Comment = pgTable("comment", {
   userId: text("userId")
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
+  replyTargetId: uuid("repliesTo"),
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,
@@ -186,6 +187,10 @@ export const CommentRelations = relations(Comment, ({ one }) => ({
   commentValue: one(CommentValue, {
     fields: [Comment.id],
     references: [CommentValue.commentId],
+  }),
+  repliesTo: one(Comment, {
+    fields: [Comment.replyTargetId],
+    references: [Comment.id],
   }),
 }));
 
