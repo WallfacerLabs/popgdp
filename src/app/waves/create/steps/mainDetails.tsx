@@ -12,8 +12,8 @@ import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 import {
   CategoryPicker,
-  getCategoryColor,
   getCategoryIcon,
+  getCategoryStyles,
 } from "@/components/ui/categories/categoryPicker";
 import {
   Form,
@@ -123,7 +123,7 @@ export function MainDetails() {
             className="mt-2 w-full"
             onClick={() =>
               appendCategory({
-                icon: undefined as any,
+                color: undefined as any,
                 description: "",
                 name: "",
               })
@@ -157,7 +157,7 @@ function CategoryField({ index, removeCategory }: CategoryFieldProps) {
     <li className="relative rounded-3xl border p-6">
       <div className="flex items-center gap-4">
         <FormField
-          name={`categories.${index}.icon`}
+          name={`categories.${index}.color`}
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -169,7 +169,7 @@ function CategoryField({ index, removeCategory }: CategoryFieldProps) {
                       variant="outline"
                       className={cn(
                         "rounded-full transition-opacity hover:opacity-70",
-                        getCategoryColor(field.value),
+                        getCategoryStyles(field.value),
                       )}
                     >
                       {getCategoryIcon(field.value)}

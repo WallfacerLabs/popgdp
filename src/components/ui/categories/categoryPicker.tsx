@@ -8,7 +8,7 @@ import { SunIcon } from "@/components/icons/sunIcon";
 import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
 import { badgeColors } from "../badge";
-import { categoryNames, type CategoryName } from "./constants";
+import { categoryColor, type CategoryColor } from "./constants";
 
 interface CategoryPickerProps {
   name: string;
@@ -25,10 +25,10 @@ export function CategoryPicker({ value, onChange, name }: CategoryPickerProps) {
       name={name}
       onValueChange={onChange}
     >
-      {categoryNames.map((categoryName) => (
+      {categoryColor.map((categoryColor) => (
         <RadioGroup.Item
-          key={categoryName}
-          value={categoryName}
+          key={categoryColor}
+          value={categoryColor}
           className="relative"
           asChild
         >
@@ -37,11 +37,11 @@ export function CategoryPicker({ value, onChange, name }: CategoryPickerProps) {
             variant="outline"
             className={cn(
               "rounded-full transition-opacity hover:opacity-70",
-              getCategoryColor(categoryName),
+              getCategoryStyles(categoryColor),
             )}
           >
             <RadioGroup.Indicator className="absolute left-0 top-0 h-full w-full rounded-full ring-2 ring-primary ring-offset-2" />
-            {getCategoryIcon(categoryName)}
+            {getCategoryIcon(categoryColor)}
           </Button>
         </RadioGroup.Item>
       ))}
@@ -52,23 +52,23 @@ export function CategoryPicker({ value, onChange, name }: CategoryPickerProps) {
 const categoryIcons = {
   red: <SunIcon />,
   pink: <ThumbUpIcon />,
-} satisfies Record<CategoryName, ReactNode>;
+} satisfies Record<CategoryColor, ReactNode>;
 
 export function getCategoryIcon(
-  categoryName: CategoryName | undefined,
+  categoryColor: CategoryColor | undefined,
 ): ReactNode {
-  if (!categoryName) {
+  if (!categoryColor) {
     return <PlusIcon />;
   }
 
-  return categoryIcons[categoryName];
+  return categoryIcons[categoryColor];
 }
 
-export function getCategoryColor(categoryName: CategoryName | undefined) {
-  if (!categoryName) {
+export function getCategoryStyles(categoryColor: CategoryColor | undefined) {
+  if (!categoryColor) {
     return "";
   }
 
-  const color = badgeColors[categoryName];
+  const color = badgeColors[categoryColor];
   return `${color} hover:${color} focus-visible:${color}`;
 }

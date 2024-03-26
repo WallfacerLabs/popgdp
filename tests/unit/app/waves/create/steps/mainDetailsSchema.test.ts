@@ -12,7 +12,7 @@ const validData: mainDetailsSchema = {
   categories: [
     {
       description: "description",
-      icon: "red",
+      color: "red",
       name: "name",
     },
   ],
