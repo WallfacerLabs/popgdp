@@ -17,6 +17,7 @@ const badgeVariants = cva(
         red: "bg-red",
         blue: "bg-blue",
         pink: "bg-pink",
+        purple: "bg-purple",
       },
     },
     defaultVariants: {

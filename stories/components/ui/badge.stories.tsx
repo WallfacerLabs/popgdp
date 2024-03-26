@@ -40,4 +40,10 @@ const Pink: Story = {
   },
 };
 
-export { Green, Orange, Red, Blue, Pink };
+const Purple: Story = {
+  args: {
+    variant: "purple",
+  },
+};
+
+export { Green, Orange, Red, Blue, Pink, Purple };
