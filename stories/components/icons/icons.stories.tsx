@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/ui/button";
-import * as ICONS from "@/components/icons";
+
+import * as ICONS from "./icons";
 
 const meta = {
   title: "Icons",
