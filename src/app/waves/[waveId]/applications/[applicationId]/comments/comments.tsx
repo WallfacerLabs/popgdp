@@ -119,7 +119,7 @@ export async function Comment({ comment, waveId }: CommentProps) {
             <div className="flex items-center gap-2">
               <Button
                 variant="link"
-                className="h-8 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+                className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
               >
                 <ReplyIcon />
                 Reply
@@ -142,17 +142,14 @@ export async function Comment({ comment, waveId }: CommentProps) {
   );
 }
 
-const commentContainerVariants = cva(
-  "flex flex-col gap-3 rounded-2xl p-2 pb-4",
-  {
-    variants: {
-      isReview: {
-        true: "bg-orange/50",
-        false: "",
-      },
-    },
-    defaultVariants: {
-      isReview: false,
+const commentContainerVariants = cva("flex flex-col gap-3 rounded-2xl p-2", {
+  variants: {
+    isReview: {
+      true: "bg-orange/50",
+      false: "",
     },
   },
-);
+  defaultVariants: {
+    isReview: false,
+  },
+});

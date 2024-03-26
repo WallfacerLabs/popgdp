@@ -1,7 +1,9 @@
 import { HTMLAttributes } from "react";
 import { getCommentValue } from "@/drizzle/queries/commentValues";
+import { cva } from "class-variance-authority";
 
 import { getUserId } from "@/lib/auth";
+import { cn } from "@/lib/cn";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -20,6 +22,7 @@ export async function CommentValueForm({
   applicationId,
   waveId,
   commentId,
+  className,
 }: CommentValueFormProps) {
   const userId = await getUserId();
   const applicationValue = await getCommentValue({
@@ -31,10 +34,10 @@ export async function CommentValueForm({
   const isSpam = applicationValue === "spam";
 
   return (
-    <form className="ml-auto flex items-center gap-2">
+    <form className={cn("ml-auto flex items-center gap-2", className)}>
       <Button
         variant="link"
-        className="h-8 p-2 py-0 font-bold before:bg-primary/0"
+        className={commentButtonVariants({ isActive: isSpam })}
         aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
         formAction={async () => {
           "use server";
@@ -54,7 +57,7 @@ export async function CommentValueForm({
       <Separator orientation="vertical" className="h-8 bg-primary opacity-10" />
       <Button
         variant="link"
-        className="h-8 p-2 py-0 font-bold before:bg-primary/0"
+        className={commentButtonVariants({ isActive: isUpvoted })}
         aria-label={isSpam ? "Unmark as helpful" : "Mark as helpful"}
         disabled={!userId}
         formAction={async () => {
@@ -75,3 +78,21 @@ export async function CommentValueForm({
     </form>
   );
 }
+
+const commentButtonVariants = cva(
+  cn(
+    "h-8 p-2 py-0 transition-all",
+    "before:bg-primary/0 hover:opacity-100 focus-visible:opacity-100",
+  ),
+  {
+    variants: {
+      isActive: {
+        true: "font-bold",
+        false: "opacity-60",
+      },
+    },
+    defaultVariants: {
+      isActive: false,
+    },
+  },
+);
