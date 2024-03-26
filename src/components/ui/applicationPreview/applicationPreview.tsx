@@ -70,9 +70,9 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
               : projectPlaceholder
           }
           width={1088}
-          height={1024}
+          height={1088}
           alt={`${application.name} cover image`}
-          className="ml-auto max-h-[512px] w-auto max-w-[544px] rounded-l-[inherit] rounded-tr-2xl object-contain object-right-top"
+          className="ml-auto aspect-square w-full max-w-[544px] rounded-tl-3xl rounded-tr-2xl object-cover object-center"
         />
       </div>
       <Accordion title="Application details" type="multiple">
