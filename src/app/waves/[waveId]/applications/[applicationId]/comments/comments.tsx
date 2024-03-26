@@ -119,7 +119,7 @@ export async function Comment({ comment, waveId }: CommentProps) {
             <div className="flex items-center gap-2">
               <Button
                 variant="link"
-                className="h-8 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+                className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
               >
                 <ReplyIcon />
                 Reply
