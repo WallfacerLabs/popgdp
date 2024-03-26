@@ -11,6 +11,8 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
+import { categoryColor } from "@/components/ui/categories/constants";
+
 const bytea = customType<{ data: Buffer }>({
   dataType() {
     return "bytea";
@@ -20,6 +22,8 @@ const bytea = customType<{ data: Buffer }>({
 const contentValues = ["positive", "spam"] as const;
 export const contentValueEnum = pgEnum("contentValue", contentValues);
 export type ContentValueEnum = (typeof contentValues)[number];
+
+export const categoryColorEnum = pgEnum("categoryColor", categoryColor);
 
 export const Wave = pgTable("wave", {
   id: serial("id").primaryKey(),
@@ -297,4 +301,14 @@ export const Image = pgTable("image", {
   })
     .notNull()
     .defaultNow(),
+});
+
+export const Category = pgTable("category", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  color: categoryColorEnum("color").notNull(),
+  waveId: integer("waveId")
+    .notNull()
+    .references(() => Wave.id, { onDelete: "cascade" }),
 });

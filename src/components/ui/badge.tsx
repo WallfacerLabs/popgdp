@@ -4,6 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn";
 import { SunIcon } from "@/components/icons/sunIcon";
 
+export const badgeColors = {
+  green: "bg-green",
+  orange: "bg-orange",
+  red: "bg-red",
+  blue: "bg-blue",
+  pink: "bg-pink",
+  purple: "bg-purple",
+} as const;
+
 const badgeVariants = cva(
   cn(
     "inline-flex items-center rounded-full px-2 py-1 min-h-6 gap-1 text-xs font-semibold",
@@ -11,14 +20,7 @@ const badgeVariants = cva(
   ),
   {
     variants: {
-      variant: {
-        green: "bg-green",
-        orange: "bg-orange",
-        red: "bg-red",
-        blue: "bg-blue",
-        pink: "bg-pink",
-        purple: "bg-purple",
-      },
+      variant: badgeColors,
     },
     defaultVariants: {
       variant: "green",

@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { db } from "@/drizzle/db";
-import { Wave } from "@/drizzle/schema";
+import { Category, Wave } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
 export const getWaves = cache(async () => db.query.Wave.findMany());
@@ -14,6 +14,25 @@ export const getWaveWithApplications = cache(async (id: number) => {
   return wave;
 });
 
-export function insertWave(data: typeof Wave.$inferInsert) {
-  return db.insert(Wave).values(data).returning({ id: Wave.id });
+type CategoryInsertData = Omit<typeof Category.$inferInsert, "waveId">;
+
+export function insertWave(
+  waveData: typeof Wave.$inferInsert,
+  categoriesData: CategoryInsertData[],
+) {
+  return db.transaction(async (db) => {
+    const [{ waveId }] = await db
+      .insert(Wave)
+      .values(waveData)
+      .returning({ waveId: Wave.id });
+
+    const categories = categoriesData.map((categoryData) => ({
+      ...categoryData,
+      waveId,
+    }));
+
+    await db.insert(Category).values(categories);
+
+    return waveId;
+  });
 }

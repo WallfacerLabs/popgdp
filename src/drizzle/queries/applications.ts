@@ -56,15 +56,15 @@ export function insertApplication(
       .insert(Application)
       .values(applicationData)
       .returning({ applicationId: Application.id });
-    await Promise.all(
-      membersData.map((memberData) =>
-        db.insert(Member).values({
-          ...memberData,
-          imageId: memberData.imageId || undefined,
-          applicationId,
-        }),
-      ),
-    );
+
+    const members = membersData.map((memberData) => ({
+      ...memberData,
+      imageId: memberData.imageId || undefined,
+      applicationId,
+    }));
+
+    await db.insert(Member).values(members);
+
     return applicationId;
   });
 }
