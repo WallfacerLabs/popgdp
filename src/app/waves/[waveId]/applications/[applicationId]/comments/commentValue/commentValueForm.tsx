@@ -1,3 +1,4 @@
+import { HTMLAttributes } from "react";
 import { getCommentValue } from "@/drizzle/queries/commentValues";
 
 import { getUserId } from "@/lib/auth";
@@ -9,7 +10,9 @@ import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
 import { commentValueAction } from "./commentValueAction";
 
-interface CommentValueFormProps extends ApplicationParamsSchema {
+interface CommentValueFormProps
+  extends ApplicationParamsSchema,
+    Pick<HTMLAttributes<HTMLFormElement>, "className"> {
   commentId: string;
 }
 
