@@ -9,6 +9,13 @@ type ValidationError = SafeParseError<mainDetailsSchema>;
 const validData: mainDetailsSchema = {
   name: "First wave",
   summary: "This is the first wave",
+  categories: [
+    {
+      description: "description",
+      icon: "icon",
+      name: "name",
+    },
+  ],
 };
 
 describe("/app/waves/create/steps/mainDetailsSchema", () => {
@@ -67,6 +74,80 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
       expect(validationResult.error.issues[0].message).toBe(
         errorMessages.maxLength("Wave summary", 160),
       );
+    });
+  });
+
+  describe("categories", () => {
+    describe("name", () => {
+      it("at least 3 characters", () => {
+        const validationResult = mainDetailsSchema.safeParse({
+          ...validData,
+          categories: [
+            {
+              ...validData.categories[0],
+              name: "",
+            },
+          ],
+        } satisfies mainDetailsSchema) as ValidationError;
+
+        expect(validationResult.success).toBe(false);
+        expect(validationResult.error.issues[0].message).toBe(
+          errorMessages.minLength("Category name", 3),
+        );
+      });
+
+      it("at most 20 characters", () => {
+        const validationResult = mainDetailsSchema.safeParse({
+          ...validData,
+          categories: [
+            {
+              ...validData.categories[0],
+              name: "a".repeat(21),
+            },
+          ],
+        } satisfies mainDetailsSchema) as ValidationError;
+
+        expect(validationResult.success).toBe(false);
+        expect(validationResult.error.issues[0].message).toBe(
+          errorMessages.maxLength("Category name", 20),
+        );
+      });
+    });
+
+    describe("description", () => {
+      it("at least 3 characters", () => {
+        const validationResult = mainDetailsSchema.safeParse({
+          ...validData,
+          categories: [
+            {
+              ...validData.categories[0],
+              description: "",
+            },
+          ],
+        } satisfies mainDetailsSchema) as ValidationError;
+
+        expect(validationResult.success).toBe(false);
+        expect(validationResult.error.issues[0].message).toBe(
+          errorMessages.minLength("Category description", 3),
+        );
+      });
+
+      it("at most 140 characters", () => {
+        const validationResult = mainDetailsSchema.safeParse({
+          ...validData,
+          categories: [
+            {
+              ...validData.categories[0],
+              description: "a".repeat(141),
+            },
+          ],
+        } satisfies mainDetailsSchema) as ValidationError;
+
+        expect(validationResult.success).toBe(false);
+        expect(validationResult.error.issues[0].message).toBe(
+          errorMessages.maxLength("Category description", 140),
+        );
+      });
     });
   });
 });

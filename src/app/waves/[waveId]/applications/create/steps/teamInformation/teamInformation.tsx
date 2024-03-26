@@ -115,7 +115,7 @@ export function TeamInformation() {
           <FormLabel>Members</FormLabel>
           {memberFields.length > 0 && (
             <ul className="flex flex-col gap-4 rounded-3xl border p-4">
-              {memberFields.map((field, index, array) => (
+              {memberFields.map((field, index) => (
                 <MemberField
                   key={field.id}
                   form={form}
