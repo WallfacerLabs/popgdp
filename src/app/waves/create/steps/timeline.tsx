@@ -131,7 +131,7 @@ const CalendarField = <
               <FormControl>
                 <Button
                   variant="outline"
-                  className="h-12 w-40 justify-start gap-2 aria-[invalid=true]:border-destructive"
+                  className="h-12 w-40 justify-start gap-2 aria-[invalid=true]:border-red"
                 >
                   <CalendarIcon className="h-6 w-6" />
                   {field.value ? formatDate(field.value) : "Pick a date"}

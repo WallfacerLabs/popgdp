@@ -14,7 +14,7 @@ const badgeVariants = cva(
       variant: {
         green: "bg-green",
         orange: "bg-orange",
-        destructive: "bg-destructive",
+        red: "bg-red",
         blue: "bg-blue",
         pink: "bg-pink",
       },
@@ -27,7 +27,7 @@ const badgeVariants = cva(
 
 export interface BadgeProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+  VariantProps<typeof badgeVariants> { }
 
 function Badge({ className, variant, ...props }: BadgeProps) {
   return (
