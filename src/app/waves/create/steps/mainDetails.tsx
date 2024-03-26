@@ -8,7 +8,13 @@ import {
   useFormContext,
 } from "react-hook-form";
 
+import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
+import {
+  CategoryPicker,
+  getCategoryColor,
+  getCategoryIcon,
+} from "@/components/ui/categories/categoryPicker";
 import {
   Form,
   FormControl,
@@ -30,7 +36,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { CrossIcon } from "@/components/icons/crossIcon";
 import { PlusCircleIcon } from "@/components/icons/plusCircleIcon";
-import { PlusIcon } from "@/components/icons/plusIcon";
 
 import {
   useWaveStepsContext,
@@ -117,7 +122,11 @@ export function MainDetails() {
             variant="outline"
             className="mt-2 w-full"
             onClick={() =>
-              appendCategory({ icon: "", description: "", name: "" })
+              appendCategory({
+                icon: undefined as any,
+                description: "",
+                name: "",
+              })
             }
           >
             <PlusCircleIcon />
@@ -150,7 +159,7 @@ function CategoryField({ index, removeCategory }: CategoryFieldProps) {
         <FormField
           name={`categories.${index}.icon`}
           control={form.control}
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <Popover>
                 <PopoverTrigger asChild>
@@ -158,13 +167,22 @@ function CategoryField({ index, removeCategory }: CategoryFieldProps) {
                     <Button
                       size="icon"
                       variant="outline"
-                      className="rounded-full"
+                      className={cn(
+                        "rounded-full transition-opacity hover:opacity-70",
+                        getCategoryColor(field.value),
+                      )}
                     >
-                      <PlusIcon />
+                      {getCategoryIcon(field.value)}
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent>Icons</PopoverContent>
+                <PopoverContent align="start">
+                  <CategoryPicker
+                    name={field.name}
+                    onChange={field.onChange}
+                    value={field.value}
+                  />
+                </PopoverContent>
               </Popover>
             </FormItem>
           )}

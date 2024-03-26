@@ -15,15 +15,18 @@ export async function createWaveAction(data: WaveData) {
     throw new UnauthenticatedError();
   }
 
-  const [{ id }] = await insertWave({
-    name: data.name,
-    summary: data.summary,
-    openStartDate: data.openStartDate,
-    denoisingStartDate: data.denoisingStartDate,
-    assesmentStartDate: data.assesmentStartDate,
-    closeDate: data.closeDate,
-  });
+  const waveId = await insertWave(
+    {
+      name: data.name,
+      summary: data.summary,
+      openStartDate: data.openStartDate,
+      denoisingStartDate: data.denoisingStartDate,
+      assesmentStartDate: data.assesmentStartDate,
+      closeDate: data.closeDate,
+    },
+    data.categories,
+  );
 
   revalidatePath("/");
-  redirect(`/waves/${id}`);
+  redirect(`/waves/${waveId}`);
 }
