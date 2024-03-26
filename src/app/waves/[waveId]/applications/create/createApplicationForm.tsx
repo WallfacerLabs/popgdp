@@ -1,5 +1,7 @@
 "use client";
 
+import { Categories } from "@/drizzle/queries/categories";
+
 import { Stepper } from "@/components/ui/stepper";
 import { CampaignIcon } from "@/components/icons/campaignIcon";
 import { ClockIcon } from "@/components/icons/clockIcon";
@@ -34,12 +36,18 @@ const stepsConfig = [
   },
 ];
 
-export default function CreateApplicationForm() {
+interface CreateApplicationFormProps {
+  categories: Categories;
+}
+
+export default function CreateApplicationForm({
+  categories,
+}: CreateApplicationFormProps) {
   const { currentStep } = useStepsContext();
 
   return (
     <Stepper currentStep={currentStep} stepsConfig={stepsConfig}>
-      <MainDetails />
+      <MainDetails categories={categories} />
       <TeamInformation />
       <GrantScoping />
       <Roadmap />

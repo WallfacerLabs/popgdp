@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { getCategoriesForWave } from "@/drizzle/queries/categories";
 
 import { getUserId } from "@/lib/auth";
 import { parseWaveParams } from "@/lib/paramsValidation";
@@ -15,12 +16,13 @@ export default async function CreateApplication({
 }: {
   params: unknown;
 }) {
+  const { waveId } = parseWaveParams(params);
   const userId = await getUserId();
   if (!userId) {
     return <Unauthenticated />;
   }
 
-  const { waveId } = parseWaveParams(params);
+  const categories = await getCategoriesForWave(waveId);
 
   return (
     <>
@@ -29,7 +31,7 @@ export default async function CreateApplication({
         <PageTitle>Apply for the Grant</PageTitle>
       </div>
 
-      <CreateApplicationForm />
+      <CreateApplicationForm categories={categories} />
     </>
   );
 }

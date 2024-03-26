@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { getCategoriesForWave } from "@/drizzle/queries/categories";
 
 import { getUserId } from "@/lib/auth";
 import { parseWaveParams } from "@/lib/paramsValidation";
@@ -19,5 +20,7 @@ export default async function PreviewApplicationPage({
     return <Unauthenticated />;
   }
 
-  return <PreviewApplication waveId={waveId} />;
+  const categories = await getCategoriesForWave(waveId);
+
+  return <PreviewApplication waveId={waveId} categories={categories} />;
 }

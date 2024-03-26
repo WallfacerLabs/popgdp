@@ -9,6 +9,7 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 
 import { cn } from "@/lib/cn";
+import { CheckIcon } from "@/components/icons/checkIcon";
 
 const RadioGroup = forwardRef<
   ElementRef<typeof RadioGroupPrimitive.Root>,
@@ -41,7 +42,7 @@ const RadioGroupItem = forwardRef<
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <div className="aspect-square h-3 w-3 rounded-full bg-primary transition-colors" />
+        <CheckIcon className="rounded-full bg-primary text-white" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );

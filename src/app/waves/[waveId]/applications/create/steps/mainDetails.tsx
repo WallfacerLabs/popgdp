@@ -5,11 +5,15 @@ import {
   positiveNumberSchema,
   specificLengthStringSchema,
 } from "@/constants/validationSchemas";
+import { Categories } from "@/drizzle/queries/categories";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
+import { getCategoryIcon } from "@/components/ui/categories/getCategoryIcon";
+import { getCategoryStyles } from "@/components/ui/categories/getCategoryStyles";
 import {
   Form,
   FormControl,
@@ -24,6 +28,11 @@ import {
 } from "@/components/ui/form";
 import { ImageUpload } from "@/components/ui/imageUpload";
 import { Input } from "@/components/ui/input";
+import {
+  RadioGroup,
+  RadioGroupItem,
+  RadioGroupLabel,
+} from "@/components/ui/radioGroup";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { ClockIcon } from "@/components/icons/clockIcon";
@@ -48,10 +57,11 @@ export const mainDetailsSchema = z.object({
   duration: z.string(),
   budget: positiveNumberSchema("Project budget"),
   summary: specificLengthStringSchema("Entity name", FORM_FIELD_PARAMS.summary),
+  categoryId: z.string(),
 });
 export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
 
-export function MainDetails() {
+export function MainDetails({ categories }: { categories: Categories }) {
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
   const form = useForm<mainDetailsSchema>({
@@ -63,7 +73,8 @@ export function MainDetails() {
       duration: applicationData.duration ?? "",
       budget: applicationData.budget ? applicationData.budget.toString() : "",
       summary: applicationData.summary ?? "",
-    } satisfies Record<keyof mainDetailsSchema, string> as any,
+      categoryId: undefined,
+    } satisfies Record<keyof mainDetailsSchema, string | undefined> as any,
   });
 
   const imageUploadRef = useRef<HTMLInputElement>(null);
@@ -115,6 +126,44 @@ export function MainDetails() {
                 <Input {...field} type="hidden" />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="categoryId"
+          render={({ field }) => (
+            <FormItem aria-required>
+              <FormLabel>Project category:</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  className="grid grid-cols-3 gap-2"
+                >
+                  {categories.map((category) => (
+                    <RadioGroupLabel
+                      key={category.id}
+                      className="justify-start"
+                    >
+                      <span
+                        className={cn(
+                          "flex h-6 w-6 items-center justify-center rounded-full [&>svg]:h-4 [&>svg]:w-4",
+                          getCategoryStyles(category.color),
+                        )}
+                      >
+                        {getCategoryIcon(category.color)}
+                      </span>
+                      <span className="text-xs font-bold">{category.name}</span>
+                      <RadioGroupItem value={category.id} className="ml-auto" />
+                    </RadioGroupLabel>
+                  ))}
+                </RadioGroup>
+              </FormControl>
+              <FormMessages>
+                <FormMessage />
+              </FormMessages>
             </FormItem>
           )}
         />

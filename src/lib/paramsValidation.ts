@@ -1,7 +1,10 @@
 import { notFound, useParams } from "next/navigation";
 import { z } from "zod";
 
-function parseParams<T extends z.ZodTypeAny>(schema: T, params: unknown) {
+function parseParams<T extends z.ZodTypeAny>(
+  schema: T,
+  params: unknown,
+): T["_output"] {
   const result = schema.safeParse(params);
   if (!result.success) {
     throw notFound();

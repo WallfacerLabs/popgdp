@@ -10,11 +10,9 @@ import {
 
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
-import {
-  CategoryPicker,
-  getCategoryIcon,
-  getCategoryStyles,
-} from "@/components/ui/categories/categoryPicker";
+import { CategoryPicker } from "@/components/ui/categories/categoryPicker";
+import { getCategoryIcon } from "@/components/ui/categories/getCategoryIcon";
+import { getCategoryStyles } from "@/components/ui/categories/getCategoryStyles";
 import {
   Form,
   FormControl,

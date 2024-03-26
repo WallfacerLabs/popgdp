@@ -7,9 +7,9 @@ import { z } from "zod";
 
 import { formatDate } from "@/lib/dates";
 import { parseWaveParams } from "@/lib/paramsValidation";
-import { CategoryBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import {
@@ -110,7 +110,7 @@ export default async function Wave({
                 <WldAmount amount={project.budget} />
               </TableCell>
               <TableCell>
-                <CategoryBadge>Category</CategoryBadge>
+                <CategoryBadge category={project.category} />
               </TableCell>
             </TableLinkRow>
           ))}
