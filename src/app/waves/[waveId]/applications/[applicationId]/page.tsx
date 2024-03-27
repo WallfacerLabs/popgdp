@@ -4,7 +4,7 @@ import { getApplicationWithComments } from "@/drizzle/queries/applications";
 import { parseApplicationParams } from "@/lib/paramsValidation";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
 import { BackButton } from "@/components/ui/backButton";
-import { CategoryBadge } from "@/components/ui/badge";
+import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { Separator } from "@/components/ui/separator";
 
@@ -25,7 +25,7 @@ export default async function Application({ params }: { params: unknown }) {
         <div className="flex items-center gap-4">
           <BackButton href={`/waves/${application.waveId}`} />
           <PageTitle>{application.name}</PageTitle>
-          <CategoryBadge>Category</CategoryBadge>
+          <CategoryBadge category={application.category} />
         </div>
         <ApplicationValueForm applicationId={applicationId} waveId={waveId} />
       </div>

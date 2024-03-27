@@ -72,6 +72,11 @@ export const Application = pgTable("application", {
   entityName: text("entityName").notNull(),
   duration: text("duration").notNull(),
   budget: integer("budget").notNull(),
+  categoryId: uuid("category")
+    .notNull()
+    .references(() => Category.id, {
+      onDelete: "cascade",
+    }),
 
   teamSummary: text("teamSummary").notNull(),
 
@@ -117,6 +122,10 @@ export const ApplicationRelations = relations(Application, ({ one, many }) => ({
   }),
   comments: many(Comment),
   members: many(Member),
+  category: one(Category, {
+    fields: [Application.categoryId],
+    references: [Category.id],
+  }),
 }));
 
 export const Member = pgTable("member", {

@@ -8,7 +8,14 @@ export const getWaves = cache(async () => db.query.Wave.findMany());
 export const getWaveWithApplications = cache(async (id: number) => {
   const wave = await db.query.Wave.findFirst({
     where: eq(Wave.id, id),
-    with: { applications: { with: { user: { columns: { name: true } } } } },
+    with: {
+      applications: {
+        with: {
+          user: { columns: { name: true } },
+          category: { columns: { color: true, name: true } },
+        },
+      },
+    },
   });
 
   return wave;

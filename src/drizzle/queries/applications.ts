@@ -14,6 +14,12 @@ export const getApplicationWithComments = cache(
             name: true,
           },
         },
+        category: {
+          columns: {
+            color: true,
+            name: true,
+          },
+        },
         comments: {
           with: {
             user: {
@@ -63,7 +69,9 @@ export function insertApplication(
       applicationId,
     }));
 
-    await db.insert(Member).values(members);
+    if (members.length > 0) {
+      await db.insert(Member).values(members);
+    }
 
     return applicationId;
   });
