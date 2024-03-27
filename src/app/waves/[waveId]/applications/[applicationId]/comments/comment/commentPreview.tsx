@@ -10,22 +10,25 @@ import { Separator } from "@/components/ui/separator";
 import { UserAvatar } from "@/components/ui/userAvatar";
 import { ReplyIcon } from "@/components/icons/replyIcon";
 
+import { CommentReplyForm } from "../addCommentForm/commentReplyForm";
 import { CommentProps } from "./comment";
 
 interface CommentPreviewProps extends Omit<CommentProps, "waveId" | "userId"> {
   commentContent: ReactNode;
   commentValueForm: ReactNode;
-  commentReplyForm: ReactNode;
 }
 
 export const CommentPreview = ({
   comment,
   commentContent,
   commentValueForm,
-  commentReplyForm,
 }: CommentPreviewProps) => {
-  const [isReply, setIsReply] = useState(false);
   const isReview = comment.review?.isReview;
+  const [isReply, setIsReply] = useState(false);
+
+  function onReply() {
+    setIsReply(false);
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -62,7 +65,14 @@ export const CommentPreview = ({
           </div>
         </div>
       </article>
-      {isReply && commentReplyForm}
+      {isReply && (
+        <CommentReplyForm
+          applicationId={comment.applicationId}
+          waveId={1}
+          replyTargetId={comment.id}
+          onReply={onReply}
+        />
+      )}
     </div>
   );
 };

@@ -2,7 +2,6 @@ import { ApplicationWithComments } from "@/drizzle/queries/applications";
 
 import { UserId } from "@/lib/auth";
 
-import { CommentReplyForm } from "../addCommentForm/commentReplyForm";
 import { CommentValueForm } from "../commentValue/commentValueForm";
 import { CommentContent } from "./commentContent";
 import { CommentPreview } from "./commentPreview";
@@ -26,13 +25,6 @@ export const Comment = ({ comment, waveId, userId }: CommentProps) => {
           commentId={comment.id}
           commentValue={comment.commentValues[0]?.value}
           userId={userId}
-        />
-      }
-      commentReplyForm={
-        <CommentReplyForm
-          applicationId={comment.applicationId}
-          waveId={waveId}
-          replyTargetId={comment.id}
         />
       }
     />
