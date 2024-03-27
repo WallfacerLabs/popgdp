@@ -61,7 +61,7 @@ export const CommentReplyForm = ({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Editor onChange={field.onChange} />
+                <Editor onChange={field.onChange} size="small" />
               </FormControl>
               <FormMessage />
             </FormItem>
