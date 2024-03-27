@@ -1,10 +1,15 @@
 import { cache } from "react";
 import { db } from "@/drizzle/db";
-import { Application, Member } from "@/drizzle/schema";
+import { Application, CommentValue, Member } from "@/drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 
+import { UserId } from "@/lib/auth";
+
 export const getApplicationWithComments = cache(
-  async (id: (typeof Application.$inferSelect)["id"]) => {
+  async (
+    id: (typeof Application.$inferSelect)["id"],
+    userId: UserId | undefined,
+  ) => {
     return db.query.Application.findFirst({
       where: eq(Application.id, id),
       with: {
@@ -22,6 +27,9 @@ export const getApplicationWithComments = cache(
         },
         comments: {
           with: {
+            commentValues: {
+              where: userId ? eq(CommentValue.userId, userId) : sql`false`,
+            },
             user: {
               columns: {
                 image: true,

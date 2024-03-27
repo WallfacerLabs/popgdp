@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getApplicationWithComments } from "@/drizzle/queries/applications";
 
+import { getUserId } from "@/lib/auth";
 import { parseApplicationParams } from "@/lib/paramsValidation";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
 import { BackButton } from "@/components/ui/backButton";
@@ -13,7 +14,8 @@ import { Comments } from "./comments/comments";
 
 export default async function Application({ params }: { params: unknown }) {
   const { applicationId, waveId } = parseApplicationParams(params);
-  const application = await getApplicationWithComments(applicationId);
+  const userId = await getUserId();
+  const application = await getApplicationWithComments(applicationId, userId);
 
   if (!application) {
     return notFound();
