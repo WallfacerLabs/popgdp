@@ -19,7 +19,7 @@ export async function updateUserDetailsAction(
   await updateUser({
     id: userId,
     name: userDetails.nickname,
-    imageId: userDetails.avatarId,
+    imageId: userDetails.avatar?.id,
   });
 
   revalidatePath("/");

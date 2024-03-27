@@ -1,20 +1,19 @@
 import { useRef, type ChangeEvent } from "react";
-import Image from "next/image";
-import { urls } from "@/constants/urls";
 
 import { cn } from "@/lib/cn";
 import { Input } from "@/components/ui/input";
 import { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
-import { uploadImage } from "@/app/waves/[waveId]/applications/create/steps/uploadImageAction";
 
-import { TrashIcon } from "../icons/trashIcon";
-import { Button } from "./button";
+import { TrashIcon } from "../../icons/trashIcon";
+import { Button } from "../button";
+import { ImageData, ImagePreview } from "./imagePreview";
+import { uploadImage } from "./uploadImageAction";
 
 interface ImageUploadProps {
   placeholder: string;
   disabled?: boolean;
-  imageId: string | undefined;
-  onChange: (value: string) => void;
+  image: ImageData | undefined;
+  onChange: (value: ImageData | undefined) => void;
   className?: string;
 }
 
@@ -22,7 +21,7 @@ export function ImageUpload({
   className,
   placeholder,
   disabled,
-  imageId,
+  image,
   onChange,
 }: ImageUploadProps) {
   const imageUploadRef = useRef<HTMLInputElement>(null);
@@ -32,13 +31,13 @@ export function ImageUpload({
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
-      const imageId = await uploadImage(formData);
-      onChange(imageId);
+      const imageData = await uploadImage(formData);
+      onChange(imageData);
     }
   }
 
   function onImageRemove() {
-    onChange("");
+    onChange(undefined);
     if (imageUploadRef.current) {
       imageUploadRef.current.value = "";
     }
@@ -54,8 +53,8 @@ export function ImageUpload({
       )}
     >
       <label className="h-full w-full cursor-pointer rounded-[inherit] [&:has(input:disabled)]:cursor-not-allowed">
-        {imageId ? (
-          <Preview imageId={imageId} />
+        {image ? (
+          <ImagePreview image={image} className="p-0.5" />
         ) : (
           <Placeholder placeholder={placeholder} />
         )}
@@ -67,7 +66,7 @@ export function ImageUpload({
           className="-z-1 disabled:opacity:0 absolute h-0 w-0 overflow-hidden border-0 p-0 opacity-0"
         />
       </label>
-      {imageId && (
+      {image && (
         <Button
           type="button"
           variant="outline"
@@ -94,17 +93,5 @@ const Placeholder = ({
         </span>
       )}
     </div>
-  );
-};
-
-const Preview = ({ imageId }: { imageId: string }) => {
-  return (
-    <Image
-      src={urls.image.preview(imageId)}
-      width={444}
-      height={348}
-      alt=""
-      className="h-full w-full rounded-[inherit] object-cover p-0.5"
-    />
   );
 };

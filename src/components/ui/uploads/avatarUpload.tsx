@@ -1,24 +1,23 @@
 import { useRef, type ChangeEvent } from "react";
-import Image from "next/image";
-import { urls } from "@/constants/urls";
 
 import { cn } from "@/lib/cn";
 import { Input } from "@/components/ui/input";
 import { CrossIcon } from "@/components/icons/crossIcon";
 import { PictureIcon } from "@/components/icons/pictureIcon";
-import { uploadImage } from "@/app/waves/[waveId]/applications/create/steps/uploadImageAction";
 
-import { Button } from "./button";
+import { Button } from "../button";
+import { ImageData, ImagePreview } from "./imagePreview";
+import { uploadImage } from "./uploadImageAction";
 
 interface AvatarUploadProps {
-  imageId: string | undefined;
-  onChange: (value: string) => void;
+  image: ImageData | undefined;
+  onChange: (value: ImageData | undefined) => void;
   className?: string;
 }
 
 export function AvatarUpload({
   className,
-  imageId,
+  image,
   onChange,
 }: AvatarUploadProps) {
   const avatarUploadRef = useRef<HTMLInputElement>(null);
@@ -28,13 +27,13 @@ export function AvatarUpload({
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
-      const avatarId = await uploadImage(formData);
-      onChange(avatarId);
+      const imageData = await uploadImage(formData);
+      onChange(imageData);
     }
   }
 
   function onAvatarRemove() {
-    onChange("");
+    onChange(undefined);
     if (avatarUploadRef.current) {
       avatarUploadRef.current.value = "";
     }
@@ -49,7 +48,7 @@ export function AvatarUpload({
       )}
     >
       <label className="h-full w-full cursor-pointer rounded-[inherit] p-0.5 [&:has(input:disabled)]:cursor-not-allowed">
-        {imageId ? <Preview imageId={imageId} /> : <Placeholder />}
+        {image ? <ImagePreview image={image} /> : <Placeholder />}
         <Input
           ref={avatarUploadRef}
           type="file"
@@ -57,7 +56,7 @@ export function AvatarUpload({
           className="-z-1 disabled:opacity:0 absolute h-0 w-0 overflow-hidden border-0 p-0 opacity-0"
         />
       </label>
-      {imageId && (
+      {image && (
         <Button
           type="button"
           variant="outline"
@@ -78,17 +77,5 @@ const Placeholder = () => {
     <div className="flex h-full w-full flex-col items-center justify-center">
       <PictureIcon className="h-4 w-4 transition-colors" />
     </div>
-  );
-};
-
-const Preview = ({ imageId }: { imageId: string }) => {
-  return (
-    <Image
-      src={urls.image.preview(imageId)}
-      width={64}
-      height={64}
-      alt=""
-      className="h-full w-full rounded-[inherit] object-cover"
-    />
   );
 };

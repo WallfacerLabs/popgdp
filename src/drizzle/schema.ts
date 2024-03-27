@@ -126,6 +126,10 @@ export const ApplicationRelations = relations(Application, ({ one, many }) => ({
     fields: [Application.categoryId],
     references: [Category.id],
   }),
+  image: one(Image, {
+    fields: [Application.imageId],
+    references: [Image.id],
+  }),
 }));
 
 export const Member = pgTable("member", {
@@ -296,12 +300,23 @@ export const User = pgTable("user", {
     .defaultNow(),
 });
 
+export const UserRelations = relations(User, ({ one }) => ({
+  image: one(Image, {
+    fields: [User.imageId],
+    references: [Image.id],
+  }),
+}));
+
 export const Image = pgTable("image", {
   id: uuid("id").defaultRandom().primaryKey(),
   userId: text("userId")
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
   content: bytea("content").notNull(),
+  placeholder: text("placeholder").notNull(),
+  width: integer("width").notNull(),
+  height: integer("height").notNull(),
+
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,

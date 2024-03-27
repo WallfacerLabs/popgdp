@@ -10,6 +10,7 @@ import { BackButton } from "@/components/ui/backButton";
 import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
+import { ImageData } from "@/components/ui/uploads/imagePreview";
 import { SaveIcon } from "@/components/icons/saveIcon";
 
 import { createApplicationAction } from "../steps/createApplicationAction";
@@ -18,7 +19,7 @@ import { applicationDataSchema, useStepsContext } from "../stepsProvider";
 interface PreviewApplicationProps extends WaveParamsSchema {
   categories: Categories;
   user: {
-    imageId: string | null;
+    image: ImageData | null;
     name: string | null;
   };
 }

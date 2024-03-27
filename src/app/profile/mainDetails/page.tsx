@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { AvatarUpload } from "@/components/ui/avatarUpload";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,6 +18,8 @@ import {
   FormMessages,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AvatarUpload } from "@/components/ui/uploads/avatarUpload";
+import { imageSchema } from "@/components/ui/uploads/imagePreview";
 import { TeamIcon } from "@/components/icons/teamIcon";
 
 import { updateUserDetailsAction } from "./updateUserDetailsAction";
@@ -28,7 +29,7 @@ const FORM_FIELD_PARAMS = {
 };
 
 const profileDetailsSchema = z.object({
-  avatarId: z.string().optional(),
+  avatar: imageSchema.optional(),
   nickname: specificLengthStringSchema("Nickname", FORM_FIELD_PARAMS.nickname),
 });
 export type ProfileDetailsSchema = z.infer<typeof profileDetailsSchema>;
@@ -57,14 +58,14 @@ export default function MainDetailsPage() {
         >
           <FormField
             control={form.control}
-            name="avatarId"
+            name="avatar"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Avatar</FormLabel>
                 <FormControl>
                   <AvatarUpload
                     className="h-48 w-48"
-                    imageId={field.value}
+                    image={field.value}
                     onChange={field.onChange}
                   />
                 </FormControl>

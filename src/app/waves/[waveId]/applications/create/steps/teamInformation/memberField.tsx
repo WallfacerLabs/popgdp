@@ -1,6 +1,5 @@
 import { UseFieldArrayRemove, UseFormReturn } from "react-hook-form";
 
-import { AvatarUpload } from "@/components/ui/avatarUpload";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -10,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AvatarUpload } from "@/components/ui/uploads/avatarUpload";
 import { CrossIcon } from "@/components/icons/crossIcon";
 
 import { teamInformationSchema } from "./teamInformation";
@@ -29,11 +29,11 @@ export const MemberField = ({
     <li className="flex items-end gap-4">
       <FormField
         control={form.control}
-        name={`members.${index}.imageId`}
+        name={`members.${index}.image`}
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <AvatarUpload imageId={field.value} onChange={field.onChange} />
+              <AvatarUpload image={field.value} onChange={field.onChange} />
             </FormControl>
             <FormMessage />
           </FormItem>

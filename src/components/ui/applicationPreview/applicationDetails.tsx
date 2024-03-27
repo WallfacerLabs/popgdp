@@ -62,9 +62,9 @@ export const ApplicationDetails = ({
         {application.members.length > 0 && (
           <ContentRow label="Members:">
             <ul className="flex flex-col gap-2">
-              {application.members.map(({ imageId, name, position }, index) => (
+              {application.members.map(({ image, name, position }, index) => (
                 <li key={name + index}>
-                  <UserPreview imageId={imageId} name={name} role={position} />
+                  <UserPreview image={image} name={name} role={position} />
                 </li>
               ))}
             </ul>
