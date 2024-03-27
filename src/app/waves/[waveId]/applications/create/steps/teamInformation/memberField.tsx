@@ -1,4 +1,3 @@
-import { ChangeEvent, useRef } from "react";
 import { UseFieldArrayRemove, UseFormReturn } from "react-hook-form";
 
 import { AvatarUpload } from "@/components/ui/avatarUpload";
@@ -13,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { CrossIcon } from "@/components/icons/crossIcon";
 
-import { uploadImage } from "../uploadImageAction";
 import { teamInformationSchema } from "./teamInformation";
 
 interface MemberFieldProps {
@@ -27,45 +25,15 @@ export const MemberField = ({
   index,
   removeMember,
 }: MemberFieldProps) => {
-  const avatarUploadRef = useRef<HTMLInputElement>(null);
-
-  async function onAvatarChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("image", file);
-      const avatarId = await uploadImage(formData);
-      form.setValue(`members.${index}.imageId`, avatarId, {
-        shouldValidate: true,
-      });
-    }
-  }
-
-  function onAvatarRemove() {
-    form.setValue(`members.${index}.imageId`, "", {
-      shouldValidate: true,
-    });
-    if (avatarUploadRef.current) {
-      avatarUploadRef.current.value = "";
-    }
-  }
-
   return (
     <li className="flex items-end gap-4">
-      <AvatarUpload
-        ref={avatarUploadRef}
-        imageId={form.watch(`members.${index}.imageId`)}
-        onChange={onAvatarChange}
-        onRemove={onAvatarRemove}
-      />
-
       <FormField
         control={form.control}
         name={`members.${index}.imageId`}
         render={({ field }) => (
-          <FormItem className="hidden">
+          <FormItem>
             <FormControl>
-              <Input {...field} type="hidden" />
+              <AvatarUpload imageId={field.value} onChange={field.onChange} />
             </FormControl>
             <FormMessage />
           </FormItem>

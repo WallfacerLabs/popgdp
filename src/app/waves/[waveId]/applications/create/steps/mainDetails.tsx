@@ -1,6 +1,5 @@
 "use client";
 
-import { ChangeEvent, useRef } from "react";
 import {
   positiveNumberSchema,
   specificLengthStringSchema,
@@ -39,7 +38,6 @@ import { ClockIcon } from "@/components/icons/clockIcon";
 import { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
 
 import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
-import { uploadImage } from "./uploadImageAction";
 
 const FORM_FIELD_PARAMS = {
   name: { min: 1, max: 36 },
@@ -77,29 +75,6 @@ export function MainDetails({ categories }: { categories: Categories }) {
     } satisfies Record<keyof mainDetailsSchema, string | undefined> as any,
   });
 
-  const imageUploadRef = useRef<HTMLInputElement>(null);
-
-  async function onImageChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("image", file);
-      const imageId = await uploadImage(formData);
-      form.setValue("imageId", imageId, {
-        shouldValidate: true,
-      });
-    }
-  }
-
-  function onImageRemove() {
-    form.setValue("imageId", "", {
-      shouldValidate: true,
-    });
-    if (imageUploadRef.current) {
-      imageUploadRef.current.value = "";
-    }
-  }
-
   return (
     <Form {...form}>
       <form
@@ -109,21 +84,17 @@ export function MainDetails({ categories }: { categories: Categories }) {
           dispatch({ type: "INCREMENT_STEP" });
         })}
       >
-        <ImageUpload
-          ref={imageUploadRef}
-          imageId={form.watch("imageId")}
-          placeholder="Upload cover image"
-          onChange={onImageChange}
-          onRemove={onImageRemove}
-        />
-
         <FormField
           control={form.control}
           name="imageId"
           render={({ field }) => (
-            <FormItem className="hidden">
+            <FormItem>
               <FormControl>
-                <Input {...field} type="hidden" />
+                <ImageUpload
+                  placeholder="Upload cover image"
+                  imageId={field.value}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
