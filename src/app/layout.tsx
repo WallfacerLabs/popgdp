@@ -44,7 +44,7 @@ export default function RootLayout({
             className="flex items-center gap-1.5 px-0 font-bold before:bottom-2 before:right-0 before:w-[calc(100%-46px)] before:bg-primary/0"
             asChild
           >
-            <Link href="/">
+            <Link href="/" className="before:left-[unset] before:right-0">
               <ProductIcon className="!h-10 !w-10" aria-label="POPGDP logo" />
               <h1 className="px-3">POPGDP</h1>
             </Link>

@@ -27,8 +27,9 @@ const buttonVariants = cva(
         ),
         link: cn(
           "border-0",
-          "before:absolute before:bottom-0 before:h-0.5 before:w-full before:bg-transparent before:transition-colors before:rounded-sm",
+          "before:absolute before:left-0 before:bottom-0 before:h-0.5 before:w-full before:bg-transparent before:transition-colors before:rounded-sm",
           "hover:before:bg-primary/10 focus-visible:before:bg-primary/10",
+          "data-[active=true]:before:bg-primary",
         ),
       },
       size: {
