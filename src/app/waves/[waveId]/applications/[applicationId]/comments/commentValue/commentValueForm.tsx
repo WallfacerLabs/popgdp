@@ -1,3 +1,5 @@
+"use server";
+
 import { HTMLAttributes } from "react";
 import { cva } from "class-variance-authority";
 
