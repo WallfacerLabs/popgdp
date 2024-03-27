@@ -38,11 +38,9 @@ export const CommentReplyForm = ({
     },
   });
 
-  const handleSubmit = (
-    action: (payload: AddReplyACtionPayload) => Promise<void>,
-  ) =>
+  const handleSubmit = () =>
     form.handleSubmit(async (data) => {
-      await action({ data, waveId, applicationId, replyTargetId });
+      await addReplyAction({ data, waveId, applicationId, replyTargetId });
       form.reset();
       onReply();
     });
@@ -79,7 +77,7 @@ export const CommentReplyForm = ({
           <Button
             variant="secondary"
             disabled={form.formState.isSubmitting}
-            onClick={handleSubmit(addReplyAction)}
+            onClick={handleSubmit}
           >
             Reply
             <AddCommentIcon />
