@@ -1,4 +1,5 @@
-import { ImageData } from "./uploads/imagePreview";
+import { ImageData } from "@/constants/validationSchemas";
+
 import { UserAvatar } from "./userAvatar";
 
 export interface UserPreviewProps {

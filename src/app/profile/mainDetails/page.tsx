@@ -1,6 +1,9 @@
 "use client";
 
-import { specificLengthStringSchema } from "@/constants/validationSchemas";
+import {
+  imageSchema,
+  specificLengthStringSchema,
+} from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -19,7 +22,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AvatarUpload } from "@/components/ui/uploads/avatarUpload";
-import { imageSchema } from "@/components/ui/uploads/imagePreview";
 import { TeamIcon } from "@/components/icons/teamIcon";
 
 import { updateUserDetailsAction } from "./updateUserDetailsAction";

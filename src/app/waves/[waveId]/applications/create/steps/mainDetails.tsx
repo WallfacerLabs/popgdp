@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  imageSchema,
   positiveNumberSchema,
   specificLengthStringSchema,
 } from "@/constants/validationSchemas";
@@ -32,7 +33,6 @@ import {
   RadioGroupLabel,
 } from "@/components/ui/radioGroup";
 import { Textarea } from "@/components/ui/textarea";
-import { imageSchema } from "@/components/ui/uploads/imagePreview";
 import { ImageUpload } from "@/components/ui/uploads/imageUpload";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { ClockIcon } from "@/components/icons/clockIcon";

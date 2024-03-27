@@ -1,6 +1,7 @@
 import { HTMLAttributes } from "react";
 import Image from "next/image";
 import { urls } from "@/constants/urls";
+import { ImageData } from "@/constants/validationSchemas";
 import projectPlaceholder from "@/images/projectPlaceholder.jpg";
 
 import { cn } from "@/lib/cn";
@@ -14,7 +15,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../accordion";
-import { ImageData } from "../uploads/imagePreview";
 import { UserPreview } from "../userPreview";
 import { WldAmount } from "../wldAmount";
 import { ApplicationDetails } from "./applicationDetails";

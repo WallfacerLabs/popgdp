@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ImageData } from "@/constants/validationSchemas";
 import { Categories } from "@/drizzle/queries/categories";
 
 import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
@@ -10,7 +11,6 @@ import { BackButton } from "@/components/ui/backButton";
 import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
-import { ImageData } from "@/components/ui/uploads/imagePreview";
 import { SaveIcon } from "@/components/icons/saveIcon";
 
 import { createApplicationAction } from "../steps/createApplicationAction";

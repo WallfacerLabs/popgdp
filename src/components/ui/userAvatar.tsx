@@ -1,6 +1,8 @@
+import { ImageData } from "@/constants/validationSchemas";
+
 import { UserIcon } from "@/components/icons/userIcon";
 
-import { ImageData, ImagePreview } from "./uploads/imagePreview";
+import { ImagePreview } from "./uploads/imagePreview";
 
 interface UserAvatarProps {
   image: ImageData | null | undefined;

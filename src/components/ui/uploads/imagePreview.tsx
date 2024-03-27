@@ -1,17 +1,8 @@
 import Image from "next/image";
 import { urls } from "@/constants/urls";
-import { z } from "zod";
+import { ImageData } from "@/constants/validationSchemas";
 
 import { cn } from "@/lib/cn";
-
-export const imageSchema = z.object({
-  id: z.string(),
-  placeholder: z.string(),
-  width: z.number(),
-  height: z.number(),
-});
-
-export type ImageData = z.infer<typeof imageSchema>;
 
 interface ImagePreviewProps {
   image: ImageData;

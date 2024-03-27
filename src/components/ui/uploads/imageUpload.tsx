@@ -1,4 +1,5 @@
 import { useRef, type ChangeEvent } from "react";
+import { ImageData } from "@/constants/validationSchemas";
 
 import { cn } from "@/lib/cn";
 import { Input } from "@/components/ui/input";
@@ -6,7 +7,7 @@ import { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
 
 import { TrashIcon } from "../../icons/trashIcon";
 import { Button } from "../button";
-import { ImageData, ImagePreview } from "./imagePreview";
+import { ImagePreview } from "./imagePreview";
 import { uploadImage } from "./uploadImageAction";
 
 interface ImageUploadProps {

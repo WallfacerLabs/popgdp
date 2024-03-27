@@ -1,6 +1,9 @@
 "use client";
 
-import { specificLengthStringSchema } from "@/constants/validationSchemas";
+import {
+  imageSchema,
+  specificLengthStringSchema,
+} from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -19,7 +22,6 @@ import {
   FormMessages,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { imageSchema } from "@/components/ui/uploads/imagePreview";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { PlusCircleIcon } from "@/components/icons/plusCircleIcon";
 import {
