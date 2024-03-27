@@ -1,8 +1,7 @@
 import { HTMLAttributes } from "react";
-import { getCommentValue } from "@/drizzle/queries/commentValues";
 import { cva } from "class-variance-authority";
 
-import { getUserId } from "@/lib/auth";
+import { UserId } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
@@ -16,22 +15,20 @@ interface CommentValueFormProps
   extends ApplicationParamsSchema,
     Pick<HTMLAttributes<HTMLFormElement>, "className"> {
   commentId: string;
+  commentValue: "positive" | "spam" | undefined;
+  userId: UserId | undefined;
 }
 
-export async function CommentValueForm({
+export function CommentValueForm({
   applicationId,
   waveId,
   commentId,
   className,
+  commentValue,
+  userId,
 }: CommentValueFormProps) {
-  const userId = await getUserId();
-  const applicationValue = await getCommentValue({
-    commentId,
-    userId,
-  });
-
-  const isUpvoted = applicationValue === "positive";
-  const isSpam = applicationValue === "spam";
+  const isUpvoted = commentValue === "positive";
+  const isSpam = commentValue === "spam";
 
   return (
     <form className={cn("ml-auto flex items-center gap-2", className)}>

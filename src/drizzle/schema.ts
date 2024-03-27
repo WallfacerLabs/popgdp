@@ -187,7 +187,7 @@ export const Comment = pgTable("comment", {
     .defaultNow(),
 });
 
-export const CommentRelations = relations(Comment, ({ one }) => ({
+export const CommentRelations = relations(Comment, ({ one, many }) => ({
   application: one(Application, {
     fields: [Comment.applicationId],
     references: [Application.id],
@@ -197,10 +197,7 @@ export const CommentRelations = relations(Comment, ({ one }) => ({
     references: [User.id],
   }),
   review: one(Review),
-  commentValue: one(CommentValue, {
-    fields: [Comment.id],
-    references: [CommentValue.commentId],
-  }),
+  commentValues: many(CommentValue),
   repliesTo: one(Comment, {
     fields: [Comment.replyTargetId],
     references: [Comment.id],
@@ -222,6 +219,13 @@ export const CommentValue = pgTable(
     pk: primaryKey({ columns: [table.commentId, table.userId] }),
   }),
 );
+
+export const CommentValueRelations = relations(CommentValue, ({ one }) => ({
+  comment: one(Comment, {
+    fields: [CommentValue.commentId],
+    references: [Comment.id],
+  }),
+}));
 
 export const Review = pgTable(
   "review",
