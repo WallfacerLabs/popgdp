@@ -1,10 +1,10 @@
-import { ApplicationWithComments } from "@/drizzle/queries/applications";
 import { Fragment } from "react";
+import { ApplicationWithComments } from "@/drizzle/queries/applications";
 
+import { UserId } from "@/lib/auth";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { UserId } from '@/lib/auth';
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
 import { Comment } from "./comment/comment";
 
