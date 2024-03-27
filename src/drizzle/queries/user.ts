@@ -13,7 +13,17 @@ export const getUser = cache(async (id: UserId | undefined) => {
 
   return db.query.User.findFirst({
     where: eq(User.id, id),
-    columns: { id: true, name: true, imageId: true },
+    columns: { id: true, name: true },
+    with: {
+      image: {
+        columns: {
+          id: true,
+          height: true,
+          width: true,
+          placeholder: true,
+        },
+      },
+    },
   });
 });
 

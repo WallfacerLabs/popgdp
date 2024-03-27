@@ -1,6 +1,9 @@
 "use client";
 
-import { specificLengthStringSchema } from "@/constants/validationSchemas";
+import {
+  imageSchema,
+  specificLengthStringSchema,
+} from "@/constants/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -39,7 +42,7 @@ export const teamInformationSchema = z.object({
   ),
   members: z.array(
     z.object({
-      imageId: z.string().optional(),
+      image: imageSchema.optional(),
       name: z.string(),
       position: z.string(),
     }),
@@ -75,8 +78,7 @@ export function TeamInformation() {
           const payload = {
             teamSummary,
             members: members.filter(
-              ({ imageId, name, position }) =>
-                imageId !== "" && name !== "" && position !== "",
+              ({ name, position }) => name !== "" && position !== "",
             ),
           };
           dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
@@ -130,7 +132,7 @@ export function TeamInformation() {
             variant="outline"
             className="mt-2 w-full"
             onClick={() =>
-              appendMember({ imageId: "", name: "", position: "" })
+              appendMember({ image: undefined, name: "", position: "" })
             }
           >
             <PlusCircleIcon />

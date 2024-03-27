@@ -1,6 +1,7 @@
 import { HTMLAttributes } from "react";
 import Image from "next/image";
 import { urls } from "@/constants/urls";
+import { ImageData } from "@/constants/validationSchemas";
 import projectPlaceholder from "@/images/projectPlaceholder.jpg";
 
 import { cn } from "@/lib/cn";
@@ -21,7 +22,7 @@ import { ApplicationDetails } from "./applicationDetails";
 export interface Application extends ApplicationData {
   user: {
     name: string | null;
-    imageId: string | null;
+    image: ImageData | null;
   };
 }
 
@@ -36,7 +37,7 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
         <div className="flex flex-col gap-6 p-10">
           <ContentRow label="User submitting">
             <UserPreview
-              imageId={application.user.imageId}
+              image={application.user.image}
               name={application.user.name}
               role="Member"
             />
@@ -64,16 +65,9 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
             {application.summary}
           </ContentRow>
         </div>
-        <Image
-          src={
-            application.imageId
-              ? urls.image.preview(application.imageId)
-              : projectPlaceholder
-          }
-          width={1088}
-          height={1088}
-          alt={`${application.name} cover image`}
-          className="ml-auto aspect-square w-full max-w-[544px] rounded-tl-3xl rounded-tr-2xl object-cover object-center"
+        <ApplicationImage
+          applicationName={application.name}
+          image={application.image}
         />
       </div>
       <Accordion title="Application details" type="multiple">
@@ -117,3 +111,32 @@ const ContentRow = ({
     </div>
   );
 };
+
+const imageClassName =
+  "ml-auto aspect-square w-full max-w-[544px] rounded-tl-3xl rounded-tr-2xl object-cover object-center";
+
+interface ApplicationImageProps {
+  image: ApplicationData["image"];
+  applicationName: ApplicationData["name"];
+}
+
+function ApplicationImage({ image, applicationName }: ApplicationImageProps) {
+  return image ? (
+    <Image
+      src={urls.image.preview(image.id)}
+      width={image.width}
+      height={image.height}
+      placeholder="blur"
+      blurDataURL={image.placeholder}
+      alt={`${applicationName} cover image`}
+      className={imageClassName}
+    />
+  ) : (
+    <Image
+      src={projectPlaceholder}
+      placeholder="blur"
+      alt={`${applicationName} cover image`}
+      className={imageClassName}
+    />
+  );
+}

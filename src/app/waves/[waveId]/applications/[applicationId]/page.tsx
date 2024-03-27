@@ -36,10 +36,10 @@ export default async function Application({ params }: { params: unknown }) {
         application={{
           ...application,
           tbdb: application.tbd,
-          imageId: application.imageId ?? undefined,
+          image: application.image ?? undefined,
           members: application.members.map((member) => ({
             ...member,
-            imageId: member.imageId ?? undefined,
+            image: member.image ?? undefined,
           })),
         }}
       />

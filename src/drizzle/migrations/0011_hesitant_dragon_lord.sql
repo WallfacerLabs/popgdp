@@ -1,0 +1,3 @@
+ALTER TABLE "image" ADD COLUMN IF NOT EXISTS "placeholder" text NOT NULL;
+ALTER TABLE "image" ADD COLUMN IF NOT EXISTS "width" integer NOT NULL;
+ALTER TABLE "image" ADD COLUMN IF NOT EXISTS "height" integer NOT NULL;

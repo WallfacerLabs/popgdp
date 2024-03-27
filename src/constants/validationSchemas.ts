@@ -28,3 +28,12 @@ export const specificLengthStringSchema = (
     .trim()
     .min(min, { message: errorMessages.minLength(fieldName, min) });
 };
+
+export const imageSchema = z.object({
+  id: z.string(),
+  placeholder: z.string(),
+  width: z.number(),
+  height: z.number(),
+});
+
+export type ImageData = z.infer<typeof imageSchema>;

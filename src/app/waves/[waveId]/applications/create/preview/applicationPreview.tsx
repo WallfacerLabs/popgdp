@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ImageData } from "@/constants/validationSchemas";
 import { Categories } from "@/drizzle/queries/categories";
 
 import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
@@ -18,7 +19,7 @@ import { applicationDataSchema, useStepsContext } from "../stepsProvider";
 interface PreviewApplicationProps extends WaveParamsSchema {
   categories: Categories;
   user: {
-    imageId: string | null;
+    image: ImageData | null;
     name: string | null;
   };
 }

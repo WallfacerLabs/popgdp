@@ -38,11 +38,15 @@ export async function createApplicationAction(
 
       tbd: application.tbd,
 
-      imageId: application.imageId || undefined,
+      imageId: application.image?.id,
       waveId,
       userId,
     },
-    application.members,
+    application.members.map((member) => ({
+      imageId: member.image?.id,
+      name: member.name,
+      position: member.position,
+    })),
   );
 
   revalidatePath(`/waves/${waveId}`);

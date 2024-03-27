@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  imageSchema,
   positiveNumberSchema,
   specificLengthStringSchema,
 } from "@/constants/validationSchemas";
@@ -25,7 +26,6 @@ import {
   FormMessage,
   FormMessages,
 } from "@/components/ui/form";
-import { ImageUpload } from "@/components/ui/imageUpload";
 import { Input } from "@/components/ui/input";
 import {
   RadioGroup,
@@ -33,6 +33,7 @@ import {
   RadioGroupLabel,
 } from "@/components/ui/radioGroup";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from "@/components/ui/uploads/imageUpload";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { ClockIcon } from "@/components/icons/clockIcon";
 import { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
@@ -46,7 +47,7 @@ const FORM_FIELD_PARAMS = {
 };
 
 export const mainDetailsSchema = z.object({
-  imageId: z.string().optional(),
+  image: imageSchema.optional(),
   name: specificLengthStringSchema("Project name", FORM_FIELD_PARAMS.name),
   entityName: specificLengthStringSchema(
     "Entity name",
@@ -65,14 +66,14 @@ export function MainDetails({ categories }: { categories: Categories }) {
   const form = useForm<mainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
-      imageId: applicationData.imageId ?? "",
+      image: applicationData.image ?? undefined,
       name: applicationData.name ?? "",
       entityName: applicationData.entityName ?? "",
       duration: applicationData.duration ?? "",
       budget: applicationData.budget ? applicationData.budget.toString() : "",
       summary: applicationData.summary ?? "",
-      categoryId: undefined,
-    } satisfies Record<keyof mainDetailsSchema, string | undefined> as any,
+      categoryId: applicationData.categoryId ?? undefined,
+    } satisfies Record<keyof mainDetailsSchema, any> as any,
   });
 
   return (
@@ -86,13 +87,13 @@ export function MainDetails({ categories }: { categories: Categories }) {
       >
         <FormField
           control={form.control}
-          name="imageId"
+          name="image"
           render={({ field }) => (
             <FormItem>
               <FormControl>
                 <ImageUpload
                   placeholder="Upload cover image"
-                  imageId={field.value}
+                  image={field.value}
                   onChange={field.onChange}
                 />
               </FormControl>

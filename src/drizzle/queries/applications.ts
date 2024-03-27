@@ -5,6 +5,24 @@ import { eq, sql } from "drizzle-orm";
 
 import { UserId } from "@/lib/auth";
 
+const imageFragment = {
+  columns: {
+    id: true,
+    placeholder: true,
+    height: true,
+    width: true,
+  },
+} as const;
+
+const userFragment = {
+  columns: {
+    name: true,
+  },
+  with: {
+    image: imageFragment,
+  },
+} as const;
+
 export const getApplicationWithComments = cache(
   async (
     id: (typeof Application.$inferSelect)["id"],
@@ -13,12 +31,8 @@ export const getApplicationWithComments = cache(
     return db.query.Application.findFirst({
       where: eq(Application.id, id),
       with: {
-        user: {
-          columns: {
-            imageId: true,
-            name: true,
-          },
-        },
+        image: imageFragment,
+        user: userFragment,
         category: {
           columns: {
             color: true,
@@ -30,12 +44,7 @@ export const getApplicationWithComments = cache(
             commentValues: {
               where: userId ? eq(CommentValue.userId, userId) : sql`false`,
             },
-            user: {
-              columns: {
-                imageId: true,
-                name: true,
-              },
-            },
+            user: userFragment,
             review: {
               extras: {
                 isReview: sql<boolean>`true`.as("isReview"),
@@ -45,9 +54,11 @@ export const getApplicationWithComments = cache(
         },
         members: {
           columns: {
-            imageId: true,
             name: true,
             position: true,
+          },
+          with: {
+            image: imageFragment,
           },
         },
       },
@@ -59,11 +70,15 @@ export type ApplicationWithComments = NonNullable<
   Awaited<ReturnType<typeof getApplicationWithComments>>
 >;
 
-type MemberInsertData = Omit<typeof Member.$inferInsert, "applicationId">;
+type MemberInsertData = Array<{
+  imageId: string | undefined;
+  name: string;
+  position: string;
+}>;
 
 export function insertApplication(
   applicationData: typeof Application.$inferInsert,
-  membersData: MemberInsertData[],
+  membersData: MemberInsertData,
 ) {
   return db.transaction(async (db) => {
     const [{ applicationId }] = await db
@@ -73,7 +88,6 @@ export function insertApplication(
 
     const members = membersData.map((memberData) => ({
       ...memberData,
-      imageId: memberData.imageId || undefined,
       applicationId,
     }));
 
