@@ -64,11 +64,7 @@ export const ApplicationDetails = ({
             <ul className="flex flex-col gap-2">
               {application.members.map(({ imageId, name, position }, index) => (
                 <li key={name + index}>
-                  <UserPreview
-                    image={`/api/images/${imageId}`}
-                    name={name}
-                    role={position}
-                  />
+                  <UserPreview imageId={imageId} name={name} role={position} />
                 </li>
               ))}
             </ul>

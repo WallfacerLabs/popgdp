@@ -17,11 +17,16 @@ import { applicationDataSchema, useStepsContext } from "../stepsProvider";
 
 interface PreviewApplicationProps extends WaveParamsSchema {
   categories: Categories;
+  user: {
+    imageId: string | null;
+    name: string | null;
+  };
 }
 
 export default function PreviewApplication({
   waveId,
   categories,
+  user,
 }: PreviewApplicationProps) {
   const router = useRouter();
   const { applicationData } = useStepsContext();
@@ -64,10 +69,7 @@ export default function PreviewApplication({
       <ApplicationPreview
         application={{
           ...validatedApplicationData,
-          user: {
-            image: undefined,
-            name: undefined,
-          },
+          user,
         }}
       />
     </div>

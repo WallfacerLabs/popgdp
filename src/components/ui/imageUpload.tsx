@@ -1,5 +1,6 @@
 import { useRef, type ChangeEvent } from "react";
 import Image from "next/image";
+import { urls } from "@/constants/urls";
 
 import { cn } from "@/lib/cn";
 import { Input } from "@/components/ui/input";
@@ -96,10 +97,10 @@ const Placeholder = ({
   );
 };
 
-const Preview = ({ imageId }: Pick<ImageUploadProps, "imageId">) => {
+const Preview = ({ imageId }: { imageId: string }) => {
   return (
     <Image
-      src={`/api/images/${imageId}`}
+      src={urls.image.preview(imageId)}
       width={444}
       height={348}
       alt=""

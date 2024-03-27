@@ -1,5 +1,6 @@
 import { HTMLAttributes } from "react";
 import Image from "next/image";
+import { urls } from "@/constants/urls";
 import projectPlaceholder from "@/images/projectPlaceholder.jpg";
 
 import { cn } from "@/lib/cn";
@@ -19,8 +20,8 @@ import { ApplicationDetails } from "./applicationDetails";
 
 export interface Application extends ApplicationData {
   user: {
-    name: string | null | undefined;
-    image: string | null | undefined;
+    name: string | null;
+    imageId: string | null;
   };
 }
 
@@ -35,7 +36,7 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
         <div className="flex flex-col gap-6 p-10">
           <ContentRow label="User submitting">
             <UserPreview
-              image={application.user.image}
+              imageId={application.user.imageId}
               name={application.user.name}
               role="Member"
             />
@@ -66,7 +67,7 @@ export function ApplicationPreview({ application }: ApplicationPreviewProps) {
         <Image
           src={
             application.imageId
-              ? `/api/images/${application.imageId}`
+              ? urls.image.preview(application.imageId)
               : projectPlaceholder
           }
           width={1088}

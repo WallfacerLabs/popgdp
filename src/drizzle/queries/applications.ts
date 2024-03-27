@@ -15,7 +15,7 @@ export const getApplicationWithComments = cache(
       with: {
         user: {
           columns: {
-            image: true,
+            imageId: true,
             name: true,
           },
         },
@@ -32,7 +32,7 @@ export const getApplicationWithComments = cache(
             },
             user: {
               columns: {
-                image: true,
+                imageId: true,
                 name: true,
               },
             },

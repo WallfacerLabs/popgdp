@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { getCategoriesForWave } from "@/drizzle/queries/categories";
+import { getUser } from "@/drizzle/queries/user";
 
 import { getUserId } from "@/lib/auth";
 import { parseWaveParams } from "@/lib/paramsValidation";
@@ -20,7 +21,16 @@ export default async function PreviewApplicationPage({
     return <Unauthenticated />;
   }
 
-  const categories = await getCategoriesForWave(waveId);
+  const [categories, user] = await Promise.all([
+    getCategoriesForWave(waveId),
+    getUser(userId),
+  ]);
 
-  return <PreviewApplication waveId={waveId} categories={categories} />;
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return (
+    <PreviewApplication waveId={waveId} categories={categories} user={user} />
+  );
 }
