@@ -28,7 +28,7 @@ export const getApplicationWithComments = cache(
         comments: {
           with: {
             commentValues: {
-              where: userId ? eq(CommentValue.userId, userId) : undefined,
+              where: userId ? eq(CommentValue.userId, userId) : sql`false`,
             },
             user: {
               columns: {
