@@ -1,6 +1,7 @@
 import { ApplicationWithComments } from "@/drizzle/queries/applications";
 import { cva } from "class-variance-authority";
 
+import { getUserId } from "@/lib/auth";
 import { formatTime } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ interface CommentProps {
 }
 
 export async function Comment({ comment, waveId }: CommentProps) {
+  const userId = await getUserId();
   const commentHtml = await parseMarkdown(comment.content);
 
   const isReview = comment.review?.isReview;
@@ -60,6 +62,8 @@ export async function Comment({ comment, waveId }: CommentProps) {
             applicationId={comment.applicationId}
             waveId={waveId}
             commentId={comment.id}
+            commentValue={comment.commentValues[0]?.value}
+            userId={userId}
           />
         </div>
       </div>
