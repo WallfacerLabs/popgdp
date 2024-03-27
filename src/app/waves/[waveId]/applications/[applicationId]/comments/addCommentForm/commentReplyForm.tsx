@@ -19,13 +19,17 @@ import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 import { addReplyAction, AddReplyACtionPayload } from "./addCommentAction";
 import { addCommentSchema } from "./addCommentSchema";
 
-type CommentReplyFormProps = ApplicationParamsSchema &
-  Pick<AddReplyACtionPayload, "replyTargetId">;
+interface CommentReplyFormProps
+  extends ApplicationParamsSchema,
+    Pick<AddReplyACtionPayload, "replyTargetId"> {
+  onReply: () => void;
+}
 
 export const CommentReplyForm = ({
   waveId,
   applicationId,
   replyTargetId,
+  onReply,
 }: CommentReplyFormProps) => {
   const form = useForm<addCommentSchema>({
     resolver: zodResolver(addCommentSchema),
@@ -40,6 +44,7 @@ export const CommentReplyForm = ({
     form.handleSubmit(async (data) => {
       await action({ data, waveId, applicationId, replyTargetId });
       form.reset();
+      onReply();
     });
 
   return (
