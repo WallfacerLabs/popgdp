@@ -1,7 +1,8 @@
-import { ApplicationWithComments } from "@/drizzle/queries/applications";
+"use client";
+
+import { ReactNode, useState } from "react";
 import { cva } from "class-variance-authority";
 
-import { getUserId } from "@/lib/auth";
 import { formatTime } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,18 +10,19 @@ import { Separator } from "@/components/ui/separator";
 import { UserAvatar } from "@/components/ui/userAvatar";
 import { ReplyIcon } from "@/components/icons/replyIcon";
 
-import { CommentValueForm } from "./commentValue/commentValueForm";
-import { parseMarkdown } from "./parseMarkdown";
+import { CommentProps } from "./comment";
 
-interface CommentProps {
-  comment: ApplicationWithComments["comments"][number];
-  waveId: number;
+interface CommentPreviewProps extends Omit<CommentProps, "waveId" | "userId"> {
+  commentContent: ReactNode;
+  commentValueForm: ReactNode;
 }
 
-export async function Comment({ comment, waveId }: CommentProps) {
-  const userId = await getUserId();
-  const commentHtml = await parseMarkdown(comment.content);
-
+export const CommentPreview = ({
+  comment,
+  commentContent,
+  commentValueForm,
+}: CommentPreviewProps) => {
+  const [isReply, setIsReply] = useState(false);
   const isReview = comment.review?.isReview;
 
   return (
@@ -43,33 +45,22 @@ export async function Comment({ comment, waveId }: CommentProps) {
                 {formatTime(comment.createdAt)}
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="link"
-                className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
-              >
-                <ReplyIcon />
-                Reply
-              </Button>
-            </div>
+            <Button
+              variant="link"
+              className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+              onClick={() => setIsReply(true)}
+            >
+              <ReplyIcon />
+              Reply {isReply && "ing"}
+            </Button>
           </div>
-          <div
-            className="prose prose-sm max-w-none"
-            dangerouslySetInnerHTML={{ __html: commentHtml }}
-          />
-          <CommentValueForm
-            className="ml-auto"
-            applicationId={comment.applicationId}
-            waveId={waveId}
-            commentId={comment.id}
-            commentValue={comment.commentValues[0]?.value}
-            userId={userId}
-          />
+          {commentContent}
+          {commentValueForm}
         </div>
       </div>
     </article>
   );
-}
+};
 
 const commentContainerVariants = cva("flex flex-col gap-3 rounded-2xl p-2", {
   variants: {

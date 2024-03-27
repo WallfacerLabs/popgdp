@@ -1,3 +1,5 @@
+"use server";
+
 import { HTMLAttributes } from "react";
 import { cva } from "class-variance-authority";
 
@@ -19,7 +21,7 @@ interface CommentValueFormProps
   userId: UserId | undefined;
 }
 
-export function CommentValueForm({
+export async function CommentValueForm({
   applicationId,
   waveId,
   commentId,
