@@ -47,6 +47,11 @@ export const CommentReplyForm = ({
       onReply();
     });
 
+  function handleCancel() {
+    form.reset();
+    onReply();
+  }
+
   return (
     <Form {...form}>
       <form className="flex flex-col gap-4">
@@ -64,8 +69,15 @@ export const CommentReplyForm = ({
         />
         <FormFooter className="mt-0 justify-start">
           <Button
+            type="button"
             variant="secondary"
-            className="self-end"
+            disabled={form.formState.isSubmitting}
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="secondary"
             disabled={form.formState.isSubmitting}
             onClick={handleSubmit(addReplyAction)}
           >
