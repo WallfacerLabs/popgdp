@@ -40,6 +40,7 @@ export { SunIcon } from "@/components/icons/sunIcon";
 export { TeamIcon } from "@/components/icons/teamIcon";
 export { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 export { TrashIcon } from "@/components/icons/trashIcon";
+export { TuneIcon } from "@/components/icons/tuneIcon";
 export { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
 export { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
 export { UserIcon } from "@/components/icons/userIcon";
