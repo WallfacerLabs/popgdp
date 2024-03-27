@@ -36,8 +36,6 @@ export default function PreviewApplication({
     (category) => category.id === validatedApplicationData.categoryId,
   )!;
 
-  console.log(categories, validatedApplicationData.categoryId);
-
   return (
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between">
