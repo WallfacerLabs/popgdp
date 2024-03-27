@@ -1,9 +1,10 @@
-import { Fragment } from "react";
 import { ApplicationWithComments } from "@/drizzle/queries/applications";
+import { Fragment } from "react";
 
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { UserId } from '@/lib/auth';
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
 import { Comment } from "./comment/comment";
 
@@ -15,9 +16,10 @@ const SECTIONS = {
 interface CommentsProps {
   comments: ApplicationWithComments["comments"];
   waveId: number;
+  userId: UserId | undefined;
 }
 
-export async function Comments({ comments, waveId }: CommentsProps) {
+export async function Comments({ comments, waveId, userId }: CommentsProps) {
   const reviews = comments.filter((comment) => comment.review?.isReview);
 
   return (
@@ -38,13 +40,13 @@ export async function Comments({ comments, waveId }: CommentsProps) {
             value={SECTIONS.discussion}
             className="[&:not(:empty)]:mt-8"
           >
-            <CommentsList comments={comments} waveId={waveId} />
+            <CommentsList comments={comments} waveId={waveId} userId={userId} />
           </TabsContent>
           <TabsContent
             value={SECTIONS.reviews}
             className="[&:not(:empty)]:mt-8"
           >
-            <CommentsList comments={reviews} waveId={waveId} />
+            <CommentsList comments={reviews} waveId={waveId} userId={userId} />
           </TabsContent>
         </section>
       </Tabs>
@@ -70,10 +72,10 @@ function SectionButton({ section, elementsAmount }: SectionButtonProps) {
   );
 }
 
-function CommentsList({ comments, waveId }: CommentsProps) {
+function CommentsList({ comments, waveId, userId }: CommentsProps) {
   return comments.map((comment) => (
     <Fragment key={comment.id}>
-      <Comment comment={comment} waveId={waveId} />
+      <Comment comment={comment} waveId={waveId} userId={userId} />
       <Separator className="my-6 last:hidden" />
     </Fragment>
   ));

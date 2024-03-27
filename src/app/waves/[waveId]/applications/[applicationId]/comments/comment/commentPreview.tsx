@@ -12,7 +12,7 @@ import { ReplyIcon } from "@/components/icons/replyIcon";
 
 import { CommentProps } from "./comment";
 
-interface CommentPreviewProps extends Omit<CommentProps, "waveId"> {
+interface CommentPreviewProps extends Omit<CommentProps, "waveId" | "userId"> {
   commentContent: ReactNode;
   commentValueForm: ReactNode;
 }
