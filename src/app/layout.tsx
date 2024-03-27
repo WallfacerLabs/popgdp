@@ -9,7 +9,10 @@ import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 import { ProductIcon } from "@/components/icons/productIcon";
+import { ReviewIcon } from "@/components/icons/reviewIcon";
+import { TuneIcon } from "@/components/icons/tuneIcon";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,6 +49,9 @@ export default function RootLayout({
               <h1 className="px-3">POPGDP</h1>
             </Link>
           </Button>
+
+          <Navigation />
+
           <AccountButton />
         </header>
 
@@ -61,5 +67,32 @@ export default function RootLayout({
         </footer>
       </body>
     </html>
+  );
+}
+
+function Navigation() {
+  return (
+    <nav>
+      <ul className="flex gap-6">
+        <li>
+          <Button variant="link" asChild className="font-bold">
+            <Link href="/">
+              <AssignmentIcon /> Submissions
+            </Link>
+          </Button>
+        </li>
+        <li>
+          <Button variant="link" className="font-bold" disabled>
+            <ReviewIcon /> My reviews
+          </Button>
+        </li>
+        <li>
+          <Button variant="link" className="font-bold" disabled>
+            <TuneIcon />
+            Moderator panel
+          </Button>
+        </li>
+      </ul>
+    </nav>
   );
 }
