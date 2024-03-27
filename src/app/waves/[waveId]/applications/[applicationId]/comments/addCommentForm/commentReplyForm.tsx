@@ -38,12 +38,11 @@ export const CommentReplyForm = ({
     },
   });
 
-  const handleSubmit = () =>
-    form.handleSubmit(async (data) => {
-      await addReplyAction({ data, waveId, applicationId, replyTargetId });
-      form.reset();
-      onReply();
-    });
+  const handleSubmit = form.handleSubmit(async (data) => {
+    await addReplyAction({ data, waveId, applicationId, replyTargetId });
+    form.reset();
+    onReply();
+  });
 
   function handleCancel() {
     form.reset();
