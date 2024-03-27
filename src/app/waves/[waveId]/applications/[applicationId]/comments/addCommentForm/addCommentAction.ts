@@ -55,3 +55,29 @@ export async function addReviewAction({
 
   revalidatePath(`/waves/${waveId}/applications/${applicationId}`);
 }
+
+export interface AddReplyACtionPayload extends AddCommentActionPayload {
+  replyTargetId: string;
+}
+
+export async function addReplyAction({
+  data,
+  applicationId,
+  waveId,
+  replyTargetId,
+}: AddReplyACtionPayload) {
+  const userId = await getUserId();
+
+  if (!userId) {
+    throw new UnauthenticatedError();
+  }
+
+  await insertComment({
+    applicationId,
+    userId,
+    content: data.comment,
+    replyTargetId: replyTargetId,
+  });
+
+  revalidatePath(`/waves/${waveId}/applications/${applicationId}`);
+}
