@@ -15,13 +15,13 @@ import { commentValueAction } from "./commentValueAction";
 
 interface CommentValueFormProps
   extends ApplicationParamsSchema,
-    Pick<HTMLAttributes<HTMLFormElement>, "className"> {
+  Pick<HTMLAttributes<HTMLFormElement>, "className"> {
   commentId: string;
   commentValue: "positive" | "spam" | undefined;
   userId: UserId | undefined;
 }
 
-export function CommentValueForm({
+export async function CommentValueForm({
   applicationId,
   waveId,
   commentId,
