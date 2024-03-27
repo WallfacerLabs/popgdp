@@ -9,8 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { UserAvatar } from "@/components/ui/userAvatar";
 import { ReplyIcon } from "@/components/icons/replyIcon";
 
-import { CommentValueForm } from "./commentValue/commentValueForm";
-import { parseMarkdown } from "./parseMarkdown";
+import { CommentValueForm } from "../commentValue/commentValueForm";
+import { parseMarkdown } from "../parseMarkdown";
 
 interface CommentProps {
   comment: ApplicationWithComments["comments"][number];
@@ -43,15 +43,13 @@ export async function Comment({ comment, waveId }: CommentProps) {
                 {formatTime(comment.createdAt)}
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="link"
-                className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
-              >
-                <ReplyIcon />
-                Reply
-              </Button>
-            </div>
+            <Button
+              variant="link"
+              className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+            >
+              <ReplyIcon />
+              Reply
+            </Button>
           </div>
           <div
             className="prose prose-sm max-w-none"

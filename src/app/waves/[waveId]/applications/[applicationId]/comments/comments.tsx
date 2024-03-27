@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
-import { Comment } from "./comment";
+import { Comment } from "./comment/comment";
 
 const SECTIONS = {
   discussion: "Discussion",
