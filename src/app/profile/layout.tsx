@@ -49,7 +49,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
             </Link>
           </Button>
         </div>
-        <div className="py-2">{children}</div>
+        {children}
       </div>
     </>
   );

@@ -281,7 +281,7 @@ export const ApplicationValue = pgTable(
 export const User = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
-  image: text("image"),
+  imageId: uuid("imageId"),
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,

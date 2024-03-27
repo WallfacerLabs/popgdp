@@ -33,7 +33,7 @@ export const CommentPreview = ({
         </Badge>
       )}
       <div className="flex gap-3">
-        <UserAvatar name={comment.user.name} image={comment.user.image} />
+        <UserAvatar name={comment.user.name} imageId={comment.user.imageId} />
         <div className="flex w-full flex-col gap-1">
           <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
             <div className="flex items-center gap-2 text-sm">
