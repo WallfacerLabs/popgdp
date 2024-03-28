@@ -7,6 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { CheckIcon } from "@/components/icons/checkIcon";
 import { DotIcon } from "@/components/icons/dotIcon";
 
+import { PageColumns } from "./pageColumns";
+
 type StepsConfig = Array<{
   name: string;
   icon: JSX.Element;
@@ -22,7 +24,7 @@ export function Stepper({
   stepsConfig: StepsConfig;
 }) {
   return (
-    <div className="flex gap-16">
+    <PageColumns>
       <div className="flex h-fit w-full max-w-[138px] flex-col gap-2">
         {stepsConfig.map(({ name }, stepIndex) => (
           <Fragment key={name}>
@@ -39,14 +41,14 @@ export function Stepper({
         ))}
       </div>
 
-      <div className="flex w-full max-w-xl flex-col gap-6">
+      <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
         <div className="flex items-center gap-2">
           {stepsConfig[currentStep].icon}
           <span className="font-bold">{stepsConfig[currentStep].name}</span>
         </div>
         {children[currentStep]}
       </div>
-    </div>
+    </PageColumns>
   );
 }
 
