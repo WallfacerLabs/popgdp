@@ -1,8 +1,8 @@
 import { ApplicationWithComments } from "@/drizzle/queries/applications";
 
 import { UserId } from "@/lib/auth";
+import { MarkdownPreview } from "@/components/ui/markdownPreview";
 
-import { CommentContent } from "../commentContent";
 import { CommentValueForm } from "../commentValue/commentValueForm";
 import { ReplyTarget } from "../replyTarget/replyTarget";
 import { CommentPreview } from "./commentPreview";
@@ -18,7 +18,7 @@ export const Comment = ({ comment, waveId, userId }: CommentProps) => {
     <CommentPreview
       comment={comment}
       replyTargetPreview={<ReplyTarget comment={comment} userId={userId} />}
-      commentContent={<CommentContent comment={comment} />}
+      commentContent={<MarkdownPreview body={comment.content} />}
       commentValueForm={
         <CommentValueForm
           className="ml-auto"
