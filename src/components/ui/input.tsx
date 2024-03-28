@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 export type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, autoComplete = "off", ...props }, ref) => {
     return (
       <input
         type={type}
@@ -19,6 +19,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           className,
         )}
         ref={ref}
+        autoComplete={autoComplete}
         {...props}
       />
     );

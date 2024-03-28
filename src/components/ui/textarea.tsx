@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, autoComplete = "off", ...props }, ref) => {
     return (
       <textarea
         className={cn(
@@ -18,6 +18,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           className,
         )}
         ref={ref}
+        autoComplete={autoComplete}
         {...props}
       />
     );
