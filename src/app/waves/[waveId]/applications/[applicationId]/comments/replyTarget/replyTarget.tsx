@@ -6,10 +6,9 @@ import { cva } from "class-variance-authority";
 
 import { UserId } from "@/lib/auth";
 import { formatTime } from "@/lib/dates";
+import { MarkdownPreview } from "@/components/ui/markdownPreview";
 import { Separator } from "@/components/ui/separator";
 import { UserAvatar } from "@/components/ui/userAvatar";
-
-import { CommentContent } from "../commentContent";
 
 interface ReplyTargetProps {
   userId: UserId | undefined;
@@ -39,9 +38,12 @@ export async function ReplyTarget({ userId, comment }: ReplyTargetProps) {
           <span className="font-bold">{user.name}</span>
           <Separator orientation="dot" className="opacity-60" />
           <div className={replyTargetVariants({ isReview: review?.isReview })}>
-            <CommentContent
-              comment={replyTarget}
-              className="pointer-events-none max-w-full select-none overflow-hidden text-ellipsis text-nowrap text-xs [&_ol]:m-0 [&_ol]:inline-flex [&_ol]:p-0 [&_p]:inline [&_ul]:m-0 [&_ul]:inline-flex [&_ul]:p-0"
+            <MarkdownPreview
+              body={replyTarget.content}
+              className="max-w-full overflow-hidden text-ellipsis text-nowrap"
+              variant="inline"
+              size="xs"
+              interactive={false}
             />
           </div>
           <Separator orientation="dot" className="opacity-60" />
