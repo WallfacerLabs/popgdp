@@ -6,7 +6,7 @@ import { updateUser } from "@/drizzle/queries/user";
 
 import { getUserId } from "@/lib/auth";
 
-import { type ProfileDetailsSchema } from "./page";
+import { type ProfileDetailsSchema } from "./updateUserDetailsForm";
 
 export async function updateUserDetailsAction(
   userDetails: ProfileDetailsSchema,
