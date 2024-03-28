@@ -76,7 +76,7 @@ export async function addReplyAction({
     applicationId,
     userId,
     content: data.comment,
-    replyTargetId: replyTargetId,
+    replyTargetId,
   });
 
   revalidatePath(`/waves/${waveId}/applications/${applicationId}`);
