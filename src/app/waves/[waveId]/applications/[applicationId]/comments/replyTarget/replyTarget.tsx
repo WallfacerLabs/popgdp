@@ -6,8 +6,8 @@ import { cva } from "class-variance-authority";
 
 import { UserId } from "@/lib/auth";
 import { formatTime } from "@/lib/dates";
-import { Separator } from "@/components/ui/separator";
 import { MarkdownPreview } from "@/components/ui/markdownPreview";
+import { Separator } from "@/components/ui/separator";
 import { UserAvatar } from "@/components/ui/userAvatar";
 
 interface ReplyTargetProps {
