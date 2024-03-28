@@ -128,7 +128,7 @@ export function MainDetails() {
             }
           >
             <PlusCircleIcon />
-            Add member
+            Add category
           </Button>
         </fieldset>
 
