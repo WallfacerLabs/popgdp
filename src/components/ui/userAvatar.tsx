@@ -28,7 +28,7 @@ export function UserAvatar({ image, size, className }: UserAvatarProps) {
 }
 
 const userAvatarVariants = cva(
-  "relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border p-0.5 bg-background",
+  "relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-primary/10 p-0.5",
   {
     variants: {
       size: {
