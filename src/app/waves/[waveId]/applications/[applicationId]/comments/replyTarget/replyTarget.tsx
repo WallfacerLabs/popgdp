@@ -37,14 +37,14 @@ export async function ReplyTarget({ userId, comment }: ReplyTargetProps) {
         <UserAvatar image={user.image} size="small" />
         <div className="flex max-w-full items-center gap-2 overflow-hidden border-b py-0.5 text-xs">
           <span className="font-bold">{user.name}</span>
-          <Separator orientation="dot" />
+          <Separator orientation="dot" className="opacity-60" />
           <div className={replyTargetVariants({ isReview: review?.isReview })}>
             <CommentContent
               comment={replyTarget}
               className="pointer-events-none max-w-full select-none overflow-hidden text-ellipsis text-nowrap text-xs [&_ol]:m-0 [&_ol]:inline-flex [&_ol]:p-0 [&_p]:inline [&_ul]:m-0 [&_ul]:inline-flex [&_ul]:p-0"
             />
           </div>
-          <Separator orientation="dot" />
+          <Separator orientation="dot" className="opacity-60" />
           <span className="text-nowrap opacity-60">
             {formatTime(createdAt)}
           </span>
