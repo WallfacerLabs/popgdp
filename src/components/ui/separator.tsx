@@ -42,7 +42,7 @@ export const Separator = forwardRef<
 );
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
-const separatorVariants = cva(cn("bg-border shrink-0 rounded-full"), {
+export const separatorVariants = cva(cn("bg-border shrink-0 rounded-full"), {
   variants: {
     orientation: {
       horizontal: "min-h-[1px] h-[1px] w-full",
