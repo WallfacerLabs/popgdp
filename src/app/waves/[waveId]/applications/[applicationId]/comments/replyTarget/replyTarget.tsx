@@ -33,7 +33,7 @@ export async function ReplyTarget({ userId, comment }: ReplyTargetProps) {
   return (
     <div className="relative px-4">
       <div className="flex items-center gap-2">
-        <UserAvatar name={user.name} imageId={user.imageId} />
+        <UserAvatar image={user.image} />
         <div className="flex max-w-full items-center gap-2 overflow-hidden border-b py-0.5 text-xs">
           <span className="font-bold">{user.name}</span>
           <div className="h-0.5 w-0.5 rounded-full bg-primary opacity-60" />
