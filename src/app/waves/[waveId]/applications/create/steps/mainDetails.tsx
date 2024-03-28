@@ -215,7 +215,11 @@ export function MainDetails({ categories }: { categories: Categories }) {
                 }
               >
                 <FormControl>
-                  <Input {...field} placeholder="Enter proposed budget" />
+                  <Input
+                    {...field}
+                    placeholder="Enter proposed budget"
+                    inputMode="numeric"
+                  />
                 </FormControl>
               </FormHint>
               <FormMessages>
