@@ -31,8 +31,8 @@ export async function ReplyTarget({ userId, comment }: ReplyTargetProps) {
   const { user, createdAt, review } = replyTarget;
 
   return (
-    <div className="relative pl-9 pr-4">
-      <div className="absolute left-7 top-1/2 h-8 w-4 rounded border-l border-t" />
+    <div className="relative border-b border-transparent pl-9 pr-4">
+      <div className="absolute left-7 top-1/2 h-5 w-2 rounded-tl border-l border-t" />
       <div className="flex items-center gap-2">
         <UserAvatar image={user.image} size="small" />
         <div className="flex max-w-full items-center gap-2 overflow-hidden border-b py-0.5 text-xs">
