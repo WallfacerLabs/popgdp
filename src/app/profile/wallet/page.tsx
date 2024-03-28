@@ -1,3 +1,3 @@
 export default function WalletPage() {
-  return <div>Wallet</div>;
+  return <div className="mx-auto w-full max-w-xl">Wallet</div>;
 }

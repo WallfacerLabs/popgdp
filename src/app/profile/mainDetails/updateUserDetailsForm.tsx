@@ -55,7 +55,7 @@ export function UserDetailsForm({
   });
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-6 py-2">
+    <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
       <div className="flex items-center gap-2">
         <TeamIcon className="h-6 w-6" />
         <span className="font-bold">Main details</span>

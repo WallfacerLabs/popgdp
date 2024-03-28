@@ -7,6 +7,7 @@ import { urls } from "@/constants/urls";
 
 import { BackButton } from "@/components/ui/backButton";
 import { Button } from "@/components/ui/button";
+import { PageColumns } from "@/components/ui/pageColumns";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { TeamIcon } from "@/components/icons/teamIcon";
 import { WalletIcon } from "@/components/icons/walletIcon";
@@ -25,7 +26,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
         <PageTitle>My profile</PageTitle>
       </div>
 
-      <div className="flex gap-16">
+      <PageColumns>
         <div className="flex h-fit w-fit max-w-[138px] flex-col gap-6">
           <Button
             variant="link"
@@ -50,7 +51,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
           </Button>
         </div>
         {children}
-      </div>
+      </PageColumns>
     </>
   );
 }
