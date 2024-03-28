@@ -6,30 +6,51 @@ import {
   type ElementRef,
 } from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/cn";
 
-const Separator = forwardRef<
+interface SeparatorProps
+  extends Omit<
+    ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>,
+    "orientation"
+  > {
+  orientation?: "horizontal" | "vertical" | "dot";
+}
+
+export const Separator = forwardRef<
   ElementRef<typeof SeparatorPrimitive.Root>,
-  ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
+  SeparatorProps
 >(
   (
     { className, orientation = "horizontal", decorative = true, ...props },
     ref,
-  ) => (
-    <SeparatorPrimitive.Root
-      ref={ref}
-      decorative={decorative}
-      orientation={orientation}
-      className={cn(
-        "bg-border",
-        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
-        className,
-      )}
-      {...props}
-    />
-  ),
+  ) => {
+    const separatorOrientation =
+      orientation === "dot" ? "horizontal" : orientation;
+
+    return (
+      <SeparatorPrimitive.Root
+        ref={ref}
+        decorative={decorative}
+        orientation={separatorOrientation}
+        className={cn(separatorVariants({ orientation }), className)}
+        {...props}
+      />
+    );
+  },
 );
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
-export { Separator };
+const separatorVariants = cva(cn("bg-border shrink-0 rounded-full"), {
+  variants: {
+    orientation: {
+      horizontal: "min-h-[1px] h-[1px] w-full",
+      vertical: "h-full w-[1px] min-w-[1px]",
+      dot: "h-1 min-h-1 w-1 min-w-1",
+    },
+  },
+  defaultVariants: {
+    orientation: "horizontal",
+  },
+});
