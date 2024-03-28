@@ -5,7 +5,6 @@ import {
 import { cva } from "class-variance-authority";
 
 import { UserId } from "@/lib/auth";
-import { cn } from "@/lib/cn";
 import { formatTime } from "@/lib/dates";
 import { UserAvatar } from "@/components/ui/userAvatar";
 
@@ -54,7 +53,7 @@ export async function ReplyTarget({ userId, comment }: ReplyTargetProps) {
 }
 
 const replyTargetVariants = cva(
-  cn("max-w-full overflow-hidden rounded-full px-1.5"),
+  "max-w-full overflow-hidden rounded-full px-1.5",
   {
     variants: {
       isReview: {
