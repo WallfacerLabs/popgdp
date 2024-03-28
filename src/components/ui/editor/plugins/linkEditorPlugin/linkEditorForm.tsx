@@ -72,7 +72,7 @@ export const LinkEditorForm = ({
             <FormItem>
               <FormLabel>Link URL</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} inputMode="url" />
               </FormControl>
               <FormMessage />
             </FormItem>
