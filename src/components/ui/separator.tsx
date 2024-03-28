@@ -42,15 +42,18 @@ export const Separator = forwardRef<
 );
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
-export const separatorVariants = cva(cn("bg-border shrink-0 rounded-full"), {
-  variants: {
-    orientation: {
-      horizontal: "min-h-[1px] h-[1px] w-full",
-      vertical: "h-full w-[1px] min-w-[1px]",
-      dot: "h-1 min-h-1 w-1 min-w-1",
+export const separatorVariants = cva(
+  cn("bg-primary opacity-10 shrink-0 rounded-full"),
+  {
+    variants: {
+      orientation: {
+        horizontal: "min-h-[1px] h-[1px] w-full",
+        vertical: "h-full w-[1px] min-w-[1px]",
+        dot: "h-1 min-h-1 w-1 min-w-1",
+      },
+    },
+    defaultVariants: {
+      orientation: "horizontal",
     },
   },
-  defaultVariants: {
-    orientation: "horizontal",
-  },
-});
+);
