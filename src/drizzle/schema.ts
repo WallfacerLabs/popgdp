@@ -286,6 +286,10 @@ export const User = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
   imageId: uuid("imageId"),
+  ethereumAddress: text("ethereumAddress"),
+  addressMessageSignature: text("addressMessageSignature"),
+  addressMessage: text("addressMessage"),
+
   createdAt: timestamp("createdAt", {
     mode: "date",
     withTimezone: true,

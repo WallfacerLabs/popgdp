@@ -13,7 +13,7 @@ export const getUser = cache(async (id: UserId | undefined) => {
 
   return db.query.User.findFirst({
     where: eq(User.id, id),
-    columns: { id: true, name: true },
+    columns: { id: true, name: true, ethereumAddress: true },
     with: {
       image: {
         columns: {
@@ -37,6 +37,44 @@ export function updateUser(data: typeof User.$inferInsert) {
     .set({
       imageId: data.imageId,
       name: data.name,
+      updatedAt: new Date(),
     })
     .where(eq(User.id, data.id));
+}
+
+export interface InsertEthereumAddressData {
+  addressMessageSignature: string;
+  addressMessage: string;
+  ethereumAddress: string;
+}
+
+export function addEthereumAddress(
+  userId: UserId,
+  {
+    addressMessageSignature,
+    ethereumAddress,
+    addressMessage,
+  }: InsertEthereumAddressData,
+) {
+  return db
+    .update(User)
+    .set({
+      ethereumAddress,
+      addressMessageSignature,
+      addressMessage,
+      updatedAt: new Date(),
+    })
+    .where(eq(User.id, userId));
+}
+
+export function removeEthereumAddress(userId: UserId) {
+  return db
+    .update(User)
+    .set({
+      ethereumAddress: null,
+      addressMessageSignature: null,
+      addressMessage: null,
+      updatedAt: new Date(),
+    })
+    .where(eq(User.id, userId));
 }

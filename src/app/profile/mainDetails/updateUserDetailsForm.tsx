@@ -40,11 +40,13 @@ export type ProfileDetailsSchema = z.infer<typeof profileDetailsSchema>;
 interface UserDetailsFormProps {
   userName: string | undefined | null;
   userAvatar: ImageData | null | undefined;
+  incrementStep: () => void;
 }
 
 export function UserDetailsForm({
   userAvatar,
   userName,
+  incrementStep,
 }: UserDetailsFormProps) {
   const form = useForm<ProfileDetailsSchema>({
     resolver: zodResolver(profileDetailsSchema),
@@ -58,8 +60,9 @@ export function UserDetailsForm({
     <Form {...form}>
       <form
         className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit((userData) => {
-          updateUserDetailsAction(userData);
+        onSubmit={form.handleSubmit(async (userData) => {
+          await updateUserDetailsAction(userData);
+          incrementStep();
         })}
       >
         <FormField
