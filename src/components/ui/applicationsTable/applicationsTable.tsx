@@ -1,4 +1,4 @@
-import { Application } from '@/app/types/Application';
+import { formatDate } from "@/lib/dates";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import {
   Table,
@@ -10,14 +10,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { WldAmount } from "@/components/ui/wldAmount";
-import { formatDate } from "@/lib/dates";
+import { Application } from "@/app/types/Application";
 
 interface ApplicationsTableProps {
   applications: Application[];
-  waveId: number
+  waveId: number;
 }
 
-export const ApplicationsTable = ({ applications, waveId }: ApplicationsTableProps) => {
+export const ApplicationsTable = ({
+  applications,
+  waveId,
+}: ApplicationsTableProps) => {
   return (
     <Table className="mt-8">
       <TableHeader>
@@ -56,5 +59,5 @@ export const ApplicationsTable = ({ applications, waveId }: ApplicationsTablePro
         ))}
       </TableBody>
     </Table>
-  )
-}
+  );
+};
