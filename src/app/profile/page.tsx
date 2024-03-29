@@ -6,7 +6,7 @@ import { BackButton } from "@/components/ui/backButton";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
-import { ProfileSettingStepper } from "./ProfileSettingStepper";
+import { ProfileSettingsStepper } from "./ProfileSettingsStepper";
 
 export default async function ProfilePage() {
   const userId = await getUserId();
@@ -22,7 +22,11 @@ export default async function ProfilePage() {
         <BackButton href={urls.root} />
         <PageTitle>My profile</PageTitle>
       </div>
-      <ProfileSettingStepper userAvatar={user?.image} userName={user?.name} />
+      <ProfileSettingsStepper
+        userAvatar={user?.image}
+        userName={user?.name}
+        ethereumAddress={user?.ethereumAddress}
+      />
     </>
   );
 }
