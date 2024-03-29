@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { ApplicationWithComments } from "@/drizzle/queries/applications";
 
-import { UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 

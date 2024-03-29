@@ -1,6 +1,6 @@
 import { ApplicationWithComments } from "@/drizzle/queries/applications";
 
-import { UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 import { MarkdownPreview } from "@/components/ui/markdownPreview";
 
 import { CommentValueForm } from "../commentValue/commentValueForm";

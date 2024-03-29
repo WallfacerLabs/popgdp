@@ -3,7 +3,7 @@ import { db } from "@/drizzle/db";
 import { Application, CommentValue, Member } from "@/drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 
-import { UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 
 const imageFragment = {
   columns: {

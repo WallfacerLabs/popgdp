@@ -7,7 +7,7 @@ import {
 } from "@/drizzle/queries/commentValues";
 import { CommentValue } from "@/drizzle/schema";
 
-import { type UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 interface CommentValueActionPayload extends ApplicationParamsSchema {
