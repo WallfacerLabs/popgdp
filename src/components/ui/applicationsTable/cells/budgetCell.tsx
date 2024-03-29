@@ -1,4 +1,4 @@
-import { Application } from "@/app/types/Application";
+import { Application } from "@/types/Application";
 
 import { TableCell } from "../../table";
 import { WldAmount } from "../../wldAmount";

@@ -1,4 +1,4 @@
-import { Application } from "@/app/types/Application";
+import { Application } from "@/types/Application";
 
 import { CategoryBadge } from "../../categories/categoryBadge";
 import { TableCell } from "../../table";

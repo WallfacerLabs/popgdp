@@ -1,5 +1,5 @@
+import { Application } from "@/types/Application";
 import { formatDate } from "@/lib/dates";
-import { Application } from "@/app/types/Application";
 
 import { TableCell } from "../../table";
 
