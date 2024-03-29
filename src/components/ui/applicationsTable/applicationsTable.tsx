@@ -1,3 +1,4 @@
+import { Application } from "@/types/Application";
 import { formatDate } from "@/lib/dates";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import {
@@ -10,7 +11,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { WldAmount } from "@/components/ui/wldAmount";
-import { Application } from "@/app/types/Application";
 
 interface ApplicationsTableProps {
   applications: Application[];
