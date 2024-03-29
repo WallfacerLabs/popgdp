@@ -1,4 +1,3 @@
-import { Application } from "@/types/Application";
 import { HTMLAttributes } from "react";
 
 import { Application } from "@/types/Application";
