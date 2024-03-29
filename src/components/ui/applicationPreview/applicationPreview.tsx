@@ -123,7 +123,7 @@ interface ApplicationImageProps {
 function ApplicationImage({ image, applicationName }: ApplicationImageProps) {
   return image ? (
     <Image
-      src={urls.image.preview(image.id)}
+      src={urls.images.preview({ imageId: image.id })}
       width={image.width}
       height={image.height}
       placeholder="blur"

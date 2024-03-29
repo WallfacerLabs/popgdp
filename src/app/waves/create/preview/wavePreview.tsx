@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { urls } from "@/constants/urls";
 
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/dates";
@@ -25,7 +26,7 @@ export default function PreviewApplication() {
   const { waveData } = useWaveStepsContext();
   const validationResult = waveDataSchema.safeParse(waveData);
   if (!validationResult.success) {
-    router.replace("/waves/create");
+    router.replace(urls.waves.create);
     return;
   }
   const validatedWaveData = validationResult.data;
@@ -34,7 +35,7 @@ export default function PreviewApplication() {
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <BackButton href="/waves/create" />
+          <BackButton href={urls.waves.create} />
           <PageTitle>{validatedWaveData.name}</PageTitle>
         </div>
         <Button

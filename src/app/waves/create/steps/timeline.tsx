@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { urls } from "@/constants/urls";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useForm,
@@ -56,7 +57,7 @@ export function Timeline() {
         className="flex w-full flex-col gap-6"
         onSubmit={form.handleSubmit(async (payload) => {
           dispatch({ type: "UPDATE_WAVE_DATA", payload });
-          router.push("/waves/create/preview");
+          router.push(urls.waves.createPreview);
         })}
       >
         <div className="grid grid-cols-2 gap-y-8 rounded-2xl border p-6">

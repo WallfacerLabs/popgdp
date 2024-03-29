@@ -12,7 +12,7 @@ interface ImagePreviewProps {
 export function ImagePreview({ image, className }: ImagePreviewProps) {
   return (
     <Image
-      src={urls.image.preview(image.id)}
+      src={urls.images.preview({ imageId: image.id })}
       placeholder="blur"
       blurDataURL={image.placeholder}
       width={image.width}

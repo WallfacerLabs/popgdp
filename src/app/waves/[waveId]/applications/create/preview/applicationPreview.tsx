@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { urls } from "@/constants/urls";
 import { ImageData } from "@/constants/validationSchemas";
 import { Categories } from "@/drizzle/queries/categories";
 
@@ -33,7 +34,11 @@ export default function PreviewApplication({
   const { applicationData } = useStepsContext();
   const validationResult = applicationDataSchema.safeParse(applicationData);
   if (!validationResult.success) {
-    router.replace(`/waves/${waveId}/applications/create`);
+    router.replace(
+      urls.applications.create({
+        waveId,
+      }),
+    );
     return;
   }
   const validatedApplicationData = validationResult.data;
@@ -46,7 +51,7 @@ export default function PreviewApplication({
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <BackButton href={`/waves/${waveId}/applications/create`} />
+          <BackButton href={urls.applications.create({ waveId })} />
           <PageTitle>{applicationData.name}</PageTitle>
           <CategoryBadge category={category} />
         </div>

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { UnauthenticatedError } from "@/constants/errors";
+import { urls } from "@/constants/urls";
 import { updateUser } from "@/drizzle/queries/user";
 
 import { getUserId } from "@/lib/auth";
@@ -22,5 +23,5 @@ export async function updateUserDetailsAction(
     imageId: userDetails.avatar?.id,
   });
 
-  revalidatePath("/");
+  revalidatePath(urls.root);
 }
