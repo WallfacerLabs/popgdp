@@ -1,6 +1,11 @@
 "use client";
 
-import { ComponentPropsWithoutRef, Fragment, type ReactNode } from "react";
+import {
+  ComponentPropsWithoutRef,
+  Fragment,
+  HTMLAttributes,
+  type ReactNode,
+} from "react";
 import { cva, VariantProps } from "class-variance-authority";
 
 import { Separator } from "@/components/ui/separator";
@@ -14,18 +19,25 @@ type StepsConfig = Array<{
   icon: JSX.Element;
 }>;
 
+interface StepperProps
+  extends Pick<HTMLAttributes<HTMLDivElement>, "className"> {
+  children: ReactNode[];
+  currentStep: number;
+  stepsConfig: StepsConfig;
+}
+
 export function Stepper({
   children,
   currentStep,
   stepsConfig,
-}: {
-  children: ReactNode[];
-  currentStep: number;
-  stepsConfig: StepsConfig;
-}) {
+  className,
+}: StepperProps) {
   return (
-    <PageColumns>
-      <div className="flex h-fit w-full max-w-[138px] flex-col gap-2">
+    <PageColumns className={className}>
+      <div
+        className="flex h-fit w-full max-w-[138px] flex-col gap-2"
+        data-column="left"
+      >
         {stepsConfig.map(({ name }, stepIndex) => (
           <Fragment key={name}>
             <StepperStep
@@ -41,7 +53,10 @@ export function Stepper({
         ))}
       </div>
 
-      <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
+      <div
+        className="mx-auto flex w-full max-w-xl flex-col gap-6"
+        data-column="middle"
+      >
         <div className="flex items-center gap-2 [&>svg]:h-6 [&>svg]:w-6">
           {stepsConfig[currentStep].icon}
           <span className="font-bold">{stepsConfig[currentStep].name}</span>
