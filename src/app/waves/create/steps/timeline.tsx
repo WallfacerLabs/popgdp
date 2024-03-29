@@ -14,8 +14,8 @@ import {
   useWaveStepsContext,
   useWaveStepsDispatchContext,
 } from "../stepsProvider";
-import { CalendarField } from "./calendarField";
 import { timelineSchema } from "./timeline.schema";
+import { TimelineStage } from "./timelineStage";
 
 export function Timeline({
   className,
@@ -44,35 +44,30 @@ export function Timeline({
         })}
       >
         <div className="flex rounded-2xl border">
-          <div className="border-l p-6 first:border-none">
-            <CalendarField
-              control={form.control}
-              name="openStartDate"
-              title="Open"
-            />
-          </div>
-          <div className="border-l p-6 first:border-none">
-            <CalendarField
-              control={form.control}
-              name="denoisingStartDate"
-              title="Denoising"
-            />
-          </div>
-          <div className="border-l p-6 first:border-none">
-            <CalendarField
-              control={form.control}
-              name="assesmentStartDate"
-              title="Assesment"
-            />
-          </div>
-          <div className="border-l p-6 first:border-none">
-            <CalendarField
-              control={form.control}
-              name="closeDate"
-              label="Close date"
-              title="Close"
-            />
-          </div>
+          <TimelineStage
+            name="openStartDate"
+            control={form.control}
+            label="Start date"
+            title="Open"
+          />
+          <TimelineStage
+            name="denoisingStartDate"
+            control={form.control}
+            label="Start date"
+            title="Denoising"
+          />
+          <TimelineStage
+            name="assesmentStartDate"
+            control={form.control}
+            label="Start date"
+            title="Assesment"
+          />
+          <TimelineStage
+            control={form.control}
+            name="closeDate"
+            label="Close date"
+            title="Close"
+          />
         </div>
 
         <FormFooter>
