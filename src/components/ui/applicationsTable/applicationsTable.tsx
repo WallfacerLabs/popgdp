@@ -1,6 +1,7 @@
 import { Application } from "@/types/Application";
 import { HTMLAttributes } from "react";
 
+import { Application } from "@/types/Application";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import {
   Table,
