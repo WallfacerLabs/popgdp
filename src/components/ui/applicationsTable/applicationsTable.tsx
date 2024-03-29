@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/table";
 import { WldAmount } from "@/components/ui/wldAmount";
 
+import { NameCell } from "./cells/nameCell";
+
 interface ApplicationsTableProps {
   applications: Application[];
   waveId: number;
@@ -39,9 +41,7 @@ export const ApplicationsTable = ({
             key={application.id}
             href={`/waves/${waveId}/applications/${application.id}`}
           >
-            <TableCell>
-              <span className="font-bold">{application.name}</span>
-            </TableCell>
+            <NameCell name={application.name} />
             <TableCell>{application.user.name}</TableCell>
             <TableCell>{application.entityName}</TableCell>
             <TableCell>
