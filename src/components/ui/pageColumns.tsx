@@ -9,7 +9,7 @@ export const PageColumns = ({
   return (
     <div
       className={cn(
-        "grid grid-cols-[172px_1fr_172px] justify-between gap-x-12 gap-y-6",
+        "grid grid-cols-[176px_1fr_176px] justify-between gap-x-28 gap-y-6",
         className,
       )}
       {...props}
