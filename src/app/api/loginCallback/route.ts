@@ -16,5 +16,5 @@ export async function GET(_: Request, context: { params: unknown }) {
     id: userId,
   });
 
-  return NextResponse.redirect(env.AUTH0_BASE_URL + urls.profile.mainDetails);
+  return NextResponse.redirect(env.AUTH0_BASE_URL + urls.profile);
 }

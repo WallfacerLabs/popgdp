@@ -1,8 +1,6 @@
 export const urls = {
-  profile: {
-    mainDetails: "/profile/mainDetails",
-    wallet: "/profile/wallet",
-  },
+  root: "/",
+  profile: "/profile",
   image: {
     preview(imageId: string) {
       return `/api/images/${imageId}`;

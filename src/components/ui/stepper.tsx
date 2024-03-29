@@ -42,7 +42,7 @@ export function Stepper({
       </div>
 
       <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 [&>svg]:h-6 [&>svg]:w-6">
           {stepsConfig[currentStep].icon}
           <span className="font-bold">{stepsConfig[currentStep].name}</span>
         </div>

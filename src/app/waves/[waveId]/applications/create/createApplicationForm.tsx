@@ -17,22 +17,22 @@ import { TeamInformation } from "./steps/teamInformation/teamInformation";
 import { useStepsContext } from "./stepsProvider";
 
 const stepsConfig = [
-  { name: "Main details", icon: <ComputerIcon className="h-6 w-6" /> },
+  { name: "Main details", icon: <ComputerIcon /> },
   {
     name: "Team information",
-    icon: <TeamIcon className="h-6 w-6" />,
+    icon: <TeamIcon />,
   },
   {
     name: "Grant scoping",
-    icon: <CampaignIcon className="h-6 w-6" />,
+    icon: <CampaignIcon />,
   },
   {
     name: "Roadmap & timeline",
-    icon: <ClockIcon className="h-6 w-6" />,
+    icon: <ClockIcon />,
   },
   {
     name: "Resources & sustainability",
-    icon: <CloudIcon className="h-6 w-6" />,
+    icon: <CloudIcon />,
   },
 ];
 
