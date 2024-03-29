@@ -37,3 +37,7 @@ export const imageSchema = z.object({
 });
 
 export type ImageData = z.infer<typeof imageSchema>;
+
+export const userSchema = z.object({
+  sid: z.string().brand("sessionUserId"),
+});

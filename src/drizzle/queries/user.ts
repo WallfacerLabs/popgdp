@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { eq } from "drizzle-orm";
 
-import { UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 
 import { db } from "../db";
 import { User } from "../schema";

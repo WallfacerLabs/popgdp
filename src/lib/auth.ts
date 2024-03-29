@@ -1,11 +1,7 @@
+import { userSchema } from "@/constants/validationSchemas";
 import { getSession } from "@auth0/nextjs-auth0";
-import { z } from "zod";
 
-export const userSchema = z.object({
-  sid: z.string().brand("sessionUserId"),
-});
-
-export type UserId = z.infer<typeof userSchema>["sid"];
+import { type UserId } from "@/types/User";
 
 export async function getUserId(): Promise<UserId | undefined> {
   const session = await getSession();

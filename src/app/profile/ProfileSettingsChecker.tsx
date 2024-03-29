@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { urls } from "@/constants/urls";
 
-import { UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 
 interface ProfileSettingsCheckerProps {
   userId: UserId | undefined;

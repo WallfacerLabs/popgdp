@@ -4,7 +4,7 @@ import {
 } from "@/drizzle/queries/applications";
 import { cva } from "class-variance-authority";
 
-import { UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 import { formatTime } from "@/lib/dates";
 import { MarkdownPreview } from "@/components/ui/markdownPreview";
 import { Separator } from "@/components/ui/separator";

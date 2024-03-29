@@ -8,7 +8,7 @@ import {
 } from "@/drizzle/queries/applicationValues";
 import { ApplicationValue } from "@/drizzle/schema";
 
-import { type UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 interface ApplicationValueActionPayload extends ApplicationParamsSchema {

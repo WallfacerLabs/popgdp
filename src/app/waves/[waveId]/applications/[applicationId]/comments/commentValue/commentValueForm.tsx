@@ -3,7 +3,7 @@
 import { HTMLAttributes } from "react";
 import { cva } from "class-variance-authority";
 
-import { UserId } from "@/lib/auth";
+import { type UserId } from "@/types/User";
 import { cn } from "@/lib/cn";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
