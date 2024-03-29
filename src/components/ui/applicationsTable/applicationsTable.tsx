@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { WldAmount } from "@/components/ui/wldAmount";
 
+import { EntityCell } from "./cells/entityCell";
 import { NameCell } from "./cells/nameCell";
 import { UserCell } from "./cells/userCell";
 
@@ -44,7 +45,7 @@ export const ApplicationsTable = ({
           >
             <NameCell name={application.name} />
             <UserCell user={application.user} />
-            <TableCell>{application.entityName}</TableCell>
+            <EntityCell entityName={application.entityName} />
             <TableCell>
               <span className="opacity-60">
                 {formatDate(application.createdAt)}
