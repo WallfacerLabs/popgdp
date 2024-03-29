@@ -20,7 +20,7 @@ export default function Error({
       error,
       digest: error.digest,
     });
-  }, [error]);
+  }, [error, logger]);
 
   return (
     <div className="mt-16 flex h-full flex-grow flex-col items-center justify-center gap-2">

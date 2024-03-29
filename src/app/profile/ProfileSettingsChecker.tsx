@@ -21,8 +21,8 @@ export function ProfileSettingsChecker({
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname !== urls.profile.mainDetails && userId && !userName) {
-      router.replace(urls.profile.mainDetails);
+    if (pathname !== urls.profile && userId && !userName) {
+      router.replace(urls.profile);
     }
   }, [router, pathname, userId, userName]);
 

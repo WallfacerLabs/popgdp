@@ -9,10 +9,10 @@ import { Timeline } from "./steps/timeline";
 import { useWaveStepsContext } from "./stepsProvider";
 
 const stepsConfig = [
-  { name: "Main details", icon: <ComputerIcon className="h-6 w-6" /> },
+  { name: "Main details", icon: <ComputerIcon /> },
   {
     name: "Timeline",
-    icon: <ClockIcon className="h-6 w-6" />,
+    icon: <ClockIcon />,
   },
 ];
 

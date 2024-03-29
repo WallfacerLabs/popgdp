@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { getUser } from "@/drizzle/queries/user";
 
 import { getUserId } from "@/lib/auth";
-import { ProfileSettingsChecker } from "@/app/profile/mainDetails/ProfileSettingsChecker";
+import { ProfileSettingsChecker } from "@/app/profile/ProfileSettingsChecker";
 
 export default async function Template({ children }: { children: ReactNode }) {
   const userId = await getUserId();
