@@ -1,7 +1,6 @@
 import { HTMLAttributes } from "react";
 
 import { Application } from "@/types/Application";
-import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import {
   Table,
   TableBody,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/table";
 
 import { BudgetCell } from "./cells/budgetCell";
+import { CategoryCell } from "./cells/categoryCell";
 import { DateCell } from "./cells/dateCell";
 import { EntityCell } from "./cells/entityCell";
 import { NameCell } from "./cells/nameCell";
@@ -51,7 +51,7 @@ export const ApplicationsTable = ({
             <EntityCell entityName={application.entityName} />
             <DateCell createdAt={application.createdAt} />
             <BudgetCell budget={application.budget} />
-            <CategoryBadge category={application.category} />
+            <CategoryCell category={application.category} />
           </TableLinkRow>
         ))}
       </TableBody>
