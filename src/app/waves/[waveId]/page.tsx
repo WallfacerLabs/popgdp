@@ -6,23 +6,12 @@ import { getWaveWithApplications } from "@/drizzle/queries/waves";
 import globeImage from "@/images/globe.png";
 import { z } from "zod";
 
-import { formatDate } from "@/lib/dates";
 import { parseWaveParams } from "@/lib/paramsValidation";
+import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableLinkRow,
-  TableRow,
-} from "@/components/ui/table";
-import { WldAmount } from "@/components/ui/wldAmount";
 
 const PAGE_SIZE = 10;
 
@@ -80,46 +69,11 @@ export default async function Wave({
         </Button>
       </div>
 
-      <Table className="mt-8">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Project name</TableHead>
-            <TableHead>User</TableHead>
-            <TableHead>Entity name</TableHead>
-            <TableHead>Submitted</TableHead>
-            <TableHead>Proposed budget</TableHead>
-            <TableHead>Category</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {currentPageApplications.map((project) => (
-            <TableLinkRow
-              key={project.id}
-              href={urls.applications.preview({
-                waveId,
-                applicationId: project.id,
-              })}
-            >
-              <TableCell>
-                <span className="font-bold">{project.name}</span>
-              </TableCell>
-              <TableCell>{project.user.name}</TableCell>
-              <TableCell>{project.entityName}</TableCell>
-              <TableCell>
-                <span className="opacity-60">
-                  {formatDate(project.createdAt)}
-                </span>
-              </TableCell>
-              <TableCell>
-                <WldAmount amount={project.budget} />
-              </TableCell>
-              <TableCell>
-                <CategoryBadge category={project.category} />
-              </TableCell>
-            </TableLinkRow>
-          ))}
-        </TableBody>
-      </Table>
+      <ApplicationsTable
+        applications={currentPageApplications}
+        waveId={waveId}
+      />
+
       {totalPages > 1 && (
         <TablePagination currentPage={page} totalPages={totalPages} />
       )}
