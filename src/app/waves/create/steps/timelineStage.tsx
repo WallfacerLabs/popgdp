@@ -1,8 +1,8 @@
+import { canPerformActionByStage, UserAction } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { AvailabilityIndicator } from "@/components/ui/availabilityIndicator";
 
 import { CalendarField, CalendarFieldProps } from "./calendarField";
-import { type TimelineSchema } from "./timeline.schema";
 
 interface TimelineStageProps extends CalendarFieldProps {
   className?: string;
@@ -12,7 +12,7 @@ export const TimelineStage = ({
   name,
   control,
   label,
-  title,
+  stage,
   className,
 }: TimelineStageProps) => {
   return (
@@ -20,69 +20,52 @@ export const TimelineStage = ({
       <CalendarField
         control={control}
         name={name}
-        title={title}
+        stage={stage}
         label={label}
       />
-      <ul className="mt-4 flex flex-col gap-2">
-        {Object.entries(fieldActions[name]).map(([action, available]) => (
-          <li key={action}>
-            <AvailabilityIndicator available={available}>
-              {action}
-            </AvailabilityIndicator>
-          </li>
-        ))}
-      </ul>
+      <ActionsList stage={stage} />
     </div>
   );
 };
 
-type FieldActions = {
-  [K in keyof TimelineSchema]: {
-    Comments: boolean;
-    "Submission edit": boolean;
-    Voting: boolean;
-    Reviewing: boolean;
-    "Submission rating": boolean;
-    "Comments rating": boolean;
-    "Reviews rating": boolean;
-  };
-};
+type ActionsListProps = Pick<TimelineStageProps, "stage">;
 
-const fieldActions: FieldActions = {
-  openStartDate: {
-    Comments: true,
-    "Submission edit": true,
-    Voting: false,
-    Reviewing: false,
-    "Submission rating": true,
-    "Comments rating": true,
-    "Reviews rating": false,
-  },
-  denoisingStartDate: {
-    Comments: true,
-    "Submission edit": true,
-    Voting: false,
-    Reviewing: false,
-    "Submission rating": true,
-    "Comments rating": true,
-    "Reviews rating": false,
-  },
-  assesmentStartDate: {
-    Comments: true,
-    "Submission edit": false,
-    Voting: true,
-    Reviewing: true,
-    "Submission rating": true,
-    "Comments rating": true,
-    "Reviews rating": true,
-  },
-  closeDate: {
-    Comments: false,
-    "Submission edit": false,
-    Voting: false,
-    Reviewing: false,
-    "Submission rating": false,
-    "Comments rating": false,
-    "Reviews rating": false,
-  },
-};
+function ActionsList({ stage }: ActionsListProps) {
+  function canPerformAction(action: UserAction) {
+    return canPerformActionByStage(stage, action);
+  }
+
+  return (
+    <ul className="mt-4 flex flex-col gap-2">
+      <li>
+        <AvailabilityIndicator available={canPerformAction("submissionAdd")}>
+          Add submission
+        </AvailabilityIndicator>
+        <AvailabilityIndicator available={canPerformAction("submissionEdit")}>
+          Edit submission
+        </AvailabilityIndicator>
+        <AvailabilityIndicator available={canPerformAction("submissionSpam")}>
+          Set submission as spam
+        </AvailabilityIndicator>
+        <AvailabilityIndicator available={canPerformAction("commentAdd")}>
+          Comments
+        </AvailabilityIndicator>
+        <AvailabilityIndicator available={canPerformAction("commentValue")}>
+          Rate comments
+        </AvailabilityIndicator>
+        <AvailabilityIndicator available={canPerformAction("submissionVote")}>
+          Voting
+        </AvailabilityIndicator>
+        <AvailabilityIndicator available={canPerformAction("submissionVote")}>
+          Submission rating
+        </AvailabilityIndicator>
+        <AvailabilityIndicator available={canPerformAction("reviewAdd")}>
+          Reviewing
+        </AvailabilityIndicator>
+        <AvailabilityIndicator available={canPerformAction("reviewAdd")}>
+          Rate reviews
+        </AvailabilityIndicator>
+      </li>
+    </ul>
+  );
+}

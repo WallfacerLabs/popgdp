@@ -18,7 +18,12 @@ export async function getUserId(): Promise<UserId | undefined> {
   return user.data.sid;
 }
 
-type WaveStage = "notOpen" | "open" | "denoising" | "assesment" | "closed";
+export type WaveStage =
+  | "notOpen"
+  | "open"
+  | "denoising"
+  | "assesment"
+  | "close";
 
 interface WaveStageArgs {
   openStartDate: Date;
@@ -36,7 +41,7 @@ export function getWaveStage({
   const currentDate = new Date();
 
   if (currentDate > closeDate) {
-    return "closed";
+    return "close";
   }
 
   if (currentDate > assesmentStartDate) {
@@ -54,7 +59,7 @@ export function getWaveStage({
   return "notOpen";
 }
 
-type UserAction =
+export type UserAction =
   | "submissionAdd"
   | "submissionEdit"
   | "submissionSpam"
@@ -90,10 +95,10 @@ const canPerformByStage = {
     submissionVote: true,
     commentAdd:     true,
     commentValue:   true,
-    reviewAdd:      false,
+    reviewAdd:      true,
   },
 } satisfies Record<
-  Exclude<WaveStage, "notOpen" | "closed">,
+  Exclude<WaveStage, "notOpen" | "close">,
   Record<UserAction, boolean>
 >;
 
@@ -101,7 +106,7 @@ export function canPerformActionByStage(
   stage: WaveStage,
   action: UserAction,
 ): boolean {
-  if (stage === "notOpen" || stage === "closed") {
+  if (stage === "notOpen" || stage === "close") {
     return false;
   }
 

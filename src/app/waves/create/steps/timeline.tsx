@@ -53,26 +53,26 @@ export function Timeline({
               name="openStartDate"
               control={form.control}
               label="Start date"
-              title="Open"
+              stage="open"
               className="border-none"
             />
             <TimelineStage
               name="denoisingStartDate"
               control={form.control}
               label="Start date"
-              title="Denoising"
+              stage="denoising"
             />
             <TimelineStage
               name="assesmentStartDate"
               control={form.control}
               label="Start date"
-              title="Assesment"
+              stage="assesment"
             />
             <TimelineStage
               control={form.control}
               name="closeDate"
               label="Close date"
-              title="Close"
+              stage="close"
             />
           </div>
 
