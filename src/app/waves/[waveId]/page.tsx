@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { urls } from "@/constants/urls";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
 import globeImage from "@/images/globe.png";
 import { z } from "zod";
@@ -73,7 +74,7 @@ export default async function Wave({
       <div className="mt-8 flex items-center justify-between">
         <PageTitle>Submissions</PageTitle>
         <Button asChild>
-          <Link href={`/waves/${waveId}/applications/create`}>
+          <Link href={urls.applications.create({ waveId })}>
             Apply for Grant
           </Link>
         </Button>
@@ -94,7 +95,10 @@ export default async function Wave({
           {currentPageApplications.map((project) => (
             <TableLinkRow
               key={project.id}
-              href={`/waves/${waveId}/applications/${project.id}`}
+              href={urls.applications.preview({
+                waveId,
+                applicationId: project.id,
+              })}
             >
               <TableCell>
                 <span className="font-bold">{project.name}</span>

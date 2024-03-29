@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { UnauthenticatedError } from "@/constants/errors";
+import { urls } from "@/constants/urls";
 import { insertWave } from "@/drizzle/queries/waves";
 
 import { getUserId } from "@/lib/auth";
@@ -27,6 +28,6 @@ export async function createWaveAction(data: WaveData) {
     data.categories,
   );
 
-  revalidatePath("/");
-  redirect(`/waves/${waveId}`);
+  revalidatePath(urls.root);
+  redirect(urls.waves.preview({ waveId }));
 }

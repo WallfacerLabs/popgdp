@@ -5,6 +5,8 @@ import { AxiomWebVitals } from "next-axiom";
 
 import "./globals.css";
 
+import { urls } from "@/constants/urls";
+
 import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
@@ -44,7 +46,10 @@ export default function RootLayout({
             className="flex items-center gap-1.5 px-0 font-bold before:bottom-2 before:right-0 before:w-[calc(100%-46px)] before:bg-primary/0"
             asChild
           >
-            <Link href="/" className="before:left-[unset] before:right-0">
+            <Link
+              href={urls.root}
+              className="before:left-[unset] before:right-0"
+            >
               <ProductIcon className="!h-10 !w-10" aria-label="POPGDP logo" />
               <h1 className="px-3">POPGDP</h1>
             </Link>
@@ -76,7 +81,7 @@ function Navigation() {
       <ul className="flex gap-6">
         <li>
           <Button variant="link" asChild className="font-bold">
-            <Link href="/">
+            <Link href={urls.root}>
               <AssignmentIcon /> Submissions
             </Link>
           </Button>

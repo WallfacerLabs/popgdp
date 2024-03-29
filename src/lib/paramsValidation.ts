@@ -44,6 +44,8 @@ const imageParamsSchema = z.object({
   imageId: z.string(),
 });
 
+export type ImageParamsSchema = z.infer<typeof imageParamsSchema>;
+
 export function parseImageParams(params: unknown) {
   return parseParams(imageParamsSchema, params);
 }

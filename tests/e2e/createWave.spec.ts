@@ -1,3 +1,4 @@
+import { urls } from "@/constants/urls";
 import { db } from "@/drizzle/db";
 import { Wave } from "@/drizzle/schema";
 import { expect, test } from "@playwright/test";
@@ -9,7 +10,7 @@ test.beforeEach(async () => {
 });
 
 test("cannot access page if not authenticated", async ({ page }) => {
-  await page.goto("/");
+  await page.goto(urls.root);
 
   await page.getByRole("link", { name: "Create wave" }).click();
 
@@ -19,7 +20,7 @@ test("cannot access page if not authenticated", async ({ page }) => {
 test.skip("creates a new wave", async ({ browser }) => {
   const page = await getPageWithLoggedUser(browser);
 
-  await page.goto("/");
+  await page.goto(urls.root);
 
   await page.getByRole("link", { name: "Create wave" }).click();
 
@@ -30,7 +31,7 @@ test.skip("creates a new wave", async ({ browser }) => {
 
   await expect(page.getByText("Submissions")).toBeVisible();
 
-  await page.goto("/");
+  await page.goto(urls.root);
 
   await expect(page.getByText("First wave")).toBeVisible();
   await expect(page.getByText("This is a wave of grants")).toBeVisible();

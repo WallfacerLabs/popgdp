@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { urls } from "@/constants/urls";
 
 import { getUserId } from "@/lib/auth";
 import { BackButton } from "@/components/ui/backButton";
@@ -19,7 +20,7 @@ export default async function CreateWave() {
   return (
     <>
       <div className="mb-16 flex items-center gap-4">
-        <BackButton href="/" />
+        <BackButton href={urls.root} />
         <PageTitle>Create new wave</PageTitle>
       </div>
       <CreateWaveForm />

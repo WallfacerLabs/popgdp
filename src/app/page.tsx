@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { urls } from "@/constants/urls";
 import { getWaves } from "@/drizzle/queries/waves";
 
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,7 @@ export default async function Home() {
       <div className="flex justify-between">
         <PageTitle>Current waves</PageTitle>
         <Button variant="secondary" asChild>
-          <Link href="waves/create">Create wave</Link>
+          <Link href={urls.waves.create}>Create wave</Link>
         </Button>
       </div>
       <ol className="flex flex-col gap-8">

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { urls } from "@/constants/urls";
 import { getApplicationWithComments } from "@/drizzle/queries/applications";
 
 import { getUserId } from "@/lib/auth";
@@ -25,7 +26,7 @@ export default async function Application({ params }: { params: unknown }) {
     <div className="flex w-full flex-col gap-4">
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <BackButton href={`/waves/${application.waveId}`} />
+          <BackButton href={urls.waves.preview({ waveId })} />
           <PageTitle>{application.name}</PageTitle>
           <CategoryBadge category={application.category} />
         </div>

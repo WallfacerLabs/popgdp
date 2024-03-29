@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { urls } from "@/constants/urls";
 import { getCategoriesForWave } from "@/drizzle/queries/categories";
 
 import { getUserId } from "@/lib/auth";
@@ -27,7 +28,7 @@ export default async function CreateApplication({
   return (
     <>
       <div className="mb-16 flex items-center gap-4">
-        <BackButton href={`/waves/${waveId}`} />
+        <BackButton href={urls.waves.preview({ waveId })} />
         <PageTitle>Apply for the Grant</PageTitle>
       </div>
 
