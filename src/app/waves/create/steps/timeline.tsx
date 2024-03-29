@@ -1,5 +1,6 @@
 "use client";
 
+import { HTMLAttributes } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -35,7 +36,9 @@ import {
 } from "../stepsProvider";
 import { timelineSchema } from "./timeline.schema";
 
-export function Timeline() {
+export function Timeline({
+  className,
+}: Pick<HTMLAttributes<HTMLDivElement>, "className">) {
   const router = useRouter();
   const { waveData } = useWaveStepsContext();
   const dispatch = useWaveStepsDispatchContext();
@@ -51,56 +54,58 @@ export function Timeline() {
   });
 
   return (
-    <Form {...form}>
-      <form
-        className="flex w-full flex-col gap-6"
-        onSubmit={form.handleSubmit(async (payload) => {
-          dispatch({ type: "UPDATE_WAVE_DATA", payload });
-          router.push("/waves/create/preview");
-        })}
-      >
-        <div className="grid grid-cols-2 gap-y-8 rounded-2xl border p-6">
-          <CalendarField
-            control={form.control}
-            name="openStartDate"
-            title="Open"
-          />
-          <CalendarField
-            control={form.control}
-            name="denoisingStartDate"
-            title="Denoising"
-          />
-          <CalendarField
-            control={form.control}
-            name="assesmentStartDate"
-            title="Assesment"
-          />
-          <CalendarField
-            control={form.control}
-            name="closeDate"
-            label="Close date"
-            title="Close"
-          />
-        </div>
+    <div className={className}>
+      <Form {...form}>
+        <form
+          className="flex w-full flex-col gap-6"
+          onSubmit={form.handleSubmit(async (payload) => {
+            dispatch({ type: "UPDATE_WAVE_DATA", payload });
+            router.push("/waves/create/preview");
+          })}
+        >
+          <div className="flex rounded-2xl border">
+            <CalendarField
+              control={form.control}
+              name="openStartDate"
+              title="Open"
+            />
+            <CalendarField
+              control={form.control}
+              name="denoisingStartDate"
+              title="Denoising"
+            />
+            <CalendarField
+              control={form.control}
+              name="assesmentStartDate"
+              title="Assesment"
+            />
+            <CalendarField
+              control={form.control}
+              name="closeDate"
+              label="Close date"
+              title="Close"
+            />
+          </div>
 
-        <FormFooter>
-          <Button
-            disabled={form.formState.isSubmitting}
-            variant="secondary"
-            type="button"
-            onClick={() => dispatch({ type: "DECREMENT_STEP" })}
-          >
-            <ArrowIcon direction="left" />
-            Back
-          </Button>
+          <FormFooter>
+            <Button
+              disabled={form.formState.isSubmitting}
+              variant="secondary"
+              type="button"
+              onClick={() => dispatch({ type: "DECREMENT_STEP" })}
+            >
+              <ArrowIcon direction="left" />
+              Back
+            </Button>
 
-          <Button disabled={form.formState.isSubmitting}>
-            Preview
-            <ArrowIcon direction="right" />
-          </Button>
-        </FormFooter>
-      </form>
-    </Form>
+            <Button disabled={form.formState.isSubmitting}>
+              Preview
+              <ArrowIcon direction="right" />
+            </Button>
+          </FormFooter>
+        </form>
+      </Form>
+    </div>
   );
 }
 
