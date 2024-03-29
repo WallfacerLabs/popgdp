@@ -1,18 +1,24 @@
+import { HTMLAttributes } from "react";
+
 import { Application } from "@/types/Application";
-import { formatDate } from "@/lib/dates";
-import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableLinkRow,
   TableRow,
 } from "@/components/ui/table";
-import { WldAmount } from "@/components/ui/wldAmount";
 
-interface ApplicationsTableProps {
+import { BudgetCell } from "./cells/budgetCell";
+import { CategoryCell } from "./cells/categoryCell";
+import { DateCell } from "./cells/dateCell";
+import { EntityCell } from "./cells/entityCell";
+import { NameCell } from "./cells/nameCell";
+import { UserCell } from "./cells/userCell";
+
+interface ApplicationsTableProps
+  extends Pick<HTMLAttributes<HTMLDivElement>, "className"> {
   applications: Application[];
   waveId: number;
 }
@@ -20,9 +26,10 @@ interface ApplicationsTableProps {
 export const ApplicationsTable = ({
   applications,
   waveId,
+  className,
 }: ApplicationsTableProps) => {
   return (
-    <Table className="mt-8">
+    <Table className={className}>
       <TableHeader>
         <TableRow>
           <TableHead>Project name</TableHead>
@@ -39,22 +46,12 @@ export const ApplicationsTable = ({
             key={application.id}
             href={`/waves/${waveId}/applications/${application.id}`}
           >
-            <TableCell>
-              <span className="font-bold">{application.name}</span>
-            </TableCell>
-            <TableCell>{application.user.name}</TableCell>
-            <TableCell>{application.entityName}</TableCell>
-            <TableCell>
-              <span className="opacity-60">
-                {formatDate(application.createdAt)}
-              </span>
-            </TableCell>
-            <TableCell>
-              <WldAmount amount={application.budget} />
-            </TableCell>
-            <TableCell>
-              <CategoryBadge category={application.category} />
-            </TableCell>
+            <NameCell name={application.name} />
+            <UserCell user={application.user} />
+            <EntityCell entityName={application.entityName} />
+            <DateCell createdAt={application.createdAt} />
+            <BudgetCell budget={application.budget} />
+            <CategoryCell category={application.category} />
           </TableLinkRow>
         ))}
       </TableBody>

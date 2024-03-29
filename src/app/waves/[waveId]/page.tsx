@@ -70,6 +70,7 @@ export default async function Wave({
       </div>
 
       <ApplicationsTable
+        className="mt-8"
         applications={currentPageApplications}
         waveId={waveId}
       />
