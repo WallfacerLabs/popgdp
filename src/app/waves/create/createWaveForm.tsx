@@ -20,7 +20,11 @@ export default function CreateWaveForm() {
   const { currentStep } = useWaveStepsContext();
 
   return (
-    <Stepper currentStep={currentStep} stepsConfig={stepsConfig}>
+    <Stepper
+      currentStep={currentStep}
+      stepsConfig={stepsConfig}
+      className="[&>[data-column=middle]]:col-span-2 [&>[data-column=middle]]:max-w-full"
+    >
       <MainDetails />
       <Timeline />
     </Stepper>
