@@ -1,5 +1,4 @@
 import { Application } from "@/types/Application";
-import { formatDate } from "@/lib/dates";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import {
   Table,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { WldAmount } from "@/components/ui/wldAmount";
 
+import { DateCell } from "./cells/dateCell";
 import { EntityCell } from "./cells/entityCell";
 import { NameCell } from "./cells/nameCell";
 import { UserCell } from "./cells/userCell";
@@ -46,11 +46,7 @@ export const ApplicationsTable = ({
             <NameCell name={application.name} />
             <UserCell user={application.user} />
             <EntityCell entityName={application.entityName} />
-            <TableCell>
-              <span className="opacity-60">
-                {formatDate(application.createdAt)}
-              </span>
-            </TableCell>
+            <DateCell createdAt={application.createdAt} />
             <TableCell>
               <WldAmount amount={application.budget} />
             </TableCell>
