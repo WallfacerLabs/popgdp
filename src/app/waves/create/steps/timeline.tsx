@@ -10,6 +10,7 @@ import {
   type FieldValues,
 } from "react-hook-form";
 
+import { cn } from "@/lib/cn";
 import { formatDate, getStartOfDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -38,7 +39,7 @@ import { timelineSchema } from "./timeline.schema";
 
 export function Timeline({
   className,
-}: Pick<HTMLAttributes<HTMLDivElement>, "className">) {
+}: Pick<HTMLAttributes<HTMLFormElement>, "className">) {
   const router = useRouter();
   const { waveData } = useWaveStepsContext();
   const dispatch = useWaveStepsDispatchContext();
@@ -54,58 +55,56 @@ export function Timeline({
   });
 
   return (
-    <div className={className}>
-      <Form {...form}>
-        <form
-          className="flex w-full flex-col gap-6"
-          onSubmit={form.handleSubmit(async (payload) => {
-            dispatch({ type: "UPDATE_WAVE_DATA", payload });
-            router.push("/waves/create/preview");
-          })}
-        >
-          <div className="flex rounded-2xl border">
-            <CalendarField
-              control={form.control}
-              name="openStartDate"
-              title="Open"
-            />
-            <CalendarField
-              control={form.control}
-              name="denoisingStartDate"
-              title="Denoising"
-            />
-            <CalendarField
-              control={form.control}
-              name="assesmentStartDate"
-              title="Assesment"
-            />
-            <CalendarField
-              control={form.control}
-              name="closeDate"
-              label="Close date"
-              title="Close"
-            />
-          </div>
+    <Form {...form}>
+      <form
+        className={cn("flex w-full flex-col gap-6", className)}
+        onSubmit={form.handleSubmit(async (payload) => {
+          dispatch({ type: "UPDATE_WAVE_DATA", payload });
+          router.push("/waves/create/preview");
+        })}
+      >
+        <div className="flex rounded-2xl border">
+          <CalendarField
+            control={form.control}
+            name="openStartDate"
+            title="Open"
+          />
+          <CalendarField
+            control={form.control}
+            name="denoisingStartDate"
+            title="Denoising"
+          />
+          <CalendarField
+            control={form.control}
+            name="assesmentStartDate"
+            title="Assesment"
+          />
+          <CalendarField
+            control={form.control}
+            name="closeDate"
+            label="Close date"
+            title="Close"
+          />
+        </div>
 
-          <FormFooter>
-            <Button
-              disabled={form.formState.isSubmitting}
-              variant="secondary"
-              type="button"
-              onClick={() => dispatch({ type: "DECREMENT_STEP" })}
-            >
-              <ArrowIcon direction="left" />
-              Back
-            </Button>
+        <FormFooter>
+          <Button
+            disabled={form.formState.isSubmitting}
+            variant="secondary"
+            type="button"
+            onClick={() => dispatch({ type: "DECREMENT_STEP" })}
+          >
+            <ArrowIcon direction="left" />
+            Back
+          </Button>
 
-            <Button disabled={form.formState.isSubmitting}>
-              Preview
-              <ArrowIcon direction="right" />
-            </Button>
-          </FormFooter>
-        </form>
-      </Form>
-    </div>
+          <Button disabled={form.formState.isSubmitting}>
+            Preview
+            <ArrowIcon direction="right" />
+          </Button>
+        </FormFooter>
+      </form>
+    </Form>
   );
 }
 
