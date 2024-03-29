@@ -9,8 +9,8 @@ import {
   TableLinkRow,
   TableRow,
 } from "@/components/ui/table";
-import { WldAmount } from "@/components/ui/wldAmount";
 
+import { BudgetCell } from "./cells/budgetCell";
 import { DateCell } from "./cells/dateCell";
 import { EntityCell } from "./cells/entityCell";
 import { NameCell } from "./cells/nameCell";
@@ -47,9 +47,7 @@ export const ApplicationsTable = ({
             <UserCell user={application.user} />
             <EntityCell entityName={application.entityName} />
             <DateCell createdAt={application.createdAt} />
-            <TableCell>
-              <WldAmount amount={application.budget} />
-            </TableCell>
+            <BudgetCell budget={application.budget} />
             <TableCell>
               <CategoryBadge category={application.category} />
             </TableCell>
