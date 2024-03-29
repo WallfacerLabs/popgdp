@@ -49,6 +49,7 @@ export function Timeline({
             control={form.control}
             label="Start date"
             title="Open"
+            className="border-none"
           />
           <TimelineStage
             name="denoisingStartDate"
