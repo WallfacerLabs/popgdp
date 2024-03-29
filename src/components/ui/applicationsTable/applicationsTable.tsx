@@ -3,7 +3,6 @@ import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableLinkRow,
@@ -48,9 +47,7 @@ export const ApplicationsTable = ({
             <EntityCell entityName={application.entityName} />
             <DateCell createdAt={application.createdAt} />
             <BudgetCell budget={application.budget} />
-            <TableCell>
-              <CategoryBadge category={application.category} />
-            </TableCell>
+            <CategoryBadge category={application.category} />
           </TableLinkRow>
         ))}
       </TableBody>
