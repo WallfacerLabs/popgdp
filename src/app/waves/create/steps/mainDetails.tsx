@@ -39,13 +39,17 @@ import {
   useWaveStepsContext,
   useWaveStepsDispatchContext,
 } from "../stepsProvider";
-import { FORM_FIELD_PARAMS, mainDetailsSchema } from "./mainDetails.schema";
+import {
+  FORM_FIELD_PARAMS,
+  mainDetailsSchema,
+  type MainDetailsSchema,
+} from "./mainDetails.schema";
 
 export function MainDetails() {
   const { waveData } = useWaveStepsContext();
   const dispatch = useWaveStepsDispatchContext();
 
-  const form = useForm<mainDetailsSchema>({
+  const form = useForm<MainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
       name: waveData.name ?? "",
@@ -149,7 +153,7 @@ interface CategoryFieldProps {
 }
 
 function CategoryField({ index, removeCategory }: CategoryFieldProps) {
-  const form = useFormContext<mainDetailsSchema>();
+  const form = useFormContext<MainDetailsSchema>();
 
   return (
     <li className="relative rounded-3xl border p-6">

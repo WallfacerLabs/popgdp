@@ -12,10 +12,10 @@ import { Input } from "@/components/ui/input";
 import { AvatarUpload } from "@/components/ui/uploads/avatarUpload";
 import { CrossIcon } from "@/components/icons/crossIcon";
 
-import { teamInformationSchema } from "./teamInformation";
+import { type TeamInformationSchema } from "./teamInformation";
 
 interface MemberFieldProps {
-  form: UseFormReturn<teamInformationSchema>;
+  form: UseFormReturn<TeamInformationSchema>;
   index: number;
   removeMember: UseFieldArrayRemove;
 }

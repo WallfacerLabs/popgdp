@@ -21,16 +21,16 @@ import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 export const roadmapSchema = z.object({
   tbdb: z.string(),
 });
-export type roadmapSchema = z.infer<typeof roadmapSchema>;
+export type RoadmapSchema = z.infer<typeof roadmapSchema>;
 
 export function Roadmap() {
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
-  const form = useForm<roadmapSchema>({
+  const form = useForm<RoadmapSchema>({
     resolver: zodResolver(roadmapSchema),
     defaultValues: {
       tbdb: applicationData.tbdb ?? "",
-    } satisfies roadmapSchema,
+    } satisfies RoadmapSchema,
   });
 
   return (

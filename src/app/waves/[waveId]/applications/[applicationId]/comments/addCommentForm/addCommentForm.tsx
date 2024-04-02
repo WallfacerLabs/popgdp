@@ -22,14 +22,14 @@ import {
   addReviewAction,
   type AddCommentActionPayload,
 } from "./addCommentAction";
-import { addCommentSchema } from "./addCommentSchema";
+import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
 import { AddReviewDialog } from "./addReviewDialog";
 
 export function AddCommentForm() {
   const { waveId, applicationId } = useApplicationParams();
 
   const [editorKey, setEditorKey] = useState(0);
-  const form = useForm<addCommentSchema>({
+  const form = useForm<AddCommentSchema>({
     resolver: zodResolver(addCommentSchema),
     defaultValues: {
       comment: "",

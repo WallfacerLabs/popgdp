@@ -48,17 +48,17 @@ export const teamInformationSchema = z.object({
     }),
   ),
 });
-export type teamInformationSchema = z.infer<typeof teamInformationSchema>;
+export type TeamInformationSchema = z.infer<typeof teamInformationSchema>;
 
 export function TeamInformation() {
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
-  const form = useForm<teamInformationSchema>({
+  const form = useForm<TeamInformationSchema>({
     resolver: zodResolver(teamInformationSchema),
     defaultValues: {
       teamSummary: applicationData.teamSummary ?? "",
       members: applicationData.members ?? [],
-    } satisfies teamInformationSchema,
+    } satisfies TeamInformationSchema,
   });
 
   const {

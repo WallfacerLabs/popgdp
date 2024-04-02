@@ -58,12 +58,12 @@ export const mainDetailsSchema = z.object({
   summary: specificLengthStringSchema("Entity name", FORM_FIELD_PARAMS.summary),
   categoryId: z.string(),
 });
-export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
+export type MainDetailsSchema = z.infer<typeof mainDetailsSchema>;
 
 export function MainDetails({ categories }: { categories: Categories }) {
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
-  const form = useForm<mainDetailsSchema>({
+  const form = useForm<MainDetailsSchema>({
     resolver: zodResolver(mainDetailsSchema),
     defaultValues: {
       image: applicationData.image ?? undefined,
@@ -73,7 +73,7 @@ export function MainDetails({ categories }: { categories: Categories }) {
       budget: applicationData.budget ? applicationData.budget.toString() : "",
       summary: applicationData.summary ?? "",
       categoryId: applicationData.categoryId ?? undefined,
-    } satisfies Record<keyof mainDetailsSchema, any> as any,
+    } satisfies Record<keyof MainDetailsSchema, any> as any,
   });
 
   return (
