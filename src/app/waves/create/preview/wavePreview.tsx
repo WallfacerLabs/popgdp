@@ -1,6 +1,5 @@
 "use client";
 
-import { HTMLAttributes } from "react";
 import { useRouter } from "next/navigation";
 import { urls } from "@/constants/urls";
 
@@ -92,10 +91,10 @@ export default function PreviewApplication() {
   );
 }
 
-interface StagePreviewProps
-  extends Pick<HTMLAttributes<HTMLLIElement>, "className"> {
+interface StagePreviewProps {
   title: string;
   date: Date;
+  className?: string;
 }
 
 function StagePreview({ title, date, className }: StagePreviewProps) {
