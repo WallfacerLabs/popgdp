@@ -1,12 +1,11 @@
-import { HTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/cn";
 import { parseMarkdown } from "@/lib/parseMarkdown";
 
-interface MarkdownPreviewProps
-  extends Pick<HTMLAttributes<HTMLDivElement>, "className"> {
+interface MarkdownPreviewProps {
   body: string;
+  className?: string;
 }
 
 export const MarkdownPreview = async ({

@@ -1,13 +1,11 @@
-import { HTMLAttributes } from "react";
-
 import { Wave } from "@/types/Wave";
 import { cn } from "@/lib/cn";
 
 import { TimelineStage } from "./timelineStage";
 
-interface TimelinePreviewProps
-  extends Pick<HTMLAttributes<HTMLUListElement>, "className"> {
+interface TimelinePreviewProps {
   wave: Wave;
+  className?: string;
 }
 
 export const TimelinePreview = ({ wave, className }: TimelinePreviewProps) => {

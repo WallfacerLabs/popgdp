@@ -1,4 +1,3 @@
-import { HTMLAttributes } from "react";
 import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/cn";
@@ -6,9 +5,10 @@ import { cn } from "@/lib/cn";
 import { CheckIcon } from "../icons/checkIcon";
 import { MinusIcon } from "../icons/minusIcon";
 
-interface AvailabilityIndicatorProps
-  extends Pick<HTMLAttributes<HTMLDivElement>, "children" | "className"> {
+interface AvailabilityIndicatorProps {
   available: boolean;
+  children: React.ReactNode;
+  className?: string;
 }
 
 export const AvailabilityIndicator = ({

@@ -122,6 +122,8 @@ FormLabel.displayName = "FormLabel";
 interface FormHintProps {
   leftHint?: ReactNode;
   rightHint?: ReactNode;
+  children: ReactNode;
+  className?: string;
 }
 
 const FormHint = ({
@@ -129,8 +131,7 @@ const FormHint = ({
   rightHint,
   className,
   children,
-}: FormHintProps &
-  Pick<HTMLAttributes<HTMLDivElement>, "className" | "children">) => {
+}: FormHintProps) => {
   return (
     <div
       className={cn(
@@ -229,9 +230,9 @@ const FormMessage = forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
-interface FormCounterProps
-  extends Pick<HTMLAttributes<HTMLParagraphElement>, "className"> {
+interface FormCounterProps {
   limit: number;
+  className?: string;
 }
 
 const FormCounter = ({ limit, className }: FormCounterProps) => {
