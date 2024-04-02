@@ -1,18 +1,14 @@
-import { ComponentPropsWithoutRef } from "react";
-
 import { cn } from "@/lib/cn";
 
-export const ProductIcon = ({
-  className,
-  ...props
-}: Pick<ComponentPropsWithoutRef<"svg">, "className">) => {
+import { IconProps } from "./types/Icon";
+
+export const ProductIcon = ({ className }: IconProps) => {
   return (
     <svg
       className={cn("block", className)}
       viewBox="0 0 32 32"
       color="currentColor"
       fill="none"
-      {...props}
     >
       <rect width="32" height="32" rx="16" fill="white" />
       <path

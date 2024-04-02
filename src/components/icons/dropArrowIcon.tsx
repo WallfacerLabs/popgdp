@@ -1,22 +1,20 @@
-import { ComponentPropsWithoutRef } from "react";
-
 import { cn } from "@/lib/cn";
 import {
   IconDirection,
   iconDirections,
 } from "@/components/icons/utils/iconDirection";
 
+import { IconProps } from "./types/Icon";
+
 export const DropArrowIcon = ({
   direction,
   className,
-  ...props
-}: Pick<ComponentPropsWithoutRef<"svg">, "className"> & IconDirection) => {
+}: IconProps & IconDirection) => {
   return (
     <svg
       className={cn("block", className)}
       viewBox="0 -960 960 960"
       color="currentColor"
-      {...props}
     >
       <g
         style={{ transformBox: "fill-box" }}
