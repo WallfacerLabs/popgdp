@@ -7,4 +7,4 @@ export const timelineSchema = z.object({
   closeDate: z.coerce.date(),
 });
 
-export type timelineSchema = z.infer<typeof timelineSchema>;
+export type TimelineSchema = z.infer<typeof timelineSchema>;
