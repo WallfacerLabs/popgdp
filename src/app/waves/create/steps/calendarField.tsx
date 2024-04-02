@@ -17,11 +17,11 @@ import {
 } from "@/components/ui/popover";
 import { CalendarIcon } from "@/components/icons/calendarIcon";
 
-import { TimelineSchema } from "./timeline.schema";
+import { timelineSchema } from "./timeline.schema";
 
 export interface CalendarFieldProps {
-  name: FieldPath<TimelineSchema>;
-  control: Control<TimelineSchema>;
+  name: FieldPath<timelineSchema>;
+  control: Control<timelineSchema>;
   label: string;
   title: string;
 }

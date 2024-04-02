@@ -2,7 +2,7 @@ import { cn } from "@/lib/cn";
 import { AvailabilityIndicator } from "@/components/ui/availabilityIndicator";
 
 import { CalendarField, CalendarFieldProps } from "./calendarField";
-import { TimelineSchema } from "./timeline.schema";
+import { timelineSchema } from "./timeline.schema";
 
 interface TimelineStageProps extends CalendarFieldProps {
   className?: string;
@@ -37,7 +37,7 @@ export const TimelineStage = ({
 };
 
 type FieldActions = {
-  [K in keyof TimelineSchema]: {
+  [K in keyof timelineSchema]: {
     Comments: boolean;
     "Submission edit": boolean;
     Voting: boolean;
