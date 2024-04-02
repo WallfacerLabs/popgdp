@@ -1,3 +1,3 @@
-import { Wave } from "./Wave";
+import { type Wave } from "./Wave";
 
 export type Application = Wave["applications"][number];
