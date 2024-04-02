@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentPropsWithoutRef, Fragment, type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 
 import { Separator } from "@/components/ui/separator";
@@ -139,7 +139,6 @@ const stepperVariant = cva(
 const StepperIconWrapper = ({
   variant,
   children,
-}: VariantProps<typeof stepperVariant> &
-  Pick<ComponentPropsWithoutRef<"div">, "children">) => {
+}: VariantProps<typeof stepperVariant> & { children: ReactNode }) => {
   return <div className={stepperVariant({ variant })}>{children}</div>;
 };
