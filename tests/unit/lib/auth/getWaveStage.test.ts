@@ -75,6 +75,6 @@ describe("lib/auth/getWaveStage", () => {
       closeDate: createDate(4),
     });
 
-    expect(stage).toBe("closed");
+    expect(stage).toBe("close");
   });
 });

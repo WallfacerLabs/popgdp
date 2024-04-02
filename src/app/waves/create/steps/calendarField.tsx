@@ -1,5 +1,6 @@
 import { Control, type FieldPath } from "react-hook-form";
 
+import { type WaveStage } from "@/lib/auth";
 import { formatDate, getStartOfDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -23,14 +24,14 @@ export interface CalendarFieldProps {
   name: FieldPath<TimelineSchema>;
   control: Control<TimelineSchema>;
   label: string;
-  title: string;
+  stage: WaveStage;
 }
 
 export const CalendarField = ({
   name,
   control,
   label,
-  title,
+  stage,
 }: CalendarFieldProps) => {
   const todayDate = getStartOfDate(new Date());
 
@@ -40,7 +41,7 @@ export const CalendarField = ({
       name={name}
       render={({ field }) => (
         <FormItem aria-required>
-          <div className="mb-4 font-bold">{title}</div>
+          <div className="mb-4 font-bold capitalize">{stage}</div>
           <FormLabel>{label}</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
