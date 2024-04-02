@@ -221,7 +221,7 @@ function CategoryField({ index, removeCategory }: CategoryFieldProps) {
       />
       <Button
         size="icon"
-        className="absolute right-0 top-0 h-8 w-8 -translate-y-1/3 translate-x-1/3 rounded-full"
+        className="absolute right-0 top-0 h-8 w-8 -translate-y-1/3 translate-x-1/3 rounded-full text-red"
         variant="outline"
         onClick={() => removeCategory(index)}
       >
