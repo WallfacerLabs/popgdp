@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 
+import { TimelinePreview } from "./timeline/timelinePreview";
 import { WaveBanner } from "./waveBanner";
 
 const PAGE_SIZE = 10;
@@ -46,7 +47,9 @@ export default async function Wave({
     <>
       <WaveBanner />
 
-      <div className="mt-8 flex items-center justify-between">
+      <TimelinePreview wave={wave} className="mt-6" />
+
+      <div className="mt-6 flex items-center justify-between">
         <PageTitle>Submissions</PageTitle>
         <Button asChild>
           <Link href={urls.applications.create({ waveId })}>
