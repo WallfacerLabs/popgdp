@@ -17,5 +17,8 @@ export const errorMessages = {
   positiveNumber(fieldName: string) {
     return `${fieldName} must be a positive number`;
   },
+  laterDate(originFieldName: string, relatedFieldName: string) {
+    return `${originFieldName} must be later than ${relatedFieldName}`;
+  },
   invalidUrl: "Invalid URL",
 };
