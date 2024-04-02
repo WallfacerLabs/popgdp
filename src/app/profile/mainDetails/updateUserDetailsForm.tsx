@@ -85,7 +85,7 @@ export function UserDetailsForm({
           control={form.control}
           name="nickname"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Nickname</FormLabel>
               <FormControl>
                 <Input {...field} />
