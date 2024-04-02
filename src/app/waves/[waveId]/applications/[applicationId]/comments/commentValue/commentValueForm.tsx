@@ -1,6 +1,5 @@
 "use server";
 
-import { HTMLAttributes } from "react";
 import { cva } from "class-variance-authority";
 
 import { type UserId } from "@/types/User";
@@ -13,12 +12,11 @@ import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
 import { commentValueAction } from "./commentValueAction";
 
-interface CommentValueFormProps
-  extends ApplicationParamsSchema,
-    Pick<HTMLAttributes<HTMLFormElement>, "className"> {
+interface CommentValueFormProps extends ApplicationParamsSchema {
   commentId: string;
   commentValue: "positive" | "spam" | undefined;
   userId: UserId | undefined;
+  className?: string;
 }
 
 export async function CommentValueForm({

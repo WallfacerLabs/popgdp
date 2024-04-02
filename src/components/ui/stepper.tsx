@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ComponentPropsWithoutRef,
-  Fragment,
-  HTMLAttributes,
-  type ReactNode,
-} from "react";
+import { ComponentPropsWithoutRef, Fragment, type ReactNode } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 
 import { Separator } from "@/components/ui/separator";
@@ -19,11 +14,11 @@ type StepsConfig = Array<{
   icon: JSX.Element;
 }>;
 
-interface StepperProps
-  extends Pick<HTMLAttributes<HTMLDivElement>, "className"> {
-  children: ReactNode[];
-  currentStep: number;
+interface StepperProps {
   stepsConfig: StepsConfig;
+  currentStep: number;
+  children: ReactNode[];
+  className?: string;
 }
 
 export function Stepper({
