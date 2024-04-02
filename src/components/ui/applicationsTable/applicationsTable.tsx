@@ -1,5 +1,3 @@
-import { HTMLAttributes } from "react";
-
 import { Application } from "@/types/Application";
 import {
   Table,
@@ -17,10 +15,10 @@ import { EntityCell } from "./cells/entityCell";
 import { NameCell } from "./cells/nameCell";
 import { UserCell } from "./cells/userCell";
 
-interface ApplicationsTableProps
-  extends Pick<HTMLAttributes<HTMLDivElement>, "className"> {
+interface ApplicationsTableProps {
   applications: Application[];
   waveId: number;
+  className?: string;
 }
 
 export const ApplicationsTable = ({

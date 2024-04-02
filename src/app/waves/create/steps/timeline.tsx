@@ -1,6 +1,5 @@
 "use client";
 
-import { HTMLAttributes } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { urls } from "@/constants/urls";
@@ -20,9 +19,11 @@ import {
 import { sequentTimelineSchema, type TimelineSchema } from "./timeline.schema";
 import { TimelineStage } from "./timelineStage";
 
-export function Timeline({
-  className,
-}: Pick<HTMLAttributes<HTMLFormElement>, "className">) {
+interface TimelineProps {
+  className?: string;
+}
+
+export function Timeline({ className }: TimelineProps) {
   const router = useRouter();
   const { waveData } = useWaveStepsContext();
   const dispatch = useWaveStepsDispatchContext();
