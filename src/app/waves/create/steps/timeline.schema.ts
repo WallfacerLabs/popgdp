@@ -1,42 +1,28 @@
 import { errorMessages } from "@/constants/errorMessages";
 import { z } from "zod";
 
-export const timelineSchema = z
-  .object({
-    openStartDate: z.coerce.date(),
-    denoisingStartDate: z.coerce.date(),
-    assesmentStartDate: z.coerce.date(),
-    closeDate: z.coerce.date(),
+export const timelineSchema = z.object({
+  openStartDate: z.coerce.date(),
+  denoisingStartDate: z.coerce.date(),
+  assesmentStartDate: z.coerce.date(),
+  closeDate: z.coerce.date(),
+});
+
+export const sequentTimelineSchema = timelineSchema
+  .refine((schema) => schema.denoisingStartDate > schema.openStartDate, {
+    message: errorMessages.laterDate("Denoising start date", "Open start date"),
+    path: ["denoisingStartDate"],
   })
-  .superRefine((schema, ctx) => {
-    if (schema.openStartDate > schema.denoisingStartDate) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: errorMessages.laterDate(
-          "Open start date",
-          "Denoising start date",
-        ),
-        path: ["denoisingStartDate"],
-      });
-    }
-    if (schema.denoisingStartDate > schema.assesmentStartDate) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: errorMessages.laterDate(
-          "Denoising start date",
-          "Assesment start date",
-        ),
-        path: ["assesmentStartDate"],
-      });
-    }
-    if (schema.assesmentStartDate > schema.closeDate) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: errorMessages.laterDate("Assesment start date", "Close date"),
-        path: ["closeDate"],
-      });
-    }
-    return schema;
+  .refine((schema) => schema.assesmentStartDate > schema.denoisingStartDate, {
+    message: errorMessages.laterDate(
+      "Assesment start date",
+      "Denoising start date",
+    ),
+    path: ["assesmentStartDate"],
+  })
+  .refine((schema) => schema.closeDate > schema.assesmentStartDate, {
+    message: errorMessages.laterDate("Close date", "Assesment start date"),
+    path: ["closeDate"],
   });
 
 export type TimelineSchema = z.infer<typeof timelineSchema>;
