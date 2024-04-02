@@ -17,7 +17,7 @@ import {
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
 import { addReplyAction, AddReplyACtionPayload } from "./addCommentAction";
-import { addCommentSchema } from "./addCommentSchema";
+import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
 
 interface CommentReplyFormProps
   extends ApplicationParamsSchema,
@@ -31,7 +31,7 @@ export const CommentReplyForm = ({
   replyTargetId,
   onReply,
 }: CommentReplyFormProps) => {
-  const form = useForm<addCommentSchema>({
+  const form = useForm<AddCommentSchema>({
     resolver: zodResolver(addCommentSchema),
     defaultValues: {
       comment: "",

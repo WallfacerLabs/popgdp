@@ -10,10 +10,10 @@ import {
 import { getUserId } from "@/lib/auth";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
-import { addCommentSchema } from "./addCommentSchema";
+import { type AddCommentSchema } from "./addCommentSchema";
 
 export interface AddCommentActionPayload extends ApplicationParamsSchema {
-  data: addCommentSchema;
+  data: AddCommentSchema;
 }
 
 export async function addCommentAction({
