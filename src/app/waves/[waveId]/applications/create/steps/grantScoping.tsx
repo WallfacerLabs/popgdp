@@ -46,12 +46,12 @@ export const grantScopingSchema = z.object({
     FORM_FIELD_PARAMS.requirements,
   ),
 });
-export type grantScopingSchema = z.infer<typeof grantScopingSchema>;
+export type GrantScopingSchema = z.infer<typeof grantScopingSchema>;
 
 export function GrantScoping() {
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
-  const form = useForm<grantScopingSchema>({
+  const form = useForm<GrantScopingSchema>({
     resolver: zodResolver(grantScopingSchema),
     defaultValues: {
       idea: applicationData.idea ?? "",
@@ -59,7 +59,7 @@ export function GrantScoping() {
       state: applicationData.state ?? "",
       goals: applicationData.goals ?? "",
       requirements: applicationData.requirements ?? "",
-    } satisfies grantScopingSchema,
+    } satisfies GrantScopingSchema,
   });
 
   return (

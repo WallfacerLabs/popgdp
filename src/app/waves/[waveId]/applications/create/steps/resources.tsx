@@ -23,7 +23,7 @@ import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 export const resourcesSchema = z.object({
   tbd: z.string(),
 });
-export type resourcesSchema = z.infer<typeof resourcesSchema>;
+export type ResourcesSchema = z.infer<typeof resourcesSchema>;
 
 export function Resources() {
   const router = useRouter();
@@ -31,11 +31,11 @@ export function Resources() {
 
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
-  const form = useForm<resourcesSchema>({
+  const form = useForm<ResourcesSchema>({
     resolver: zodResolver(resourcesSchema),
     defaultValues: {
       tbd: applicationData.tbd ?? "",
-    } satisfies resourcesSchema,
+    } satisfies ResourcesSchema,
   });
 
   return (

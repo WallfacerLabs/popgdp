@@ -25,4 +25,4 @@ export const sequentTimelineSchema = timelineSchema
     path: ["closeDate"],
   });
 
-export type timelineSchema = z.infer<typeof timelineSchema>;
+export type TimelineSchema = z.infer<typeof timelineSchema>;

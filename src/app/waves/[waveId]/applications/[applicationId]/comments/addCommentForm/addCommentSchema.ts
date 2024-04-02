@@ -8,4 +8,4 @@ export const addCommentSchema = z.object({
     .min(1, { message: errorMessages.nonEmptyString("Comment") }),
 });
 
-export type addCommentSchema = z.infer<typeof addCommentSchema>;
+export type AddCommentSchema = z.infer<typeof addCommentSchema>;

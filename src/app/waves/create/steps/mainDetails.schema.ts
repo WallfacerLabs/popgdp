@@ -45,4 +45,4 @@ export const mainDetailsSchema = z.object({
   ),
 });
 
-export type mainDetailsSchema = z.infer<typeof mainDetailsSchema>;
+export type MainDetailsSchema = z.infer<typeof mainDetailsSchema>;
