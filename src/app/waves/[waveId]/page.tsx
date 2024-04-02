@@ -47,6 +47,8 @@ export default async function Wave({
     <>
       <WaveBanner />
 
+      <PageTitle className="mt-6">{wave.name}</PageTitle>
+
       <TimelinePreview wave={wave} className="mt-6" />
 
       <div className="mt-6 flex items-center justify-between">
