@@ -17,7 +17,7 @@ import {
   useWaveStepsContext,
   useWaveStepsDispatchContext,
 } from "../stepsProvider";
-import { timelineSchema } from "./timeline.schema";
+import { timelineSchema, TimelineSchema } from "./timeline.schema";
 import { TimelineStage } from "./timelineStage";
 
 export function Timeline({
@@ -27,7 +27,7 @@ export function Timeline({
   const { waveData } = useWaveStepsContext();
   const dispatch = useWaveStepsDispatchContext();
 
-  const form = useForm<timelineSchema>({
+  const form = useForm<TimelineSchema>({
     resolver: zodResolver(timelineSchema),
     defaultValues: {
       openStartDate: waveData.openStartDate ?? undefined,
