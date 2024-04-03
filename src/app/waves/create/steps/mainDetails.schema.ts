@@ -30,19 +30,21 @@ export const mainDetailsSchema = z.object({
     "Wave summary",
     FORM_FIELD_PARAMS.summary,
   ),
-  categories: z.array(
-    z.object({
-      color: z.enum(categoryColor),
-      name: specificLengthStringSchema(
-        "Category name",
-        FORM_FIELD_PARAMS.category.name,
-      ),
-      description: specificLengthStringSchema(
-        "Category description",
-        FORM_FIELD_PARAMS.category.description,
-      ),
-    }),
-  ),
+  categories: z
+    .array(
+      z.object({
+        color: z.enum(categoryColor),
+        name: specificLengthStringSchema(
+          "Category name",
+          FORM_FIELD_PARAMS.category.name,
+        ),
+        description: specificLengthStringSchema(
+          "Category description",
+          FORM_FIELD_PARAMS.category.description,
+        ),
+      }),
+    )
+    .min(1, { message: "At least one category is required" }),
 });
 
 export type MainDetailsSchema = z.infer<typeof mainDetailsSchema>;
