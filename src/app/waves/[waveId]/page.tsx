@@ -9,8 +9,8 @@ import { ApplicationsTable } from "@/components/ui/applicationsTable/application
 import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
+import { TimelinePreview } from "@/components/ui/wavesTimelinePreview/timelinePreview";
 
-import { TimelinePreview } from "./timeline/timelinePreview";
 import { WaveBanner } from "./waveBanner";
 
 const PAGE_SIZE = 10;
