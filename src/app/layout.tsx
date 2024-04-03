@@ -13,7 +13,7 @@ import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { AssignmentIcon } from "@/components/icons/assignmentIcon";
-import { ProductIcon } from "@/components/icons/productIcon";
+import { ProductAnimatedIcon } from "@/components/icons/productAnimatedIcon";
 import { TuneIcon } from "@/components/icons/tuneIcon";
 
 const inter = Inter({
@@ -50,7 +50,10 @@ export default function RootLayout({
               href={urls.root}
               className="before:left-[unset] before:right-0"
             >
-              <ProductIcon className="!h-10 !w-10" aria-label="POPGDP logo" />
+              <ProductAnimatedIcon
+                className="!h-10 !w-10"
+                aria-label="POPGDP logo"
+              />
               <h1 className="px-3">POPGDP</h1>
             </Link>
           </Button>
