@@ -1,32 +1,29 @@
 import { cva, VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/cn";
-import { parseMarkdown } from "@/lib/parseMarkdown";
 
 interface MarkdownPreviewProps {
   body: string;
   className?: string;
 }
 
-export const MarkdownPreview = async ({
+export function MarkdownPreview({
   body,
   className,
   variant,
   size,
   interactive,
-}: MarkdownPreviewProps & VariantProps<typeof markdownVariants>) => {
-  const commentHtml = await parseMarkdown(body);
-
+}: MarkdownPreviewProps & VariantProps<typeof markdownVariants>) {
   return (
     <div
       className={cn(
         markdownVariants({ variant, size, interactive }),
         className,
       )}
-      dangerouslySetInnerHTML={{ __html: commentHtml }}
+      dangerouslySetInnerHTML={{ __html: body }}
     />
   );
-};
+}
 
 const markdownVariants = cva(
   cn(

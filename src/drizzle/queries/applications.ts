@@ -4,6 +4,7 @@ import { Application, CommentValue, Member } from "@/drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 
 import { type UserId } from "@/types/User";
+import { parseMarkdown } from "@/lib/parseMarkdown";
 
 const imageFragment = {
   columns: {
@@ -28,7 +29,7 @@ export const getApplicationWithComments = cache(
     id: (typeof Application.$inferSelect)["id"],
     userId: UserId | undefined,
   ) => {
-    return db.query.Application.findFirst({
+    const data = await db.query.Application.findFirst({
       where: eq(Application.id, id),
       with: {
         image: imageFragment,
@@ -63,6 +64,22 @@ export const getApplicationWithComments = cache(
         },
       },
     });
+
+    if (!data) {
+      return undefined;
+    }
+
+    const markdownContent = await Promise.all(
+      data.comments.map((comment) => parseMarkdown(comment.content)),
+    );
+
+    return {
+      ...data,
+      comments: data.comments.map((comment, index) => ({
+        ...comment,
+        markdownContent: markdownContent[index],
+      })),
+    };
   },
 );
 

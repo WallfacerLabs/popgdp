@@ -1,6 +1,5 @@
-"use server";
-
 import { cva } from "class-variance-authority";
+import { useForm } from "react-hook-form";
 
 import { type UserId } from "@/types/User";
 import { cn } from "@/lib/cn";
@@ -19,7 +18,7 @@ interface CommentValueFormProps extends ApplicationParamsSchema {
   className?: string;
 }
 
-export async function CommentValueForm({
+export function CommentValueForm({
   applicationId,
   waveId,
   commentId,
@@ -27,8 +26,32 @@ export async function CommentValueForm({
   commentValue,
   userId,
 }: CommentValueFormProps) {
+  const form = useForm();
+
   const isUpvoted = commentValue === "positive";
   const isSpam = commentValue === "spam";
+
+  const onSpamClick = form.handleSubmit(async () => {
+    await commentValueAction({
+      commentId,
+      userId,
+      applicationId,
+      waveId,
+      isChecked: isSpam,
+      value: "spam",
+    });
+  });
+
+  const onHelpfulClick = form.handleSubmit(async () => {
+    await commentValueAction({
+      commentId,
+      userId,
+      applicationId,
+      waveId,
+      isChecked: isUpvoted,
+      value: "positive",
+    });
+  });
 
   return (
     <form className={cn("ml-auto flex items-center gap-2", className)}>
@@ -36,39 +59,21 @@ export async function CommentValueForm({
         variant="link"
         className={commentButtonVariants({ isActive: isSpam })}
         aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
-        disabled={!userId}
-        formAction={async () => {
-          "use server";
-          await commentValueAction({
-            commentId,
-            userId,
-            applicationId,
-            waveId,
-            isChecked: isSpam,
-            value: "spam",
-          });
-        }}
+        disabled={!userId || form.formState.isSubmitting}
+        onClick={onSpamClick}
       >
         <ErrorCircleIcon />
         {isSpam ? "Marked as SPAM" : "SPAM"}
       </Button>
+
       <Separator orientation="vertical" className="h-8 bg-primary opacity-10" />
+
       <Button
         variant="link"
         className={commentButtonVariants({ isActive: isUpvoted })}
         aria-label={isSpam ? "Unmark as helpful" : "Mark as helpful"}
-        disabled={!userId}
-        formAction={async () => {
-          "use server";
-          await commentValueAction({
-            commentId,
-            userId,
-            applicationId,
-            waveId,
-            isChecked: isUpvoted,
-            value: "positive",
-          });
-        }}
+        disabled={!userId || form.formState.isSubmitting}
+        onClick={onHelpfulClick}
       >
         <ThumbUpIcon />
         {isUpvoted ? "Marked as helpful" : "Helpful"}
