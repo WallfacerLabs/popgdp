@@ -45,7 +45,7 @@ export const TimelineStage = ({
 
 const timelineStageVariants = cva(
   cn(
-    "flex-grow border border px-4 pb-3 pt-2",
+    "flex-grow border border px-4 pb-3 pt-2 overflow-hidden",
     "first:rounded-l-3xl last:rounded-r-3xl",
     "bg-background",
   ),
