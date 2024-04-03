@@ -1,12 +1,12 @@
 import { Fragment } from "react";
-import { ApplicationWithComments } from "@/drizzle/queries/applications";
 
+import { type Comment } from "@/types/Comment";
 import { type UserId } from "@/types/User";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
-import { Comment } from "./comment/comment";
+import { CommentPreview } from "./comment/commentPreview";
 
 const SECTIONS = {
   discussion: "Discussion",
@@ -14,7 +14,7 @@ const SECTIONS = {
 } as const;
 
 interface CommentsProps {
-  comments: ApplicationWithComments["comments"];
+  comments: Comment[];
   waveId: number;
   userId: UserId | undefined;
 }
@@ -36,17 +36,29 @@ export async function Comments({ comments, waveId, userId }: CommentsProps) {
               elementsAmount={reviews.length}
             />
           </TabsList>
+
           <TabsContent
             value={SECTIONS.discussion}
             className="[&:not(:empty)]:mt-8"
           >
-            <CommentsList comments={comments} waveId={waveId} userId={userId} />
+            <CommentsList
+              comments={comments}
+              allComments={comments}
+              waveId={waveId}
+              userId={userId}
+            />
           </TabsContent>
+
           <TabsContent
             value={SECTIONS.reviews}
             className="[&:not(:empty)]:mt-8"
           >
-            <CommentsList comments={reviews} waveId={waveId} userId={userId} />
+            <CommentsList
+              comments={reviews}
+              allComments={comments}
+              waveId={waveId}
+              userId={userId}
+            />
           </TabsContent>
         </section>
       </Tabs>
@@ -72,10 +84,20 @@ function SectionButton({ section, elementsAmount }: SectionButtonProps) {
   );
 }
 
-function CommentsList({ comments, waveId, userId }: CommentsProps) {
+function CommentsList({
+  comments,
+  waveId,
+  userId,
+  allComments,
+}: CommentsProps & { allComments: Comment[] }) {
   return comments.map((comment) => (
     <Fragment key={comment.id}>
-      <Comment comment={comment} waveId={waveId} userId={userId} />
+      <CommentPreview
+        comment={comment}
+        allComments={allComments}
+        waveId={waveId}
+        userId={userId}
+      />
       <Separator className="my-6 last:hidden" />
     </Fragment>
   ));

@@ -25,12 +25,12 @@ interface CommentReplyFormProps
   onReply: () => void;
 }
 
-export const CommentReplyForm = ({
+export function CommentReplyForm({
   waveId,
   applicationId,
   replyTargetId,
   onReply,
-}: CommentReplyFormProps) => {
+}: CommentReplyFormProps) {
   const form = useForm<AddCommentSchema>({
     resolver: zodResolver(addCommentSchema),
     defaultValues: {
@@ -85,4 +85,4 @@ export const CommentReplyForm = ({
       </form>
     </Form>
   );
-};
+}

@@ -1,25 +1,19 @@
-import {
-  ApplicationWithComments,
-  getApplicationWithComments,
-} from "@/drizzle/queries/applications";
 import { cva } from "class-variance-authority";
 
-import { type UserId } from "@/types/User";
+import { Comment } from "@/types/Comment";
 import { formatTime } from "@/lib/dates";
 import { MarkdownPreview } from "@/components/ui/markdownPreview";
 import { Separator } from "@/components/ui/separator";
 import { UserAvatar } from "@/components/ui/userAvatar";
 
 interface ReplyTargetProps {
-  userId: UserId | undefined;
-  comment: ApplicationWithComments["comments"][number];
+  comment: Comment;
+  allComments: Comment[];
 }
 
-export async function ReplyTarget({ userId, comment }: ReplyTargetProps) {
-  const { replyTargetId, applicationId } = comment;
-  const application = await getApplicationWithComments(applicationId, userId);
-
-  const replyTarget = application?.comments.find(
+export async function ReplyTarget({ comment, allComments }: ReplyTargetProps) {
+  const { replyTargetId } = comment;
+  const replyTarget = allComments.find(
     (comment) => comment.id === replyTargetId,
   );
 
@@ -39,7 +33,7 @@ export async function ReplyTarget({ userId, comment }: ReplyTargetProps) {
           <Separator orientation="dot" className="opacity-60" />
           <div className={replyTargetVariants({ isReview: review?.isReview })}>
             <MarkdownPreview
-              body={replyTarget.content}
+              body={replyTarget.markdownContent}
               className="max-w-full overflow-hidden text-ellipsis text-nowrap"
               variant="inline"
               size="xs"
