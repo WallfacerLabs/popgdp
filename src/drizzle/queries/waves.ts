@@ -3,7 +3,19 @@ import { db } from "@/drizzle/db";
 import { Category, Wave } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export const getWaves = cache(async () => db.query.Wave.findMany());
+export const getWaves = cache(async () =>
+  db.query.Wave.findMany({
+    with: {
+      categories: {
+        columns: {
+          id: true,
+          name: true,
+          color: true,
+        },
+      },
+    },
+  }),
+);
 
 export const getWaveWithApplications = cache(async (id: number) => {
   const wave = await db.query.Wave.findFirst({

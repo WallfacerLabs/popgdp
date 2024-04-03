@@ -47,6 +47,7 @@ const timelineStageVariants = cva(
   cn(
     "flex-grow border border px-4 pb-3 pt-2",
     "first:rounded-l-3xl last:rounded-r-3xl",
+    "bg-background",
   ),
   {
     variants: {

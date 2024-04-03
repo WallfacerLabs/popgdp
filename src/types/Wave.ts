@@ -1,5 +1,7 @@
-import { type getWaveWithApplications } from "@/drizzle/queries/waves";
+import { type getWaves } from "@/drizzle/queries/waves";
 
-export type Wave = NonNullable<
-  Awaited<ReturnType<typeof getWaveWithApplications>>
->;
+export type WaveWithCategories = NonNullable<
+  Awaited<ReturnType<typeof getWaves>>
+>[number];
+
+export type Wave = Omit<WaveWithCategories, "categories">;
