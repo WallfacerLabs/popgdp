@@ -44,6 +44,7 @@ const FORM_FIELD_PARAMS = {
   name: { min: 1, max: 36 },
   entityName: { min: 1, max: 36 },
   summary: { min: 1, max: 160 },
+  duration: { min: 1, max: 36 },
 };
 
 export const mainDetailsSchema = z.object({
@@ -53,7 +54,10 @@ export const mainDetailsSchema = z.object({
     "Entity name",
     FORM_FIELD_PARAMS.entityName,
   ),
-  duration: z.string(),
+  duration: specificLengthStringSchema(
+    "Project duration",
+    FORM_FIELD_PARAMS.duration,
+  ),
   budget: positiveNumberSchema("Project budget"),
   summary: specificLengthStringSchema("Entity name", FORM_FIELD_PARAMS.summary),
   categoryId: z.string(),
@@ -184,7 +188,7 @@ export function MainDetails({ categories }: { categories: Categories }) {
           control={form.control}
           name="duration"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
               <FormLabel>Proposed project duration</FormLabel>
               <FormHint leftHint={<ClockIcon />}>
                 <FormControl>
@@ -194,7 +198,10 @@ export function MainDetails({ categories }: { categories: Categories }) {
                   />
                 </FormControl>
               </FormHint>
-              <FormMessage />
+              <FormMessages>
+                <FormMessage />
+                <FormCounter limit={FORM_FIELD_PARAMS.duration.max} />
+              </FormMessages>
             </FormItem>
           )}
         />
