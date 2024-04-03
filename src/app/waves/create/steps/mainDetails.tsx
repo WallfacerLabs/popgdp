@@ -177,6 +177,7 @@ function CategoryField({ index, removeCategory }: CategoryFieldProps) {
                       variant="outline"
                       className={cn(
                         "rounded-full transition-opacity hover:opacity-70",
+                        "aria-[invalid=true]:border-red",
                         getCategoryStyles(field.value),
                       )}
                     >
