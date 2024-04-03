@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 import { ProductIcon } from "@/components/icons/productIcon";
-import { ReviewIcon } from "@/components/icons/reviewIcon";
 import { TuneIcon } from "@/components/icons/tuneIcon";
 
 const inter = Inter({
@@ -84,11 +83,6 @@ function Navigation() {
             <Link href={urls.root}>
               <AssignmentIcon /> Submissions
             </Link>
-          </Button>
-        </li>
-        <li>
-          <Button variant="link" className="font-bold" disabled>
-            <ReviewIcon /> My reviews
           </Button>
         </li>
         <li>
