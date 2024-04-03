@@ -50,7 +50,7 @@ export default function PreviewApplication() {
           Submit
         </Button>
       </div>
-      <Card>
+      <Card className="bg-gray-50">
         <CardHeader>
           <CardTitle>{validatedWaveData.name}</CardTitle>
           <CardDescription className="mt-4 text-xs text-primary">
@@ -69,7 +69,7 @@ export default function PreviewApplication() {
             </ul>
           </div>
           <Separator />
-          <ul className="grid grid-cols-4 gap-y-8 rounded-2xl border">
+          <ul className="grid grid-cols-4 gap-y-8 rounded-2xl border bg-background">
             <StagePreview
               title="Open"
               date={validatedWaveData.openStartDate}
