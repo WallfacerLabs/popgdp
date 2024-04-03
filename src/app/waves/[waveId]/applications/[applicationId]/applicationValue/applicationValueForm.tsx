@@ -25,6 +25,7 @@ export async function ApplicationValueForm({
     <form className="flex gap-4">
       <Button
         variant={isSpam ? "secondary" : "outline"}
+        disabled={!userId}
         formAction={async () => {
           "use server";
           await applicationValueAction({
