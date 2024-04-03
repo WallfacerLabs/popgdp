@@ -108,9 +108,20 @@ export function MainDetails() {
         />
 
         <fieldset aria-required className="group">
-          <FormLabel className="mb-4">
-            Set categories for upcoming wave
-          </FormLabel>
+          <FormField
+            control={form.control}
+            name="categories"
+            render={() => (
+              <>
+                <FormLabel className="mb-4">
+                  Set categories for upcoming wave
+                </FormLabel>
+                <FormMessages>
+                  <FormMessage />
+                </FormMessages>
+              </>
+            )}
+          />
           <ul className="flex flex-col gap-4">
             {categoryFields.map((_, index) => (
               <CategoryField
