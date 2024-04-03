@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useFieldArray,
@@ -153,6 +154,7 @@ interface CategoryFieldProps {
 }
 
 function CategoryField({ index, removeCategory }: CategoryFieldProps) {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const form = useFormContext<MainDetailsSchema>();
 
   return (
@@ -163,7 +165,11 @@ function CategoryField({ index, removeCategory }: CategoryFieldProps) {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <Popover>
+              <FormLabel className="sr-only">Category icon</FormLabel>
+              <Popover
+                open={isPopoverOpen}
+                onOpenChange={(open) => setIsPopoverOpen(open)}
+              >
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
@@ -181,7 +187,10 @@ function CategoryField({ index, removeCategory }: CategoryFieldProps) {
                 <PopoverContent align="start">
                   <CategoryPicker
                     name={field.name}
-                    onChange={field.onChange}
+                    onChange={(value) => {
+                      field.onChange(value);
+                      setIsPopoverOpen(false);
+                    }}
                     value={field.value}
                   />
                 </PopoverContent>

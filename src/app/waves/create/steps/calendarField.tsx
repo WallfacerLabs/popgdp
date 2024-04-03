@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Control, type FieldPath } from "react-hook-form";
 
 import { type WaveStage } from "@/lib/auth";
@@ -33,6 +36,7 @@ export const CalendarField = ({
   label,
   stage,
 }: CalendarFieldProps) => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const todayDate = getStartOfDate(new Date());
 
   return (
@@ -43,7 +47,10 @@ export const CalendarField = ({
         <FormItem aria-required>
           <div className="mb-4 font-bold capitalize">{stage}</div>
           <FormLabel>{label}</FormLabel>
-          <Popover>
+          <Popover
+            open={isPopoverOpen}
+            onOpenChange={(value) => setIsPopoverOpen(value)}
+          >
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
@@ -60,7 +67,10 @@ export const CalendarField = ({
                 mode="single"
                 defaultMonth={field.value}
                 selected={field.value}
-                onSelect={field.onChange}
+                onSelect={(value) => {
+                  field.onChange(value);
+                  setIsPopoverOpen(false);
+                }}
                 disabled={(date) => date < todayDate}
               />
             </PopoverContent>

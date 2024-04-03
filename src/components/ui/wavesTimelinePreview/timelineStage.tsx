@@ -36,7 +36,7 @@ export const TimelineStage = ({
         </div>
         <span className="text-xs text-gray-500">
           {formatDate(startDate)}
-          {endDate && <>-{formatDate(endDate)}</>}
+          {endDate && <> - {formatDate(endDate)}</>}
         </span>
       </div>
     </li>

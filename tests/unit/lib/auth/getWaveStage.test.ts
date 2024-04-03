@@ -1,11 +1,12 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { getWaveStage } from "@/lib/auth";
+import { addDays } from "@/lib/dates";
 
 const initialDate = new Date("2022-01-01 00:00:00");
 
 function createDate(days: number) {
-  return new Date(initialDate.getTime() + days * 24 * 60 * 60 * 1000);
+  return addDays(initialDate, days);
 }
 
 describe("lib/auth/getWaveStage", () => {
