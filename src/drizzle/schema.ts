@@ -63,6 +63,7 @@ export const Wave = pgTable("wave", {
 
 export const WaveRelations = relations(Wave, ({ many }) => ({
   applications: many(Application),
+  categories: many(Category),
 }));
 
 export const Application = pgTable("application", {
@@ -344,3 +345,10 @@ export const Category = pgTable("category", {
     .notNull()
     .references(() => Wave.id, { onDelete: "cascade" }),
 });
+
+export const CategoryRelations = relations(Category, ({ one }) => ({
+  wave: one(Wave, {
+    fields: [Category.waveId],
+    references: [Wave.id],
+  }),
+}));
