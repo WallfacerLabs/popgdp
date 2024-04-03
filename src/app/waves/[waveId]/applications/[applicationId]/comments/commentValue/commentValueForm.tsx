@@ -36,6 +36,7 @@ export async function CommentValueForm({
         variant="link"
         className={commentButtonVariants({ isActive: isSpam })}
         aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
+        disabled={!userId}
         formAction={async () => {
           "use server";
           await commentValueAction({
