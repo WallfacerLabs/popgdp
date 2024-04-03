@@ -20,5 +20,7 @@ test("renders with user signed in", async ({ browser }) => {
 
   await page.goto(urls.root);
 
-  await expect(page.getByRole("link", { name: "Sign out" })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "World ID connected" }),
+  ).toBeVisible();
 });
