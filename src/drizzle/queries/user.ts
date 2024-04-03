@@ -31,15 +31,23 @@ export function insertUser(data: typeof User.$inferInsert) {
   return db.insert(User).values(data).onConflictDoNothing();
 }
 
-export function updateUser(data: typeof User.$inferInsert) {
+export function upsertUser(data: typeof User.$inferInsert) {
   return db
-    .update(User)
-    .set({
-      imageId: data.imageId,
+    .insert(User)
+    .values({
+      id: data.id,
       name: data.name,
+      imageId: data.imageId,
       updatedAt: new Date(),
     })
-    .where(eq(User.id, data.id));
+    .onConflictDoUpdate({
+      target: User.id,
+      set: {
+        imageId: data.imageId,
+        name: data.name,
+        updatedAt: new Date(),
+      },
+    });
 }
 
 export interface InsertEthereumAddressData {

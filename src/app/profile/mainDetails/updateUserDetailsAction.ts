@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { UnauthenticatedError } from "@/constants/errors";
 import { urls } from "@/constants/urls";
-import { updateUser } from "@/drizzle/queries/user";
+import { upsertUser } from "@/drizzle/queries/user";
 
 import { getUserId } from "@/lib/auth";
 
@@ -17,7 +17,7 @@ export async function updateUserDetailsAction(
     throw new UnauthenticatedError();
   }
 
-  await updateUser({
+  await upsertUser({
     id: userId,
     name: userDetails.nickname,
     imageId: userDetails.avatar?.id,
