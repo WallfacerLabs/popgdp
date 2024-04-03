@@ -17,7 +17,7 @@ const RadioGroup = forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <RadioGroupPrimitive.Root
-      className={cn("grid gap-2", className)}
+      className={cn("group grid gap-2", className)}
       {...props}
       ref={ref}
     />
@@ -59,6 +59,7 @@ const RadioGroupLabel = forwardRef<
       "flex cursor-pointer items-center justify-between gap-2 rounded-2xl border p-3 text-xs font-medium leading-none transition-colors",
       "focus-within:border-primary [&:has([data-state=checked])]:border-primary [&:hover:not(:has(:disabled))]:border-primary",
       "has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50",
+      "group-aria-[invalid=true]:border-red",
       className,
     )}
     {...props}
