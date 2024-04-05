@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import * as csv from "csv/sync";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -36,7 +37,22 @@ type ReviewersData = z.infer<typeof reviewersDataSchema>;
 
 export function UpdateReviewersDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [reviewersData, setReviewersData] = useState<ReviewersData>([]);
+
+  const form = useForm<{ reviewers: ReviewersData }>({
+    defaultValues: {
+      reviewers: [],
+    },
+  });
+  const reviewersData = form.watch("reviewers");
+
+  const onSubmit = form.handleSubmit(async () => {
+    await updateReviewersAction(
+      reviewersData.map(({ address }) => ({
+        ethereumAddress: address,
+      })),
+    );
+    setIsDialogOpen(false);
+  });
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
@@ -61,7 +77,7 @@ export function UpdateReviewersDialog() {
               const parsedCsv = csv.parse(fileBuffer, { columns: true });
               const data = reviewersDataSchema.parse(parsedCsv);
 
-              setReviewersData(data);
+              form.setValue("reviewers", data);
             }}
           />
           <Table className="max-h-64">
@@ -83,16 +99,7 @@ export function UpdateReviewersDialog() {
               ))}
             </TableBody>
           </Table>
-          <Button
-            onClick={async () => {
-              await updateReviewersAction(
-                reviewersData.map(({ address }) => ({
-                  ethereumAddress: address,
-                })),
-              );
-              setIsDialogOpen(false);
-            }}
-          >
+          <Button disabled={form.formState.isSubmitting} onClick={onSubmit}>
             Upload
           </Button>
         </form>
