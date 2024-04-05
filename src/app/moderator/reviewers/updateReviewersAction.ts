@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { UnauthenticatedError } from "@/constants/errors";
 import { urls } from "@/constants/urls";
-import { insertReviewers } from "@/drizzle/queries/reviewers";
+import { updateReviewers } from "@/drizzle/queries/reviewers";
 
 import { type Reviewer } from "@/types/Reviewer";
 import { getUserId } from "@/lib/auth";
@@ -14,7 +14,7 @@ export async function updateReviewersAction(reviewers: Array<Reviewer>) {
     throw new UnauthenticatedError();
   }
 
-  await insertReviewers(reviewers);
+  await updateReviewers(reviewers);
 
   revalidatePath(urls.moderator.reviewers);
 }
