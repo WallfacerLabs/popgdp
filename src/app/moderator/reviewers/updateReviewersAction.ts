@@ -1,6 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { UnauthenticatedError } from "@/constants/errors";
+import { urls } from "@/constants/urls";
 import { insertReviewers } from "@/drizzle/queries/reviewers";
 
 import { type Reviewer } from "@/types/Reviewer";
@@ -13,4 +15,6 @@ export async function updateReviewersAction(reviewers: Array<Reviewer>) {
   }
 
   await insertReviewers(reviewers);
+
+  revalidatePath(urls.moderator.reviewers);
 }
