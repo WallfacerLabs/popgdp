@@ -27,6 +27,18 @@ export const getUser = cache(async (id: UserId | undefined) => {
   });
 });
 
+export const getUserRoles = cache(async (id: UserId) => {
+  const [roles] = await db
+    .select({
+      isReviewer: Reviewer.ethereumAddress,
+    })
+    .from(User)
+    .leftJoin(Reviewer, eq(User.ethereumAddress, Reviewer.ethereumAddress))
+    .where(eq(User.id, id));
+
+  return roles;
+});
+
 export const getAllReviewers = cache(async () => {
   return db
     .select({

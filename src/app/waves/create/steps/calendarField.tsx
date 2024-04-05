@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Control, type FieldPath } from "react-hook-form";
 
-import { type WaveStage } from "@/lib/auth";
+import { type WaveStage } from "@/config/waveStages";
 import { formatDate, getStartOfDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
