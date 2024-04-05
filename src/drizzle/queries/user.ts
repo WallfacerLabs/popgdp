@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { type UserId } from "@/types/User";
 
 import { db } from "../db";
-import { User } from "../schema";
+import { Image, Reviewer, User } from "../schema";
 
 export const getUser = cache(async (id: UserId | undefined) => {
   if (!id) {
@@ -25,6 +25,24 @@ export const getUser = cache(async (id: UserId | undefined) => {
       },
     },
   });
+});
+
+export const getAllReviewers = cache(async () => {
+  return db
+    .select({
+      id: User.id,
+      name: User.name,
+      ethereumAddress: User.ethereumAddress,
+      image: {
+        id: Image.id,
+        placeholder: Image.placeholder,
+        width: Image.width,
+        height: Image.height,
+      },
+    })
+    .from(User)
+    .innerJoin(Reviewer, eq(User.ethereumAddress, Reviewer.ethereumAddress))
+    .leftJoin(Image, eq(User.imageId, Image.id));
 });
 
 export function insertUser(data: typeof User.$inferInsert) {

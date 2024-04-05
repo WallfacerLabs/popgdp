@@ -13,6 +13,7 @@ import { useAccount, useSignMessage, WagmiProvider } from "wagmi";
 import { mainnet } from "wagmi/chains";
 
 import { Button } from "@/components/ui/button";
+import { EtherscanLink } from "@/components/ui/etherscanLink";
 import { FormFooter } from "@/components/ui/form";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { CrossIcon } from "@/components/icons/crossIcon";
@@ -72,14 +73,7 @@ function AddressForm({
           <div className="h-2 w-2 rounded-full bg-green-300" />
           Wallet connected
         </div>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-mono text-blue-400 underline"
-          href={`https://etherscan.io/address/${ethereumAddress}`}
-        >
-          {ethereumAddress}
-        </a>
+        <EtherscanLink ethereumAddress={ethereumAddress} />
         <Button
           variant="link"
           className="w-fit pl-0 text-red before:hover:bg-transparent"

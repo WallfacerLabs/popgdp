@@ -352,3 +352,7 @@ export const CategoryRelations = relations(Category, ({ one }) => ({
     references: [Wave.id],
   }),
 }));
+
+export const Reviewer = pgTable("reviewer", {
+  ethereumAddress: text("ethereumAddress").primaryKey(),
+});
