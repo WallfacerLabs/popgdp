@@ -1,9 +1,9 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
 
+import { categoryColors } from "@/types/CategoryColor";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 
-import { categoryColor } from "./constants";
 import { getCategoryIcon } from "./getCategoryIcon";
 import { getCategoryStyles } from "./getCategoryStyles";
 
@@ -22,7 +22,7 @@ export function CategoryPicker({ value, onChange, name }: CategoryPickerProps) {
       name={name}
       onValueChange={onChange}
     >
-      {categoryColor.map((categoryColor) => (
+      {categoryColors.map((categoryColor) => (
         <RadioGroup.Item
           key={categoryColor}
           value={categoryColor}

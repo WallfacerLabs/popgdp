@@ -1,5 +1,6 @@
+import { type CategoryColor } from "@/types/CategoryColor";
+
 import { Badge } from "../badge";
-import { type CategoryColor } from "./constants";
 import { getCategoryIcon } from "./getCategoryIcon";
 
 interface Category {

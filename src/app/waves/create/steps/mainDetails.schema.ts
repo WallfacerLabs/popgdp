@@ -1,7 +1,7 @@
 import { specificLengthStringSchema } from "@/constants/validationSchemas";
 import { z } from "zod";
 
-import { categoryColor } from "@/components/ui/categories/constants";
+import { categoryColors } from "@/types/CategoryColor";
 
 export const FORM_FIELD_PARAMS = {
   name: {
@@ -33,7 +33,7 @@ export const mainDetailsSchema = z.object({
   categories: z
     .array(
       z.object({
-        color: z.enum(categoryColor),
+        color: z.enum(categoryColors),
         name: specificLengthStringSchema(
           "Category name",
           FORM_FIELD_PARAMS.category.name,
