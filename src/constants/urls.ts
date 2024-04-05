@@ -20,6 +20,9 @@ export const urls = {
     preview: ({ waveId, applicationId }: ApplicationParamsSchema) =>
       `/waves/${waveId}/applications/${applicationId}` as const,
   },
+  moderator: {
+    reviewers: "/moderator/reviewers",
+  },
   images: {
     preview: ({ imageId }: ImageParamsSchema) =>
       `/api/images/${imageId}` as const,
