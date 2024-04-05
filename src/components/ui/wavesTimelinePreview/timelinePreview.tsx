@@ -1,5 +1,5 @@
 import { Wave } from "@/types/Wave";
-import { getWaveStage } from "@/lib/auth";
+import { getWaveStage } from "@/config/waveStages";
 import { cn } from "@/lib/cn";
 import { Badge } from "@/components/ui/badge";
 

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
 
-import { getWaveStage } from "@/lib/auth";
+import { getWaveStage } from "@/config/waveStages";
 import { addDays } from "@/lib/dates";
 
 const initialDate = new Date("2022-01-01 00:00:00");
@@ -9,7 +9,7 @@ function createDate(days: number) {
   return addDays(initialDate, days);
 }
 
-describe("lib/auth/getWaveStage", () => {
+describe("config/waveStages", () => {
   afterEach(() => {
     vi.useRealTimers();
   });

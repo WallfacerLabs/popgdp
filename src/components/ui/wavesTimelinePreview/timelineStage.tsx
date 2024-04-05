@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-import { type WaveStage } from "@/lib/auth";
+import { type WaveStage } from "@/config/waveStages";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
