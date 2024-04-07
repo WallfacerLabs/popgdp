@@ -11,7 +11,8 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
-import { categoryColor } from "@/components/ui/categories/constants";
+import { categoryColors } from "@/types/CategoryColor";
+import { contentValues } from "@/types/ContentValue";
 
 const bytea = customType<{ data: Buffer }>({
   dataType() {
@@ -19,11 +20,8 @@ const bytea = customType<{ data: Buffer }>({
   },
 });
 
-const contentValues = ["positive", "spam"] as const;
 export const contentValueEnum = pgEnum("contentValue", contentValues);
-export type ContentValueEnum = (typeof contentValues)[number];
-
-export const categoryColorEnum = pgEnum("categoryColor", categoryColor);
+export const categoryColorEnum = pgEnum("categoryColor", categoryColors);
 
 export const Wave = pgTable("wave", {
   id: serial("id").primaryKey(),

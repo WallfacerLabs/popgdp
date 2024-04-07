@@ -5,8 +5,8 @@ import {
   deleteCommentValue,
   insertCommentValue,
 } from "@/drizzle/queries/commentValues";
-import { CommentValue } from "@/drizzle/schema";
 
+import { type ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
@@ -14,7 +14,7 @@ interface CommentValueActionPayload extends ApplicationParamsSchema {
   commentId: string;
   userId: UserId | undefined;
   isChecked: boolean;
-  value: (typeof CommentValue.$inferInsert)["value"];
+  value: ContentValue;
 }
 
 export async function commentValueAction({

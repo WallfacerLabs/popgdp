@@ -6,15 +6,15 @@ import {
   deleteApplicationValue,
   insertApplicationValue,
 } from "@/drizzle/queries/applicationValues";
-import { ApplicationValue } from "@/drizzle/schema";
 
+import { type ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 interface ApplicationValueActionPayload extends ApplicationParamsSchema {
   userId: UserId | undefined;
   isChecked: boolean;
-  value: (typeof ApplicationValue.$inferInsert)["value"];
+  value: ContentValue;
 }
 
 export async function applicationValueAction({
