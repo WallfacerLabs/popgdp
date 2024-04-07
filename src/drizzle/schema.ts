@@ -129,6 +129,7 @@ export const ApplicationRelations = relations(Application, ({ one, many }) => ({
     fields: [Application.imageId],
     references: [Image.id],
   }),
+  applicationValues: many(ApplicationValue),
 }));
 
 export const Member = pgTable("member", {
@@ -278,6 +279,16 @@ export const ApplicationValue = pgTable(
   },
   (table) => ({
     pk: primaryKey({ columns: [table.applicationId, table.userId] }),
+  }),
+);
+
+export const ApplicationValueRelations = relations(
+  ApplicationValue,
+  ({ one }) => ({
+    application: one(Application, {
+      fields: [ApplicationValue.applicationId],
+      references: [Application.id],
+    }),
   }),
 );
 
