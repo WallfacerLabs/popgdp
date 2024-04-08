@@ -1,13 +1,8 @@
-import { cva, VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/cn";
 
 import { IconProps } from "./types/Icon";
 
-export const ProductAnimatedIcon = ({
-  className,
-  variant,
-}: IconProps & VariantProps<typeof animationVariants>) => {
+export const ProductAnimatedIcon = ({ className }: IconProps) => {
   return (
     <svg
       className={cn("block", className)}
@@ -55,7 +50,7 @@ export const ProductAnimatedIcon = ({
               dur="8s"
               repeatCount="indefinite"
               keySplines={new Array(values.length - 1)
-                .fill(animationVariants({ variant }))
+                .fill("0.1 0.5 0.7 1")
                 .join("; ")}
               calcMode="spline"
             />
@@ -73,22 +68,6 @@ export const ProductAnimatedIcon = ({
     </svg>
   );
 };
-
-const animationVariants = cva("", {
-  variants: {
-    variant: {
-      current: "0.1 0.5 0.7 1",
-      linear: "0,0,1,1",
-      ease: ".25,.1,.25,1",
-      easeIn: ".42,0,1,1",
-      easeOut: "0,0,.58,1",
-      easeInOut: ".42,0,.58,1",
-    },
-  },
-  defaultVariants: {
-    variant: "linear",
-  },
-});
 
 const animationSteps = {
   height: [
