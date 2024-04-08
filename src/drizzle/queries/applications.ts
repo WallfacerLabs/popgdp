@@ -83,10 +83,6 @@ export const getApplicationWithComments = cache(
   },
 );
 
-export type ApplicationWithComments = NonNullable<
-  Awaited<ReturnType<typeof getApplicationWithComments>>
->;
-
 type MemberInsertData = Array<{
   imageId: string | undefined;
   name: string;
