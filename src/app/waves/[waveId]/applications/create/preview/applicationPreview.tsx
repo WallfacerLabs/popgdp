@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { urls } from "@/constants/urls";
 import { ImageData } from "@/constants/validationSchemas";
-import { Categories } from "@/drizzle/queries/categories";
 
+import { type Category } from "@/types/Category";
 import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
@@ -18,7 +18,7 @@ import { createApplicationAction } from "../steps/createApplicationAction";
 import { applicationDataSchema, useStepsContext } from "../stepsProvider";
 
 interface PreviewApplicationProps extends WaveParamsSchema {
-  categories: Categories;
+  categories: Array<Category>;
   user: {
     image: ImageData | null;
     name: string | null;

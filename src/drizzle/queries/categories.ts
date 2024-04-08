@@ -17,5 +17,3 @@ export const getCategoriesForWave = cache(
     });
   },
 );
-
-export type Categories = Awaited<ReturnType<typeof getCategoriesForWave>>;

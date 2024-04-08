@@ -1,7 +1,6 @@
 "use client";
 
-import { Categories } from "@/drizzle/queries/categories";
-
+import { type Category } from "@/types/Category";
 import { Stepper } from "@/components/ui/stepper";
 import { CampaignIcon } from "@/components/icons/campaignIcon";
 import { ClockIcon } from "@/components/icons/clockIcon";
@@ -37,7 +36,7 @@ const stepsConfig = [
 ];
 
 interface CreateApplicationFormProps {
-  categories: Categories;
+  categories: Array<Category>;
 }
 
 export default function CreateApplicationForm({
