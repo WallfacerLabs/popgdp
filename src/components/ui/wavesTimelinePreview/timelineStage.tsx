@@ -52,7 +52,7 @@ const timelineStageVariants = cva(
   {
     variants: {
       isCurrent: {
-        true: "border-green",
+        true: "border-green bg-green/10",
         false: "",
       },
     },
