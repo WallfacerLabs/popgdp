@@ -2,6 +2,7 @@ import { getModeratorPanelUsers } from "@/drizzle/queries/user";
 
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import { EtherscanLink } from "@/components/ui/etherscanLink";
+import { ModeratorNavigaton } from "@/components/ui/moderatorNavigaton";
 import { PageTitle } from "@/components/ui/pageTitle";
 import {
   Table,
@@ -23,6 +24,8 @@ export default async function UsersPage() {
       <div className="flex justify-between">
         <PageTitle>Manage</PageTitle>
       </div>
+
+      <ModeratorNavigaton />
 
       <Table>
         <TableHeader>
