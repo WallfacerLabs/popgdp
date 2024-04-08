@@ -4,6 +4,7 @@ import { urls } from "@/constants/urls";
 import worldIDorb from "@/images/worldIDorb.png";
 import { getSession } from "@auth0/nextjs-auth0";
 
+import { getUserPermission, UserPermission } from "@/config/userPermissions";
 import { LogoutIcon } from "@/components/icons/logoutIcon";
 import { UserIcon } from "@/components/icons/userIcon";
 
@@ -13,21 +14,27 @@ import { Separator } from "./separator";
 
 export async function AccountButton() {
   const session = await getSession();
+  const userRoleText = await getUserRoleText();
 
   if (session) {
     return (
       <Popover>
-        <PopoverTrigger asChild>
-          <Button className="rounded-3xl">
-            <Image
-              src={worldIDorb}
-              alt=""
-              className="h-6 w-6"
-              placeholder="blur"
-            />
-            World ID connected
-          </Button>
-        </PopoverTrigger>
+        <div className="flex items-center rounded-3xl border">
+          {userRoleText && (
+            <span className="px-4 text-xs font-semibold">{userRoleText}</span>
+          )}
+          <PopoverTrigger asChild>
+            <Button className="rounded-3xl">
+              <Image
+                src={worldIDorb}
+                alt=""
+                className="h-6 w-6"
+                placeholder="blur"
+              />
+              World ID connected
+            </Button>
+          </PopoverTrigger>
+        </div>
         <PopoverContent className="w-[var(--radix-popover-trigger-width)]">
           <ul className="flex flex-col gap-3 text-sm">
             <li>
@@ -56,4 +63,17 @@ export async function AccountButton() {
       <a href={urls.auth.login}>Sign in</a>
     </Button>
   );
+}
+
+async function getUserRoleText() {
+  const userPermission = await getUserPermission();
+
+  switch (userPermission) {
+    case UserPermission.moderator:
+      return "Moderator";
+    case UserPermission.reviewer:
+      return "Reviewer";
+    default:
+      return undefined;
+  }
 }
