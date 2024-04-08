@@ -7,6 +7,7 @@ import "./globals.css";
 
 import { urls } from "@/constants/urls";
 
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
@@ -74,7 +75,9 @@ export default function RootLayout({
   );
 }
 
-function Navigation() {
+async function Navigation() {
+  const isModerator = await userHasRole(UserPermission.moderator);
+
   return (
     <nav>
       <ul className="flex gap-6">
@@ -85,12 +88,16 @@ function Navigation() {
             </Link>
           </Button>
         </li>
-        <li>
-          <Button variant="link" className="font-bold" disabled>
-            <TuneIcon />
-            Moderator panel
-          </Button>
-        </li>
+        {isModerator && (
+          <li>
+            <Button variant="link" className="font-bold" asChild>
+              <Link href={urls.moderator.applications}>
+                <TuneIcon />
+                Moderator panel
+              </Link>
+            </Button>
+          </li>
+        )}
       </ul>
     </nav>
   );
