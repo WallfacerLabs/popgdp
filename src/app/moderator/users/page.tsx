@@ -1,5 +1,11 @@
 import { db } from "@/drizzle/db";
-import { CommentValue, Image, Review, User } from "@/drizzle/schema";
+import {
+  Application,
+  CommentValue,
+  Image,
+  Review,
+  User,
+} from "@/drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
@@ -13,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
 import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
@@ -24,7 +31,9 @@ export default async function UsersPage() {
       ethereumAddress: User.ethereumAddress,
       createdAt: User.createdAt,
       image: Image,
-      reviewsCount: sql<number>`count(${Review.commentId})`.mapWith(Number),
+      reviewsCount: sql<number>`count(distinct ${Review.commentId})`.mapWith(
+        Number,
+      ),
       spamCount:
         sql<number>`count(case when ${CommentValue.value} = 'spam' then 1 end)`.mapWith(
           Number,
@@ -33,11 +42,15 @@ export default async function UsersPage() {
         sql<number>`count(case when ${CommentValue.value} = 'positive' then 1 end)`.mapWith(
           Number,
         ),
+      submissionsCount: sql<number>`count(distinct ${Application.id})`.mapWith(
+        Number,
+      ),
     })
     .from(User)
     .leftJoin(Image, eq(Image.id, User.imageId))
-    .innerJoin(Review, eq(User.id, Review.userId))
+    .leftJoin(Review, eq(User.id, Review.userId))
     .leftJoin(CommentValue, eq(User.id, CommentValue.userId))
+    .leftJoin(Application, eq(User.id, Application.userId))
     .groupBy(User.id, Image.id);
 
   console.log(users);
@@ -56,6 +69,7 @@ export default async function UsersPage() {
             <TableHead>Reviews</TableHead>
             <TableHead>SPAM count</TableHead>
             <TableHead>Useful</TableHead>
+            <TableHead>Submissions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -80,6 +94,7 @@ export default async function UsersPage() {
                 {user.spamCount ? (
                   <span className="flex items-center gap-1 text-red">
                     <ErrorCircleIcon className="h-4 w-4" />
+                    {user.spamCount}
                   </span>
                 ) : (
                   <span>-</span>
@@ -91,6 +106,18 @@ export default async function UsersPage() {
                     <>
                       <ThumbUpIcon className="h-4 w-4" />
                       {user.helpfulCount}
+                    </>
+                  ) : (
+                    "-"
+                  )}
+                </span>
+              </TableCell>
+              <TableCell>
+                <span className="flex items-center gap-1">
+                  {user.submissionsCount ? (
+                    <>
+                      <AssignmentIcon className="h-4 w-4" />
+                      {user.submissionsCount}
                     </>
                   ) : (
                     "-"
