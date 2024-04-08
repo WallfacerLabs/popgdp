@@ -1,20 +1,18 @@
 import { cache } from "react";
 import { countDistinct, eq } from "drizzle-orm";
 
-import { ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
 
 import { db } from "../db";
 import {
   Application,
-  CommentValue,
   Image,
   Moderator,
   Review,
   Reviewer,
   User,
 } from "../schema";
-import { countCommentValue } from "./comments";
+import { commentValueSq } from "./commentValues";
 
 export const getUser = cache(async (id: UserId | undefined) => {
   if (!id) {
@@ -78,16 +76,21 @@ export const getModeratorPanelUsers = cache(async () => {
       createdAt: User.createdAt,
       image: Image,
       reviewsCount: countDistinct(Review.commentId),
-      spamCount: countCommentValue(ContentValue.spam),
-      helpfulCount: countCommentValue(ContentValue.positive),
+      spamCount: commentValueSq.spamCount,
+      helpfulCount: commentValueSq.helpfulCount,
       submissionsCount: countDistinct(Application.id),
     })
     .from(User)
     .leftJoin(Image, eq(Image.id, User.imageId))
     .leftJoin(Review, eq(User.id, Review.userId))
-    .leftJoin(CommentValue, eq(User.id, CommentValue.userId))
+    .leftJoin(commentValueSq, eq(User.id, commentValueSq.userId))
     .leftJoin(Application, eq(User.id, Application.userId))
-    .groupBy(User.id, Image.id);
+    .groupBy(
+      User.id,
+      Image.id,
+      commentValueSq.spamCount,
+      commentValueSq.helpfulCount,
+    );
 });
 
 export function insertUser(data: typeof User.$inferInsert) {

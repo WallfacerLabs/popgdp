@@ -1,8 +1,5 @@
 import { db } from "@/drizzle/db";
-import { Comment, CommentValue, Review } from "@/drizzle/schema";
-import { sql } from "drizzle-orm";
-
-import { ContentValue } from "@/types/ContentValue";
+import { Comment, Review } from "@/drizzle/schema";
 
 export async function insertComment(data: typeof Comment.$inferInsert) {
   return db.insert(Comment).values(data);
@@ -21,10 +18,4 @@ export async function insertCommentAsReview(data: typeof Comment.$inferInsert) {
       userId: data.userId,
     });
   });
-}
-
-export function countCommentValue(value: ContentValue) {
-  return sql<number>`count(case when ${CommentValue.value} = ${value} then 1 end)`.mapWith(
-    Number,
-  );
 }
