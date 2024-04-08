@@ -1,10 +1,20 @@
 import { cache } from "react";
-import { eq } from "drizzle-orm";
+import { countDistinct, eq } from "drizzle-orm";
 
+import { ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
 
 import { db } from "../db";
-import { Image, Moderator, Reviewer, User } from "../schema";
+import {
+  Application,
+  CommentValue,
+  Image,
+  Moderator,
+  Review,
+  Reviewer,
+  User,
+} from "../schema";
+import { countCommentValue } from "./comments";
 
 export const getUser = cache(async (id: UserId | undefined) => {
   if (!id) {
@@ -57,6 +67,27 @@ export const getAllReviewers = cache(async () => {
     .from(User)
     .innerJoin(Reviewer, eq(User.ethereumAddress, Reviewer.ethereumAddress))
     .leftJoin(Image, eq(User.imageId, Image.id));
+});
+
+export const getModeratorPanelUsers = cache(async () => {
+  return db
+    .select({
+      id: User.id,
+      name: User.name,
+      ethereumAddress: User.ethereumAddress,
+      createdAt: User.createdAt,
+      image: Image,
+      reviewsCount: countDistinct(Review.commentId),
+      spamCount: countCommentValue(ContentValue.spam),
+      helpfulCount: countCommentValue(ContentValue.positive),
+      submissionsCount: countDistinct(Application.id),
+    })
+    .from(User)
+    .leftJoin(Image, eq(Image.id, User.imageId))
+    .leftJoin(Review, eq(User.id, Review.userId))
+    .leftJoin(CommentValue, eq(User.id, CommentValue.userId))
+    .leftJoin(Application, eq(User.id, Application.userId))
+    .groupBy(User.id, Image.id);
 });
 
 export function insertUser(data: typeof User.$inferInsert) {
