@@ -23,6 +23,7 @@ export const urls = {
   moderator: {
     reviewers: "/moderator/reviewers",
     applications: "/moderator/applications",
+    users: "/moderator/users",
   },
   images: {
     preview: ({ imageId }: ImageParamsSchema) =>
