@@ -25,13 +25,13 @@ export function deleteCommentValue(query: typeof CommentValue.$inferSelect) {
     );
 }
 
-export function countCommentValue(value: ContentValue) {
+function countCommentValue(value: ContentValue) {
   return sql<number>`count(case when ${CommentValue.value} = ${value} then 1 end)`.mapWith(
     Number,
   );
 }
 
-export const commentValueSq = db
+export const countCommentValuesQuery = db
   .select({
     userId: CommentValue.userId,
     spamCount: countCommentValue(ContentValue.spam).as("spamCount"),
@@ -39,4 +39,4 @@ export const commentValueSq = db
   })
   .from(CommentValue)
   .groupBy(CommentValue.userId)
-  .as("commentValueSq");
+  .as("countCommentValuesQuery");
