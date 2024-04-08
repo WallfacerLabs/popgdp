@@ -34,7 +34,7 @@ export default async function ReviewersPage() {
       entityName: Application.entityName,
       budget: Application.budget,
       createdAt: Application.createdAt,
-      user: { name: User.name },
+      user: { name: User.name, ethereumAddress: User.ethereumAddress },
       category: {
         name: Category.name,
         color: Category.color,
@@ -118,7 +118,11 @@ export default async function ReviewersPage() {
           {applications.map((application) => (
             <TableRow key={application.id}>
               <NameCell name={application.name} />
-              <UserCell user={application.user} />
+              <UserCell
+                name={application.user.name}
+                ethereumAddress={null}
+                image={null}
+              />
               <EntityCell entityName={application.entityName} />
               <DateCell createdAt={application.createdAt} />
               <BudgetCell budget={application.budget} />

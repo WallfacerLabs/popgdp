@@ -1,10 +1,16 @@
-import { Application } from "@/types/Application";
+import { ImageData } from "@/constants/validationSchemas";
+
 import { EtherscanLink } from "@/components/ui/etherscanLink";
 import { TableCell } from "@/components/ui/table";
 import { UserAvatar } from "@/components/ui/userAvatar";
 
-export const UserCell = ({ user }: Pick<Application, "user">) => {
-  const { ethereumAddress, image, name } = user;
+interface UserCellProps {
+  name: string | null;
+  ethereumAddress: string | null | undefined;
+  image: ImageData | null | undefined;
+}
+
+export const UserCell = ({ name, ethereumAddress, image }: UserCellProps) => {
   return (
     <TableCell>
       <div className="flex gap-3">
