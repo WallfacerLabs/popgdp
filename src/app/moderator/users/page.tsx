@@ -1,5 +1,5 @@
 import { db } from "@/drizzle/db";
-import { Image, Review, User } from "@/drizzle/schema";
+import { CommentValue, Image, Review, User } from "@/drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
@@ -13,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
 
 export default async function UsersPage() {
   const users = await db
@@ -23,10 +24,12 @@ export default async function UsersPage() {
       createdAt: User.createdAt,
       image: Image,
       reviewsCount: sql<number>`count(${Review.commentId})`.mapWith(Number),
+      spamCount: sql<number>`count(${CommentValue.commentId})`.mapWith(Number),
     })
     .from(User)
     .leftJoin(Image, eq(Image.id, User.imageId))
     .innerJoin(Review, eq(User.id, Review.userId))
+    .leftJoin(CommentValue, eq(User.id, CommentValue.userId))
     .groupBy(User.id, Image.id);
 
   console.log(users);
@@ -43,6 +46,7 @@ export default async function UsersPage() {
             <TableHead>User</TableHead>
             <TableHead>Wallet address</TableHead>
             <TableHead>Reviews</TableHead>
+            <TableHead>SPAM count</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -62,6 +66,15 @@ export default async function UsersPage() {
               </TableCell>
               <TableCell>
                 <span>{user.reviewsCount ?? "-"}</span>
+              </TableCell>
+              <TableCell>
+                {user.spamCount ? (
+                  <span className="flex items-center gap-1 text-red">
+                    <ErrorCircleIcon className="h-4 w-4" />
+                  </span>
+                ) : (
+                  <span>-</span>
+                )}
               </TableCell>
             </TableRow>
           ))}
