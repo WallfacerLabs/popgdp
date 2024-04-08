@@ -38,7 +38,7 @@ export const ProductAnimatedIcon = ({ className }: IconProps) => {
           ry="8"
           width="11.5"
           height="11.5"
-          stroke-width="2.8"
+          strokeWidth="2.8"
           stroke="currentColor"
           className="innerCircle"
         >

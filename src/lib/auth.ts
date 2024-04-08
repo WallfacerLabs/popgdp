@@ -3,7 +3,7 @@ import { getSession } from "@auth0/nextjs-auth0";
 
 import { type UserId } from "@/types/User";
 
-export async function getUserId(): Promise<UserId | undefined> {
+export async function getUserData() {
   const session = await getSession();
 
   if (!session) {
@@ -15,5 +15,13 @@ export async function getUserId(): Promise<UserId | undefined> {
     return undefined;
   }
 
-  return user.data.sid;
+  return {
+    id: user.data.sid,
+    verificationLevel: user.data.credentialType,
+  };
+}
+
+export async function getUserId(): Promise<UserId | undefined> {
+  const userData = await getUserData();
+  return userData?.id;
 }

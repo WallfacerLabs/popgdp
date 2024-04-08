@@ -10,6 +10,7 @@ export async function getPageWithLoggedUser(browser: Browser) {
     {
       user: {
         sid: USER_ID,
+        credentialType: "orb",
       },
     },
     { secret: process.env.AUTH0_SECRET! },
