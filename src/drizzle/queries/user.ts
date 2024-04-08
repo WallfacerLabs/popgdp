@@ -1,18 +1,13 @@
 import { cache } from "react";
-import { countDistinct, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 import { type UserId } from "@/types/User";
 
 import { db } from "../db";
-import {
-  Application,
-  Image,
-  Moderator,
-  Review,
-  Reviewer,
-  User,
-} from "../schema";
-import { commentValueSq } from "./commentValues";
+import { Image, Moderator, Reviewer, User } from "../schema";
+import { countApplicationsQuery } from "./applications";
+import { countCommentValuesQuery } from "./commentValues";
+import { countReviewsQuery } from "./reviews";
 
 export const getUser = cache(async (id: UserId | undefined) => {
   if (!id) {
@@ -46,7 +41,10 @@ export const getUserRoles = cache(async (id: UserId) => {
     .leftJoin(Moderator, eq(User.ethereumAddress, Moderator.ethereumAddress))
     .where(eq(User.id, id));
 
-  return roles;
+  return {
+    isModerator: !!roles?.isModerator,
+    isReviewer: !!roles?.isReviewer,
+  };
 });
 
 export const getAllReviewers = cache(async () => {
@@ -75,21 +73,21 @@ export const getModeratorPanelUsers = cache(async () => {
       ethereumAddress: User.ethereumAddress,
       createdAt: User.createdAt,
       image: Image,
-      reviewsCount: countDistinct(Review.commentId),
-      spamCount: commentValueSq.spamCount,
-      helpfulCount: commentValueSq.helpfulCount,
-      submissionsCount: countDistinct(Application.id),
+      reviewsCount: countReviewsQuery.count,
+      spamCount: countCommentValuesQuery.spamCount,
+      helpfulCount: countCommentValuesQuery.helpfulCount,
+      submissionsCount: countApplicationsQuery.count,
     })
     .from(User)
     .leftJoin(Image, eq(Image.id, User.imageId))
-    .leftJoin(Review, eq(User.id, Review.userId))
-    .leftJoin(commentValueSq, eq(User.id, commentValueSq.userId))
-    .leftJoin(Application, eq(User.id, Application.userId))
-    .groupBy(
-      User.id,
-      Image.id,
-      commentValueSq.spamCount,
-      commentValueSq.helpfulCount,
+    .leftJoin(countReviewsQuery, eq(User.id, countReviewsQuery.userId))
+    .leftJoin(
+      countCommentValuesQuery,
+      eq(User.id, countCommentValuesQuery.userId),
+    )
+    .leftJoin(
+      countApplicationsQuery,
+      eq(User.id, countApplicationsQuery.userId),
     );
 });
 

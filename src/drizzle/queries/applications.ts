@@ -9,7 +9,7 @@ import {
   Member,
   User,
 } from "@/drizzle/schema";
-import { eq, sql } from "drizzle-orm";
+import { count, eq, sql } from "drizzle-orm";
 
 import { ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
@@ -174,3 +174,12 @@ export function insertApplication(
     return applicationId;
   });
 }
+
+export const countApplicationsQuery = db
+  .select({
+    userId: Application.userId,
+    count: count(Application.userId).as("applicationsCount"),
+  })
+  .from(Application)
+  .groupBy(Application.userId)
+  .as("countApplicationsQuery");
