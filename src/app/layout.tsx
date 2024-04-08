@@ -11,6 +11,7 @@ import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { cn } from "@/lib/cn";
 import { AccountButton } from "@/components/ui/accountButton";
 import { Button } from "@/components/ui/button";
+import { DevFloatingPanel } from "@/components/ui/devPanel/devPanel";
 import { Separator } from "@/components/ui/separator";
 import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 import { ProductAnimatedIcon } from "@/components/icons/productAnimatedIcon";
@@ -40,6 +41,7 @@ export default function RootLayout({
           inter.variable,
         )}
       >
+        <DevFloatingPanel />
         <header className="mx-auto flex w-full max-w-[1384px] items-center justify-between gap-8 p-3">
           <Button
             variant="link"
