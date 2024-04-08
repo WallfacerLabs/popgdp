@@ -55,7 +55,7 @@ export default async function UsersPage() {
             <TableHead>Wallet address</TableHead>
             <TableHead>Reviews</TableHead>
             <TableHead>SPAM count</TableHead>
-            <TableHead>Helpful</TableHead>
+            <TableHead>Useful</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
