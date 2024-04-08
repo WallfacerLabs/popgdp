@@ -2,6 +2,7 @@ import { getAllReviewers } from "@/drizzle/queries/user";
 
 import { Button } from "@/components/ui/button";
 import { EtherscanLink } from "@/components/ui/etherscanLink";
+import { ModeratorNavigaton } from "@/components/ui/moderatorNavigaton";
 import { PageTitle } from "@/components/ui/pageTitle";
 import {
   Table,
@@ -37,6 +38,9 @@ export default async function ReviewersPage() {
           </Button>
         </div>
       </div>
+
+      <ModeratorNavigaton />
+
       <Table>
         <TableHeader>
           <TableRow>

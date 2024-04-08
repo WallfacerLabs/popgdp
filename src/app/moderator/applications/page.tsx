@@ -6,6 +6,7 @@ import { DateCell } from "@/components/ui/applicationsTable/cells/dateCell";
 import { EntityCell } from "@/components/ui/applicationsTable/cells/entityCell";
 import { NameCell } from "@/components/ui/applicationsTable/cells/nameCell";
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
+import { ModeratorNavigaton } from "@/components/ui/moderatorNavigaton";
 import { PageTitle } from "@/components/ui/pageTitle";
 import {
   Table,
@@ -28,6 +29,7 @@ export default async function ReviewersPage() {
 
         <ExportSubmissions />
       </div>
+      <ModeratorNavigaton />
       <Table>
         <TableHeader>
           <TableRow>

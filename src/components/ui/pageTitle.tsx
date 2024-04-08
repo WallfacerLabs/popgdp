@@ -8,7 +8,7 @@ export const PageTitle = ({
   ...props
 }: HTMLAttributes<HTMLHeadingElement>) => {
   return (
-    <h2 className={cn("text-2xl font-bold", className)} {...props}>
+    <h2 className={cn("text-2xl font-bold leading-10", className)} {...props}>
       {children}
     </h2>
   );
