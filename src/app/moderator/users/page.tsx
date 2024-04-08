@@ -6,7 +6,7 @@ import {
   Review,
   User,
 } from "@/drizzle/schema";
-import { eq, sql } from "drizzle-orm";
+import { countDistinct, eq, sql } from "drizzle-orm";
 
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import { EtherscanLink } from "@/components/ui/etherscanLink";
@@ -31,9 +31,7 @@ export default async function UsersPage() {
       ethereumAddress: User.ethereumAddress,
       createdAt: User.createdAt,
       image: Image,
-      reviewsCount: sql<number>`count(distinct ${Review.commentId})`.mapWith(
-        Number,
-      ),
+      reviewsCount: countDistinct(Review.commentId),
       spamCount:
         sql<number>`count(case when ${CommentValue.value} = 'spam' then 1 end)`.mapWith(
           Number,
@@ -42,9 +40,7 @@ export default async function UsersPage() {
         sql<number>`count(case when ${CommentValue.value} = 'positive' then 1 end)`.mapWith(
           Number,
         ),
-      submissionsCount: sql<number>`count(distinct ${Application.id})`.mapWith(
-        Number,
-      ),
+      submissionsCount: countDistinct(Application.id),
     })
     .from(User)
     .leftJoin(Image, eq(Image.id, User.imageId))
