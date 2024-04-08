@@ -3,6 +3,25 @@ import { db } from "@/drizzle/db";
 import { Category, Wave } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
+const imageFragment = {
+  columns: {
+    id: true,
+    placeholder: true,
+    height: true,
+    width: true,
+  },
+} as const;
+
+const userFragment = {
+  columns: {
+    name: true,
+    ethereumAddress: true,
+  },
+  with: {
+    image: imageFragment,
+  },
+} as const;
+
 export const getWaves = cache(async () =>
   db.query.Wave.findMany({
     with: {
@@ -23,7 +42,7 @@ export const getWaveWithApplications = cache(async (id: number) => {
     with: {
       applications: {
         with: {
-          user: { columns: { name: true } },
+          user: userFragment,
           category: { columns: { color: true, name: true } },
         },
       },
