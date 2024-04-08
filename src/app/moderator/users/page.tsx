@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
+import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
 export default async function UsersPage() {
   const users = await db
@@ -24,7 +25,14 @@ export default async function UsersPage() {
       createdAt: User.createdAt,
       image: Image,
       reviewsCount: sql<number>`count(${Review.commentId})`.mapWith(Number),
-      spamCount: sql<number>`count(${CommentValue.commentId})`.mapWith(Number),
+      spamCount:
+        sql<number>`count(case when ${CommentValue.value} = 'spam' then 1 end)`.mapWith(
+          Number,
+        ),
+      helpfulCount:
+        sql<number>`count(case when ${CommentValue.value} = 'positive' then 1 end)`.mapWith(
+          Number,
+        ),
     })
     .from(User)
     .leftJoin(Image, eq(Image.id, User.imageId))
@@ -47,6 +55,7 @@ export default async function UsersPage() {
             <TableHead>Wallet address</TableHead>
             <TableHead>Reviews</TableHead>
             <TableHead>SPAM count</TableHead>
+            <TableHead>Helpful</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -75,6 +84,18 @@ export default async function UsersPage() {
                 ) : (
                   <span>-</span>
                 )}
+              </TableCell>
+              <TableCell>
+                <span className="flex items-center gap-1">
+                  {user.helpfulCount ? (
+                    <>
+                      <ThumbUpIcon className="h-4 w-4" />
+                      {user.helpfulCount}
+                    </>
+                  ) : (
+                    "-"
+                  )}
+                </span>
               </TableCell>
             </TableRow>
           ))}
