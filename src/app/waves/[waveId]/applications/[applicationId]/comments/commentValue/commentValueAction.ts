@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { urls } from "@/constants/urls";
 import {
   deleteCommentValue,
   insertCommentValue,
@@ -43,5 +44,5 @@ export async function commentValueAction({
     });
   }
 
-  revalidatePath(`/waves/${waveId}/applications/${applicationId}`);
+  revalidatePath(urls.applications.preview({ waveId, applicationId }));
 }

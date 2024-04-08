@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { UnauthenticatedError, UnauthorizedError } from "@/constants/errors";
+import { urls } from "@/constants/urls";
 import {
   insertComment,
   insertCommentAsReview,
@@ -34,7 +35,7 @@ export async function addCommentAction({
     content: data.comment,
   });
 
-  revalidatePath(`/waves/${waveId}/applications/${applicationId}`);
+  revalidatePath(urls.applications.preview({ waveId, applicationId }));
 }
 
 export async function addReviewAction({
@@ -59,7 +60,7 @@ export async function addReviewAction({
     content: data.comment,
   });
 
-  revalidatePath(`/waves/${waveId}/applications/${applicationId}`);
+  revalidatePath(urls.applications.preview({ waveId, applicationId }));
 }
 
 export interface AddReplyACtionPayload extends AddCommentActionPayload {
@@ -85,5 +86,5 @@ export async function addReplyAction({
     replyTargetId,
   });
 
-  revalidatePath(`/waves/${waveId}/applications/${applicationId}`);
+  revalidatePath(urls.applications.preview({ waveId, applicationId }));
 }

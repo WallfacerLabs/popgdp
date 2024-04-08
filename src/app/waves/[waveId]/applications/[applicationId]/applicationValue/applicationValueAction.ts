@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { UnauthenticatedError } from "@/constants/errors";
+import { urls } from "@/constants/urls";
 import {
   deleteApplicationValue,
   insertApplicationValue,
@@ -42,5 +43,5 @@ export async function applicationValueAction({
     });
   }
 
-  revalidatePath(`/waves/${waveId}/applications/${applicationId}`);
+  revalidatePath(urls.applications.preview({ waveId, applicationId }));
 }
