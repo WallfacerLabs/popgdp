@@ -1,5 +1,6 @@
 import { db } from "@/drizzle/db";
-import { User } from "@/drizzle/schema";
+import { Image, User } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
 
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import { EtherscanLink } from "@/components/ui/etherscanLink";
@@ -20,8 +21,10 @@ export default async function UsersPage() {
       name: User.name,
       ethereumAddress: User.ethereumAddress,
       createdAt: User.createdAt,
+      image: Image,
     })
-    .from(User);
+    .from(User)
+    .leftJoin(Image, eq(Image.id, User.imageId));
 
   return (
     <div className="flex flex-col gap-4">
@@ -42,7 +45,7 @@ export default async function UsersPage() {
               <UserCell
                 name={user.name}
                 ethereumAddress={user.ethereumAddress}
-                image={null}
+                image={user.image}
               />
               <TableCell>
                 {user.ethereumAddress ? (
