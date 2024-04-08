@@ -16,7 +16,11 @@ export async function getUserPermission(): Promise<UserPermission> {
     return UserPermission.visitor;
   }
 
-  const { isReviewer } = await getUserRoles(userId);
+  const { isReviewer, isModerator } = await getUserRoles(userId);
+
+  if (isModerator) {
+    return UserPermission.moderator;
+  }
 
   if (isReviewer) {
     return UserPermission.reviewer;

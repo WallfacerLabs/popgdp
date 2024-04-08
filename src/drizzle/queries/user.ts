@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { type UserId } from "@/types/User";
 
 import { db } from "../db";
-import { Image, Reviewer, User } from "../schema";
+import { Image, Moderator, Reviewer, User } from "../schema";
 
 export const getUser = cache(async (id: UserId | undefined) => {
   if (!id) {
@@ -31,9 +31,11 @@ export const getUserRoles = cache(async (id: UserId) => {
   const [roles] = await db
     .select({
       isReviewer: Reviewer.ethereumAddress,
+      isModerator: Moderator.ethereumAddress,
     })
     .from(User)
     .leftJoin(Reviewer, eq(User.ethereumAddress, Reviewer.ethereumAddress))
+    .leftJoin(Moderator, eq(User.ethereumAddress, Moderator.ethereumAddress))
     .where(eq(User.id, id));
 
   return roles;
