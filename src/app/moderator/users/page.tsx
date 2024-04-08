@@ -39,7 +39,11 @@ export default async function UsersPage() {
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.id}>
-              <UserCell user={user} />
+              <UserCell
+                name={user.name}
+                ethereumAddress={user.ethereumAddress}
+                image={null}
+              />
               <TableCell>
                 {user.ethereumAddress ? (
                   <EtherscanLink ethereumAddress={user.ethereumAddress} />
