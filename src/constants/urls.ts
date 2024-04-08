@@ -22,6 +22,7 @@ export const urls = {
   },
   moderator: {
     reviewers: "/moderator/reviewers",
+    applications: "/moderator/applications",
   },
   images: {
     preview: ({ imageId }: ImageParamsSchema) =>
