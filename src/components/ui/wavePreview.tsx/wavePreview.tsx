@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { urls } from "@/constants/urls";
 
 import { type WaveWithCategories } from "@/types/Wave";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,9 @@ export function WavePreview({ wave }: WavePreviewProps) {
         <CardHeader className="flex-row justify-between">
           <CardTitle>{wave.name}</CardTitle>
           <Button asChild>
-            <Link href={`/waves/${wave.id}`}>Go to wave</Link>
+            <Link href={urls.waves.preview({ waveId: wave.id })}>
+              Go to wave
+            </Link>
           </Button>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">

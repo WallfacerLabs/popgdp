@@ -1,3 +1,5 @@
+import { urls } from "@/constants/urls";
+
 import { Application } from "@/types/Application";
 import {
   Table,
@@ -42,7 +44,10 @@ export const ApplicationsTable = ({
         {applications.map((application) => (
           <TableLinkRow
             key={application.id}
-            href={`/waves/${waveId}/applications/${application.id}`}
+            href={urls.applications.preview({
+              waveId,
+              applicationId: application.id,
+            })}
           >
             <NameCell name={application.name} />
             <UserCell {...application.user} />

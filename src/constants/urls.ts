@@ -15,7 +15,7 @@ export const urls = {
   applications: {
     create: ({ waveId }: WaveParamsSchema) =>
       `/waves/${waveId}/applications/create` as const,
-    createPreview: ({ waveId }: ApplicationParamsSchema) =>
+    createPreview: ({ waveId }: WaveParamsSchema) =>
       `/waves/${waveId}/applications/create/preview` as const,
     preview: ({ waveId, applicationId }: ApplicationParamsSchema) =>
       `/waves/${waveId}/applications/${applicationId}` as const,

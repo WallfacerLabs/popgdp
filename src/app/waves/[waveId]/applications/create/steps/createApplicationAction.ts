@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { UnauthenticatedError } from "@/constants/errors";
+import { urls } from "@/constants/urls";
 import { insertApplication } from "@/drizzle/queries/applications";
 
 import { getUserId } from "@/lib/auth";
@@ -49,6 +50,6 @@ export async function createApplicationAction(
     })),
   );
 
-  revalidatePath(`/waves/${waveId}`);
-  redirect(`/waves/${waveId}`);
+  revalidatePath(urls.waves.preview({ waveId }));
+  redirect(urls.waves.preview({ waveId }));
 }
