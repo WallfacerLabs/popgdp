@@ -45,7 +45,7 @@ export const ApplicationsTable = ({
             href={`/waves/${waveId}/applications/${application.id}`}
           >
             <NameCell name={application.name} />
-            <UserCell user={application.user} />
+            <UserCell {...application.user} />
             <EntityCell entityName={application.entityName} />
             <DateCell createdAt={application.createdAt} />
             <BudgetCell budget={application.budget} />
