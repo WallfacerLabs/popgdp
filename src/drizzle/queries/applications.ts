@@ -1,8 +1,17 @@
 import { cache } from "react";
 import { db } from "@/drizzle/db";
-import { Application, CommentValue, Member } from "@/drizzle/schema";
+import {
+  Application,
+  ApplicationValue,
+  Category,
+  CommentValue,
+  Image,
+  Member,
+  User,
+} from "@/drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 
+import { ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
 import { parseMarkdown } from "@/lib/parseMarkdown";
 
@@ -82,6 +91,60 @@ export const getApplicationWithComments = cache(
     };
   },
 );
+
+function countApplicationValue(value: ContentValue) {
+  return sql<number>`count(case when ${ApplicationValue.value} = ${value} then 1 end)`.mapWith(
+    Number,
+  );
+}
+
+export const getModeratorPanelApplications = cache(async () => {
+  return db
+    .select({
+      id: Application.id,
+      name: Application.name,
+      summary: Application.summary,
+      entityName: Application.entityName,
+      duration: Application.duration,
+      budget: Application.budget,
+      teamSummary: Application.teamSummary,
+      idea: Application.idea,
+      reason: Application.reason,
+      state: Application.state,
+      goals: Application.goals,
+      requirements: Application.requirements,
+      createdAt: Application.createdAt,
+      user: { name: User.name, ethereumAddress: User.ethereumAddress },
+      userImage: {
+        id: Image.id,
+        placeholder: Image.placeholder,
+        width: Image.width,
+        height: Image.height,
+      },
+      category: {
+        name: Category.name,
+        color: Category.color,
+      },
+      helpfulCount: countApplicationValue(ContentValue.positive),
+      spamCount: countApplicationValue(ContentValue.spam),
+    })
+    .from(Application)
+    .leftJoin(
+      ApplicationValue,
+      eq(Application.id, ApplicationValue.applicationId),
+    )
+    .innerJoin(User, eq(Application.userId, User.id))
+    .innerJoin(Category, eq(Application.categoryId, Category.id))
+    .leftJoin(Image, eq(User.imageId, Image.id))
+    .groupBy(
+      Application.id,
+      User.name,
+      User.ethereumAddress,
+      Category.name,
+      Category.color,
+      Image.id,
+    );
+});
 
 type MemberInsertData = Array<{
   imageId: string | undefined;
