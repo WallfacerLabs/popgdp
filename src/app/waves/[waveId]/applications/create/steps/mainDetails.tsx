@@ -5,11 +5,11 @@ import {
   positiveNumberSchema,
   specificLengthStringSchema,
 } from "@/constants/validationSchemas";
-import { Categories } from "@/drizzle/queries/categories";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { type Category } from "@/types/Category";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 import { getCategoryIcon } from "@/components/ui/categories/getCategoryIcon";
@@ -64,7 +64,11 @@ export const mainDetailsSchema = z.object({
 });
 export type MainDetailsSchema = z.infer<typeof mainDetailsSchema>;
 
-export function MainDetails({ categories }: { categories: Categories }) {
+interface MainDetailsProps {
+  categories: Array<Category>;
+}
+
+export function MainDetails({ categories }: MainDetailsProps) {
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
   const form = useForm<MainDetailsSchema>({

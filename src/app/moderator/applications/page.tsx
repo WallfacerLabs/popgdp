@@ -55,7 +55,13 @@ export default async function ReviewersPage() {
     )
     .innerJoin(User, eq(Application.userId, User.id))
     .innerJoin(Category, eq(Application.categoryId, Category.id))
-    .groupBy(Application.id, User.name, Category.name, Category.color);
+    .groupBy(
+      Application.id,
+      User.name,
+      User.ethereumAddress,
+      Category.name,
+      Category.color,
+    );
 
   function getCsvData() {
     const csvData: any = [
