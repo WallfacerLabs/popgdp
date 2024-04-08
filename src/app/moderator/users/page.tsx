@@ -49,8 +49,6 @@ export default async function UsersPage() {
     .leftJoin(Application, eq(User.id, Application.userId))
     .groupBy(User.id, Image.id);
 
-  console.log(users);
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
