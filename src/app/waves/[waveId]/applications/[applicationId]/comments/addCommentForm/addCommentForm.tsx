@@ -25,7 +25,15 @@ import {
 import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
 import { AddReviewDialog } from "./addReviewDialog";
 
-export function AddCommentForm() {
+interface AddCommentFormProps {
+  userAlreadyReviewed: boolean;
+  isReviewer: boolean;
+}
+
+export function AddCommentForm({
+  userAlreadyReviewed,
+  isReviewer,
+}: AddCommentFormProps) {
   const { waveId, applicationId } = useApplicationParams();
 
   const [editorKey, setEditorKey] = useState(0);
@@ -72,7 +80,9 @@ export function AddCommentForm() {
           </Button>
 
           <AddReviewDialog
-            isSubmitting={form.formState.isSubmitting}
+            disabled={
+              form.formState.isSubmitting || userAlreadyReviewed || !isReviewer
+            }
             onSubmit={handleSubmit(addReviewAction)}
           />
         </FormFooter>

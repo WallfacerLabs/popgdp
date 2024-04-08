@@ -2,6 +2,7 @@ import { Fragment } from "react";
 
 import { type Comment } from "@/types/Comment";
 import { type UserId } from "@/types/User";
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -20,7 +21,12 @@ interface CommentsProps {
 }
 
 export async function Comments({ comments, waveId, userId }: CommentsProps) {
+  const isReviewer = await userHasRole(UserPermission.reviewer);
   const reviews = comments.filter((comment) => comment.review?.isReview);
+
+  const userAlreadyReviewed = reviews.some(
+    (review) => review.userId === userId,
+  );
 
   return (
     <div className="flex flex-col gap-8">
@@ -63,7 +69,10 @@ export async function Comments({ comments, waveId, userId }: CommentsProps) {
         </section>
       </Tabs>
 
-      <AddCommentForm />
+      <AddCommentForm
+        userAlreadyReviewed={userAlreadyReviewed}
+        isReviewer={isReviewer}
+      />
     </div>
   );
 }

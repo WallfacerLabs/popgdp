@@ -1,12 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { UnauthenticatedError } from "@/constants/errors";
+import { UnauthenticatedError, UnauthorizedError } from "@/constants/errors";
 import {
   insertComment,
   insertCommentAsReview,
 } from "@/drizzle/queries/comments";
 
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { getUserId } from "@/lib/auth";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
@@ -45,6 +46,11 @@ export async function addReviewAction({
 
   if (!userId) {
     throw new UnauthenticatedError();
+  }
+
+  const isReviewer = await userHasRole(UserPermission.reviewer);
+  if (!isReviewer) {
+    throw new UnauthorizedError();
   }
 
   await insertCommentAsReview({

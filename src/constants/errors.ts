@@ -3,3 +3,9 @@ export class UnauthenticatedError extends Error {
     super("Unauthenticated");
   }
 }
+
+export class UnauthorizedError extends Error {
+  constructor() {
+    super("Unauthorized");
+  }
+}

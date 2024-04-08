@@ -14,12 +14,12 @@ import {
 import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 
 interface AddReviewDialogProps {
-  isSubmitting: boolean;
+  disabled: boolean;
   onSubmit: () => void;
 }
 
 export const AddReviewDialog = ({
-  isSubmitting,
+  disabled,
   onSubmit,
 }: AddReviewDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +37,7 @@ export const AddReviewDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={handleEmptySubmit}>
       <DialogTrigger asChild>
-        <Button variant="secondary" disabled={isSubmitting}>
+        <Button variant="secondary" disabled={disabled}>
           Add review
           <AssignmentIcon />
         </Button>
@@ -53,13 +53,13 @@ export const AddReviewDialog = ({
         </p>
         <DialogFooter className="flex items-center gap-4">
           <DialogClose asChild>
-            <Button variant="secondary" disabled={isSubmitting}>
+            <Button variant="secondary" disabled={disabled}>
               Cancel
             </Button>
           </DialogClose>
           <Button
             variant="primary"
-            disabled={isSubmitting}
+            disabled={disabled}
             onClick={handleReviewSubmit}
           >
             Add review
