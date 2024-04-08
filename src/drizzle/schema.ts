@@ -365,3 +365,7 @@ export const CategoryRelations = relations(Category, ({ one }) => ({
 export const Reviewer = pgTable("reviewer", {
   ethereumAddress: text("ethereumAddress").primaryKey(),
 });
+
+export const Moderator = pgTable("moderator", {
+  ethereumAddress: text("ethereumAddress").primaryKey(),
+});
