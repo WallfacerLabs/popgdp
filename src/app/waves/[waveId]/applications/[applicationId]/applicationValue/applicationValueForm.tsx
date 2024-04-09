@@ -35,11 +35,9 @@ export async function ApplicationValueForm({
         disabled={!userId}
         formAction={async () => {
           "use server";
-          if (isCreator) {
-            throw new Error("User cannot mark their own post as spam.");
-          }
           await applicationValueAction({
             userId,
+            creatorId: creatorId,
             applicationId,
             waveId,
             isChecked: isSpam,
@@ -55,11 +53,9 @@ export async function ApplicationValueForm({
         disabled={!userId}
         formAction={async () => {
           "use server";
-          if (isCreator) {
-            throw new Error("User cannot upvote their own post.");
-          }
           await applicationValueAction({
             userId,
+            creatorId: creatorId,
             applicationId,
             waveId,
             isChecked: isUpvoted,

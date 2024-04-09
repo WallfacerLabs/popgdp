@@ -14,12 +14,14 @@ import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 interface ApplicationValueActionPayload extends ApplicationParamsSchema {
   userId: UserId | undefined;
+  creatorId: string;
   isChecked: boolean;
   value: ContentValue;
 }
 
 export async function applicationValueAction({
   userId,
+  creatorId,
   applicationId,
   waveId,
   isChecked,
@@ -27,6 +29,10 @@ export async function applicationValueAction({
 }: ApplicationValueActionPayload) {
   if (!userId) {
     throw new UnauthenticatedError();
+  }
+
+  if (userId === creatorId) {
+    throw new Error(`User cannot mark their own post as ${value}.`);
   }
 
   if (isChecked) {
