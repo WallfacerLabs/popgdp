@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { cn } from "@/lib/cn";
+import { convertToUTC } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Form, FormFooter } from "@/components/ui/form";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
@@ -45,7 +46,13 @@ export function Timeline({ className }: TimelineProps) {
         <form
           className={cn("flex w-full flex-col gap-6", className)}
           onSubmit={form.handleSubmit(async (payload) => {
-            dispatch({ type: "UPDATE_WAVE_DATA", payload });
+            const utcPayload = Object.fromEntries(
+              Object.entries(payload).map(([key, value]) => [
+                key,
+                convertToUTC(value),
+              ]),
+            );
+            dispatch({ type: "UPDATE_WAVE_DATA", payload: utcPayload });
             router.push(urls.waves.createPreview);
           })}
         >
