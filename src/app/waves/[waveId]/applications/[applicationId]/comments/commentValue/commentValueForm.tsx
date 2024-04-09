@@ -29,35 +29,25 @@ export function CommentValueForm({
   const isUpvoted = comment.commentValues[0]?.value === "positive";
   const isSpam = comment.commentValues[0]?.value === "spam";
 
-  const ownComment = userId === comment.userId;
+  const isCommentator = userId === comment.userId;
 
-  const isVotingDisabled = !userId || form.formState.isSubmitting || ownComment;
+  const isVotingDisabled =
+    !userId || form.formState.isSubmitting || isCommentator;
 
-  const onSpamClick = form.handleSubmit(async () => {
-    if (!ownComment) {
+  const handleAction = (value: "positive" | "spam", isChecked: boolean) =>
+    form.handleSubmit(async () => {
+      if (isCommentator) {
+        throw new Error(`User cannot mark their own comment as ${value}.`);
+      }
       await commentValueAction({
         commentId: comment.id,
         userId,
         applicationId: comment.applicationId,
         waveId,
-        isChecked: isSpam,
-        value: "spam",
+        isChecked,
+        value,
       });
-    }
-  });
-
-  const onHelpfulClick = form.handleSubmit(async () => {
-    if (!ownComment) {
-      await commentValueAction({
-        commentId: comment.id,
-        userId,
-        applicationId: comment.applicationId,
-        waveId,
-        isChecked: isUpvoted,
-        value: "positive",
-      });
-    }
-  });
+    });
 
   return (
     <form className={cn("ml-auto flex items-center gap-2", className)}>
@@ -66,7 +56,7 @@ export function CommentValueForm({
         className={commentButtonVariants({ isActive: isSpam })}
         aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
         disabled={isVotingDisabled}
-        onClick={onSpamClick}
+        onClick={handleAction("spam", isSpam)}
       >
         <ErrorCircleIcon />
         {isSpam ? "Marked as SPAM" : "SPAM"}
@@ -77,9 +67,9 @@ export function CommentValueForm({
       <Button
         variant="link"
         className={commentButtonVariants({ isActive: isUpvoted })}
-        aria-label={isSpam ? "Unmark as helpful" : "Mark as helpful"}
+        aria-label={isUpvoted ? "Unmark as helpful" : "Mark as helpful"}
         disabled={isVotingDisabled}
-        onClick={onHelpfulClick}
+        onClick={handleAction("positive", isUpvoted)}
       >
         <ThumbUpIcon />
         {isUpvoted ? "Marked as helpful" : "Helpful"}
