@@ -1,1 +1,1 @@
-ALTER TABLE "application" ADD COLUMN IF NOT EXISTS "email" text NOT NULL DEFAULT '';
+ALTER TABLE "application" ADD COLUMN IF NOT EXISTS "email" text NOT NULL;
