@@ -120,6 +120,13 @@
       "when": 1712621100817,
       "tag": "0016_even_earthquake",
       "breakpoints": false
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1712657147717,
+      "tag": "0017_naive_pyro",
+      "breakpoints": false
     }
   ]
 }
