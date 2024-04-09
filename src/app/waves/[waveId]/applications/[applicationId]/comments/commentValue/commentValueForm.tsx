@@ -49,6 +49,8 @@ export function CommentValueForm({
       });
     });
 
+  if (isCommentator) return null;
+
   return (
     <form className={cn("ml-auto flex items-center gap-2", className)}>
       <Button

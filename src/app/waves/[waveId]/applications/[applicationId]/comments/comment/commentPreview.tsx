@@ -73,14 +73,12 @@ export const CommentPreview = ({
               </div>
 
               <MarkdownPreview body={comment.markdownContent} />
-              {userId !== comment.userId && (
-                <CommentValueForm
-                  className="ml-auto"
-                  comment={comment}
-                  waveId={waveId}
-                  userId={userId}
-                />
-              )}
+              <CommentValueForm
+                className="ml-auto"
+                comment={comment}
+                waveId={waveId}
+                userId={userId}
+              />
             </div>
           </div>
         </article>
