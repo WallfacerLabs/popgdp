@@ -1,5 +1,7 @@
+import { notFound } from "next/navigation";
 import { getModeratorPanelUsers } from "@/drizzle/queries/user";
 
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import { EtherscanLink } from "@/components/ui/etherscanLink";
 import { ModeratorNavigation } from "@/components/ui/moderatorNavigation";
@@ -19,6 +21,11 @@ import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 import { ExportUsers } from "./exportUsers";
 
 export default async function UsersPage() {
+  const isModerator = await userHasRole(UserPermission.moderator);
+  if (!isModerator) {
+    throw notFound();
+  }
+
   const users = await getModeratorPanelUsers();
 
   return (
