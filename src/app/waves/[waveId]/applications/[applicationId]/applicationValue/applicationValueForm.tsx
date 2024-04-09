@@ -6,11 +6,14 @@ import { Button } from "@/components/ui/button";
 
 import { applicationValueAction } from "./applicationValueAction";
 
-type ApplicationValueFormProps = ApplicationParamsSchema;
+interface ApplicationValueFormProps extends ApplicationParamsSchema {
+  creatorId: string;
+}
 
 export async function ApplicationValueForm({
   applicationId,
   waveId,
+  creatorId,
 }: ApplicationValueFormProps) {
   const userId = await getUserId();
   const applicationValue = await getApplicationValue({
@@ -21,6 +24,10 @@ export async function ApplicationValueForm({
   const isUpvoted = applicationValue === "positive";
   const isSpam = applicationValue === "spam";
 
+  const isCreator = userId === creatorId;
+
+  if (isCreator) return null;
+
   return (
     <form className="flex gap-4">
       <Button
@@ -30,6 +37,7 @@ export async function ApplicationValueForm({
           "use server";
           await applicationValueAction({
             userId,
+            creatorId: creatorId,
             applicationId,
             waveId,
             isChecked: isSpam,
@@ -47,6 +55,7 @@ export async function ApplicationValueForm({
           "use server";
           await applicationValueAction({
             userId,
+            creatorId: creatorId,
             applicationId,
             waveId,
             isChecked: isUpvoted,
