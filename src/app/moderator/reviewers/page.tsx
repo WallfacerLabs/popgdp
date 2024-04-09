@@ -64,7 +64,7 @@ export default async function ReviewersPage() {
                 <UserPreview name={reviewer.name} image={reviewer.image} />
               </TableCell>
               <TableCell>Reviewer</TableCell>
-              <TableCell>0</TableCell>
+              <TableCell>{reviewer.reviewsCount ?? "-"}</TableCell>
               <TableCell>
                 <EtherscanLink ethereumAddress={reviewer.ethereumAddress!} />
               </TableCell>
