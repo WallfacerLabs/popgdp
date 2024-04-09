@@ -16,6 +16,8 @@ import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
 import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
+import { ExportUsers } from "./exportUsers";
+
 export default async function UsersPage() {
   const users = await getModeratorPanelUsers();
 
@@ -23,6 +25,8 @@ export default async function UsersPage() {
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
         <PageTitle>Manage</PageTitle>
+
+        <ExportUsers />
       </div>
 
       <ModeratorNavigaton />
