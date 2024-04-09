@@ -2,6 +2,7 @@ import { cva } from "class-variance-authority";
 import { useForm } from "react-hook-form";
 
 import { Comment } from "@/types/Comment";
+import { ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
@@ -26,15 +27,15 @@ export function CommentValueForm({
 }: CommentValueFormProps) {
   const form = useForm();
 
-  const isUpvoted = comment.commentValues[0]?.value === "positive";
-  const isSpam = comment.commentValues[0]?.value === "spam";
+  const isUpvoted = comment.commentValues[0]?.value === ContentValue.positive;
+  const isSpam = comment.commentValues[0]?.value === ContentValue.spam;
 
   const isCommentator = userId === comment.userId;
 
   const isVotingDisabled =
     !userId || form.formState.isSubmitting || isCommentator;
 
-  const handleAction = (value: "positive" | "spam", isChecked: boolean) =>
+  const handleAction = (value: ContentValue, isChecked: boolean) =>
     form.handleSubmit(async () => {
       await commentValueAction({
         commentId: comment.id,
