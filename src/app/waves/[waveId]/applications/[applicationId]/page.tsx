@@ -32,7 +32,11 @@ export default async function Application({ params }: { params: unknown }) {
         </div>
 
         {userId !== application.userId && (
-          <ApplicationValueForm applicationId={applicationId} waveId={waveId} />
+          <ApplicationValueForm
+            applicationId={applicationId}
+            waveId={waveId}
+            creatorId={application.userId}
+          />
         )}
       </div>
 

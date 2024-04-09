@@ -6,10 +6,15 @@ import { Button } from "@/components/ui/button";
 
 import { applicationValueAction } from "./applicationValueAction";
 
+interface ApplicationValueFormProps extends ApplicationParamsSchema {
+  creatorId: string;
+}
+
 export async function ApplicationValueForm({
   applicationId,
   waveId,
-}: ApplicationParamsSchema) {
+  creatorId,
+}: ApplicationValueFormProps) {
   const userId = await getUserId();
   const applicationValue = await getApplicationValue({
     applicationId,
@@ -19,6 +24,8 @@ export async function ApplicationValueForm({
   const isUpvoted = applicationValue === "positive";
   const isSpam = applicationValue === "spam";
 
+  const isCreator = userId === creatorId;
+
   return (
     <form className="flex gap-4">
       <Button
@@ -26,6 +33,9 @@ export async function ApplicationValueForm({
         disabled={!userId}
         formAction={async () => {
           "use server";
+          if (isCreator) {
+            throw new Error("User cannot mark their own post as spam.");
+          }
           await applicationValueAction({
             userId,
             applicationId,
@@ -43,6 +53,9 @@ export async function ApplicationValueForm({
         disabled={!userId}
         formAction={async () => {
           "use server";
+          if (isCreator) {
+            throw new Error("User cannot upvote their own post.");
+          }
           await applicationValueAction({
             userId,
             applicationId,
