@@ -26,6 +26,8 @@ export async function ApplicationValueForm({
 
   const isCreator = userId === creatorId;
 
+  if (isCreator) return null;
+
   return (
     <form className="flex gap-4">
       <Button
