@@ -1,5 +1,7 @@
+import { notFound } from "next/navigation";
 import { getAllReviewers } from "@/drizzle/queries/user";
 
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { Button } from "@/components/ui/button";
 import { EtherscanLink } from "@/components/ui/etherscanLink";
 import { ModeratorNavigation } from "@/components/ui/moderatorNavigation";
@@ -19,6 +21,11 @@ import { InfoCircleIcon } from "@/components/icons/infoCircleIcon";
 import { UpdateReviewersDialog } from "./updateReviewersDialog";
 
 export default async function ReviewersPage() {
+  const isModerator = await userHasRole(UserPermission.moderator);
+  if (!isModerator) {
+    throw notFound();
+  }
+
   const reviewers = await getAllReviewers();
 
   return (

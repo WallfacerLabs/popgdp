@@ -1,5 +1,7 @@
+import { notFound } from "next/navigation";
 import { getModeratorPanelApplications } from "@/drizzle/queries/applications";
 
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { BudgetCell } from "@/components/ui/applicationsTable/cells/budgetCell";
 import { CategoryCell } from "@/components/ui/applicationsTable/cells/categoryCell";
 import { DateCell } from "@/components/ui/applicationsTable/cells/dateCell";
@@ -20,6 +22,11 @@ import {
 import { ExportSubmissions } from "./exportSubmissions";
 
 export default async function ReviewersPage() {
+  const isModerator = await userHasRole(UserPermission.moderator);
+  if (!isModerator) {
+    throw notFound();
+  }
+
   const applications = await getModeratorPanelApplications();
 
   return (
