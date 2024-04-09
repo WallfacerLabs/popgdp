@@ -18,6 +18,7 @@ import {
   Form,
   FormControl,
   FormCounter,
+  FormDescription,
   FormField,
   FormFooter,
   FormHint,
@@ -54,6 +55,7 @@ export const mainDetailsSchema = z.object({
     "Entity name",
     FORM_FIELD_PARAMS.entityName,
   ),
+  email: z.string().email(),
   duration: specificLengthStringSchema(
     "Project duration",
     FORM_FIELD_PARAMS.duration,
@@ -77,6 +79,7 @@ export function MainDetails({ categories }: MainDetailsProps) {
       image: applicationData.image ?? undefined,
       name: applicationData.name ?? "",
       entityName: applicationData.entityName ?? "",
+      email: applicationData.email ?? "",
       duration: applicationData.duration ?? "",
       budget: applicationData.budget ? applicationData.budget.toString() : "",
       summary: applicationData.summary ?? "",
@@ -180,9 +183,31 @@ export function MainDetails({ categories }: MainDetailsProps) {
                   placeholder="Enter the name of entity responsible for project"
                 />
               </FormControl>
-              <FormMessages>
+              <FormMessages className="gap- flex-col">
                 <FormMessage />
                 <FormCounter limit={FORM_FIELD_PARAMS.entityName.max} />
+              </FormMessages>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem aria-required>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Enter contact email for the project"
+                />
+              </FormControl>
+              <FormMessages className="flex-col">
+                <FormMessage />
+                <FormDescription>
+                  Email will be visible only to moderator
+                </FormDescription>
               </FormMessages>
             </FormItem>
           )}

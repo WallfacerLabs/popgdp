@@ -195,7 +195,7 @@ const FormMessages = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     return (
       <div
         ref={ref}
-        className={cn("flex gap-x-4 [&:not(:empty)]:mt-0.5", className)}
+        className={cn("flex gap-x-4 gap-y-1 [&:not(:empty)]:mt-0.5", className)}
         {...props}
       >
         {children}
