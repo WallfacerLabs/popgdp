@@ -45,19 +45,27 @@ const TableRow = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     <div className={cn(rowClasses, className)} {...props} />
   ),
 );
-TableRow.displayName = "TableLinkRow";
+TableRow.displayName = "TableRow";
 
-const TableLinkRow = forwardRef<HTMLAnchorElement, ComponentProps<typeof Link>>(
-  ({ className, ...props }, ref) => (
-    <Link
+const TableLinkRow = forwardRef<HTMLDivElement, ComponentProps<typeof Link>>(
+  ({ className, children, ...props }, ref) => (
+    <TableRow
       ref={ref}
       className={cn(
         rowClasses,
-        "last:rounded-b-lg hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+        "relative [&>.table-cell>*]:relative [&>.table-cell>*]:z-10 [&>.table-cell>*]:w-fit",
         className,
       )}
-      {...props}
-    />
+    >
+      {children}
+      <Link
+        className={cn(
+          "absolute inset-0 h-full w-full transition-colors last:rounded-b-lg",
+          "hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+        )}
+        {...props}
+      />
+    </TableRow>
   ),
 );
 TableLinkRow.displayName = "TableLinkRow";
@@ -92,10 +100,10 @@ TableCell.displayName = "TableCell";
 
 export {
   Table,
-  TableHeader,
   TableBody,
-  TableHead,
-  TableRow,
-  TableLinkRow,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableLinkRow,
+  TableRow,
 };
