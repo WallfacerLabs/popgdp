@@ -14,6 +14,7 @@ import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 interface CommentValueActionPayload extends ApplicationParamsSchema {
   commentId: string;
   userId: UserId | undefined;
+  commentatorId: string;
   isChecked: boolean;
   value: ContentValue;
 }
@@ -21,6 +22,7 @@ interface CommentValueActionPayload extends ApplicationParamsSchema {
 export async function commentValueAction({
   applicationId,
   userId,
+  commentatorId,
   commentId,
   waveId,
   isChecked,
@@ -28,6 +30,10 @@ export async function commentValueAction({
 }: CommentValueActionPayload) {
   if (!userId) {
     throw new Error("Unauthorized");
+  }
+
+  if (userId === commentatorId) {
+    throw new Error(`User cannot mark their own comment as ${value}.`);
   }
 
   if (isChecked) {
