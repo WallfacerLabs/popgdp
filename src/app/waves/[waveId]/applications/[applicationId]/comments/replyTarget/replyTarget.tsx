@@ -11,7 +11,7 @@ interface ReplyTargetProps {
   allComments: Comment[];
 }
 
-export async function ReplyTarget({ comment, allComments }: ReplyTargetProps) {
+export function ReplyTarget({ comment, allComments }: ReplyTargetProps) {
   const { replyTargetId } = comment;
   const replyTarget = allComments.find(
     (comment) => comment.id === replyTargetId,
