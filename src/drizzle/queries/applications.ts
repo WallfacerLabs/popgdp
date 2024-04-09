@@ -105,6 +105,7 @@ export const getModeratorPanelApplications = cache(async () => {
       name: Application.name,
       summary: Application.summary,
       entityName: Application.entityName,
+      email: Application.email,
       duration: Application.duration,
       budget: Application.budget,
       teamSummary: Application.teamSummary,
