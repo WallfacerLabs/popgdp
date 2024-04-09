@@ -1,9 +1,9 @@
 import { cva } from "class-variance-authority";
 import { useForm } from "react-hook-form";
 
+import { Comment } from "@/types/Comment";
 import { type UserId } from "@/types/User";
 import { cn } from "@/lib/cn";
-import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
@@ -11,46 +11,52 @@ import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
 import { commentValueAction } from "./commentValueAction";
 
-interface CommentValueFormProps extends ApplicationParamsSchema {
-  commentId: string;
-  commentValue: "positive" | "spam" | undefined;
+interface CommentValueFormProps {
+  comment: Comment;
+  waveId: number;
   userId: UserId | undefined;
   className?: string;
 }
 
 export function CommentValueForm({
-  applicationId,
+  comment,
   waveId,
-  commentId,
   className,
-  commentValue,
   userId,
 }: CommentValueFormProps) {
   const form = useForm();
 
-  const isUpvoted = commentValue === "positive";
-  const isSpam = commentValue === "spam";
+  const isUpvoted = comment.commentValues[0]?.value === "positive";
+  const isSpam = comment.commentValues[0]?.value === "spam";
+
+  const ownComment = userId === comment.userId;
+
+  const isVotingDisabled = !userId || form.formState.isSubmitting || ownComment;
 
   const onSpamClick = form.handleSubmit(async () => {
-    await commentValueAction({
-      commentId,
-      userId,
-      applicationId,
-      waveId,
-      isChecked: isSpam,
-      value: "spam",
-    });
+    if (!ownComment) {
+      await commentValueAction({
+        commentId: comment.id,
+        userId,
+        applicationId: comment.applicationId,
+        waveId,
+        isChecked: isSpam,
+        value: "spam",
+      });
+    }
   });
 
   const onHelpfulClick = form.handleSubmit(async () => {
-    await commentValueAction({
-      commentId,
-      userId,
-      applicationId,
-      waveId,
-      isChecked: isUpvoted,
-      value: "positive",
-    });
+    if (!ownComment) {
+      await commentValueAction({
+        commentId: comment.id,
+        userId,
+        applicationId: comment.applicationId,
+        waveId,
+        isChecked: isUpvoted,
+        value: "positive",
+      });
+    }
   });
 
   return (
@@ -59,7 +65,7 @@ export function CommentValueForm({
         variant="link"
         className={commentButtonVariants({ isActive: isSpam })}
         aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
-        disabled={!userId || form.formState.isSubmitting}
+        disabled={isVotingDisabled}
         onClick={onSpamClick}
       >
         <ErrorCircleIcon />
@@ -72,7 +78,7 @@ export function CommentValueForm({
         variant="link"
         className={commentButtonVariants({ isActive: isUpvoted })}
         aria-label={isSpam ? "Unmark as helpful" : "Mark as helpful"}
-        disabled={!userId || form.formState.isSubmitting}
+        disabled={isVotingDisabled}
         onClick={onHelpfulClick}
       >
         <ThumbUpIcon />
