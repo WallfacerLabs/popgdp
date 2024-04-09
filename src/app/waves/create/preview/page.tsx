@@ -1,16 +1,16 @@
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 
-import { getUserId } from "@/lib/auth";
-import { Unauthenticated } from "@/components/ui/unauthenticated";
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 
 const WavePreview = dynamic(() => import("./wavePreview"), {
   ssr: false,
 });
 
 export default async function PreviewApplicationPage() {
-  const userId = await getUserId();
-  if (!userId) {
-    return <Unauthenticated />;
+  const isModerator = await userHasRole(UserPermission.moderator);
+  if (!isModerator) {
+    throw notFound();
   }
 
   return <WavePreview />;

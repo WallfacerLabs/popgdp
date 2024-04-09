@@ -1,20 +1,19 @@
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 import { urls } from "@/constants/urls";
 
-import { getUserId } from "@/lib/auth";
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { BackButton } from "@/components/ui/backButton";
 import { PageTitle } from "@/components/ui/pageTitle";
-import { Unauthenticated } from "@/components/ui/unauthenticated";
 
 const CreateWaveForm = dynamic(() => import("./createWaveForm"), {
   ssr: false,
 });
 
 export default async function CreateWave() {
-  const userId = await getUserId();
-
-  if (!userId) {
-    return <Unauthenticated />;
+  const isModerator = await userHasRole(UserPermission.moderator);
+  if (!isModerator) {
+    throw notFound();
   }
 
   return (
