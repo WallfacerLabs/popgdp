@@ -17,11 +17,21 @@ export async function updateUserDetailsAction(
     throw new UnauthenticatedError();
   }
 
-  await upsertUser({
-    id: userId,
-    name: userDetails.nickname,
-    imageId: userDetails.avatar?.id,
-  });
+  try {
+    await upsertUser({
+      id: userId,
+      name: userDetails.nickname,
+      imageId: userDetails.avatar?.id,
+    });
+  } catch (error: any) {
+    if (error.constraint_name === "user_name_unique") {
+      return {
+        error: "Nickname is already taken",
+      };
+    }
+
+    throw error;
+  }
 
   revalidatePath(urls.root);
 }

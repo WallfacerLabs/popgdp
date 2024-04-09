@@ -294,7 +294,7 @@ export const ApplicationValueRelations = relations(
 
 export const User = pgTable("user", {
   id: text("id").notNull().primaryKey(),
-  name: text("name"),
+  name: text("name").unique(),
   imageId: uuid("imageId"),
   ethereumAddress: text("ethereumAddress"),
   addressMessageSignature: text("addressMessageSignature"),
