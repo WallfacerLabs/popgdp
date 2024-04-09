@@ -36,6 +36,7 @@ export default async function ReviewersPage() {
             <TableHead>Project name</TableHead>
             <TableHead>User</TableHead>
             <TableHead>Entity name</TableHead>
+            <TableHead>Email</TableHead>
             <TableHead>Date</TableHead>
             <TableHead>Proposed budget</TableHead>
             <TableHead>Upvotes</TableHead>
@@ -53,6 +54,7 @@ export default async function ReviewersPage() {
                 image={application.userImage}
               />
               <EntityCell entityName={application.entityName} />
+              <TableCell>{application.email}</TableCell>
               <DateCell createdAt={application.createdAt} />
               <BudgetCell budget={application.budget} />
               <TableCell>{application.helpfulCount}</TableCell>
