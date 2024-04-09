@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 import { useForm } from "react-hook-form";
 
-import { Comment } from "@/types/Comment";
+import { type Comment } from "@/types/Comment";
 import { ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
 import { cn } from "@/lib/cn";
