@@ -1,0 +1,1 @@
+ALTER TABLE "application" ADD COLUMN "email" text NOT NULL;
