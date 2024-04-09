@@ -2,11 +2,14 @@ import { errorMessages } from "@/constants/errorMessages";
 import { describe, expect, it } from "vitest";
 import { SafeParseError } from "zod";
 
-import { mainDetailsSchema } from "@/app/waves/create/steps/mainDetails.schema";
+import {
+  mainDetailsSchema,
+  type MainDetailsSchema,
+} from "@/app/waves/create/steps/mainDetails.schema";
 
-type ValidationError = SafeParseError<mainDetailsSchema>;
+type ValidationError = SafeParseError<MainDetailsSchema>;
 
-const validData: mainDetailsSchema = {
+const validData: MainDetailsSchema = {
   name: "First wave",
   summary: "This is the first wave",
   categories: [
@@ -30,7 +33,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
       const validationResult = mainDetailsSchema.safeParse({
         ...validData,
         name: "",
-      } satisfies mainDetailsSchema) as ValidationError;
+      } satisfies MainDetailsSchema) as ValidationError;
 
       expect(validationResult.success).toBe(false);
       expect(validationResult.error.issues[0].message).toBe(
@@ -42,7 +45,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
       const validationResult = mainDetailsSchema.safeParse({
         ...validData,
         name: "a".repeat(21),
-      } satisfies mainDetailsSchema) as ValidationError;
+      } satisfies MainDetailsSchema) as ValidationError;
 
       expect(validationResult.success).toBe(false);
       expect(validationResult.error.issues[0].message).toBe(
@@ -56,7 +59,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
       const validationResult = mainDetailsSchema.safeParse({
         ...validData,
         summary: "",
-      } satisfies mainDetailsSchema) as ValidationError;
+      } satisfies MainDetailsSchema) as ValidationError;
 
       expect(validationResult.success).toBe(false);
       expect(validationResult.error.issues[0].message).toBe(
@@ -68,7 +71,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
       const validationResult = mainDetailsSchema.safeParse({
         ...validData,
         summary: "a".repeat(161),
-      } satisfies mainDetailsSchema) as ValidationError;
+      } satisfies MainDetailsSchema) as ValidationError;
 
       expect(validationResult.success).toBe(false);
       expect(validationResult.error.issues[0].message).toBe(
@@ -88,7 +91,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
               name: "",
             },
           ],
-        } satisfies mainDetailsSchema) as ValidationError;
+        } satisfies MainDetailsSchema) as ValidationError;
 
         expect(validationResult.success).toBe(false);
         expect(validationResult.error.issues[0].message).toBe(
@@ -105,7 +108,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
               name: "a".repeat(21),
             },
           ],
-        } satisfies mainDetailsSchema) as ValidationError;
+        } satisfies MainDetailsSchema) as ValidationError;
 
         expect(validationResult.success).toBe(false);
         expect(validationResult.error.issues[0].message).toBe(
@@ -124,7 +127,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
               description: "",
             },
           ],
-        } satisfies mainDetailsSchema) as ValidationError;
+        } satisfies MainDetailsSchema) as ValidationError;
 
         expect(validationResult.success).toBe(false);
         expect(validationResult.error.issues[0].message).toBe(
@@ -141,7 +144,7 @@ describe("/app/waves/create/steps/mainDetailsSchema", () => {
               description: "a".repeat(141),
             },
           ],
-        } satisfies mainDetailsSchema) as ValidationError;
+        } satisfies MainDetailsSchema) as ValidationError;
 
         expect(validationResult.success).toBe(false);
         expect(validationResult.error.issues[0].message).toBe(
