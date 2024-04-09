@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ImageData,
   imageSchema,
@@ -61,8 +59,15 @@ export function UserDetailsForm({
       <form
         className="flex w-full flex-col gap-6"
         onSubmit={form.handleSubmit(async (userData) => {
-          await updateUserDetailsAction(userData);
-          incrementStep();
+          const result = await updateUserDetailsAction(userData);
+          if (result?.error) {
+            form.setError("nickname", {
+              type: "server",
+              message: result.error,
+            });
+          } else {
+            incrementStep();
+          }
         })}
       >
         <FormField
