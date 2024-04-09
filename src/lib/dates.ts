@@ -30,3 +30,9 @@ export function addDays(date: Date, days: number) {
   newDate.setDate(newDate.getDate() + days);
   return newDate;
 }
+
+export function convertToUTC(date: Date) {
+  return new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+  );
+}
