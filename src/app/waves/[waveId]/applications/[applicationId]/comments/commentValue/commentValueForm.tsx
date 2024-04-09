@@ -36,12 +36,10 @@ export function CommentValueForm({
 
   const handleAction = (value: "positive" | "spam", isChecked: boolean) =>
     form.handleSubmit(async () => {
-      if (isCommentator) {
-        throw new Error(`User cannot mark their own comment as ${value}.`);
-      }
       await commentValueAction({
         commentId: comment.id,
         userId,
+        commentatorId: comment.userId,
         applicationId: comment.applicationId,
         waveId,
         isChecked,
