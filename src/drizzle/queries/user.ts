@@ -53,6 +53,7 @@ export const getAllReviewers = cache(async () => {
       id: User.id,
       name: User.name,
       ethereumAddress: User.ethereumAddress,
+      reviewsCount: countReviewsQuery.count,
       image: {
         id: Image.id,
         placeholder: Image.placeholder,
@@ -62,6 +63,7 @@ export const getAllReviewers = cache(async () => {
     })
     .from(User)
     .innerJoin(Reviewer, eq(User.ethereumAddress, Reviewer.ethereumAddress))
+    .leftJoin(countReviewsQuery, eq(User.id, countReviewsQuery.userId))
     .leftJoin(Image, eq(User.imageId, Image.id));
 });
 
