@@ -30,7 +30,10 @@ export default async function Application({ params }: { params: unknown }) {
           <PageTitle>{application.name}</PageTitle>
           <CategoryBadge category={application.category} />
         </div>
-        <ApplicationValueForm applicationId={applicationId} waveId={waveId} />
+
+        {userId !== application.userId && (
+          <ApplicationValueForm applicationId={applicationId} waveId={waveId} />
+        )}
       </div>
 
       <ApplicationPreview

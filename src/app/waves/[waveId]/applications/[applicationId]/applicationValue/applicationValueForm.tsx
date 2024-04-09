@@ -6,12 +6,10 @@ import { Button } from "@/components/ui/button";
 
 import { applicationValueAction } from "./applicationValueAction";
 
-type ApplicationValueFormProps = ApplicationParamsSchema;
-
 export async function ApplicationValueForm({
   applicationId,
   waveId,
-}: ApplicationValueFormProps) {
+}: ApplicationParamsSchema) {
   const userId = await getUserId();
   const applicationValue = await getApplicationValue({
     applicationId,
