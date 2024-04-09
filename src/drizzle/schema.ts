@@ -69,6 +69,7 @@ export const Application = pgTable("application", {
   name: text("name").notNull(),
   summary: text("summary").notNull(),
   entityName: text("entityName").notNull(),
+  email: text("email").notNull(),
   duration: text("duration").notNull(),
   budget: integer("budget").notNull(),
   categoryId: uuid("category")
