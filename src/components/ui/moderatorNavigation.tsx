@@ -9,7 +9,7 @@ import { cn } from "@/lib/cn";
 
 import { Button } from "./button";
 
-export function ModeratorNavigaton() {
+export function ModeratorNavigation() {
   return (
     <nav className="flex gap-2">
       <ActiveLink href={urls.moderator.applications}>Submissions</ActiveLink>
