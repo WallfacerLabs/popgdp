@@ -25,6 +25,7 @@ export async function createApplicationAction(
       name: application.name,
       summary: application.summary,
       entityName: application.entityName,
+      email: application.email,
       duration: application.duration,
       budget: application.budget,
       categoryId: application.categoryId,
