@@ -19,7 +19,6 @@ export default defineConfig({
     baseURL,
     trace: "on-first-retry",
   },
-  globalSetup: "./tests/e2e/globalSetup.ts",
 
   projects: [
     {

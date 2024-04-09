@@ -1,9 +1,10 @@
 import { db } from "@/drizzle/db";
-import { User } from "@/drizzle/schema";
+import { Moderator, User } from "@/drizzle/schema";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 import { type Browser } from "@playwright/test";
 
 const USER_ID = "regularUser";
+const ETHEREUM_ADDRESS = "the-ethereum-address";
 
 export async function getPageWithLoggedUser(browser: Browser) {
   const session = await generateSessionCookie(
@@ -16,11 +17,15 @@ export async function getPageWithLoggedUser(browser: Browser) {
     { secret: process.env.AUTH0_SECRET! },
   );
 
+  await db.delete(User);
+  await db.delete(Moderator);
+
   await db
     .insert(User)
     .values({
       id: USER_ID,
       name: "Regular User",
+      ethereumAddress: ETHEREUM_ADDRESS,
     })
     .onConflictDoUpdate({
       target: User.id,
@@ -28,6 +33,8 @@ export async function getPageWithLoggedUser(browser: Browser) {
         name: "Regular User",
       },
     });
+
+  await db.insert(Moderator).values({ ethereumAddress: ETHEREUM_ADDRESS });
 
   const browserContext = await browser.newContext({
     storageState: {

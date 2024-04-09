@@ -18,11 +18,9 @@ test.beforeEach(async () => {
 });
 
 test("cannot access page if not authenticated", async ({ page }) => {
-  await page.goto(urls.root);
+  await page.goto(urls.waves.create);
 
-  await page.getByRole("link", { name: "Create wave" }).click();
-
-  await expect(page.getByText("Unauthenticated")).toBeVisible();
+  await expect(page.getByText("404")).toBeVisible();
 });
 
 test("creates a new wave", async ({ browser }) => {

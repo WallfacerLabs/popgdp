@@ -2,18 +2,18 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { UnauthenticatedError } from "@/constants/errors";
+import { UnauthorizedError } from "@/constants/errors";
 import { urls } from "@/constants/urls";
 import { insertWave } from "@/drizzle/queries/waves";
 
-import { getUserId } from "@/lib/auth";
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 
 import { WaveData } from "./stepsProvider";
 
 export async function createWaveAction(data: WaveData) {
-  const userId = await getUserId();
-  if (!userId) {
-    throw new UnauthenticatedError();
+  const isModerator = await userHasRole(UserPermission.moderator);
+  if (!isModerator) {
+    throw new UnauthorizedError();
   }
 
   const waveId = await insertWave(
