@@ -219,11 +219,15 @@ export function MainDetails({ categories }: MainDetailsProps) {
           render={({ field }) => (
             <FormItem aria-required>
               <FormLabel>Proposed project duration</FormLabel>
-              <FormHint leftHint={<ClockIcon />}>
+              <FormHint
+                className="[&>input]:pr-16"
+                leftHint={<ClockIcon />}
+                rightHint="days"
+              >
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Enter proposed project duration"
+                    placeholder="Enter proposed project duration, in days"
                   />
                 </FormControl>
               </FormHint>
