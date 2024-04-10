@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "404",
+};
+
 export default function NotFound() {
   return (
     <div className="my-[25vh] flex flex-col items-center">
