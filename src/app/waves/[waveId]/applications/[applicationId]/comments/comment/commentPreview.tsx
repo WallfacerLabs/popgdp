@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { ReplyIcon } from "@/components/icons/replyIcon";
 
 import { CommentReplyForm } from "../addCommentForm/commentReplyForm";
+import { CommentValueForm } from "../commentValue/commentValueForm";
 import { ReplyTarget } from "../replyTarget/replyTarget";
 import { CommentBody } from "./commentBody";
 import { RepliesList } from "./repliesList";
@@ -73,6 +74,12 @@ export const CommentPreview = ({
               Reply
             </Button>
           </div>
+          <CommentValueForm
+            className="ml-auto"
+            comment={comment}
+            waveId={waveId}
+            userId={userId}
+          />
         </div>
       </div>
       {isReply && (
