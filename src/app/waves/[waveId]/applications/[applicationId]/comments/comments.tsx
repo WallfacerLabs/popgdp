@@ -1,7 +1,11 @@
 import { Fragment } from "react";
 
 import { type ApplicationWithComments } from "@/types/Application";
-import { type Comment } from "@/types/Comment";
+import {
+  COMMENT_SECTIONS,
+  CommentSection,
+  type Comment,
+} from "@/types/Comment";
 import { type UserId } from "@/types/User";
 import {
   canAddComment,
@@ -13,11 +17,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { AddCommentForm } from "./addCommentForm/addCommentForm";
 import { CommentPreview } from "./comment/commentPreview";
-
-const SECTIONS = {
-  discussion: "Discussion",
-  reviews: "Reviews",
-} as const;
 
 interface CommentsProps {
   userId: UserId | undefined;
@@ -41,21 +40,21 @@ export async function Comments({ application, userId }: CommentsProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      <Tabs defaultValue={SECTIONS.discussion}>
+      <Tabs defaultValue={COMMENT_SECTIONS.discussion}>
         <section>
           <TabsList className="justify-start gap-6">
             <SectionButton
-              section={SECTIONS.discussion}
+              section={COMMENT_SECTIONS.discussion}
               elementsAmount={comments.length}
             />
             <SectionButton
-              section={SECTIONS.reviews}
+              section={COMMENT_SECTIONS.reviews}
               elementsAmount={reviews.length}
             />
           </TabsList>
 
           <TabsContent
-            value={SECTIONS.discussion}
+            value={COMMENT_SECTIONS.discussion}
             className="[&:not(:empty)]:mt-8"
           >
             <CommentsList
@@ -64,11 +63,12 @@ export async function Comments({ application, userId }: CommentsProps) {
               userId={userId}
               commentValidationError={commentValidationError}
               rateCommentValidationError={rateCommentValidationError}
+              section={COMMENT_SECTIONS.discussion}
             />
           </TabsContent>
 
           <TabsContent
-            value={SECTIONS.reviews}
+            value={COMMENT_SECTIONS.reviews}
             className="[&:not(:empty)]:mt-8"
           >
             <CommentsList
@@ -77,6 +77,7 @@ export async function Comments({ application, userId }: CommentsProps) {
               userId={userId}
               commentValidationError={commentValidationError}
               rateCommentValidationError={rateCommentValidationError}
+              section={COMMENT_SECTIONS.reviews}
             />
           </TabsContent>
         </section>
@@ -92,7 +93,7 @@ export async function Comments({ application, userId }: CommentsProps) {
 }
 
 interface SectionButtonProps {
-  section: (typeof SECTIONS)[keyof typeof SECTIONS];
+  section: (typeof COMMENT_SECTIONS)[keyof typeof COMMENT_SECTIONS];
   elementsAmount: number;
 }
 
@@ -113,6 +114,8 @@ interface CommentsListProps {
   userId: UserId | undefined;
   commentValidationError: string | undefined;
   rateCommentValidationError: string | undefined;
+  // interface CommentsListProps extends CommentsProps {
+  section: CommentSection;
 }
 
 function CommentsList({
@@ -121,6 +124,7 @@ function CommentsList({
   userId,
   commentValidationError,
   rateCommentValidationError,
+  section,
 }: CommentsListProps) {
   return comments.map((comment) => (
     <Fragment key={comment.id}>
@@ -130,6 +134,7 @@ function CommentsList({
         userId={userId}
         addCommentValidationError={commentValidationError}
         rateCommentValidationError={rateCommentValidationError}
+        section={section}
       />
       <Separator className="my-6 last:hidden" />
     </Fragment>
