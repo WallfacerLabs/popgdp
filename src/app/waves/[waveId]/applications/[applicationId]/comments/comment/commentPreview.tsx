@@ -81,6 +81,9 @@ export const CommentPreview = ({
             userId={userId}
           />
         </div>
+        {isReview && section === COMMENT_SECTIONS.reviews && (
+          <RepliesList replies={reviewReplies} />
+        )}
       </div>
       {isReply && (
         <CommentReplyForm
@@ -88,9 +91,6 @@ export const CommentPreview = ({
           replyTargetId={id}
           onReply={onReply}
         />
-      )}
-      {isReview && section === COMMENT_SECTIONS.reviews && (
-        <RepliesList replies={reviewReplies} />
       )}
     </div>
   );
