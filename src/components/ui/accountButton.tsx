@@ -59,7 +59,7 @@ export async function AccountButton() {
   }
 
   return (
-    <Button className="w-24" asChild>
+    <Button className="w-24 justify-self-end" asChild>
       <a href={urls.auth.login}>Sign in</a>
     </Button>
   );
