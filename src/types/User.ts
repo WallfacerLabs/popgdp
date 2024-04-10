@@ -1,4 +1,3 @@
-import { type userSchema } from "@/constants/validationSchemas";
-import { type z } from "zod";
+import { type getUserId } from "@/lib/auth";
 
-export type UserId = z.infer<typeof userSchema>["sid"];
+export type UserId = NonNullable<Awaited<ReturnType<typeof getUserId>>>;
