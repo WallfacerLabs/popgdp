@@ -11,7 +11,7 @@ interface CommentBodyProps {
 export function CommentBody({ comment }: CommentBodyProps) {
   const { user, createdAt, markdownContent } = comment;
   return (
-    <article className="flex gap-3">
+    <article className="flex w-full gap-3">
       <UserAvatar image={user.image} />
       <div className="flex w-full flex-col gap-1">
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">

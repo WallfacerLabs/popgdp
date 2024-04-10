@@ -11,6 +11,8 @@ import {
 } from "@/types/Comment";
 import { type UserId } from "@/types/User";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ReplyIcon } from "@/components/icons/replyIcon";
 
 import { CommentReplyForm } from "../addCommentForm/commentReplyForm";
 import { ReplyTarget } from "../replyTarget/replyTarget";
@@ -62,6 +64,14 @@ export const CommentPreview = ({
           )}
           <div className="flex gap-4">
             <CommentBody comment={comment} />
+            <Button
+              variant="link"
+              className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+              onClick={() => setIsReply(true)}
+            >
+              <ReplyIcon />
+              Reply
+            </Button>
           </div>
         </div>
       </div>
