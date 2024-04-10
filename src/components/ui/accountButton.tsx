@@ -8,6 +8,7 @@ import { getUserPermission, UserPermission } from "@/config/userPermissions";
 import { LogoutIcon } from "@/components/icons/logoutIcon";
 import { UserIcon } from "@/components/icons/userIcon";
 
+import { ChevronIcon } from "../icons/chevronIcon";
 import { Button } from "./button";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Separator } from "./separator";
@@ -26,7 +27,7 @@ export async function AccountButton() {
             </span>
           )}
           <PopoverTrigger asChild>
-            <Button className="rounded-3xl">
+            <Button className="group rounded-3xl px-4">
               <Image
                 src={worldIDorb}
                 alt=""
@@ -34,6 +35,10 @@ export async function AccountButton() {
                 placeholder="blur"
               />
               World ID connected
+              <ChevronIcon
+                direction="down"
+                className="transition-transform group-data-[state=open]:scale-y-[-100%]"
+              />
             </Button>
           </PopoverTrigger>
         </div>
