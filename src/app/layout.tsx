@@ -42,10 +42,10 @@ export default function RootLayout({
         )}
       >
         <DevFloatingPanel />
-        <header className="mx-auto flex w-full max-w-[1384px] items-center justify-between gap-8 p-3">
+        <header className="mx-auto grid w-full max-w-[1384px] grid-cols-[292px_1fr_292px] items-center gap-8 p-3">
           <Button
             variant="link"
-            className="flex items-center gap-1.5 px-0 font-bold before:bottom-2 before:right-0 before:w-[calc(100%-46px)] before:bg-primary/0"
+            className="flex items-center gap-1.5 justify-self-start px-0 font-bold before:bottom-2 before:right-0 before:w-[calc(100%-46px)] before:bg-primary/0"
             asChild
           >
             <Link
@@ -84,7 +84,7 @@ async function Navigation() {
   const isModerator = await userHasRole(UserPermission.moderator);
 
   return (
-    <nav>
+    <nav className="justify-self-center">
       <ul className="flex gap-6">
         <li>
           <Button variant="link" asChild className="font-bold">

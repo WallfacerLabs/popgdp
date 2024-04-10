@@ -19,7 +19,7 @@ export async function AccountButton() {
   if (session) {
     return (
       <Popover>
-        <div className="flex items-center rounded-3xl border">
+        <div className="flex items-center justify-self-end rounded-3xl border">
           {userRoleText && (
             <span className="px-4 text-xs font-semibold">{userRoleText}</span>
           )}
@@ -59,7 +59,7 @@ export async function AccountButton() {
   }
 
   return (
-    <Button className="w-24" asChild>
+    <Button className="w-24 justify-self-end" asChild>
       <a href={urls.auth.login}>Sign in</a>
     </Button>
   );
