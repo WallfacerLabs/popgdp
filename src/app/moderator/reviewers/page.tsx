@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllReviewers } from "@/drizzle/queries/user";
 
@@ -19,6 +20,10 @@ import { DotsHorizontalIcon } from "@/components/icons/dotsHorizontalIcon";
 import { InfoCircleIcon } from "@/components/icons/infoCircleIcon";
 
 import { UpdateReviewersDialog } from "./updateReviewersDialog";
+
+export const metadata: Metadata = {
+  title: "Reviewers",
+};
 
 export default async function ReviewersPage() {
   const isModerator = await userHasRole(UserPermission.moderator);

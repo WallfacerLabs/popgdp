@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getModeratorPanelUsers } from "@/drizzle/queries/user";
 
@@ -19,6 +20,10 @@ import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
 import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
 import { ExportUsers } from "./exportUsers";
+
+export const metadata: Metadata = {
+  title: "Users",
+};
 
 export default async function UsersPage() {
   const isModerator = await userHasRole(UserPermission.moderator);

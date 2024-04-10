@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { getCategoriesForWave } from "@/drizzle/queries/categories";
 import { getUser } from "@/drizzle/queries/user";
@@ -5,6 +6,10 @@ import { getUser } from "@/drizzle/queries/user";
 import { getUserId } from "@/lib/auth";
 import { parseWaveParams } from "@/lib/paramsValidation";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
+
+export const metadata: Metadata = {
+  title: "Submission preview",
+};
 
 const PreviewApplication = dynamic(() => import("./applicationPreview"), {
   ssr: false,

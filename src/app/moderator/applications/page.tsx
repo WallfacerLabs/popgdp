@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getModeratorPanelApplications } from "@/drizzle/queries/applications";
 
@@ -20,6 +21,10 @@ import {
 } from "@/components/ui/table";
 
 import { ExportSubmissions } from "./exportSubmissions";
+
+export const metadata: Metadata = {
+  title: "Submissions",
+};
 
 export default async function ReviewersPage() {
   const isModerator = await userHasRole(UserPermission.moderator);
