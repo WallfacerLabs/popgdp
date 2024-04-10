@@ -15,7 +15,7 @@ export const UserCell = ({ name, ethereumAddress, image }: UserCellProps) => {
     <TableCell>
       <div className="flex gap-3">
         <UserAvatar image={image} />
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col justify-center gap-1">
           <span className="font-bold">{name}</span>
           {ethereumAddress && (
             <EtherscanLink ethereumAddress={ethereumAddress} short />
