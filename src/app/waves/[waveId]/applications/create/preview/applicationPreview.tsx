@@ -14,8 +14,8 @@ import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { SaveIcon } from "@/components/icons/saveIcon";
 
-import { createApplicationAction } from "../steps/createApplicationAction";
 import { applicationDataSchema, useStepsContext } from "../stepsProvider";
+import { createApplicationAction } from "./createApplicationAction";
 
 interface PreviewApplicationProps extends WaveParamsSchema {
   categories: Array<Category>;
