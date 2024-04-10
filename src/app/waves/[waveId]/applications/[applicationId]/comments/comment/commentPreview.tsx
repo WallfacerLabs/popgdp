@@ -81,9 +81,9 @@ export const CommentPreview = ({
             userId={userId}
           />
         </div>
-        {isReview && section === COMMENT_SECTIONS.reviews && (
-          <RepliesList replies={reviewReplies} />
-        )}
+        {isReview &&
+          section === COMMENT_SECTIONS.reviews &&
+          reviewReplies.length > 0 && <RepliesList replies={reviewReplies} />}
       </div>
       {isReply && (
         <CommentReplyForm
