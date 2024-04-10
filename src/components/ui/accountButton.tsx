@@ -19,9 +19,11 @@ export async function AccountButton() {
   if (session) {
     return (
       <Popover>
-        <div className="flex items-center justify-self-end rounded-3xl border">
+        <div className="flex items-center justify-self-end">
           {userRoleText && (
-            <span className="px-4 text-xs font-semibold">{userRoleText}</span>
+            <span className="-mr-10 flex h-10 items-center rounded-3xl border px-3 pr-12 text-xs font-semibold">
+              {userRoleText}
+            </span>
           )}
           <PopoverTrigger asChild>
             <Button className="rounded-3xl">
