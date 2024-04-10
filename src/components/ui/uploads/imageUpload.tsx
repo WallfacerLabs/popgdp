@@ -14,7 +14,7 @@ interface ImageUploadProps {
   placeholder: string;
   disabled?: boolean;
   image: ImageData | undefined;
-  onChange: (value: ImageData | undefined) => void;
+  onChange: (value: ImageData | null) => void;
   className?: string;
 }
 
@@ -38,7 +38,7 @@ export function ImageUpload({
   }
 
   function onImageRemove() {
-    onChange(undefined);
+    onChange(null);
     if (imageUploadRef.current) {
       imageUploadRef.current.value = "";
     }
