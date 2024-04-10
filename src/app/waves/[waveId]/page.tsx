@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { urls } from "@/constants/urls";
@@ -18,6 +19,23 @@ const PAGE_SIZE = 10;
 const searchParamsSchema = z.object({
   page: z.coerce.number().optional().default(1),
 });
+
+export async function generateMetadata({
+  params,
+}: {
+  params: unknown;
+}): Promise<Metadata> {
+  const { waveId } = parseWaveParams(params);
+  const wave = await getWaveWithApplications(waveId);
+  if (!wave) {
+    return {
+      title: "Wave",
+    };
+  }
+  return {
+    title: wave.name,
+  };
+}
 
 export default async function Wave({
   params,
