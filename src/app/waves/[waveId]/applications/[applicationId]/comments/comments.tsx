@@ -55,7 +55,7 @@ export async function Comments({ application, userId }: CommentsProps) {
 
           <TabsContent
             value={COMMENT_SECTIONS.discussion}
-            className="[&:not(:empty)]:mt-8"
+            className="flex flex-col gap-6 [&:not(:empty)]:mt-8"
           >
             <CommentsList
               application={application}
@@ -69,7 +69,7 @@ export async function Comments({ application, userId }: CommentsProps) {
 
           <TabsContent
             value={COMMENT_SECTIONS.reviews}
-            className="[&:not(:empty)]:mt-8"
+            className="flex flex-col gap-6 [&:not(:empty)]:mt-8"
           >
             <CommentsList
               application={application}
@@ -136,7 +136,7 @@ function CommentsList({
         rateCommentValidationError={rateCommentValidationError}
         section={section}
       />
-      <Separator className="my-6 last:hidden" />
+      <Separator className="last:hidden" />
     </Fragment>
   ));
 }
