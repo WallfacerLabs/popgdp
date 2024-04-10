@@ -1,3 +1,5 @@
+"use server";
+
 import { canPerformActionByStage, type UserAction } from "@/config/waveStages";
 import { cn } from "@/lib/cn";
 import { AvailabilityIndicator } from "@/components/ui/availabilityIndicator";

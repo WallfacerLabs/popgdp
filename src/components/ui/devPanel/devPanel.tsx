@@ -1,4 +1,5 @@
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { urls } from "@/constants/urls";
 import { db } from "@/drizzle/db";
@@ -22,6 +23,7 @@ export async function DevFloatingPanel() {
   const userData = await getUser(userId);
 
   const { isReviewer, isModerator } = await getUserRoles(userId);
+  const bypassStage = cookies().get("bypassStage");
 
   return (
     <Popover>
@@ -50,6 +52,7 @@ export async function DevFloatingPanel() {
                   .where(
                     eq(Reviewer.ethereumAddress, userData?.ethereumAddress!),
                   );
+
                 revalidatePath("/");
               }}
             >
@@ -98,6 +101,28 @@ export async function DevFloatingPanel() {
               }}
             >
               Add moderator role
+            </Button>
+          )}
+
+          {bypassStage?.value === "true" ? (
+            <Button
+              formAction={async () => {
+                "use server";
+                cookies().set("bypassStage", "false");
+                revalidatePath("/");
+              }}
+            >
+              Disable bypass stage
+            </Button>
+          ) : (
+            <Button
+              formAction={async () => {
+                "use server";
+                cookies().set("bypassStage", "true");
+                revalidatePath("/");
+              }}
+            >
+              Enable bypass stage
             </Button>
           )}
         </form>

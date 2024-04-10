@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 export type WaveStage =
   | "notOpen"
   | "open"
@@ -86,6 +88,12 @@ export function canPerformActionByStage(
   stage: WaveStage,
   action: UserAction,
 ): boolean {
+  const cookieStore = cookies();
+  const bypassStage = cookieStore.get("bypassStage");
+  if (bypassStage?.value === "true") {
+    return true;
+  }
+
   if (stage === "notOpen" || stage === "close") {
     return false;
   }

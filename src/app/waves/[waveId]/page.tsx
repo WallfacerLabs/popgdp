@@ -5,8 +5,10 @@ import { urls } from "@/constants/urls";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
 import { z } from "zod";
 
+import { type Wave } from "@/types/Wave";
+import { canPerformActionByStage, getWaveStage } from "@/config/waveStages";
 import { getUserId } from "@/lib/auth";
-import { parseWaveParams, WaveParamsSchema } from "@/lib/paramsValidation";
+import { parseWaveParams } from "@/lib/paramsValidation";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
@@ -43,7 +45,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Wave({
+export default async function WavePage({
   params,
   searchParams,
 }: {
@@ -75,7 +77,7 @@ export default async function Wave({
 
       <div className="mt-6 flex items-center justify-between">
         <PageTitle>Submissions</PageTitle>
-        <ApplyForGrantButton waveId={waveId} />
+        <ApplyForGrantButton wave={wave} />
       </div>
 
       <ApplicationsTable
@@ -91,8 +93,18 @@ export default async function Wave({
   );
 }
 
-async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
+interface ApplyForGrantButtonProps {
+  wave: Wave;
+}
+
+async function ApplyForGrantButton({ wave }: ApplyForGrantButtonProps) {
   const userId = await getUserId();
+  const stage = getWaveStage(wave);
+  const isCorrectStage = canPerformActionByStage(stage, "submissionAdd");
+
+  if (!isCorrectStage) {
+    return null;
+  }
 
   if (!userId) {
     return (
@@ -109,7 +121,9 @@ async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
 
   return (
     <Button asChild>
-      <Link href={urls.applications.create({ waveId })}>Apply for Grant</Link>
+      <Link href={urls.applications.create({ waveId: wave.id })}>
+        Apply for Grant
+      </Link>
     </Button>
   );
 }
