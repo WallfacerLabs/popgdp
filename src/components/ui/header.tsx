@@ -1,7 +1,4 @@
 import Link from "next/link";
-
-import "./globals.css";
-
 import { urls } from "@/constants/urls";
 
 import { AccountButton } from "@/components/ui/accountButton";
@@ -9,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/ui/navigation";
 import { ProductAnimatedIcon } from "@/components/icons/productAnimatedIcon";
 
-export async function Header() {
+export function Header() {
   return (
     <header className="mx-auto grid w-full max-w-[1384px] grid-cols-[292px_1fr_292px] items-center gap-8 p-3">
       <Button

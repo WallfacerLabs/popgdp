@@ -1,7 +1,4 @@
 import Link from "next/link";
-
-import "./globals.css";
-
 import { urls } from "@/constants/urls";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
