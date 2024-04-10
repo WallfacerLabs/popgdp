@@ -25,8 +25,8 @@ export const RepliesList = ({ replies }: RepliesListProps) => {
         value="applicationDetails"
         className="relative flex flex-col"
       >
-        <AccordionContent className="mt-4 pl-16">
-          <div className="flex flex-col gap-4">
+        <AccordionContent>
+          <div className="flex flex-col gap-4 pl-16 pt-4">
             {replies.map((reply) => (
               <Fragment key={reply.id}>
                 <CommentBody comment={reply} />
