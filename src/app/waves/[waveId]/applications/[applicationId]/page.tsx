@@ -51,11 +51,7 @@ export default async function Application({ params }: { params: unknown }) {
           <CategoryBadge category={application.category} />
         </div>
 
-        <ApplicationValueForm
-          applicationId={applicationId}
-          waveId={waveId}
-          creatorId={application.userId}
-        />
+        <ApplicationValueForm application={application} />
       </div>
 
       <ApplicationPreview
