@@ -12,7 +12,7 @@ import { uploadImage } from "./uploadImageAction";
 
 interface AvatarUploadProps {
   image: ImageData | undefined;
-  onChange: (value: ImageData | undefined) => void;
+  onChange: (value: ImageData | null) => void;
   className?: string;
 }
 
@@ -34,7 +34,7 @@ export function AvatarUpload({
   }
 
   function onAvatarRemove() {
-    onChange(undefined);
+    onChange(null);
     if (avatarUploadRef.current) {
       avatarUploadRef.current.value = "";
     }
