@@ -1,27 +1,29 @@
-import { userSchema } from "@/constants/validationSchemas";
 import { getSession } from "@auth0/nextjs-auth0";
+import { z } from "zod";
 
-import { type UserId } from "@/types/User";
+const userSchema = z.object({
+  sub: z
+    .string()
+    .transform((sub) => sub.split("|")[2])
+    .brand("sessionUserId"),
+  credentialType: z.enum(["device", "orb"]),
+});
 
 export async function getUserData() {
   const session = await getSession();
 
-  if (!session) {
-    return undefined;
-  }
-
-  const user = userSchema.safeParse(session.user);
+  const user = userSchema.safeParse(session?.user);
   if (!user.success) {
     return undefined;
   }
 
   return {
-    id: user.data.sid,
+    id: user.data.sub,
     verificationLevel: user.data.credentialType,
   };
 }
 
-export async function getUserId(): Promise<UserId | undefined> {
+export async function getUserId() {
   const userData = await getUserData();
   return userData?.id;
 }

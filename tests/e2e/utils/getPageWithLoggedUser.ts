@@ -3,14 +3,15 @@ import { Moderator, User } from "@/drizzle/schema";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 import { type Browser } from "@playwright/test";
 
-const USER_ID = "regularUser";
+const USER_SUB = "oauth2|worldcoin|regularUser";
+const USER_ID = USER_SUB.split("|")[2];
 const ETHEREUM_ADDRESS = "the-ethereum-address";
 
 export async function getPageWithLoggedUser(browser: Browser) {
   const session = await generateSessionCookie(
     {
       user: {
-        sid: USER_ID,
+        sub: USER_SUB,
         credentialType: "orb",
       },
     },
