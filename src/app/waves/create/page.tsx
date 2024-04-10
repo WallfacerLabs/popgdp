@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import { urls } from "@/constants/urls";
@@ -5,6 +6,10 @@ import { urls } from "@/constants/urls";
 import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { BackButton } from "@/components/ui/backButton";
 import { PageTitle } from "@/components/ui/pageTitle";
+
+export const metadata: Metadata = {
+  title: "Create wave",
+};
 
 const CreateWaveForm = dynamic(() => import("./createWaveForm"), {
   ssr: false,

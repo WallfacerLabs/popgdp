@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { urls } from "@/constants/urls";
 import { getApplicationWithComments } from "@/drizzle/queries/applications";
@@ -12,6 +13,25 @@ import { Separator } from "@/components/ui/separator";
 
 import { ApplicationValueForm } from "./applicationValue/applicationValueForm";
 import { Comments } from "./comments/comments";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: unknown;
+}): Promise<Metadata> {
+  const userId = await getUserId();
+  const { applicationId } = parseApplicationParams(params);
+  const application = await getApplicationWithComments(applicationId, userId);
+
+  if (!application) {
+    return {
+      title: "Submission",
+    };
+  }
+  return {
+    title: application.name,
+  };
+}
 
 export default async function Application({ params }: { params: unknown }) {
   const { applicationId, waveId } = parseApplicationParams(params);

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { urls } from "@/constants/urls";
 import { getCategoriesForWave } from "@/drizzle/queries/categories";
@@ -11,6 +12,10 @@ import { Unauthenticated } from "@/components/ui/unauthenticated";
 const CreateApplicationForm = dynamic(() => import("./createApplicationForm"), {
   ssr: false,
 });
+
+export const metadata: Metadata = {
+  title: "Add submission",
+};
 
 export default async function CreateApplication({
   params,

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { urls } from "@/constants/urls";
 import { getUser } from "@/drizzle/queries/user";
 
@@ -7,6 +8,10 @@ import { PageTitle } from "@/components/ui/pageTitle";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
 import { ProfileSettingsStepper } from "./ProfileSettingsStepper";
+
+export const metadata: Metadata = {
+  title: "Profile",
+};
 
 export default async function ProfilePage() {
   const userId = await getUserId();
