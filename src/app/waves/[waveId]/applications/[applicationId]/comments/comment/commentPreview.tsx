@@ -4,20 +4,18 @@ import { useState } from "react";
 import { cva } from "class-variance-authority";
 
 import { type ApplicationWithComments } from "@/types/Application";
-import { type Comment } from "@/types/Comment";
+import {
+  COMMENT_SECTIONS,
+  CommentSection,
+  type Comment,
+} from "@/types/Comment";
 import { type UserId } from "@/types/User";
-import { formatTime } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MarkdownPreview } from "@/components/ui/markdownPreview";
-import { Separator } from "@/components/ui/separator";
-import { ErrorTooltip } from "@/components/ui/tooltip";
-import { UserAvatar } from "@/components/ui/userAvatar";
-import { ReplyIcon } from "@/components/icons/replyIcon";
 
 import { CommentReplyForm } from "../addCommentForm/commentReplyForm";
-import { CommentValueForm } from "../commentValue/commentValueForm";
 import { ReplyTarget } from "../replyTarget/replyTarget";
+import { CommentBody } from "./commentBody";
+import { RepliesList } from "./repliesList";
 
 interface CommentPreviewProps {
   application: ApplicationWithComments;
@@ -25,6 +23,7 @@ interface CommentPreviewProps {
   userId: UserId | undefined;
   addCommentValidationError: string | undefined;
   rateCommentValidationError: string | undefined;
+  section: CommentSection;
 }
 
 export const CommentPreview = ({
@@ -33,12 +32,17 @@ export const CommentPreview = ({
   userId,
   addCommentValidationError,
   rateCommentValidationError,
+  section,
 }: CommentPreviewProps) => {
   const { waveId, comments: allComments } = application;
   const { review, user, replyTargetId, createdAt, id } = comment;
 
   const isReview = review?.isReview;
   const [isReply, setIsReply] = useState(false);
+
+  const reviewReplies: Comment[] = allComments.filter(
+    (reply) => reply.replyTargetId === comment.id,
+  );
 
   function onReply() {
     setIsReply(false);
@@ -50,47 +54,16 @@ export const CommentPreview = ({
         {replyTargetId && (
           <ReplyTarget comment={comment} allComments={allComments} />
         )}
-        <article className={commentContainerVariants({ isReview })}>
+        <div className={commentContainerVariants({ isReview })}>
           {isReview && (
             <Badge variant="orange" className="flex w-fit">
               Review
             </Badge>
           )}
-          <div className="flex gap-3">
-            <UserAvatar image={user.image} />
-            <div className="flex w-full flex-col gap-1">
-              <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="font-bold">{user.name}</span>
-                  <Separator orientation="dot" className="opacity-60" />
-                  <span className="opacity-60">Member</span>
-                  <Separator orientation="dot" className="opacity-60" />
-                  <span className="opacity-60">{formatTime(createdAt)}</span>
-                </div>
-                <ErrorTooltip message={addCommentValidationError}>
-                  <Button
-                    disabled={!!addCommentValidationError}
-                    variant="link"
-                    className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
-                    onClick={() => setIsReply(true)}
-                  >
-                    <ReplyIcon />
-                    Reply
-                  </Button>
-                </ErrorTooltip>
-              </div>
-
-              <MarkdownPreview body={comment.markdownContent} />
-              <CommentValueForm
-                className="ml-auto"
-                comment={comment}
-                waveId={waveId}
-                userId={userId}
-                rateCommentValidationError={rateCommentValidationError}
-              />
-            </div>
+          <div className="flex gap-4">
+            <CommentBody comment={comment} />
           </div>
-        </article>
+        </div>
       </div>
       {isReply && (
         <CommentReplyForm
@@ -98,6 +71,9 @@ export const CommentPreview = ({
           replyTargetId={id}
           onReply={onReply}
         />
+      )}
+      {isReview && section === COMMENT_SECTIONS.reviews && (
+        <RepliesList replies={reviewReplies} />
       )}
     </div>
   );
