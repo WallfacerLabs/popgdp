@@ -47,6 +47,11 @@ export default function PreviewApplication({
     (category) => category.id === validatedApplicationData.categoryId,
   )!;
 
+  const onApplicationSubmit = async (isDraft: boolean) => {
+    await createApplicationAction(validatedApplicationData, waveId, isDraft);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.applicationStepsData);
+  };
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between">
@@ -56,17 +61,11 @@ export default function PreviewApplication({
           <CategoryBadge category={category} />
         </div>
         <div className="flex gap-4">
-          <Button variant="secondary">
+          <Button variant="secondary" onClick={() => onApplicationSubmit(true)}>
             Save as draft
             <SaveIcon />
           </Button>
-          <Button
-            className="px-14"
-            onClick={async () => {
-              await createApplicationAction(validatedApplicationData, waveId);
-              localStorage.removeItem(LOCAL_STORAGE_KEYS.applicationStepsData);
-            }}
-          >
+          <Button className="px-14" onClick={() => onApplicationSubmit(false)}>
             Submit
           </Button>
         </div>
