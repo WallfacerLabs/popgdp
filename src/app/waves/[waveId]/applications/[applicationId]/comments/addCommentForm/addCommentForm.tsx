@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { useApplicationParams } from "@/lib/paramsValidation";
+import { parseApplicationParams } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import { Editor } from "@/components/ui/editor/editor";
 import {
@@ -34,7 +35,7 @@ export function AddCommentForm({
   userAlreadyReviewed,
   isReviewer,
 }: AddCommentFormProps) {
-  const { waveId, applicationId } = useApplicationParams();
+  const { waveId, applicationId } = parseApplicationParams(useParams());
 
   const [editorKey, setEditorKey] = useState(0);
   const form = useForm<AddCommentSchema>({

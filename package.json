@@ -52,7 +52,7 @@
     "csv": "^6.3.8",
     "drizzle-orm": "^0.29.3",
     "lexical": "^0.13.1",
-    "next": "14.1.4",
+    "next": "14.2.0",
     "next-axiom": "^1.1.1",
     "postgres": "^3.4.3",
     "react": "^18",
