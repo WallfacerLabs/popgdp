@@ -33,6 +33,30 @@ const userFragment = {
   },
 } as const;
 
+export const getDraftApplication = cache(
+  async (id: (typeof Application.$inferSelect)["id"]) => {
+    const data = await db.query.Application.findFirst({
+      where: eq(Application.id, id),
+      with: {
+        image: imageFragment,
+        user: userFragment,
+        category: {
+          columns: {
+            color: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    if (!data) {
+      return undefined;
+    }
+
+    return data;
+  },
+);
+
 export const getApplicationWithComments = cache(
   async (
     id: (typeof Application.$inferSelect)["id"],
