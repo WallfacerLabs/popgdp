@@ -1,19 +1,12 @@
-import Link from "next/link";
-import { urls } from "@/constants/urls";
+"use client";
+
+import { useState } from "react";
 import { z } from "zod";
 
+import { Category } from "@/types/Category";
 import { WaveWithApplications } from "@/types/Wave";
-import { getUserId } from "@/lib/auth";
-import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
-import { Button } from "@/components/ui/button";
-import { PageTitle } from "@/components/ui/pageTitle";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 import { SubmissionFilters } from "./submissionFilters";
 
@@ -25,62 +18,50 @@ const searchParamsSchema = z.object({
 
 interface SubmissionsProps {
   wave: WaveWithApplications;
-  waveId: number;
   searchParams: unknown;
 }
 
-export function Submissions({ wave, waveId, searchParams }: SubmissionsProps) {
+export function Submissions({ wave, searchParams }: SubmissionsProps) {
   const { page } = searchParamsSchema.parse(searchParams);
+  const [selectedCategory, setSelectedCategory] = useState<
+    Category["id"] | null
+  >(null);
 
-  const applicationsCount = wave.applications.length;
+  const applications = wave.applications;
+
+  const filteredApplications = selectedCategory
+    ? applications.filter(
+        (application) => application.categoryId === selectedCategory,
+      )
+    : applications;
+
+  const applicationsCount = filteredApplications.length;
   const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
 
-  const currentPageApplications = wave.applications.slice(
+  const currentPageApplications = filteredApplications.slice(
     (page - 1) * PAGE_SIZE,
     page * PAGE_SIZE,
   );
 
+  function onCategoryChange(value: Category["id"]) {
+    setSelectedCategory(value);
+  }
+
   return (
     <>
-      <div className="mt-6 flex items-center justify-between">
-        <PageTitle>Submissions</PageTitle>
-        <ApplyForGrantButton waveId={waveId} />
-      </div>
-
-      <SubmissionFilters waveId={waveId} />
+      <SubmissionFilters
+        categories={wave.categories}
+        onCategoryChange={onCategoryChange}
+      />
 
       <ApplicationsTable
-        className="mt-8"
         applications={currentPageApplications}
-        waveId={waveId}
+        waveId={wave.id}
       />
 
       {totalPages > 1 && (
         <TablePagination currentPage={page} totalPages={totalPages} />
       )}
     </>
-  );
-}
-
-async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
-  const userId = await getUserId();
-
-  if (!userId) {
-    return (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button disabled>Apply for Grant</Button>
-        </TooltipTrigger>
-        <TooltipContent align="end">
-          You must sign in to apply for a grant
-        </TooltipContent>
-      </Tooltip>
-    );
-  }
-
-  return (
-    <Button asChild>
-      <Link href={urls.applications.create({ waveId })}>Apply for Grant</Link>
-    </Button>
   );
 }
