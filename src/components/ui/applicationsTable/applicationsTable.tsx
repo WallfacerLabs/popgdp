@@ -49,7 +49,7 @@ export const ApplicationsTable = ({
               applicationId: application.id,
             })}
           >
-            <NameCell name={application.name} />
+            <NameCell name={application.name} draft={application.draft} />
             <UserCell {...application.user} />
             <EntityCell entityName={application.entityName} />
             <DateCell createdAt={application.createdAt} />
