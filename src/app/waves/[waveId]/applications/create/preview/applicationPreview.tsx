@@ -47,7 +47,7 @@ export default function PreviewApplication({
     (category) => category.id === validatedApplicationData.categoryId,
   )!;
 
-  const onApplicationSubmit = async (isDraft: boolean) => {
+  const onApplicationSubmit = async ({ isDraft }: { isDraft: boolean }) => {
     await createApplicationAction(validatedApplicationData, waveId, isDraft);
     localStorage.removeItem(LOCAL_STORAGE_KEYS.applicationStepsData);
   };
@@ -61,11 +61,17 @@ export default function PreviewApplication({
           <CategoryBadge category={category} />
         </div>
         <div className="flex gap-4">
-          <Button variant="secondary" onClick={() => onApplicationSubmit(true)}>
+          <Button
+            variant="secondary"
+            onClick={() => onApplicationSubmit({ isDraft: true })}
+          >
             Save as draft
             <SaveIcon />
           </Button>
-          <Button className="px-14" onClick={() => onApplicationSubmit(false)}>
+          <Button
+            className="px-14"
+            onClick={() => onApplicationSubmit({ isDraft: false })}
+          >
             Submit
           </Button>
         </div>
