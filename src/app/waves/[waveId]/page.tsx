@@ -5,7 +5,7 @@ import { getWaveWithApplications } from "@/drizzle/queries/waves";
 import { parseWaveParams } from "@/lib/paramsValidation";
 import { TimelinePreview } from "@/components/ui/wavesTimelinePreview/timelinePreview";
 
-import { Submissions } from "./applications/submissions/submissions";
+import { SubmissionsSection } from "./applications/submissions/submissionsSection";
 import { WaveBanner } from "./waveBanner";
 
 export async function generateMetadata({
@@ -41,12 +41,12 @@ export default async function Wave({
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <WaveBanner />
 
-      <TimelinePreview wave={wave} className="mt-6" />
+      <TimelinePreview wave={wave} />
 
-      <Submissions wave={wave} waveId={waveId} searchParams={searchParams} />
-    </>
+      <SubmissionsSection wave={wave} searchParams={searchParams} />
+    </div>
   );
 }
