@@ -45,7 +45,7 @@ export const ApplicationDetails = ({
       className="flex gap-20"
       orientation="vertical"
     >
-      <TabsList className="flex-col items-start justify-start gap-6">
+      <TabsList className="flex-col items-start gap-6">
         {TABS_CONFIG.map(({ key, label, icon }) => (
           <TabsTrigger
             value={key}

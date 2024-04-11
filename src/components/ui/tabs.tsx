@@ -17,10 +17,7 @@ const TabsList = forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
-    className={cn(
-      "flex items-center justify-center text-foreground",
-      className,
-    )}
+    className={cn("flex items-center gap-4 text-foreground", className)}
     {...props}
   />
 ));
