@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cva } from "class-variance-authority";
 
+import { type ApplicationWithComments } from "@/types/Application";
 import { type Comment } from "@/types/Comment";
 import { type UserId } from "@/types/User";
 import { formatTime } from "@/lib/dates";
@@ -10,6 +11,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MarkdownPreview } from "@/components/ui/markdownPreview";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { UserAvatar } from "@/components/ui/userAvatar";
 import { ReplyIcon } from "@/components/icons/replyIcon";
 
@@ -18,19 +24,22 @@ import { CommentValueForm } from "../commentValue/commentValueForm";
 import { ReplyTarget } from "../replyTarget/replyTarget";
 
 interface CommentPreviewProps {
+  application: ApplicationWithComments;
   comment: Comment;
-  waveId: number;
   userId: UserId | undefined;
-  allComments: Comment[];
+  addCommentValidationError: string | undefined;
+  rateCommentValidationError: string | undefined;
 }
 
 export const CommentPreview = ({
+  application,
   comment,
-  waveId,
   userId,
-  allComments,
+  addCommentValidationError,
+  rateCommentValidationError,
 }: CommentPreviewProps) => {
-  const { review, user, replyTargetId, createdAt, applicationId, id } = comment;
+  const { waveId, comments: allComments } = application;
+  const { review, user, replyTargetId, createdAt, id } = comment;
 
   const isReview = review?.isReview;
   const [isReply, setIsReply] = useState(false);
@@ -62,14 +71,22 @@ export const CommentPreview = ({
                   <Separator orientation="dot" className="opacity-60" />
                   <span className="opacity-60">{formatTime(createdAt)}</span>
                 </div>
-                <Button
-                  variant="link"
-                  className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
-                  onClick={() => setIsReply(true)}
-                >
-                  <ReplyIcon />
-                  Reply
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      disabled={!!addCommentValidationError}
+                      variant="link"
+                      className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+                      onClick={() => setIsReply(true)}
+                    >
+                      <ReplyIcon />
+                      Reply
+                    </Button>
+                  </TooltipTrigger>
+                  {addCommentValidationError && (
+                    <TooltipContent>{addCommentValidationError}</TooltipContent>
+                  )}
+                </Tooltip>
               </div>
 
               <MarkdownPreview body={comment.markdownContent} />
@@ -78,6 +95,7 @@ export const CommentPreview = ({
                 comment={comment}
                 waveId={waveId}
                 userId={userId}
+                rateCommentValidationError={rateCommentValidationError}
               />
             </div>
           </div>
@@ -85,8 +103,7 @@ export const CommentPreview = ({
       </div>
       {isReply && (
         <CommentReplyForm
-          applicationId={applicationId}
-          waveId={waveId}
+          application={application}
           replyTargetId={id}
           onReply={onReply}
         />

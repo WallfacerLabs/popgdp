@@ -1,7 +1,7 @@
 import { ValidationError } from "@/constants/errors";
 import { getWaveDates } from "@/drizzle/queries/waves";
 
-import { ApplicationWithComments } from "@/types/Application";
+import { type ApplicationWithComments } from "@/types/Application";
 import { getUserId } from "@/lib/auth";
 
 import { userHasRole, UserPermission } from "./userPermissions";
@@ -102,11 +102,21 @@ export async function canRateApplication({
 
 export async function canAddComment(application: ApplicationWithComments) {
   try {
-    const userId = await checkUserId("You need to be signed in to apply");
+    const userId = await checkUserId(
+      "You need to be signed in to add comments",
+    );
+
+    const isOrbVerified = await userHasRole(UserPermission.orbVerified);
+    if (!isOrbVerified && application.userId !== userId) {
+      throw new ValidationError(
+        "You need to be orb verified to add comments under other users submissions",
+      );
+    }
+
     await checkWaveStage({
       waveId: application.waveId,
-      action: "submissionAdd",
-      errorMsg: "You cannot apply in this wave stage",
+      action: "commentAdd",
+      errorMsg: "You cannot add comments in this wave stage",
     });
     return { userId };
   } catch (error) {
@@ -125,6 +135,10 @@ export async function canAddReview(application: ApplicationWithComments) {
       errorMsg: "You need to be reviewer to review",
     });
 
+    if (application.userId === userId) {
+      throw new ValidationError("You cannot review your own submission");
+    }
+
     const alreadyReviewed = application.comments
       .filter((comment) => comment.review?.isReview)
       .some((review) => review.userId === userId);
@@ -136,6 +150,27 @@ export async function canAddReview(application: ApplicationWithComments) {
       waveId: application.waveId,
       action: "reviewAdd",
       errorMsg: "You cannot add review in this wave stage",
+    });
+
+    return { userId };
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return { validationErrorMessage: error.message };
+    }
+    throw error;
+  }
+}
+
+export async function canRateComment({ waveId }: { waveId: number }) {
+  try {
+    const userId = await checkUserId(
+      "You need to be signed in to rate comments",
+    );
+
+    await checkWaveStage({
+      action: "commentValue",
+      waveId,
+      errorMsg: "You cannot rate comments in this wave stage",
     });
 
     return { userId };
