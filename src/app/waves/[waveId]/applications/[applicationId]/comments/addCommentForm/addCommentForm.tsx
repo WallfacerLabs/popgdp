@@ -16,6 +16,11 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
 import {
@@ -27,13 +32,13 @@ import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
 import { AddReviewDialog } from "./addReviewDialog";
 
 interface AddCommentFormProps {
-  userAlreadyReviewed: boolean;
-  isReviewer: boolean;
+  reviewValidationError: string | undefined;
+  commentValidationError: string | undefined;
 }
 
 export function AddCommentForm({
-  userAlreadyReviewed,
-  isReviewer,
+  reviewValidationError,
+  commentValidationError,
 }: AddCommentFormProps) {
   const { waveId, applicationId } = parseApplicationParams(useParams());
 
@@ -70,22 +75,36 @@ export function AddCommentForm({
           )}
         />
         <FormFooter className="mt-0 justify-start">
-          <Button
-            variant="secondary"
-            className="self-end"
-            disabled={form.formState.isSubmitting}
-            onClick={handleSubmit(addCommentAction)}
-          >
-            Add comment
-            <AddCommentIcon />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="secondary"
+                className="self-end"
+                disabled={
+                  form.formState.isSubmitting || !!commentValidationError
+                }
+                onClick={handleSubmit(addCommentAction)}
+              >
+                Add comment
+                <AddCommentIcon />
+              </Button>
+            </TooltipTrigger>
+            {commentValidationError && (
+              <TooltipContent>{commentValidationError}</TooltipContent>
+            )}
+          </Tooltip>
 
-          <AddReviewDialog
-            disabled={
-              form.formState.isSubmitting || userAlreadyReviewed || !isReviewer
-            }
-            onSubmit={handleSubmit(addReviewAction)}
-          />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <AddReviewDialog
+                validationError={reviewValidationError}
+                onSubmit={handleSubmit(addReviewAction)}
+              />
+            </TooltipTrigger>
+            {reviewValidationError && (
+              <TooltipContent>{reviewValidationError}</TooltipContent>
+            )}
+          </Tooltip>
         </FormFooter>
       </form>
     </Form>

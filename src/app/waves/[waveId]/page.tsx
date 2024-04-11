@@ -5,7 +5,7 @@ import { urls } from "@/constants/urls";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
 import { z } from "zod";
 
-import { getUserId } from "@/lib/auth";
+import { canAddSubmission } from "@/config/actionPermissions";
 import { parseWaveParams, WaveParamsSchema } from "@/lib/paramsValidation";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { Button } from "@/components/ui/button";
@@ -92,17 +92,15 @@ export default async function Wave({
 }
 
 async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
-  const userId = await getUserId();
+  const { validationErrorMessage } = await canAddSubmission({ waveId });
 
-  if (!userId) {
+  if (typeof validationErrorMessage !== "undefined") {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
           <Button disabled>Apply for Grant</Button>
         </TooltipTrigger>
-        <TooltipContent align="end">
-          You must sign in to apply for a grant
-        </TooltipContent>
+        <TooltipContent align="end">{validationErrorMessage}</TooltipContent>
       </Tooltip>
     );
   }

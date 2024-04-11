@@ -2,11 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { UnauthenticatedError } from "@/constants/errors";
 import { urls } from "@/constants/urls";
 import { insertApplication } from "@/drizzle/queries/applications";
 
-import { getUserId } from "@/lib/auth";
+import { canAddSubmission } from "@/config/actionPermissions";
 
 import { ApplicationData } from "../stepsProvider";
 
@@ -15,10 +14,10 @@ export async function createApplicationAction(
   waveId: number,
   isDraft: boolean,
 ) {
-  const userId = await getUserId();
+  const { userId, validationErrorMessage } = await canAddSubmission({ waveId });
 
-  if (!userId) {
-    throw new UnauthenticatedError();
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
   }
 
   await insertApplication(
