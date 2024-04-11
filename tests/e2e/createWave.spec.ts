@@ -80,6 +80,6 @@ test("creates a new wave", async ({ browser }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expect(
-    page.getByRole("link", { name: "Apply for Grant" }),
+    page.getByRole("button", { name: "Apply for Grant" }),
   ).toBeVisible();
 });

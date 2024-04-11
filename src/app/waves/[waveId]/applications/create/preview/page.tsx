@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 import { getCategoriesForWave } from "@/drizzle/queries/categories";
 import { getUser } from "@/drizzle/queries/user";
 
-import { getUserId } from "@/lib/auth";
+import { canAddSubmission } from "@/config/actionPermissions";
 import { parseWaveParams } from "@/lib/paramsValidation";
-import { Unauthenticated } from "@/components/ui/unauthenticated";
 
 export const metadata: Metadata = {
   title: "Submission preview",
@@ -21,9 +21,9 @@ export default async function PreviewApplicationPage({
   params: unknown;
 }) {
   const { waveId } = parseWaveParams(params);
-  const userId = await getUserId();
-  if (!userId) {
-    return <Unauthenticated />;
+  const { userId, validationErrorMessage } = await canAddSubmission({ waveId });
+  if (typeof validationErrorMessage !== "undefined") {
+    throw notFound();
   }
 
   const [categories, user] = await Promise.all([

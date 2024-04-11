@@ -68,11 +68,7 @@ export default async function Application({ params }: { params: unknown }) {
 
       <Separator className="my-16" />
 
-      <Comments
-        comments={application.comments}
-        waveId={waveId}
-        userId={userId}
-      />
+      <Comments application={application} userId={userId} />
     </div>
   );
 }

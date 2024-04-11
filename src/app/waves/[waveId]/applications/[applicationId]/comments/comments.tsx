@@ -1,8 +1,9 @@
 import { Fragment } from "react";
 
+import { type ApplicationWithComments } from "@/types/Application";
 import { type Comment } from "@/types/Comment";
 import { type UserId } from "@/types/User";
-import { userHasRole, UserPermission } from "@/config/userPermissions";
+import { canAddComment, canAddReview } from "@/config/actionPermissions";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -15,18 +16,18 @@ const SECTIONS = {
 } as const;
 
 interface CommentsProps {
-  comments: Comment[];
-  waveId: number;
   userId: UserId | undefined;
+  application: ApplicationWithComments;
 }
 
-export async function Comments({ comments, waveId, userId }: CommentsProps) {
-  const isReviewer = await userHasRole(UserPermission.reviewer);
+export async function Comments({ application, userId }: CommentsProps) {
+  const { comments, waveId } = application;
   const reviews = comments.filter((comment) => comment.review?.isReview);
 
-  const userAlreadyReviewed = reviews.some(
-    (review) => review.userId === userId,
-  );
+  const { validationErrorMessage: commentValidationError } =
+    await canAddComment(application);
+  const { validationErrorMessage: reviewValidationError } =
+    await canAddReview(application);
 
   return (
     <div className="flex flex-col gap-8">
@@ -70,8 +71,8 @@ export async function Comments({ comments, waveId, userId }: CommentsProps) {
       </Tabs>
 
       <AddCommentForm
-        userAlreadyReviewed={userAlreadyReviewed}
-        isReviewer={isReviewer}
+        commentValidationError={commentValidationError}
+        reviewValidationError={reviewValidationError}
       />
     </div>
   );
@@ -93,12 +94,19 @@ function SectionButton({ section, elementsAmount }: SectionButtonProps) {
   );
 }
 
+interface CommentsListProps {
+  comments: Comment[];
+  allComments: Comment[];
+  waveId: number;
+  userId: UserId | undefined;
+}
+
 function CommentsList({
   comments,
   waveId,
   userId,
   allComments,
-}: CommentsProps & { allComments: Comment[] }) {
+}: CommentsListProps) {
   return comments.map((comment) => (
     <Fragment key={comment.id}>
       <CommentPreview

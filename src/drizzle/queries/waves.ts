@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { QueryError } from "@/constants/errors";
 import { db } from "@/drizzle/db";
 import { Category, Wave } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
@@ -22,8 +23,8 @@ const userFragment = {
   },
 } as const;
 
-export const getWaves = cache(async () =>
-  db.query.Wave.findMany({
+export const getWaves = cache(async () => {
+  return db.query.Wave.findMany({
     with: {
       categories: {
         columns: {
@@ -33,8 +34,26 @@ export const getWaves = cache(async () =>
         },
       },
     },
-  }),
-);
+  });
+});
+
+export const getWaveDates = cache(async (waveId: number) => {
+  const wave = await db.query.Wave.findFirst({
+    where: eq(Wave.id, waveId),
+    columns: {
+      openStartDate: true,
+      denoisingStartDate: true,
+      assesmentStartDate: true,
+      closeDate: true,
+    },
+  });
+
+  if (!wave) {
+    throw new QueryError("Wave not found");
+  }
+
+  return wave;
+});
 
 export const getWaveWithApplications = cache(async (id: number) => {
   const wave = await db.query.Wave.findFirst({
