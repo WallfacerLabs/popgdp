@@ -41,7 +41,7 @@ async function ApplyForGrantButton({
 }: WaveParamsSchema & { userId: UserId | undefined }) {
   const { validationErrorMessage } = await canAddSubmission({ waveId });
 
-  if (typeof validationErrorMessage !== "undefined") {
+  if (!userId) {
     return (
       <ErrorTooltip message={validationErrorMessage}>
         <Button disabled>Apply for Grant</Button>
