@@ -1,3 +1,5 @@
+import { env } from "./env";
+
 export type WaveStage =
   | "notOpen"
   | "open"
@@ -86,6 +88,10 @@ export function canPerformActionByStage(
   stage: WaveStage,
   action: UserAction,
 ): boolean {
+  if (env.NEXT_PUBLIC_SKIP_STAGE_CHECK) {
+    return true;
+  }
+
   if (stage === "notOpen" || stage === "close") {
     return false;
   }

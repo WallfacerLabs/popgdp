@@ -11,5 +11,13 @@ export const env = createEnv({
     AUTH0_CLIENT_ID: z.string().min(1),
     AUTH0_CLIENT_SECRET: z.string().min(1),
   },
-  experimental__runtimeEnv: {},
+  client: {
+    NEXT_PUBLIC_SKIP_STAGE_CHECK: z
+      .string()
+      .default("false")
+      .transform((value) => value === "true"),
+  },
+  experimental__runtimeEnv: {
+    NEXT_PUBLIC_SKIP_STAGE_CHECK: process.env.NEXT_PUBLIC_SKIP_STAGE_CHECK,
+  },
 });
