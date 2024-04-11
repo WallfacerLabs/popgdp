@@ -3,10 +3,13 @@
 import { useState } from "react";
 import { z } from "zod";
 
+import { Application } from "@/types/Application";
 import { type Category } from "@/types/Category";
+import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { CategoryFilterOption } from "./filters/categoryFilter";
 import { SubmissionFilters } from "./submissionFilters";
@@ -17,12 +20,18 @@ const searchParamsSchema = z.object({
   page: z.coerce.number().optional().default(1),
 });
 
+const SUBMISSION_TABS = {
+  allSubmissions: "All Submissions",
+  mySubmissions: "My Submissions",
+} as const;
+
 interface SubmissionsProps {
   wave: WaveWithApplications;
   searchParams: unknown;
+  userId: UserId | undefined;
 }
 
-export function Submissions({ wave, searchParams }: SubmissionsProps) {
+export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
   const { page } = searchParamsSchema.parse(searchParams);
   const categories: CategoryFilterOption[] = [
     { id: "allCategories", name: "All Categories" },
@@ -32,16 +41,23 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilterOption["id"]>("allCategories");
 
-  const applications = wave.applications.filter(
+  const allApplications = wave.applications.filter(
     (application) => application.user.isContentHidden === false,
   );
 
+  const userApplications = allApplications.filter(
+    (application) => application.userId === userId,
+  );
+
+  const [pageApplications, setPageApplications] =
+    useState<Application[]>(allApplications);
+
   const filteredApplications =
     selectedCategory !== "allCategories"
-      ? applications.filter(
+      ? pageApplications.filter(
           (application) => application.categoryId === selectedCategory,
         )
-      : applications;
+      : pageApplications;
 
   const applicationsCount = filteredApplications.length;
   const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
@@ -55,6 +71,14 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
     setSelectedCategory(value);
   }
 
+  function onTabChange(value: string) {
+    setPageApplications(
+      value === SUBMISSION_TABS.allSubmissions
+        ? allApplications
+        : userApplications,
+    );
+  }
+
   return (
     <>
       <SubmissionFilters
@@ -62,10 +86,33 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
         onCategoryChange={onCategoryChange}
       />
 
-      <ApplicationsTable
-        applications={currentPageApplications}
-        waveId={wave.id}
-      />
+      <Tabs
+        defaultValue={SUBMISSION_TABS.allSubmissions}
+        onValueChange={onTabChange}
+      >
+        <TabsList className="ml-4">
+          <TabsTrigger value={SUBMISSION_TABS.allSubmissions}>
+            {SUBMISSION_TABS.allSubmissions}
+          </TabsTrigger>
+          <TabsTrigger value={SUBMISSION_TABS.mySubmissions}>
+            {SUBMISSION_TABS.mySubmissions}
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value={SUBMISSION_TABS.allSubmissions}>
+          <ApplicationsTable
+            applications={currentPageApplications}
+            waveId={wave.id}
+          />
+        </TabsContent>
+
+        <TabsContent value={SUBMISSION_TABS.mySubmissions}>
+          <ApplicationsTable
+            applications={currentPageApplications}
+            waveId={wave.id}
+          />
+        </TabsContent>
+      </Tabs>
 
       {totalPages > 1 && (
         <TablePagination currentPage={page} totalPages={totalPages} />
