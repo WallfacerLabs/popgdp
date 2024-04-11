@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import {
+  boolean,
   customType,
   integer,
   pgEnum,
@@ -66,6 +67,7 @@ export const WaveRelations = relations(Wave, ({ many }) => ({
 
 export const Application = pgTable("application", {
   id: uuid("id").defaultRandom().primaryKey(),
+  draft: boolean("draft").notNull(),
   name: text("name").notNull(),
   summary: text("summary").notNull(),
   entityName: text("entityName").notNull(),
