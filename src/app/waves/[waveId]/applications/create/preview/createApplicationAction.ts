@@ -22,6 +22,7 @@ export async function createApplicationAction(
 
   await insertApplication(
     {
+      draft: false,
       name: application.name,
       summary: application.summary,
       entityName: application.entityName,
