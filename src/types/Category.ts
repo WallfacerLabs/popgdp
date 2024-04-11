@@ -1,3 +1,3 @@
-import { type getCategoriesForWave } from "@/drizzle/queries/categories";
+import { getCategoriesForWave } from "@/drizzle/queries/categories";
 
 export type Category = Awaited<ReturnType<typeof getCategoriesForWave>>[number];

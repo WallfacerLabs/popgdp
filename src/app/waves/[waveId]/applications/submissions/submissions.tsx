@@ -15,6 +15,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import { SubmissionFilters } from "./submissionFilters";
+
 const PAGE_SIZE = 10;
 
 const searchParamsSchema = z.object({
@@ -44,6 +46,8 @@ export function Submissions({ wave, waveId, searchParams }: SubmissionsProps) {
         <PageTitle>Submissions</PageTitle>
         <ApplyForGrantButton waveId={waveId} />
       </div>
+
+      <SubmissionFilters waveId={waveId} />
 
       <ApplicationsTable
         className="mt-8"
