@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, type ElementRef } from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 
 import { cn } from "@/lib/cn";
