@@ -24,6 +24,17 @@ const meta = {
   component: Select,
 } satisfies Meta<typeof Select>;
 
+const OPTIONS = [
+  { value: "Sun", icon: <SunIcon /> },
+  { value: "Thumb", icon: <ThumbUpIcon />, disabled: true },
+  { value: "Cloud", icon: <CloudIcon /> },
+  { value: "Clock", icon: <ClockIcon /> },
+  { value: "Computer", icon: <ComputerIcon /> },
+  { value: "Calendar", icon: <CalendarIcon /> },
+  { value: "Campaign", icon: <CampaignIcon /> },
+  { value: "Picture", icon: <PictureIcon /> },
+];
+
 export default meta;
 type Story = StoryObj<typeof meta>;
 
@@ -34,30 +45,11 @@ const Default: Story = {
         <SelectValue placeholder="Category" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="sun">
-          <SunIcon /> Sun
-        </SelectItem>
-        <SelectItem value="thumb" disabled>
-          <ThumbUpIcon /> Thumb
-        </SelectItem>
-        <SelectItem value="cloud">
-          <CloudIcon /> Cloud
-        </SelectItem>
-        <SelectItem value="clock">
-          <ClockIcon /> Clock
-        </SelectItem>
-        <SelectItem value="computer">
-          <ComputerIcon /> Computer
-        </SelectItem>
-        <SelectItem value="calendar">
-          <CalendarIcon /> Calendar
-        </SelectItem>
-        <SelectItem value="campaign">
-          <CampaignIcon /> Campaign
-        </SelectItem>
-        <SelectItem value="picture">
-          <PictureIcon /> Picture
-        </SelectItem>
+        {OPTIONS.map(({ value, disabled, icon }) => (
+          <SelectItem key={value} value={value} disabled={disabled}>
+            {icon} {value}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   ),
