@@ -1,4 +1,4 @@
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { z } from "zod";
 
 function parseParams<T extends z.ZodTypeAny>(
@@ -22,10 +22,6 @@ export function parseWaveParams(params: unknown) {
   return parseParams(waveParamsSchema, params);
 }
 
-export function useWaveParams() {
-  return parseWaveParams(useParams());
-}
-
 const applicationParamsSchema = waveParamsSchema.extend({
   applicationId: z.string(),
 });
@@ -34,10 +30,6 @@ export type ApplicationParamsSchema = z.infer<typeof applicationParamsSchema>;
 
 export function parseApplicationParams(params: unknown) {
   return parseParams(applicationParamsSchema, params);
-}
-
-export function useApplicationParams() {
-  return parseApplicationParams(useParams());
 }
 
 const imageParamsSchema = z.object({

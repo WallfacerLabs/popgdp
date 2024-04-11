@@ -1,12 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { urls } from "@/constants/urls";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { useWaveParams } from "@/lib/paramsValidation";
+import { parseWaveParams } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -28,7 +28,7 @@ export type ResourcesSchema = z.infer<typeof resourcesSchema>;
 
 export function Resources() {
   const router = useRouter();
-  const { waveId } = useWaveParams();
+  const { waveId } = parseWaveParams(useParams());
 
   const { applicationData } = useStepsContext();
   const dispatch = useStepsDispatchContext();
