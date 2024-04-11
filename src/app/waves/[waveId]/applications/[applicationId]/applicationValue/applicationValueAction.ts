@@ -1,53 +1,54 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { UnauthenticatedError } from "@/constants/errors";
 import { urls } from "@/constants/urls";
 import {
   deleteApplicationValue,
   insertApplicationValue,
 } from "@/drizzle/queries/applicationValues";
 
+import { type ApplicationWithComments } from "@/types/Application";
 import { type ContentValue } from "@/types/ContentValue";
-import { type UserId } from "@/types/User";
-import { ApplicationParamsSchema } from "@/lib/paramsValidation";
+import { canRateApplication } from "@/config/actionPermissions";
 
-interface ApplicationValueActionPayload extends ApplicationParamsSchema {
-  userId: UserId | undefined;
-  creatorId: string;
+interface ApplicationValueActionPayload {
   isChecked: boolean;
   value: ContentValue;
+  application: ApplicationWithComments;
 }
 
 export async function applicationValueAction({
-  userId,
-  creatorId,
-  applicationId,
-  waveId,
+  application,
   isChecked,
   value,
 }: ApplicationValueActionPayload) {
-  if (!userId) {
-    throw new UnauthenticatedError();
+  const applicationId = application.id;
+  const waveId = application.waveId;
+
+  const { validationErrorMessage, userId } = await canRateApplication({
+    creatorId: application.userId,
+  });
+
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
   }
 
-  if (userId === creatorId) {
-    throw new Error(`User cannot mark their own post as ${value}.`);
-  }
+  const applicationValue = {
+    applicationId,
+    userId,
+    value,
+  } as const;
 
   if (isChecked) {
-    await deleteApplicationValue({
-      applicationId,
-      userId,
-      value,
-    });
+    await deleteApplicationValue(applicationValue);
   } else {
-    await insertApplicationValue({
-      applicationId,
-      userId,
-      value,
-    });
+    await insertApplicationValue(applicationValue);
   }
 
-  revalidatePath(urls.applications.preview({ waveId, applicationId }));
+  revalidatePath(
+    urls.applications.preview({
+      waveId,
+      applicationId,
+    }),
+  );
 }

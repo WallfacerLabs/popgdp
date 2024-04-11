@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { getSession } from "@auth0/nextjs-auth0";
 import { z } from "zod";
 
@@ -9,7 +10,7 @@ const userSchema = z.object({
   credentialType: z.enum(["device", "orb"]),
 });
 
-export async function getUserData() {
+export const getUserData = cache(async () => {
   const session = await getSession();
 
   const user = userSchema.safeParse(session?.user);
@@ -21,7 +22,7 @@ export async function getUserData() {
     id: user.data.sub,
     verificationLevel: user.data.credentialType,
   };
-}
+});
 
 export async function getUserId() {
   const userData = await getUserData();
