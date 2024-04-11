@@ -13,6 +13,7 @@ import { ApplicationData } from "../stepsProvider";
 export async function createApplicationAction(
   application: ApplicationData,
   waveId: number,
+  isDraft: boolean,
 ) {
   const userId = await getUserId();
 
@@ -22,7 +23,7 @@ export async function createApplicationAction(
 
   await insertApplication(
     {
-      draft: false,
+      draft: isDraft,
       name: application.name,
       summary: application.summary,
       entityName: application.entityName,
