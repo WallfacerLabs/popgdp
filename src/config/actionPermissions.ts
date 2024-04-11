@@ -16,8 +16,8 @@ export async function canRateApplication({
     };
   }
 
-  const isOrbVerifier = await userHasRole(UserPermission.orbVerified);
-  if (!isOrbVerifier) {
+  const isOrbVerified = await userHasRole(UserPermission.orbVerified);
+  if (!isOrbVerified) {
     return {
       validationErrorMessage: "You need to be orb verified to rate submissions",
     };
