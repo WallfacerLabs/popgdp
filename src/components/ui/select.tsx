@@ -21,7 +21,7 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "border-input group flex h-10 w-full items-center justify-between rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      "border-input group flex h-10 w-full items-center justify-between rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 [&>svg]:h-4 [&>svg]:w-4",
       className,
     )}
     {...props}
@@ -30,7 +30,7 @@ const SelectTrigger = forwardRef<
     <SelectPrimitive.Icon asChild>
       <ChevronIcon
         direction="down"
-        className="h-4 w-4 transition-transform group-data-[state=open]:scale-y-[-100%]"
+        className="transition-transform group-data-[state=open]:scale-y-[-100%]"
       />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
@@ -44,12 +44,12 @@ const SelectScrollUpButton = forwardRef<
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
-      "flex cursor-default items-center justify-center py-1",
+      "flex cursor-default items-center justify-center py-1 [&>svg]:h-4 [&>svg]:w-4",
       className,
     )}
     {...props}
   >
-    <ChevronIcon direction="up" className="h-4 w-4" />
+    <ChevronIcon direction="up" />
   </SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
@@ -61,12 +61,12 @@ const SelectScrollDownButton = forwardRef<
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
-      "flex cursor-default items-center justify-center py-1",
+      "flex cursor-default items-center justify-center py-1 [&>svg]:h-4 [&>svg]:w-4",
       className,
     )}
     {...props}
   >
-    <ChevronIcon direction="down" className="h-4 w-4" />
+    <ChevronIcon direction="down" />
   </SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName =
@@ -131,13 +131,15 @@ const SelectItem = forwardRef<
     {...props}
   >
     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
-      <SelectPrimitive.ItemIndicator>
-        <CheckIcon className="h-4 w-4" />
+      <SelectPrimitive.ItemIndicator className="[&>svg]:h-4 [&>svg]:w-4">
+        <CheckIcon />
       </SelectPrimitive.ItemIndicator>
     </span>
 
     <SelectPrimitive.ItemText>
-      <span className="flex items-center gap-2">{children}</span>
+      <span className="flex items-center gap-2 [&>svg]:h-4 [&>svg]:w-4">
+        {children}
+      </span>
     </SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));

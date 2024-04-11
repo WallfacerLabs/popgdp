@@ -35,28 +35,28 @@ const Default: Story = {
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="sun">
-          <SunIcon className="h-4 w-4" /> Sun
+          <SunIcon /> Sun
         </SelectItem>
         <SelectItem value="thumb" disabled>
-          <ThumbUpIcon className="h-4 w-4" /> Thumb
+          <ThumbUpIcon /> Thumb
         </SelectItem>
         <SelectItem value="cloud">
-          <CloudIcon className="h-4 w-4" /> Cloud
+          <CloudIcon /> Cloud
         </SelectItem>
         <SelectItem value="clock">
-          <ClockIcon className="h-4 w-4" /> Clock
+          <ClockIcon /> Clock
         </SelectItem>
         <SelectItem value="computer">
-          <ComputerIcon className="h-4 w-4" /> Computer
+          <ComputerIcon /> Computer
         </SelectItem>
         <SelectItem value="calendar">
-          <CalendarIcon className="h-4 w-4" /> Calendar
+          <CalendarIcon /> Calendar
         </SelectItem>
         <SelectItem value="campaign">
-          <CampaignIcon className="h-4 w-4" /> Campaign
+          <CampaignIcon /> Campaign
         </SelectItem>
         <SelectItem value="picture">
-          <PictureIcon className="h-4 w-4" /> Picture
+          <PictureIcon /> Picture
         </SelectItem>
       </SelectContent>
     </Select>
