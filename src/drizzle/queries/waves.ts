@@ -65,6 +65,14 @@ export const getWaveWithApplications = cache(async (id: number) => {
           category: { columns: { color: true, name: true } },
         },
       },
+      categories: {
+        columns: {
+          id: true,
+          name: true,
+          color: true,
+          description: true,
+        },
+      },
     },
   });
 
