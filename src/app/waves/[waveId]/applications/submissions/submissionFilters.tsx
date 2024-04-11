@@ -1,5 +1,6 @@
-import { getCategoriesForWave } from "@/drizzle/queries/categories";
+"use client";
 
+import { Category } from "@/types/Category";
 import { cn } from "@/lib/cn";
 import { getCategoryIcon } from "@/components/ui/categories/getCategoryIcon";
 import { getCategoryStyles } from "@/components/ui/categories/getCategoryStyles";
@@ -13,23 +14,31 @@ import {
 
 type SubmissionFiltersProps = CategoryFilterProps;
 
-export function SubmissionFilters({ waveId }: SubmissionFiltersProps) {
+export function SubmissionFilters({
+  categories,
+  onCategoryChange,
+}: SubmissionFiltersProps) {
   return (
     <nav className="flex flex-wrap items-center gap-x-4 gap-y-1">
-      <CategoryFilter waveId={waveId} />
+      <CategoryFilter
+        categories={categories}
+        onCategoryChange={onCategoryChange}
+      />
     </nav>
   );
 }
 
 interface CategoryFilterProps {
-  waveId: number;
+  categories: Category[];
+  onCategoryChange: (value: string) => void;
 }
 
-async function CategoryFilter({ waveId }: CategoryFilterProps) {
-  const categories = await getCategoriesForWave(waveId);
-
+const CategoryFilter = ({
+  categories,
+  onCategoryChange,
+}: CategoryFilterProps) => {
   return (
-    <Select>
+    <Select onValueChange={onCategoryChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Category" />
       </SelectTrigger>
@@ -50,4 +59,4 @@ async function CategoryFilter({ waveId }: CategoryFilterProps) {
       </SelectContent>
     </Select>
   );
-}
+};
