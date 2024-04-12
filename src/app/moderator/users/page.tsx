@@ -19,6 +19,7 @@ import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
 import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
+import { BlockUserButton } from "./blockUserButton/blockUserButton";
 import { ExportUsers } from "./exportUsers";
 
 export const metadata: Metadata = {
@@ -52,6 +53,7 @@ export default async function UsersPage() {
             <TableHead>SPAM count</TableHead>
             <TableHead>Useful</TableHead>
             <TableHead>Submissions</TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -61,6 +63,10 @@ export default async function UsersPage() {
                 name={user.name}
                 ethereumAddress={user.ethereumAddress}
                 image={user.image}
+                isBlocked={user.isBlocked}
+                blockedBadgeText={
+                  user.isContentHidden ? "Blocked and hidden" : "Blocked"
+                }
               />
               <TableCell>
                 {user.ethereumAddress ? (
@@ -105,6 +111,9 @@ export default async function UsersPage() {
                     "-"
                   )}
                 </span>
+              </TableCell>
+              <TableCell>
+                <BlockUserButton user={user} />
               </TableCell>
             </TableRow>
           ))}
