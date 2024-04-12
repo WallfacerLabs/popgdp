@@ -44,8 +44,8 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
         selectedCategory === "allCategories" ||
         application.categoryId === selectedCategory,
     )
-    .filter((app) =>
-      app.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+    .filter((application) =>
+      application.name.toLowerCase().includes(searchPhrase.toLowerCase()),
     );
 
   const applicationsCount = filteredApplications.length;
