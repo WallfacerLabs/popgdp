@@ -30,7 +30,7 @@ export async function SubmissionsSection({
         <ApplyForGrantButton waveId={wave.id} userId={userId} />
       </div>
 
-      <Submissions wave={wave} searchParams={searchParams} />
+      <Submissions wave={wave} searchParams={searchParams} userId={userId} />
     </>
   );
 }
