@@ -302,6 +302,8 @@ export const User = pgTable("user", {
   ethereumAddress: text("ethereumAddress"),
   addressMessageSignature: text("addressMessageSignature"),
   addressMessage: text("addressMessage"),
+  isBlocked: boolean("isBlocked").notNull().default(false),
+  isContentHidden: boolean("isContentHidden").notNull().default(false),
 
   createdAt: timestamp("createdAt", {
     mode: "date",

@@ -27,6 +27,7 @@ const imageFragment = {
 const userFragment = {
   columns: {
     name: true,
+    isContentHidden: true,
   },
   with: {
     image: imageFragment,

@@ -31,7 +31,9 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilterOption["id"]>("allCategories");
 
-  const applications = wave.applications;
+  const applications = wave.applications.filter(
+    (application) => application.user.isContentHidden === false,
+  );
 
   const filteredApplications =
     selectedCategory !== "allCategories"

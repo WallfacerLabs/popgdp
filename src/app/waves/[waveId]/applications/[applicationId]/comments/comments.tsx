@@ -25,7 +25,10 @@ interface CommentsProps {
 }
 
 export async function Comments({ application, userId }: CommentsProps) {
-  const { comments, waveId } = application;
+  const comments = application.comments.filter(
+    (comment) => comment.user.isContentHidden === false,
+  );
+
   const reviews = comments.filter((comment) => comment.review?.isReview);
 
   const { validationErrorMessage: commentValidationError } =

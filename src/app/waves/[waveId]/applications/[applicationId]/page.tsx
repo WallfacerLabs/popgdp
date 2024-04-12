@@ -23,7 +23,7 @@ export async function generateMetadata({
   const { applicationId } = parseApplicationParams(params);
   const application = await getApplicationWithComments(applicationId, userId);
 
-  if (!application) {
+  if (!application || application.user.isContentHidden) {
     return {
       title: "Submission",
     };
@@ -38,7 +38,7 @@ export default async function Application({ params }: { params: unknown }) {
   const userId = await getUserId();
   const application = await getApplicationWithComments(applicationId, userId);
 
-  if (!application) {
+  if (!application || application.user.isContentHidden) {
     return notFound();
   }
 
