@@ -46,32 +46,32 @@ export const AddReviewDialog = ({
             <AssignmentIcon />
           </Button>
         </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Confirm your review</DialogTitle>
-          </DialogHeader>
-          <p>
-            Confirm adding your review.
-            <br />
-            You will not be able to change or delete it!
-          </p>
-          <DialogFooter className="flex items-center gap-4">
-            <DialogClose asChild>
-              <Button variant="secondary" disabled={disabled}>
-                Cancel
-              </Button>
-            </DialogClose>
-            <Button
-              variant="primary"
-              disabled={disabled}
-              onClick={handleReviewSubmit}
-            >
-              Add review
-              <AssignmentIcon />
-            </Button>
-          </DialogFooter>
-        </DialogContent>
       </ErrorTooltip>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Confirm your review</DialogTitle>
+        </DialogHeader>
+        <p>
+          Confirm adding your review.
+          <br />
+          You will not be able to change or delete it!
+        </p>
+        <DialogFooter className="flex items-center gap-4">
+          <DialogClose asChild>
+            <Button variant="secondary" disabled={disabled}>
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button
+            variant="primary"
+            disabled={disabled}
+            onClick={handleReviewSubmit}
+          >
+            Add review
+            <AssignmentIcon />
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 };
