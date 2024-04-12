@@ -42,6 +42,8 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
     CategoryFilterOption["id"] | undefined
   >();
 
+  const [searchPhrase, setSearchPhrase] = useState("");
+
   const applications = wave.applications.filter(
     (application) => application.user.isContentHidden === false,
   );
