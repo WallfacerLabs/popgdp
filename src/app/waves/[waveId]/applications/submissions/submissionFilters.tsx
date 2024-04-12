@@ -1,6 +1,7 @@
 "use client";
 
 import { type Category } from "@/types/Category";
+import { CategoryColor } from "@/types/CategoryColor";
 import { cn } from "@/lib/cn";
 import { getCategoryIcon } from "@/components/ui/categories/getCategoryIcon";
 import { getCategoryStyles } from "@/components/ui/categories/getCategoryStyles";
@@ -11,13 +12,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ClearAllIcon } from "@/components/icons/clearAllIcon";
 
-type SubmissionFiltersProps = CategoryFilterProps;
+export type CategoryFilterOption = Omit<Category, "color" | "description"> & {
+  color?: CategoryColor;
+  description?: string;
+};
+
+interface CategoryFilterProps {
+  categories: CategoryFilterOption[];
+  onCategoryChange: (value: string) => void;
+}
 
 export function SubmissionFilters({
   categories,
   onCategoryChange,
-}: SubmissionFiltersProps) {
+}: CategoryFilterProps) {
   return (
     <nav className="flex flex-wrap items-center gap-x-4 gap-y-1">
       <CategoryFilter
@@ -28,17 +38,12 @@ export function SubmissionFilters({
   );
 }
 
-interface CategoryFilterProps {
-  categories: Category[];
-  onCategoryChange: (value: string) => void;
-}
-
 const CategoryFilter = ({
   categories,
   onCategoryChange,
 }: CategoryFilterProps) => {
   return (
-    <Select onValueChange={onCategoryChange}>
+    <Select onValueChange={onCategoryChange} defaultValue="allCategories">
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Category" />
       </SelectTrigger>
@@ -51,7 +56,7 @@ const CategoryFilter = ({
                 getCategoryStyles(color),
               )}
             >
-              {getCategoryIcon(color)}
+              {getCategoryFilterIcon(color)}
             </span>
             {name}
           </SelectItem>
@@ -60,3 +65,8 @@ const CategoryFilter = ({
     </Select>
   );
 };
+
+function getCategoryFilterIcon(color: CategoryColor | undefined) {
+  if (!color) return <ClearAllIcon />;
+  return getCategoryIcon(color);
+}

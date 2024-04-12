@@ -8,7 +8,7 @@ import { type WaveWithApplications } from "@/types/Wave";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 
-import { SubmissionFilters } from "./submissionFilters";
+import { CategoryFilterOption, SubmissionFilters } from "./submissionFilters";
 
 const PAGE_SIZE = 10;
 
@@ -23,19 +23,24 @@ interface SubmissionsProps {
 
 export function Submissions({ wave, searchParams }: SubmissionsProps) {
   const { page } = searchParamsSchema.parse(searchParams);
-  const [selectedCategory, setSelectedCategory] = useState<
-    Category["id"] | null
-  >(null);
+  const categories: CategoryFilterOption[] = [
+    { id: "allCategories", name: "All Categories" },
+    ...wave.categories,
+  ];
+
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryFilterOption["id"]>("allCategories");
 
   const applications = wave.applications.filter(
     (application) => application.user.isContentHidden === false,
   );
 
-  const filteredApplications = selectedCategory
-    ? applications.filter(
-        (application) => application.categoryId === selectedCategory,
-      )
-    : applications;
+  const filteredApplications =
+    selectedCategory !== "allCategories"
+      ? applications.filter(
+          (application) => application.categoryId === selectedCategory,
+        )
+      : applications;
 
   const applicationsCount = filteredApplications.length;
   const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
@@ -52,7 +57,7 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
   return (
     <>
       <SubmissionFilters
-        categories={wave.categories}
+        categories={categories}
         onCategoryChange={onCategoryChange}
       />
 
