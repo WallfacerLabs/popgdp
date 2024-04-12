@@ -3,7 +3,11 @@ import { Fragment } from "react";
 import { type ApplicationWithComments } from "@/types/Application";
 import { type Comment } from "@/types/Comment";
 import { type UserId } from "@/types/User";
-import { canAddComment, canAddReview } from "@/config/actionPermissions";
+import {
+  canAddComment,
+  canAddReview,
+  canRateComment,
+} from "@/config/actionPermissions";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -29,6 +33,9 @@ export async function Comments({ application, userId }: CommentsProps) {
   const { validationErrorMessage: reviewValidationError } =
     await canAddReview(application);
 
+  const { validationErrorMessage: rateCommentValidationError } =
+    await canRateComment({ waveId: application.waveId });
+
   return (
     <div className="flex flex-col gap-8">
       <Tabs defaultValue={SECTIONS.discussion}>
@@ -49,10 +56,11 @@ export async function Comments({ application, userId }: CommentsProps) {
             className="[&:not(:empty)]:mt-8"
           >
             <CommentsList
+              application={application}
               comments={comments}
-              allComments={comments}
-              waveId={waveId}
               userId={userId}
+              commentValidationError={commentValidationError}
+              rateCommentValidationError={rateCommentValidationError}
             />
           </TabsContent>
 
@@ -61,16 +69,18 @@ export async function Comments({ application, userId }: CommentsProps) {
             className="[&:not(:empty)]:mt-8"
           >
             <CommentsList
+              application={application}
               comments={reviews}
-              allComments={comments}
-              waveId={waveId}
               userId={userId}
+              commentValidationError={commentValidationError}
+              rateCommentValidationError={rateCommentValidationError}
             />
           </TabsContent>
         </section>
       </Tabs>
 
       <AddCommentForm
+        application={application}
         commentValidationError={commentValidationError}
         reviewValidationError={reviewValidationError}
       />
@@ -95,25 +105,28 @@ function SectionButton({ section, elementsAmount }: SectionButtonProps) {
 }
 
 interface CommentsListProps {
+  application: ApplicationWithComments;
   comments: Comment[];
-  allComments: Comment[];
-  waveId: number;
   userId: UserId | undefined;
+  commentValidationError: string | undefined;
+  rateCommentValidationError: string | undefined;
 }
 
 function CommentsList({
+  application,
   comments,
-  waveId,
   userId,
-  allComments,
+  commentValidationError,
+  rateCommentValidationError,
 }: CommentsListProps) {
   return comments.map((comment) => (
     <Fragment key={comment.id}>
       <CommentPreview
+        application={application}
         comment={comment}
-        allComments={allComments}
-        waveId={waveId}
         userId={userId}
+        addCommentValidationError={commentValidationError}
+        rateCommentValidationError={rateCommentValidationError}
       />
       <Separator className="my-6 last:hidden" />
     </Fragment>

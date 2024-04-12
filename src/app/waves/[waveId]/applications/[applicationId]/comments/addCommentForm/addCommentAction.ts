@@ -1,32 +1,33 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { UnauthenticatedError, UnauthorizedError } from "@/constants/errors";
 import { urls } from "@/constants/urls";
 import {
   insertComment,
   insertCommentAsReview,
 } from "@/drizzle/queries/comments";
 
-import { userHasRole, UserPermission } from "@/config/userPermissions";
-import { getUserId } from "@/lib/auth";
-import { ApplicationParamsSchema } from "@/lib/paramsValidation";
+import { type ApplicationWithComments } from "@/types/Application";
+import { canAddComment, canAddReview } from "@/config/actionPermissions";
 
 import { type AddCommentSchema } from "./addCommentSchema";
 
-export interface AddCommentActionPayload extends ApplicationParamsSchema {
+export interface AddCommentActionPayload {
+  application: ApplicationWithComments;
   data: AddCommentSchema;
 }
 
 export async function addCommentAction({
   data,
-  applicationId,
-  waveId,
+  application,
 }: AddCommentActionPayload) {
-  const userId = await getUserId();
+  const applicationId = application.id;
+  const waveId = application.waveId;
 
-  if (!userId) {
-    throw new UnauthenticatedError();
+  const { userId, validationErrorMessage } = await canAddComment(application);
+
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
   }
 
   await insertComment({
@@ -40,18 +41,15 @@ export async function addCommentAction({
 
 export async function addReviewAction({
   data,
-  applicationId,
-  waveId,
+  application,
 }: AddCommentActionPayload) {
-  const userId = await getUserId();
+  const applicationId = application.id;
+  const waveId = application.waveId;
 
-  if (!userId) {
-    throw new UnauthenticatedError();
-  }
+  const { userId, validationErrorMessage } = await canAddReview(application);
 
-  const isReviewer = await userHasRole(UserPermission.reviewer);
-  if (!isReviewer) {
-    throw new UnauthorizedError();
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
   }
 
   await insertCommentAsReview({
@@ -69,14 +67,16 @@ export interface AddReplyACtionPayload extends AddCommentActionPayload {
 
 export async function addReplyAction({
   data,
-  applicationId,
-  waveId,
+  application,
   replyTargetId,
 }: AddReplyACtionPayload) {
-  const userId = await getUserId();
+  const applicationId = application.id;
+  const waveId = application.waveId;
 
-  if (!userId) {
-    throw new UnauthenticatedError();
+  const { userId, validationErrorMessage } = await canAddComment(application);
+
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
   }
 
   await insertComment({

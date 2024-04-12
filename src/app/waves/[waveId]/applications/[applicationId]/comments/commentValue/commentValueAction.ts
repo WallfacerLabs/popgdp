@@ -8,12 +8,11 @@ import {
 } from "@/drizzle/queries/commentValues";
 
 import { type ContentValue } from "@/types/ContentValue";
-import { type UserId } from "@/types/User";
+import { canRateComment } from "@/config/actionPermissions";
 import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 
 interface CommentValueActionPayload extends ApplicationParamsSchema {
   commentId: string;
-  userId: UserId | undefined;
   commentatorId: string;
   isChecked: boolean;
   value: ContentValue;
@@ -21,15 +20,15 @@ interface CommentValueActionPayload extends ApplicationParamsSchema {
 
 export async function commentValueAction({
   applicationId,
-  userId,
   commentatorId,
   commentId,
   waveId,
   isChecked,
   value,
 }: CommentValueActionPayload) {
-  if (!userId) {
-    throw new Error("Unauthorized");
+  const { userId, validationErrorMessage } = await canRateComment({ waveId });
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
   }
 
   if (userId === commentatorId) {

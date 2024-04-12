@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { type ApplicationWithComments } from "@/types/Application";
 import { parseApplicationParams } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import { Editor } from "@/components/ui/editor/editor";
@@ -32,11 +33,13 @@ import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
 import { AddReviewDialog } from "./addReviewDialog";
 
 interface AddCommentFormProps {
+  application: ApplicationWithComments;
   reviewValidationError: string | undefined;
   commentValidationError: string | undefined;
 }
 
 export function AddCommentForm({
+  application,
   reviewValidationError,
   commentValidationError,
 }: AddCommentFormProps) {
@@ -54,7 +57,7 @@ export function AddCommentForm({
     action: (payload: AddCommentActionPayload) => Promise<void>,
   ) =>
     form.handleSubmit(async (data) => {
-      await action({ data, waveId, applicationId });
+      await action({ data, application });
       setEditorKey((prev) => prev + 1);
       form.reset();
     });

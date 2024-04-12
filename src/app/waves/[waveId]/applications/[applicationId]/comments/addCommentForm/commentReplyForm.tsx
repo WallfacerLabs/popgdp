@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { ApplicationParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import { Editor } from "@/components/ui/editor/editor";
 import {
@@ -20,14 +19,12 @@ import { addReplyAction, AddReplyACtionPayload } from "./addCommentAction";
 import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
 
 interface CommentReplyFormProps
-  extends ApplicationParamsSchema,
-    Pick<AddReplyACtionPayload, "replyTargetId"> {
+  extends Pick<AddReplyACtionPayload, "replyTargetId" | "application"> {
   onReply: () => void;
 }
 
 export function CommentReplyForm({
-  waveId,
-  applicationId,
+  application,
   replyTargetId,
   onReply,
 }: CommentReplyFormProps) {
@@ -39,7 +36,7 @@ export function CommentReplyForm({
   });
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    await addReplyAction({ data, waveId, applicationId, replyTargetId });
+    await addReplyAction({ data, application, replyTargetId });
     form.reset();
     onReply();
   });
