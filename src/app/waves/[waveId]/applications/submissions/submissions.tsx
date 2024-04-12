@@ -8,7 +8,8 @@ import { type WaveWithApplications } from "@/types/Wave";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 
-import { CategoryFilterOption, SubmissionFilters } from "./submissionFilters";
+import { CategoryFilterOption } from "./filters/categoryFilter";
+import { SubmissionFilters } from "./submissionFilters";
 
 const PAGE_SIZE = 10;
 
