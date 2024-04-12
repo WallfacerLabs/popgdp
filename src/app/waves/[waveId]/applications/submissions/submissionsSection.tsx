@@ -2,7 +2,7 @@ import Link from "next/link";
 import { urls } from "@/constants/urls";
 
 import { WaveWithApplications } from "@/types/Wave";
-import { getUserId } from "@/lib/auth";
+import { canAddSubmission } from "@/config/actionPermissions";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
@@ -33,9 +33,9 @@ export function SubmissionsSection({ wave, searchParams }: SubmissionsProps) {
 }
 
 async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
-  const userId = await getUserId();
+  const { validationErrorMessage } = await canAddSubmission({ waveId });
 
-  if (!userId) {
+  if (typeof validationErrorMessage !== "undefined") {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
