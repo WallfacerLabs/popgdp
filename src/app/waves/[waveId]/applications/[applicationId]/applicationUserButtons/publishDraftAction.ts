@@ -4,18 +4,25 @@ import { revalidatePath } from "next/cache";
 import { urls } from "@/constants/urls";
 import { publishDraft } from "@/drizzle/queries/applications";
 
-import { ApplicationId } from "@/types/Application";
+import { ApplicationWithComments } from "@/types/Application";
+import { canPublishDraft } from "@/config/actionPermissions";
 
 export async function publishDraftAction({
-  applicationId,
-  waveId,
+  application,
 }: {
-  applicationId: ApplicationId;
-  waveId: number;
+  application: ApplicationWithComments;
 }) {
-  // await canPublishDraft()
+  const { validationErrorMessage } = await canPublishDraft(application);
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
+  }
 
-  await publishDraft(applicationId);
-  console.log("published");
-  revalidatePath(urls.applications.preview({ applicationId, waveId }));
+  await publishDraft(application.id);
+
+  revalidatePath(
+    urls.applications.preview({
+      applicationId: application.id,
+      waveId: application.waveId,
+    }),
+  );
 }

@@ -75,7 +75,27 @@ export async function canAddSubmission({ waveId }: { waveId: number }) {
   }
 }
 
-export async function canPublishDraft() {}
+export async function canPublishDraft(application: ApplicationWithComments) {
+  try {
+    const userId = await checkUserId(
+      "You need to be signed in to publish draft",
+    );
+    if (userId !== application.userId) {
+      throw new ValidationError("Invalid user id");
+    }
+    await checkWaveStage({
+      waveId: application.waveId,
+      action: "submissionAdd",
+      errorMsg: "You cannot publish draft in this wave stage",
+    });
+    return { userId };
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return { validationErrorMessage: error.message };
+    }
+    throw error;
+  }
+}
 
 interface CanRateApplicationArgs {
   creatorId: string;
