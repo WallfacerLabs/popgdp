@@ -12,6 +12,7 @@ import {
 import { type UserId } from "@/types/User";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ErrorTooltip } from "@/components/ui/tooltip";
 import { ReplyIcon } from "@/components/icons/replyIcon";
 
 import { CommentReplyForm } from "../addCommentForm/commentReplyForm";
@@ -65,14 +66,17 @@ export const CommentPreview = ({
           )}
           <div className="flex gap-4">
             <CommentBody comment={comment} />
-            <Button
-              variant="link"
-              className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
-              onClick={() => setIsReply(true)}
-            >
-              <ReplyIcon />
-              Reply
-            </Button>
+            <ErrorTooltip message={addCommentValidationError}>
+              <Button
+                disabled={!!addCommentValidationError}
+                variant="link"
+                className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+                onClick={() => setIsReply(true)}
+              >
+                <ReplyIcon />
+                Reply
+              </Button>
+            </ErrorTooltip>
           </div>
           <CommentValueForm
             className="ml-auto"
