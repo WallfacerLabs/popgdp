@@ -1,30 +1,12 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { urls } from "@/constants/urls";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
-import { z } from "zod";
 
-import { canAddSubmission } from "@/config/actionPermissions";
-import { parseWaveParams, WaveParamsSchema } from "@/lib/paramsValidation";
-import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
-import { Button } from "@/components/ui/button";
-import { PageTitle } from "@/components/ui/pageTitle";
-import { TablePagination } from "@/components/ui/pagination/tablePagination";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { parseWaveParams } from "@/lib/paramsValidation";
 import { TimelinePreview } from "@/components/ui/wavesTimelinePreview/timelinePreview";
 
+import { SubmissionsSection } from "./applications/submissions/submissionsSection";
 import { WaveBanner } from "./waveBanner";
-
-const PAGE_SIZE = 10;
-
-const searchParamsSchema = z.object({
-  page: z.coerce.number().optional().default(1),
-});
 
 export async function generateMetadata({
   params,
@@ -51,7 +33,6 @@ export default async function Wave({
   searchParams: unknown;
 }) {
   const { waveId } = parseWaveParams(params);
-  const { page } = searchParamsSchema.parse(searchParams);
 
   const wave = await getWaveWithApplications(waveId);
 
@@ -59,55 +40,13 @@ export default async function Wave({
     return notFound();
   }
 
-  const applicationsCount = wave.applications.length;
-  const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
-
-  const currentPageApplications = wave.applications.slice(
-    (page - 1) * PAGE_SIZE,
-    page * PAGE_SIZE,
-  );
-
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <WaveBanner />
 
-      <TimelinePreview wave={wave} className="mt-6" />
+      <TimelinePreview wave={wave} />
 
-      <div className="mt-6 flex items-center justify-between">
-        <PageTitle>Submissions</PageTitle>
-        <ApplyForGrantButton waveId={waveId} />
-      </div>
-
-      <ApplicationsTable
-        className="mt-8"
-        applications={currentPageApplications}
-        waveId={waveId}
-      />
-
-      {totalPages > 1 && (
-        <TablePagination currentPage={page} totalPages={totalPages} />
-      )}
-    </>
-  );
-}
-
-async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
-  const { validationErrorMessage } = await canAddSubmission({ waveId });
-
-  if (typeof validationErrorMessage !== "undefined") {
-    return (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button disabled>Apply for Grant</Button>
-        </TooltipTrigger>
-        <TooltipContent align="end">{validationErrorMessage}</TooltipContent>
-      </Tooltip>
-    );
-  }
-
-  return (
-    <Button asChild>
-      <Link href={urls.applications.create({ waveId })}>Apply for Grant</Link>
-    </Button>
+      <SubmissionsSection wave={wave} searchParams={searchParams} />
+    </div>
   );
 }
