@@ -1,6 +1,7 @@
 "use client";
 
 import { type Category } from "@/types/Category";
+import { CategoryColor } from "@/types/CategoryColor";
 import { cn } from "@/lib/cn";
 import { getCategoryIcon } from "@/components/ui/categories/getCategoryIcon";
 import { getCategoryStyles } from "@/components/ui/categories/getCategoryStyles";
@@ -13,12 +14,20 @@ import {
 } from "@/components/ui/select";
 import { ClearAllIcon } from "@/components/icons/clearAllIcon";
 
-type SubmissionFiltersProps = CategoryFilterProps;
+export type CategoryFilterOption = Omit<Category, "color" | "description"> & {
+  color?: CategoryColor;
+  description?: string;
+};
+
+interface CategoryFilterProps {
+  categories: CategoryFilterOption[];
+  onCategoryChange: (value: string) => void;
+}
 
 export function SubmissionFilters({
   categories,
   onCategoryChange,
-}: SubmissionFiltersProps) {
+}: CategoryFilterProps) {
   return (
     <nav className="flex flex-wrap items-center gap-x-4 gap-y-1">
       <CategoryFilter
@@ -27,11 +36,6 @@ export function SubmissionFilters({
       />
     </nav>
   );
-}
-
-interface CategoryFilterProps {
-  categories: Category[];
-  onCategoryChange: (value: string) => void;
 }
 
 const CategoryFilter = ({
@@ -44,16 +48,6 @@ const CategoryFilter = ({
         <SelectValue placeholder="Category" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="allCategories">
-          <span
-            className={cn(
-              "flex h-6 w-6 items-center justify-center rounded-full [&>svg]:h-4 [&>svg]:w-4",
-            )}
-          >
-            <ClearAllIcon className="h-4 w-4" />
-          </span>
-          All Categories
-        </SelectItem>
         {categories.map(({ id, name, color }) => (
           <SelectItem key={id} value={id}>
             <span
@@ -62,7 +56,7 @@ const CategoryFilter = ({
                 getCategoryStyles(color),
               )}
             >
-              {getCategoryIcon(color)}
+              {getCategoryFilterIcon(color)}
             </span>
             {name}
           </SelectItem>
@@ -71,3 +65,8 @@ const CategoryFilter = ({
     </Select>
   );
 };
+
+function getCategoryFilterIcon(color: CategoryColor | undefined) {
+  if (!color) return <ClearAllIcon />;
+  return getCategoryIcon(color);
+}
