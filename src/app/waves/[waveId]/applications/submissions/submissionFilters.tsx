@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ClearAllIcon } from "@/components/icons/clearAllIcon";
 
 type SubmissionFiltersProps = CategoryFilterProps;
 
@@ -38,11 +39,21 @@ const CategoryFilter = ({
   onCategoryChange,
 }: CategoryFilterProps) => {
   return (
-    <Select onValueChange={onCategoryChange}>
+    <Select onValueChange={onCategoryChange} defaultValue="allCategories">
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Category" />
       </SelectTrigger>
       <SelectContent>
+        <SelectItem value="allCategories">
+          <span
+            className={cn(
+              "flex h-6 w-6 items-center justify-center rounded-full [&>svg]:h-4 [&>svg]:w-4",
+            )}
+          >
+            <ClearAllIcon className="h-4 w-4" />
+          </span>
+          All Categories
+        </SelectItem>
         {categories.map(({ id, name, color }) => (
           <SelectItem key={id} value={id}>
             <span

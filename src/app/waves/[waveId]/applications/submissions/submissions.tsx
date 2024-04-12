@@ -25,15 +25,16 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
   const { page } = searchParamsSchema.parse(searchParams);
   const [selectedCategory, setSelectedCategory] = useState<
     Category["id"] | null
-  >(null);
+  >("allCategories");
 
   const applications = wave.applications;
 
-  const filteredApplications = selectedCategory
-    ? applications.filter(
-        (application) => application.categoryId === selectedCategory,
-      )
-    : applications;
+  const filteredApplications =
+    selectedCategory !== "allCategories"
+      ? applications.filter(
+          (application) => application.categoryId === selectedCategory,
+        )
+      : applications;
 
   const applicationsCount = filteredApplications.length;
   const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
