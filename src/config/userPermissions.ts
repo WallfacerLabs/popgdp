@@ -4,10 +4,11 @@ import { getUserData } from "@/lib/auth";
 
 export enum UserPermission {
   visitor = 0,
-  deviceVerified = 1,
-  orbVerified = 2,
-  reviewer = 3,
-  moderator = 4,
+  blocked = 1,
+  deviceVerified = 2,
+  orbVerified = 3,
+  reviewer = 4,
+  moderator = 5,
 }
 
 export async function getUserPermission(): Promise<UserPermission> {
@@ -16,10 +17,14 @@ export async function getUserPermission(): Promise<UserPermission> {
     return UserPermission.visitor;
   }
 
-  const { isReviewer, isModerator } = await getUserRoles(user.id);
+  const { isReviewer, isModerator, isBlocked } = await getUserRoles(user.id);
 
   if (isModerator) {
     return UserPermission.moderator;
+  }
+
+  if (isBlocked) {
+    return UserPermission.blocked;
   }
 
   if (isReviewer) {

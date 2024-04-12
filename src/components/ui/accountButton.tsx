@@ -76,6 +76,8 @@ async function getUserRoleText() {
   const userPermission = await getUserPermission();
 
   switch (userPermission) {
+    case UserPermission.blocked:
+      return "Banned";
     case UserPermission.moderator:
       return "Moderator";
     case UserPermission.reviewer:

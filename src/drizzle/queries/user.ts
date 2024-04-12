@@ -45,7 +45,7 @@ export const getUserRoles = cache(async (id: UserId) => {
   return {
     isModerator: !!roles?.isModerator,
     isReviewer: !!roles?.isReviewer,
-    isBlocked: roles.isBlocked,
+    isBlocked: roles?.isBlocked,
   };
 });
 
