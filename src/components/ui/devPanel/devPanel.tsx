@@ -1,4 +1,5 @@
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { urls } from "@/constants/urls";
 import { db } from "@/drizzle/db";
@@ -22,6 +23,9 @@ export async function DevFloatingPanel() {
   const userData = await getUser(userId);
 
   const { isReviewer, isModerator } = await getUserRoles(userId);
+
+  const isSkipWaveCheckEnabled =
+    cookies().get("skipWaveStageCheck")?.value === "true";
 
   return (
     <Popover>
@@ -98,6 +102,28 @@ export async function DevFloatingPanel() {
               }}
             >
               Add moderator role
+            </Button>
+          )}
+
+          {isSkipWaveCheckEnabled ? (
+            <Button
+              formAction={async () => {
+                "use server";
+                cookies().set("skipWaveStageCheck", "false");
+                revalidatePath("/");
+              }}
+            >
+              Enable skip stage check
+            </Button>
+          ) : (
+            <Button
+              formAction={async () => {
+                "use server";
+                cookies().set("skipWaveStageCheck", "true");
+                revalidatePath("/");
+              }}
+            >
+              Disable skip stage check
             </Button>
           )}
         </form>

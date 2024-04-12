@@ -41,9 +41,7 @@ async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
         <TooltipTrigger asChild>
           <Button disabled>Apply for Grant</Button>
         </TooltipTrigger>
-        <TooltipContent align="end">
-          You must sign in to apply for a grant
-        </TooltipContent>
+        <TooltipContent align="end">{validationErrorMessage}</TooltipContent>
       </Tooltip>
     );
   }

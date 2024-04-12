@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { ValidationError } from "@/constants/errors";
 import { getWaveDates } from "@/drizzle/queries/waves";
 
@@ -41,6 +42,8 @@ async function checkWaveStage({
   action: UserAction;
   errorMsg: string;
 }) {
+  if (cookies().get("skipWaveStageCheck")?.value === "true") return;
+
   const wave = await getWaveDates(waveId);
   const waveStage = getWaveStage(wave);
   const isCorrectStage = canPerformActionByStage(waveStage, action);
