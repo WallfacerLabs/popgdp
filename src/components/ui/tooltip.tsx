@@ -4,6 +4,7 @@ import {
   forwardRef,
   type ComponentPropsWithoutRef,
   type ElementRef,
+  type ReactNode,
 } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
@@ -50,5 +51,19 @@ const TooltipContent = forwardRef<
   />
 ));
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+
+interface ErrorTooltipProps {
+  children: ReactNode;
+  message: string | undefined;
+}
+
+export function ErrorTooltip({ children, message }: ErrorTooltipProps) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
+      {message && <TooltipContent>{message}</TooltipContent>}
+    </Tooltip>
+  );
+}
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

@@ -11,11 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MarkdownPreview } from "@/components/ui/markdownPreview";
 import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ErrorTooltip } from "@/components/ui/tooltip";
 import { UserAvatar } from "@/components/ui/userAvatar";
 import { ReplyIcon } from "@/components/icons/replyIcon";
 
@@ -71,22 +67,17 @@ export const CommentPreview = ({
                   <Separator orientation="dot" className="opacity-60" />
                   <span className="opacity-60">{formatTime(createdAt)}</span>
                 </div>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      disabled={!!addCommentValidationError}
-                      variant="link"
-                      className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
-                      onClick={() => setIsReply(true)}
-                    >
-                      <ReplyIcon />
-                      Reply
-                    </Button>
-                  </TooltipTrigger>
-                  {addCommentValidationError && (
-                    <TooltipContent>{addCommentValidationError}</TooltipContent>
-                  )}
-                </Tooltip>
+                <ErrorTooltip message={addCommentValidationError}>
+                  <Button
+                    disabled={!!addCommentValidationError}
+                    variant="link"
+                    className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+                    onClick={() => setIsReply(true)}
+                  >
+                    <ReplyIcon />
+                    Reply
+                  </Button>
+                </ErrorTooltip>
               </div>
 
               <MarkdownPreview body={comment.markdownContent} />

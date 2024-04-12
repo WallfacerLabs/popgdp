@@ -17,11 +17,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ErrorTooltip } from "@/components/ui/tooltip";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
 import {
@@ -78,36 +74,22 @@ export function AddCommentForm({
           )}
         />
         <FormFooter className="mt-0 justify-start">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="secondary"
-                className="self-end"
-                disabled={
-                  form.formState.isSubmitting || !!commentValidationError
-                }
-                onClick={handleSubmit(addCommentAction)}
-              >
-                Add comment
-                <AddCommentIcon />
-              </Button>
-            </TooltipTrigger>
-            {commentValidationError && (
-              <TooltipContent>{commentValidationError}</TooltipContent>
-            )}
-          </Tooltip>
+          <ErrorTooltip message={commentValidationError}>
+            <Button
+              variant="secondary"
+              className="self-end"
+              disabled={form.formState.isSubmitting || !!commentValidationError}
+              onClick={handleSubmit(addCommentAction)}
+            >
+              Add comment
+              <AddCommentIcon />
+            </Button>
+          </ErrorTooltip>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <AddReviewDialog
-                validationError={reviewValidationError}
-                onSubmit={handleSubmit(addReviewAction)}
-              />
-            </TooltipTrigger>
-            {reviewValidationError && (
-              <TooltipContent>{reviewValidationError}</TooltipContent>
-            )}
-          </Tooltip>
+          <AddReviewDialog
+            validationError={reviewValidationError}
+            onSubmit={handleSubmit(addReviewAction)}
+          />
         </FormFooter>
       </form>
     </Form>

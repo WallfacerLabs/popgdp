@@ -4,11 +4,7 @@ import { ApplicationWithComments } from "@/types/Application";
 import { ContentValue } from "@/types/ContentValue";
 import { canRateApplication } from "@/config/actionPermissions";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ErrorTooltip } from "@/components/ui/tooltip";
 
 import { applicationValueAction } from "./applicationValueAction";
 
@@ -50,27 +46,22 @@ async function ActionButton({ application, value }: ActionButtonProps) {
     : buttonsConfig[value].false;
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant={variant}
-          disabled={!!validationErrorMessage}
-          formAction={async () => {
-            "use server";
-            await applicationValueAction({
-              application,
-              isChecked,
-              value,
-            });
-          }}
-        >
-          {text}
-        </Button>
-      </TooltipTrigger>
-      {validationErrorMessage && (
-        <TooltipContent align="end">{validationErrorMessage}</TooltipContent>
-      )}
-    </Tooltip>
+    <ErrorTooltip message={validationErrorMessage}>
+      <Button
+        variant={variant}
+        disabled={!!validationErrorMessage}
+        formAction={async () => {
+          "use server";
+          await applicationValueAction({
+            application,
+            isChecked,
+            value,
+          });
+        }}
+      >
+        {text}
+      </Button>
+    </ErrorTooltip>
   );
 }
 

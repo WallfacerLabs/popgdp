@@ -6,11 +6,7 @@ import { canAddSubmission } from "@/config/actionPermissions";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ErrorTooltip } from "@/components/ui/tooltip";
 
 import { Submissions } from "./submissions";
 
@@ -37,12 +33,9 @@ async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
 
   if (typeof validationErrorMessage !== "undefined") {
     return (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button disabled>Apply for Grant</Button>
-        </TooltipTrigger>
-        <TooltipContent align="end">{validationErrorMessage}</TooltipContent>
-      </Tooltip>
+      <ErrorTooltip message={validationErrorMessage}>
+        <Button disabled>Apply for Grant</Button>
+      </ErrorTooltip>
     );
   }
 

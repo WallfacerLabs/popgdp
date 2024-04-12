@@ -7,11 +7,7 @@ import { type UserId } from "@/types/User";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ErrorTooltip } from "@/components/ui/tooltip";
 import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
 import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 
@@ -60,43 +56,33 @@ export function CommentValueForm({
 
   return (
     <form className={cn("ml-auto flex items-center gap-2", className)}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="link"
-            className={commentButtonVariants({ isActive: isSpam })}
-            aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
-            disabled={isVotingDisabled}
-            onClick={handleAction("spam", isSpam)}
-          >
-            <ErrorCircleIcon />
-            {isSpam ? "Marked as SPAM" : "SPAM"}
-          </Button>
-        </TooltipTrigger>
-        {rateCommentValidationError && (
-          <TooltipContent>{rateCommentValidationError}</TooltipContent>
-        )}
-      </Tooltip>
+      <ErrorTooltip message={rateCommentValidationError}>
+        <Button
+          variant="link"
+          className={commentButtonVariants({ isActive: isSpam })}
+          aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
+          disabled={isVotingDisabled}
+          onClick={handleAction("spam", isSpam)}
+        >
+          <ErrorCircleIcon />
+          {isSpam ? "Marked as SPAM" : "SPAM"}
+        </Button>
+      </ErrorTooltip>
 
       <Separator orientation="vertical" className="h-8 bg-primary opacity-10" />
 
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="link"
-            className={commentButtonVariants({ isActive: isUpvoted })}
-            aria-label={isUpvoted ? "Unmark as helpful" : "Mark as helpful"}
-            disabled={isVotingDisabled}
-            onClick={handleAction("positive", isUpvoted)}
-          >
-            <ThumbUpIcon />
-            {isUpvoted ? "Marked as helpful" : "Helpful"}
-          </Button>
-        </TooltipTrigger>
-        {rateCommentValidationError && (
-          <TooltipContent>{rateCommentValidationError}</TooltipContent>
-        )}
-      </Tooltip>
+      <ErrorTooltip message={rateCommentValidationError}>
+        <Button
+          variant="link"
+          className={commentButtonVariants({ isActive: isUpvoted })}
+          aria-label={isUpvoted ? "Unmark as helpful" : "Mark as helpful"}
+          disabled={isVotingDisabled}
+          onClick={handleAction("positive", isUpvoted)}
+        >
+          <ThumbUpIcon />
+          {isUpvoted ? "Marked as helpful" : "Helpful"}
+        </Button>
+      </ErrorTooltip>
     </form>
   );
 }

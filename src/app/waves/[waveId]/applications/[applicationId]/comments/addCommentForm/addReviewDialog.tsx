@@ -11,11 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ErrorTooltip } from "@/components/ui/tooltip";
 import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 
 interface AddReviewDialogProps {
@@ -43,17 +39,13 @@ export const AddReviewDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleEmptySubmit}>
-      <Tooltip>
+      <ErrorTooltip message={validationError}>
         <DialogTrigger asChild>
-          <TooltipTrigger asChild>
-            <Button variant="secondary" disabled={disabled}>
-              Add review
-              <AssignmentIcon />
-            </Button>
-          </TooltipTrigger>
+          <Button variant="secondary" disabled={disabled}>
+            Add review
+            <AssignmentIcon />
+          </Button>
         </DialogTrigger>
-        {validationError && <TooltipContent>{validationError}</TooltipContent>}
-
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirm your review</DialogTitle>
@@ -79,7 +71,7 @@ export const AddReviewDialog = ({
             </Button>
           </DialogFooter>
         </DialogContent>
-      </Tooltip>
+      </ErrorTooltip>
     </Dialog>
   );
 };
