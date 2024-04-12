@@ -32,16 +32,21 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilterOption["id"]>("allCategories");
 
+  const [searchPhrase, setSearchPhrase] = useState("");
+
   const applications = wave.applications.filter(
     (application) => application.user.isContentHidden === false,
   );
 
-  const filteredApplications =
-    selectedCategory !== "allCategories"
-      ? applications.filter(
-          (application) => application.categoryId === selectedCategory,
-        )
-      : applications;
+  const filteredApplications = applications
+    .filter(
+      (application) =>
+        selectedCategory === "allCategories" ||
+        application.categoryId === selectedCategory,
+    )
+    .filter((app) =>
+      app.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+    );
 
   const applicationsCount = filteredApplications.length;
   const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
@@ -55,11 +60,17 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
     setSelectedCategory(value);
   }
 
+  function onSearchPhraseChange(value: string) {
+    setSearchPhrase(value);
+  }
+
   return (
     <>
       <SubmissionFilters
         categories={categories}
         onCategoryChange={onCategoryChange}
+        searchPhrase={searchPhrase}
+        onSearchPhraseChange={onSearchPhraseChange}
       />
 
       <ApplicationsTable
