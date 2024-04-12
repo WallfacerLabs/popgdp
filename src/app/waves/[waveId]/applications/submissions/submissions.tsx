@@ -42,20 +42,29 @@ export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilterOption["id"]>("allCategories");
 
+  const applications = wave.applications.filter(
+    (application) => application.user.isContentHidden === false,
+  );
+
   const { allApplications, userApplications } = useTabsSubmissions({
-    applications: wave.applications,
+    applications: applications,
     userId,
   });
 
   const [pageApplications, setPageApplications] =
     useState<Application[]>(allApplications);
 
-  const filteredApplications =
-    selectedCategory !== "allCategories"
-      ? pageApplications.filter(
-          (application) => application.categoryId === selectedCategory,
-        )
-      : pageApplications;
+  const [searchPhrase, setSearchPhrase] = useState("");
+
+  const filteredApplications = pageApplications
+    .filter(
+      (application) =>
+        selectedCategory === "allCategories" ||
+        application.categoryId === selectedCategory,
+    )
+    .filter((application) =>
+      application.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+    );
 
   const applicationsCount = filteredApplications.length;
   const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
@@ -77,11 +86,17 @@ export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
     );
   }
 
+  function onSearchPhraseChange(value: string) {
+    setSearchPhrase(value);
+  }
+
   return (
     <>
       <SubmissionFilters
         categories={categories}
         onCategoryChange={onCategoryChange}
+        searchPhrase={searchPhrase}
+        onSearchPhraseChange={onSearchPhraseChange}
       />
 
       <Tabs
