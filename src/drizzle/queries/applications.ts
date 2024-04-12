@@ -177,6 +177,15 @@ export function insertApplication(
   });
 }
 
+export function publishDraft(
+  applicationId: (typeof Application.$inferSelect)["id"],
+) {
+  return db
+    .update(Application)
+    .set({ draft: false })
+    .where(eq(Application.id, applicationId));
+}
+
 export const countApplicationsQuery = db
   .select({
     userId: Application.userId,

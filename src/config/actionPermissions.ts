@@ -75,6 +75,8 @@ export async function canAddSubmission({ waveId }: { waveId: number }) {
   }
 }
 
+export async function canPublishDraft() {}
+
 interface CanRateApplicationArgs {
   creatorId: string;
   waveId: number;
