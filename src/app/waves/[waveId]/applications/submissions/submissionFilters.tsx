@@ -1,6 +1,6 @@
 "use client";
 
-import { Category } from "@/types/Category";
+import { type Category } from "@/types/Category";
 import { cn } from "@/lib/cn";
 import { getCategoryIcon } from "@/components/ui/categories/getCategoryIcon";
 import { getCategoryStyles } from "@/components/ui/categories/getCategoryStyles";

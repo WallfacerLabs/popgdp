@@ -1,6 +1,6 @@
 import {
-  getWaveWithApplications,
   type getWaves,
+  type getWaveWithApplications,
 } from "@/drizzle/queries/waves";
 
 export type WaveWithCategories = NonNullable<

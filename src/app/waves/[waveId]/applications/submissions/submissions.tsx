@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { z } from "zod";
 
-import { Category } from "@/types/Category";
-import { WaveWithApplications } from "@/types/Wave";
+import { type Category } from "@/types/Category";
+import { type WaveWithApplications } from "@/types/Wave";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 
