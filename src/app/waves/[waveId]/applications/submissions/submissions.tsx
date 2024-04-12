@@ -27,7 +27,9 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
     Category["id"] | null
   >(null);
 
-  const applications = wave.applications;
+  const applications = wave.applications.filter(
+    (application) => application.user.isContentHidden === false,
+  );
 
   const filteredApplications = selectedCategory
     ? applications.filter(

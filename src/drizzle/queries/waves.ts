@@ -17,6 +17,7 @@ const userFragment = {
   columns: {
     name: true,
     ethereumAddress: true,
+    isContentHidden: true,
   },
   with: {
     image: imageFragment,

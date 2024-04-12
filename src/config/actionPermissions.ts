@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { ValidationError } from "@/constants/errors";
+import { getUserRoles } from "@/drizzle/queries/user";
 import { getWaveDates } from "@/drizzle/queries/waves";
 
 import { type ApplicationWithComments } from "@/types/Application";
@@ -17,6 +18,11 @@ async function checkUserId(errorMsg: string) {
   if (!userId) {
     throw new ValidationError(errorMsg);
   }
+  const { isBlocked } = await getUserRoles(userId);
+  if (isBlocked) {
+    throw new ValidationError("You are blocked from performing this action");
+  }
+
   return userId;
 }
 

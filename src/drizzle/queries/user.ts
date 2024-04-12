@@ -35,6 +35,7 @@ export const getUserRoles = cache(async (id: UserId) => {
     .select({
       isReviewer: Reviewer.ethereumAddress,
       isModerator: Moderator.ethereumAddress,
+      isBlocked: User.isBlocked,
     })
     .from(User)
     .leftJoin(Reviewer, eq(User.ethereumAddress, Reviewer.ethereumAddress))
@@ -44,6 +45,7 @@ export const getUserRoles = cache(async (id: UserId) => {
   return {
     isModerator: !!roles?.isModerator,
     isReviewer: !!roles?.isReviewer,
+    isBlocked: roles.isBlocked,
   };
 });
 
@@ -74,6 +76,8 @@ export const getModeratorPanelUsers = cache(async () => {
       name: User.name,
       ethereumAddress: User.ethereumAddress,
       createdAt: User.createdAt,
+      isBlocked: User.isBlocked,
+      isContentHidden: User.isContentHidden,
       image: Image,
       reviewsCount: countReviewsQuery.count,
       spamCount: countCommentValuesQuery.spamCount,
@@ -149,6 +153,26 @@ export function removeEthereumAddress(userId: UserId) {
       addressMessageSignature: null,
       addressMessage: null,
       updatedAt: new Date(),
+    })
+    .where(eq(User.id, userId));
+}
+
+export interface UpdateUserBlockedFlagsData {
+  userId: string;
+  isBlocked: boolean;
+  isContentHidden: boolean;
+}
+
+export function updateUserBlockedFlags({
+  userId,
+  isBlocked,
+  isContentHidden,
+}: UpdateUserBlockedFlagsData) {
+  return db
+    .update(User)
+    .set({
+      isBlocked,
+      isContentHidden,
     })
     .where(eq(User.id, userId));
 }
