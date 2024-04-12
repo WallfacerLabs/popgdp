@@ -44,7 +44,7 @@ import { useStepsContext, useStepsDispatchContext } from "../stepsProvider";
 const FORM_FIELD_PARAMS = {
   name: { min: 1, max: 36 },
   entityName: { min: 1, max: 36 },
-  summary: { min: 1, max: 160 },
+  summary: { min: 1, max: 320 },
 };
 
 export const mainDetailsSchema = z.object({
@@ -57,7 +57,10 @@ export const mainDetailsSchema = z.object({
   email: z.string().email(),
   duration: positiveNumberSchema("Project duration"),
   budget: positiveNumberSchema("Project budget"),
-  summary: specificLengthStringSchema("Entity name", FORM_FIELD_PARAMS.summary),
+  summary: specificLengthStringSchema(
+    "Project summary",
+    FORM_FIELD_PARAMS.summary,
+  ),
   categoryId: z.string(),
 });
 export type MainDetailsSchema = z.infer<typeof mainDetailsSchema>;
