@@ -45,7 +45,6 @@ const FORM_FIELD_PARAMS = {
   name: { min: 1, max: 36 },
   entityName: { min: 1, max: 36 },
   summary: { min: 1, max: 160 },
-  duration: { min: 1, max: 36 },
 };
 
 export const mainDetailsSchema = z.object({
@@ -56,10 +55,7 @@ export const mainDetailsSchema = z.object({
     FORM_FIELD_PARAMS.entityName,
   ),
   email: z.string().email(),
-  duration: specificLengthStringSchema(
-    "Project duration",
-    FORM_FIELD_PARAMS.duration,
-  ),
+  duration: positiveNumberSchema("Project duration"),
   budget: positiveNumberSchema("Project budget"),
   summary: specificLengthStringSchema("Entity name", FORM_FIELD_PARAMS.summary),
   categoryId: z.string(),
@@ -233,7 +229,6 @@ export function MainDetails({ categories }: MainDetailsProps) {
               </FormHint>
               <FormMessages>
                 <FormMessage />
-                <FormCounter limit={FORM_FIELD_PARAMS.duration.max} />
               </FormMessages>
             </FormItem>
           )}
