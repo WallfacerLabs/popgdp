@@ -32,7 +32,7 @@ const stepsStateSchema = z.object({
   currentStep: z.number(),
   applicationData: applicationDataSchema.partial(),
 });
-type StepsState = z.infer<typeof stepsStateSchema>;
+export type StepsState = z.infer<typeof stepsStateSchema>;
 
 type StepsAction =
   | {
@@ -106,6 +106,24 @@ export function StepsContextProvider({ children }: { children: ReactNode }) {
     initialStepsState,
     getInitialState,
   );
+
+  return (
+    <StepsContext.Provider value={state}>
+      <StepsDispatchContext.Provider value={dispatch}>
+        {children}
+      </StepsDispatchContext.Provider>
+    </StepsContext.Provider>
+  );
+}
+
+export function EditApplicationProvider({
+  children,
+  initialState,
+}: {
+  children: ReactNode;
+  initialState: StepsState;
+}) {
+  const [state, dispatch] = useReducer(stepsReducer, initialState);
 
   return (
     <StepsContext.Provider value={state}>

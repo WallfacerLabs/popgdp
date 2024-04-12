@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { urls } from "@/constants/urls";
+
 import { ApplicationWithComments } from "@/types/Application";
 import { canPublishDraft } from "@/config/actionPermissions";
 import { Button } from "@/components/ui/button";
@@ -25,6 +28,15 @@ export async function ApplicationUserButtons({
       <Button> Publish</Button>
     </form>
   ) : (
-    <></>
+    <Button asChild>
+      <Link
+        href={urls.applications.edit({
+          applicationId: application.id,
+          waveId: application.waveId,
+        })}
+      >
+        Edit
+      </Link>
+    </Button>
   );
 }

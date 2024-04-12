@@ -1,2 +1,2 @@
-ALTER TABLE "user" ADD COLUMN "isBlocked" boolean DEFAULT false NOT NULL;
-ALTER TABLE "user" ADD COLUMN "isContentHidden" boolean DEFAULT false NOT NULL;
+ALTER TABLE "user" ADD COLUMN IF NOT EXISTS "isBlocked" boolean DEFAULT false NOT NULL;
+ALTER TABLE "user" ADD COLUMN IF NOT EXISTS "isContentHidden" boolean DEFAULT false NOT NULL;
