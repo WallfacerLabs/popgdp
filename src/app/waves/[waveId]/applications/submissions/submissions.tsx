@@ -1,29 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { z } from "zod";
 
 import { type Category } from "@/types/Category";
 import { type WaveWithApplications } from "@/types/Wave";
+import { useSearchState } from "@/hooks/useSearchState";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 
 import { CategoryFilterOption } from "./filters/categoryFilter";
 import { SubmissionFilters } from "./submissionFilters";
 
-const PAGE_SIZE = 10;
-
-const searchParamsSchema = z.object({
-  page: z.coerce.number().optional().default(1),
-});
+const PAGE_SIZE = 1;
 
 interface SubmissionsProps {
   wave: WaveWithApplications;
-  searchParams: unknown;
 }
 
-export function Submissions({ wave, searchParams }: SubmissionsProps) {
-  const { page } = searchParamsSchema.parse(searchParams);
+export function Submissions({ wave }: SubmissionsProps) {
+  const { searchParams, updateSearchParams } = useSearchState();
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+  const search = searchParams.get("search") ?? "";
+
   const categories: CategoryFilterOption[] = [
     { id: "allCategories", name: "All Categories" },
     ...wave.categories,
@@ -31,8 +29,6 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
 
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilterOption["id"]>("allCategories");
-
-  const [searchPhrase, setSearchPhrase] = useState("");
 
   const applications = wave.applications.filter(
     (application) => application.user.isContentHidden === false,
@@ -45,7 +41,7 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
         application.categoryId === selectedCategory,
     )
     .filter((application) =>
-      application.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+      application.name.toLowerCase().includes(search.toLowerCase()),
     );
 
   const applicationsCount = filteredApplications.length;
@@ -61,7 +57,7 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
   }
 
   function onSearchPhraseChange(value: string) {
-    setSearchPhrase(value);
+    updateSearchParams("search", value);
   }
 
   return (
@@ -69,7 +65,7 @@ export function Submissions({ wave, searchParams }: SubmissionsProps) {
       <SubmissionFilters
         categories={categories}
         onCategoryChange={onCategoryChange}
-        searchPhrase={searchPhrase}
+        searchPhrase={search}
         onSearchPhraseChange={onSearchPhraseChange}
       />
 
