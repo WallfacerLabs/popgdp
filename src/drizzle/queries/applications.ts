@@ -126,6 +126,8 @@ export const getModeratorPanelApplications = cache(async () => {
       category: {
         name: Category.name,
         color: Category.color,
+        id: Category.id,
+        description: Category.description,
       },
       helpfulCount: countApplicationValue(ContentValue.positive),
       spamCount: countApplicationValue(ContentValue.spam),
