@@ -32,15 +32,12 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   const { searchParams, updateSearchParams } = useSearchState();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
   const search = searchParams.get("search") ?? "";
+  const category = searchParams.get("category") ?? "all";
 
   const categories: CategoryFilterOption[] = [
     { id: "all", name: "All Categories" },
     ...wave.categories,
   ];
-
-  const [selectedCategory, setSelectedCategory] = useState<
-    CategoryFilterOption["id"] | undefined
-  >();
 
   const applications = wave.applications.filter(
     (application) => application.user.isContentHidden === false,
@@ -56,7 +53,7 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
 
   const filteredApplications = getFilteredSubmissions({
     applications: pageApplications,
-    category: selectedCategory,
+    category,
     search,
   });
 
@@ -69,7 +66,7 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   );
 
   function onCategoryChange(value: Category["id"]) {
-    setSelectedCategory(value);
+    updateSearchParams("category", value);
   }
 
   function onTabChange(value: string) {
