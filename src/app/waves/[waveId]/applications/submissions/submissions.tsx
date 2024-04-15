@@ -11,7 +11,7 @@ import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import { CategoryFilterOption } from "./filters/categoryFilter";
 import { SubmissionFilters } from "./submissionFilters";
 
-const PAGE_SIZE = 1;
+const PAGE_SIZE = 10;
 
 interface SubmissionsProps {
   wave: WaveWithApplications;
