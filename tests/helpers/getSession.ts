@@ -1,9 +1,9 @@
-let user = {}
- 
+let user = {};
+
 export function getSession() {
   return {
-    user
-  }
+    user,
+  };
 }
 
 export function setUser(newUser: any) {
@@ -11,5 +11,5 @@ export function setUser(newUser: any) {
 }
 
 export function clearSession() {
-  user = {}
+  user = {};
 }
