@@ -1,4 +1,7 @@
-import { type getApplicationWithComments } from "@/drizzle/queries/applications";
+import {
+  getModeratorPanelApplications,
+  type getApplicationWithComments,
+} from "@/drizzle/queries/applications";
 import { type getWaveWithApplications } from "@/drizzle/queries/waves";
 
 export type Application = NonNullable<
@@ -8,3 +11,7 @@ export type Application = NonNullable<
 export type ApplicationWithComments = NonNullable<
   Awaited<ReturnType<typeof getApplicationWithComments>>
 >;
+
+export type ModeratorApplication = NonNullable<
+  Awaited<ReturnType<typeof getModeratorPanelApplications>>
+>[number];
