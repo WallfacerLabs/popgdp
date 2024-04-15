@@ -11,6 +11,7 @@ import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { Separator } from "@/components/ui/separator";
 
+import { ApplicationUserButtons } from "./applicationUserButtons/applicationUserButtons";
 import { ApplicationValueForm } from "./applicationValue/applicationValueForm";
 import { Comments } from "./comments/comments";
 
@@ -51,7 +52,11 @@ export default async function Application({ params }: { params: unknown }) {
           <CategoryBadge category={application.category} />
         </div>
 
-        <ApplicationValueForm application={application} />
+        {application.userId === userId ? (
+          <ApplicationUserButtons application={application} />
+        ) : (
+          <ApplicationValueForm application={application} />
+        )}
       </div>
 
       <ApplicationPreview
