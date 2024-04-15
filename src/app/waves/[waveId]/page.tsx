@@ -25,13 +25,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Wave({
-  params,
-  searchParams,
-}: {
-  params: unknown;
-  searchParams: unknown;
-}) {
+export default async function Wave({ params }: { params: unknown }) {
   const { waveId } = parseWaveParams(params);
 
   const wave = await getWaveWithApplications(waveId);
@@ -46,7 +40,7 @@ export default async function Wave({
 
       <TimelinePreview wave={wave} />
 
-      <SubmissionsSection wave={wave} searchParams={searchParams} />
+      <SubmissionsSection wave={wave} />
     </div>
   );
 }

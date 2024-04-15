@@ -12,10 +12,9 @@ import { Submissions } from "./submissions";
 
 interface SubmissionsProps {
   wave: WaveWithApplications;
-  searchParams: unknown;
 }
 
-export function SubmissionsSection({ wave, searchParams }: SubmissionsProps) {
+export function SubmissionsSection({ wave }: SubmissionsProps) {
   return (
     <>
       <div className="flex items-center justify-between">
@@ -23,7 +22,7 @@ export function SubmissionsSection({ wave, searchParams }: SubmissionsProps) {
         <ApplyForGrantButton waveId={wave.id} />
       </div>
 
-      <Submissions wave={wave} searchParams={searchParams} />
+      <Submissions wave={wave} />
     </>
   );
 }
