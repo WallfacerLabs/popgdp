@@ -137,8 +137,8 @@ const FormHint = ({
       className={cn(
         "relative flex items-center text-sm",
         "[&_svg]:h-4 [&_svg]:w-4",
-        leftHint && "[&>input]:pl-10",
-        rightHint && "[&>input]:pr-10",
+        !!leftHint && "[&>input]:pl-10",
+        !!rightHint && "[&>input]:pr-10",
         className,
       )}
     >
