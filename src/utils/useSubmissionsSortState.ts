@@ -10,7 +10,7 @@ export const SUBMISSIONS_LIST_COLUMNS = [
   "submissionDate",
   "budget",
   "category",
-];
+] as const;
 
 export type SubmissionsListColumn = (typeof SUBMISSIONS_LIST_COLUMNS)[number];
 
@@ -22,7 +22,7 @@ export function useSubmissionsSortState() {
   const { searchParams, updateSearchParams } = useSearchState();
 
   const handleSortBy = (name: SubmissionsSortBy["sortName"]): void => {
-    const descendingByDefault = name === "tvl" || name === "apy";
+    const descendingByDefault = name === "submissionDate" || name === "budget";
     const sortBy = searchParams.get("sortBy");
     const previousAsc = searchParams.get("asc") === "true";
     const asc = sortBy === name ? !previousAsc : !descendingByDefault;
@@ -31,14 +31,14 @@ export function useSubmissionsSortState() {
   };
 
   const asc = searchParams.get("asc") === "true";
-  const sortByRaw = searchParams.get("sortBy") ?? "";
+  const sortByRaw = searchParams.get("sortBy") ?? "name";
   const sortName = SUBMISSIONS_LIST_COLUMNS.includes(
     sortByRaw as SubmissionsListColumn,
   )
-    ? sortByRaw
+    ? (sortByRaw as SubmissionsListColumn)
     : DEFAULT_SORT_BY;
 
-  const sortBy = {
+  const sortBy: SubmissionsSortBy = {
     sortName,
     asc,
   };
