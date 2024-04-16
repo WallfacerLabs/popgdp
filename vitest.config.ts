@@ -9,6 +9,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      react: "next/dist/compiled/react/cjs/react.development.js",
+      "@auth0/nextjs-auth0": path.resolve(
+        __dirname,
+        "./tests/helpers/getSession.ts",
+      ),
     },
   },
 });
