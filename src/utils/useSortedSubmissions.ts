@@ -21,6 +21,7 @@ export function useSortedSubmissions({
     case "entity":
       return sortObjectsByKey(applications, ["entityName"], sortBy.asc);
     case "submissionDate":
+      //@ts-ignore
       return sortObjectsByKey(applications, ["createdAt"], sortBy.asc);
     case "budget":
       return sortObjectsByKey(applications, ["budget"], sortBy.asc);
