@@ -30,15 +30,6 @@ interface ApplicationsTableProps {
   setSortBy: (sortBy: SubmissionsSortBy["sortName"]) => void;
 }
 
-const SUBMISSIONS_LIST_COLUMNS = [
-  "name",
-  "user",
-  "entity",
-  "submissionDate",
-  "budget",
-  "category",
-] as const;
-
 export const ApplicationsTable = ({
   applications,
   waveId,
