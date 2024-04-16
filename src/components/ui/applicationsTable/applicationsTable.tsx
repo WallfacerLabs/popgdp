@@ -30,7 +30,7 @@ const SUBMISSIONS_LIST_COLUMNS = [
   "submissionDate",
   "budget",
   "category",
-];
+] as const;
 
 export const ApplicationsTable = ({
   applications,
