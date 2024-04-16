@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { z } from "zod";
 
 import { Application } from "@/types/Application";
 import { type Category } from "@/types/Category";
 import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
 import { useTabsSubmissions } from "@/hooks/submissions/useTabsSubmissions";
+import { useSearchState } from "@/hooks/useSearchState";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,10 +17,6 @@ import { SubmissionFilters } from "./submissionFilters";
 
 const PAGE_SIZE = 10;
 
-const searchParamsSchema = z.object({
-  page: z.coerce.number().optional().default(1),
-});
-
 const SUBMISSION_TABS = {
   allSubmissions: "All Submissions",
   mySubmissions: "My Submissions",
@@ -28,12 +24,14 @@ const SUBMISSION_TABS = {
 
 interface SubmissionsProps {
   wave: WaveWithApplications;
-  searchParams: unknown;
   userId: UserId | undefined;
 }
 
-export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
-  const { page } = searchParamsSchema.parse(searchParams);
+export function Submissions({ wave, userId }: SubmissionsProps) {
+  const { searchParams, updateSearchParams } = useSearchState();
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+  const search = searchParams.get("search") ?? "";
+
   const categories: CategoryFilterOption[] = [
     { id: "allCategories", name: "All Categories" },
     ...wave.categories,
@@ -54,8 +52,6 @@ export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
   const [pageApplications, setPageApplications] =
     useState<Application[]>(allApplications);
 
-  const [searchPhrase, setSearchPhrase] = useState("");
-
   const filteredApplications = pageApplications
     .filter(
       (application) =>
@@ -63,7 +59,7 @@ export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
         application.categoryId === selectedCategory,
     )
     .filter((application) =>
-      application.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+      application.name.toLowerCase().includes(search.toLowerCase()),
     );
 
   const applicationsCount = filteredApplications.length;
@@ -87,7 +83,7 @@ export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
   }
 
   function onSearchPhraseChange(value: string) {
-    setSearchPhrase(value);
+    updateSearchParams("search", value);
   }
 
   return (
@@ -95,7 +91,7 @@ export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
       <SubmissionFilters
         categories={categories}
         onCategoryChange={onCategoryChange}
-        searchPhrase={searchPhrase}
+        searchPhrase={search}
         onSearchPhraseChange={onSearchPhraseChange}
       />
 

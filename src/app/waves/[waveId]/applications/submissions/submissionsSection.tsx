@@ -14,13 +14,9 @@ import { Submissions } from "./submissions";
 
 interface SubmissionsProps {
   wave: WaveWithApplications;
-  searchParams: unknown;
 }
 
-export async function SubmissionsSection({
-  wave,
-  searchParams,
-}: SubmissionsProps) {
+export async function SubmissionsSection({ wave }: SubmissionsProps) {
   const userId = await getUserId();
 
   return (
@@ -30,7 +26,7 @@ export async function SubmissionsSection({
         <ApplyForGrantButton waveId={wave.id} userId={userId} />
       </div>
 
-      <Submissions wave={wave} searchParams={searchParams} userId={userId} />
+      <Submissions wave={wave} userId={userId} />
     </>
   );
 }
