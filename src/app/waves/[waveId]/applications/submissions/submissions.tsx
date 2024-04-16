@@ -7,6 +7,7 @@ import { Application } from "@/types/Application";
 import { type Category } from "@/types/Category";
 import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
+import { useTabsSubmissions } from "@/hooks/submissions/useTabsSubmissions";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -41,13 +42,10 @@ export function Submissions({ wave, searchParams, userId }: SubmissionsProps) {
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilterOption["id"]>("allCategories");
 
-  const allApplications = wave.applications.filter(
-    (application) => application.user.isContentHidden === false,
-  );
-
-  const userApplications = allApplications.filter(
-    (application) => application.userId === userId,
-  );
+  const { allApplications, userApplications } = useTabsSubmissions({
+    applications: wave.applications,
+    userId,
+  });
 
   const [pageApplications, setPageApplications] =
     useState<Application[]>(allApplications);
