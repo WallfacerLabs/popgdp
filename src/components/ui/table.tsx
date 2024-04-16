@@ -9,6 +9,9 @@ import Link from "next/link";
 
 import { cn } from "@/lib/cn";
 
+import { ChevronIcon } from "../icons/chevronIcon";
+import { Button } from "./button";
+
 const Table = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
@@ -84,6 +87,49 @@ const TableHead = forwardRef<HTMLDivElement, ThHTMLAttributes<HTMLDivElement>>(
 );
 TableHead.displayName = "TableHead";
 
+type SortBy = { sortName: string; asc: boolean };
+
+interface TableSortHeadProps extends ThHTMLAttributes<HTMLDivElement> {
+  sortName: string;
+  sortBy: SortBy;
+  setSortBy: (sortBy: SortBy) => void;
+}
+
+const TableSortHead = forwardRef<HTMLDivElement, TableSortHeadProps>(
+  ({ sortName, sortBy, setSortBy, children, ...props }, ref) => {
+    const isSorted = sortBy.sortName === sortName;
+
+    return (
+      <TableHead ref={ref} {...props}>
+        <Button
+          variant="default"
+          onClick={() => setSortBy(sortBy)}
+          className="px-0"
+        >
+          {children}
+          <div className="grid grid-rows-[0.5rem_0.5rem] items-center [&>svg]:h-4 [&>svg]:w-4 [&>svg]:transition-opacity">
+            <ChevronIcon
+              direction="up"
+              className={cn(
+                "opacity-30",
+                isSorted && sortBy.asc && "opacity-100",
+              )}
+            />
+            <ChevronIcon
+              direction="down"
+              className={cn(
+                "opacity-30",
+                isSorted && !sortBy.asc && "opacity-100",
+              )}
+            />
+          </div>
+        </Button>
+      </TableHead>
+    );
+  },
+);
+TableSortHead.displayName = "TableSortHead";
+
 const TableCell = forwardRef<HTMLDivElement, TdHTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
@@ -103,6 +149,7 @@ export {
   TableBody,
   TableCell,
   TableHead,
+  TableSortHead,
   TableHeader,
   TableLinkRow,
   TableRow,
