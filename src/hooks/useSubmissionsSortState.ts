@@ -1,4 +1,5 @@
-import { SortBy } from '@/types/Sort';
+import { SortBy } from "@/types/Sort";
+
 import { useSearchState } from "./useSearchState";
 
 const DEFAULT_SORT_BY: SubmissionsListColumn = "name";

@@ -8,6 +8,7 @@ import { Application } from "@/types/Application";
 import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
 import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
+import { useSubmissionsSortState } from "@/hooks/useSubmissionsSortState";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
 import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";
@@ -29,6 +30,8 @@ interface SubmissionsProps {
 export function Submissions({ wave, userId }: SubmissionsProps) {
   const { page, search, category, onCategoryChange, onSearchPhraseChange } =
     useSubmissionsSearchState();
+
+  const { sortBy, handleSortBy } = useSubmissionsSortState();
 
   const categories: CategoryFilterOption[] = [
     { id: "all", name: "All Categories" },
@@ -95,6 +98,8 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
           <ApplicationsTable
             applications={currentPageApplications}
             waveId={wave.id}
+            sortBy={sortBy}
+            setSortBy={handleSortBy}
           />
         </TabsContent>
 
@@ -102,6 +107,8 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
           <ApplicationsTable
             applications={currentPageApplications}
             waveId={wave.id}
+            sortBy={sortBy}
+            setSortBy={handleSortBy}
           />
         </TabsContent>
       </Tabs>
