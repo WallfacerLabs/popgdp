@@ -45,7 +45,7 @@ export const ApplicationsTable = ({
               key={column}
               sortName={column}
               sortBy={sortBy}
-              setSortBy={setSortBy}
+              setSortBy={setSortBy as (sortBy: string) => void}
             />
           ))}
         </TableRow>
@@ -83,7 +83,7 @@ const SubmissionsListHead = ({
       sortBy={sortBy}
       setSortBy={() => setSortBy(sortName)}
     >
-      {getSubmissionsListColumn(sortName)}
+      {getSubmissionsListColumn(sortName as SubmissionsSortBy["sortName"])}
     </TableSortHead>
   );
 };
