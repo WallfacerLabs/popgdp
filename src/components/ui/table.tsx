@@ -87,12 +87,12 @@ const TableHead = forwardRef<HTMLDivElement, ThHTMLAttributes<HTMLDivElement>>(
 );
 TableHead.displayName = "TableHead";
 
-type SortBy = { sortName: string; asc: boolean };
+export type SortBy = { sortName: string; asc: boolean };
 
-interface TableSortHeadProps extends ThHTMLAttributes<HTMLDivElement> {
+export interface TableSortHeadProps extends ThHTMLAttributes<HTMLDivElement> {
   sortName: string;
   sortBy: SortBy;
-  setSortBy: (sortBy: SortBy) => void;
+  setSortBy: (sortBy: SortBy["sortName"]) => void;
 }
 
 const TableSortHead = forwardRef<HTMLDivElement, TableSortHeadProps>(
@@ -103,7 +103,7 @@ const TableSortHead = forwardRef<HTMLDivElement, TableSortHeadProps>(
       <TableHead ref={ref} {...props}>
         <Button
           variant="default"
-          onClick={() => setSortBy(sortBy)}
+          onClick={() => setSortBy(sortName)}
           className="px-0"
         >
           {children}
