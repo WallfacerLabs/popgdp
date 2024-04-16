@@ -7,6 +7,7 @@ import {
 } from "react";
 import Link from "next/link";
 
+import { SortBy } from "@/types/Sort";
 import { cn } from "@/lib/cn";
 
 import { ChevronIcon } from "../icons/chevronIcon";
@@ -87,8 +88,6 @@ const TableHead = forwardRef<HTMLDivElement, ThHTMLAttributes<HTMLDivElement>>(
 );
 TableHead.displayName = "TableHead";
 
-export type SortBy = { sortName: string; asc: boolean };
-
 export interface TableSortHeadProps extends ThHTMLAttributes<HTMLDivElement> {
   sortName: string;
   sortBy: SortBy;
@@ -149,8 +148,8 @@ export {
   TableBody,
   TableCell,
   TableHead,
-  TableSortHead,
   TableHeader,
   TableLinkRow,
   TableRow,
+  TableSortHead,
 };
