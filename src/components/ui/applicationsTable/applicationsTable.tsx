@@ -5,7 +5,7 @@ import {
   SUBMISSIONS_LIST_COLUMNS,
   SubmissionsListColumn,
   SubmissionsSortBy,
-} from "@/hooks/useSubmissionsSortState";
+} from "@/hooks/submissions/useSubmissionsSortState";
 import {
   Table,
   TableBody,

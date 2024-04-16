@@ -1,6 +1,5 @@
 import { Category } from "@/types/Category";
-
-import { useSearchState } from "./useSearchState";
+import { useSearchState } from "@/hooks/useSearchState";
 
 export function useSubmissionsSearchState() {
   const { searchParams, updateSearchParams } = useSearchState();

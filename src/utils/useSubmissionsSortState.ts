@@ -1,6 +1,5 @@
 import { SortBy } from "@/types/Sort";
-
-import { useSearchState } from "./useSearchState";
+import { useSearchState } from "@/hooks/useSearchState";
 
 const DEFAULT_SORT_BY: SubmissionsListColumn = "name";
 
