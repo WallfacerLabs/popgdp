@@ -52,4 +52,16 @@ const Gray: Story = {
   },
 };
 
-export { Green, Orange, Red, Blue, Pink, Purple, Gray };
+const Yellow: Story = {
+  args: {
+    variant: "yellow",
+  },
+};
+
+const Cyan: Story = {
+  args: {
+    variant: "cyan",
+  },
+};
+
+export { Green, Orange, Red, Blue, Pink, Purple, Gray, Yellow, Cyan };
