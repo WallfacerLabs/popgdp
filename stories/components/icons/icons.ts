@@ -47,3 +47,4 @@ export { UploadCloudIcon } from "@/components/icons/uploadCloudIcon";
 export { UserIcon } from "@/components/icons/userIcon";
 export { WorldcoinIcon } from "@/components/icons/worldcoinIcon";
 export { ClearAllIcon } from "@/components/icons/clearAllIcon";
+export { SearchIcon } from "@/components/icons/searchIcon";
