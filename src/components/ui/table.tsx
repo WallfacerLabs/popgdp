@@ -38,11 +38,11 @@ const TableBody = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 TableBody.displayName = "TableBody";
 
 const rowClasses =
-  "table-row border transition-colors data-[state=selected]:bg-muted";
+  "group table-row transition-colors data-[state=selected]:bg-muted";
 
 const TableRow = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div className={cn(rowClasses, className)} {...props} />
+    <div ref={ref} className={cn(rowClasses, className)} {...props} />
   ),
 );
 TableRow.displayName = "TableRow";
@@ -53,15 +53,15 @@ const TableLinkRow = forwardRef<HTMLDivElement, ComponentProps<typeof Link>>(
       ref={ref}
       className={cn(
         rowClasses,
-        "relative [&>.table-cell>*]:relative [&>.table-cell>*]:z-10 [&>.table-cell>*]:w-fit",
+        "relative focus-within:z-10 [&>.table-cell>*]:relative [&>.table-cell>*]:z-10 [&>.table-cell>*]:w-fit",
         className,
       )}
     >
       {children}
       <Link
         className={cn(
-          "absolute inset-0 h-full w-full transition-colors last:rounded-b-lg",
-          "hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+          "absolute inset-0 h-full w-full rounded transition-colors group-last:rounded-b-2xl",
+          "hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-0",
         )}
         {...props}
       />
