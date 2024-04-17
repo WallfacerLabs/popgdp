@@ -43,7 +43,7 @@ export async function Comments({ application, userId }: CommentsProps) {
     <div className="flex flex-col gap-8">
       <Tabs defaultValue={SECTIONS.discussion}>
         <section>
-          <TabsList className="justify-start gap-6">
+          <TabsList className="gap-6">
             <SectionButton
               section={SECTIONS.discussion}
               elementsAmount={comments.length}

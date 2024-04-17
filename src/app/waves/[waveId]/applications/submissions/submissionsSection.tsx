@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { urls } from "@/constants/urls";
 
+import { UserId } from "@/types/User";
 import { WaveWithApplications } from "@/types/Wave";
 import { canAddSubmission } from "@/config/actionPermissions";
+import { getUserId } from "@/lib/auth";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/ui/pageTitle";
@@ -15,20 +17,28 @@ interface SubmissionsProps {
   searchParams: unknown;
 }
 
-export function SubmissionsSection({ wave, searchParams }: SubmissionsProps) {
+export async function SubmissionsSection({
+  wave,
+  searchParams,
+}: SubmissionsProps) {
+  const userId = await getUserId();
+
   return (
     <>
       <div className="flex items-center justify-between">
         <PageTitle>Submissions</PageTitle>
-        <ApplyForGrantButton waveId={wave.id} />
+        <ApplyForGrantButton waveId={wave.id} userId={userId} />
       </div>
 
-      <Submissions wave={wave} searchParams={searchParams} />
+      <Submissions wave={wave} searchParams={searchParams} userId={userId} />
     </>
   );
 }
 
-async function ApplyForGrantButton({ waveId }: WaveParamsSchema) {
+async function ApplyForGrantButton({
+  waveId,
+  userId,
+}: WaveParamsSchema & { userId: UserId | undefined }) {
   const { validationErrorMessage } = await canAddSubmission({ waveId });
 
   if (typeof validationErrorMessage !== "undefined") {
