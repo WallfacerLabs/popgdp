@@ -57,6 +57,12 @@ const config = {
         purple: {
           DEFAULT: "hsl(var(--purple))",
         },
+        yellow: {
+          DEFAULT: "hsl(var(--yellow))",
+        },
+        cyan: {
+          DEFAULT: "hsl(var(--cyan))",
+        },
       },
       keyframes: {
         "accordion-down": {
