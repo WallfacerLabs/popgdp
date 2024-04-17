@@ -5,5 +5,7 @@ export const categoryColors = [
   "green",
   "blue",
   "purple",
+  "yellow",
+  "cyan",
 ] as const;
 export type CategoryColor = (typeof categoryColors)[number];
