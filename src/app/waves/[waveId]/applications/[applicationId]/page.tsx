@@ -72,9 +72,12 @@ export default async function Application({ params }: { params: unknown }) {
         }}
       />
 
-      <Separator className="my-16" />
-
-      <Comments application={application} userId={userId} />
+      {!application.draft && (
+        <>
+          <Separator className="my-16" />
+          <Comments application={application} userId={userId} />
+        </>
+      )}
     </div>
   );
 }
