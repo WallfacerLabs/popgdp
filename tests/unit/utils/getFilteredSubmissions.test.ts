@@ -27,7 +27,7 @@ const APPLICATIONS_MOCK = [
 ] as Application[];
 
 describe("hooks/useFilteredSubmissions", () => {
-  test("returns all applications for default filters", () => {
+  test("default filters", () => {
     const filteredApplications = getFilteredSubmissions({
       applications: APPLICATIONS_MOCK,
       category: CATEGORIES_MOCK.all,
@@ -37,7 +37,7 @@ describe("hooks/useFilteredSubmissions", () => {
     expect(filteredApplications).toEqual(APPLICATIONS_MOCK);
   });
 
-  test("returns applications filtered by name", () => {
+  test("search filter", () => {
     const filteredApplications = getFilteredSubmissions({
       applications: APPLICATIONS_MOCK,
       category: CATEGORIES_MOCK.all,
@@ -47,7 +47,7 @@ describe("hooks/useFilteredSubmissions", () => {
     expect(filteredApplications).toEqual([APPLICATIONS_MOCK[0]]);
   });
 
-  test("returns applications filtered by category", () => {
+  test("category filter", () => {
     const filteredApplications = getFilteredSubmissions({
       applications: APPLICATIONS_MOCK,
       category: CATEGORIES_MOCK.first,
