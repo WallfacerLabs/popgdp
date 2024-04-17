@@ -1,7 +1,7 @@
+import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 import { describe, expect, test } from "vitest";
 
 import { Application } from "@/types/Application";
-import { useFilteredSubmissions } from "@/hooks/submissions/useFilteredSubmissions";
 
 const CATEGORIES_MOCK = {
   all: "all",
@@ -28,7 +28,7 @@ const APPLICATIONS_MOCK = [
 
 describe("hooks/useFilteredSubmissions", () => {
   test("returns all applications for default filters", () => {
-    const filteredApplications = useFilteredSubmissions({
+    const filteredApplications = getFilteredSubmissions({
       applications: APPLICATIONS_MOCK,
       category: CATEGORIES_MOCK.all,
       search: "",
@@ -38,7 +38,7 @@ describe("hooks/useFilteredSubmissions", () => {
   });
 
   test("returns applications filtered by name", () => {
-    const filteredApplications = useFilteredSubmissions({
+    const filteredApplications = getFilteredSubmissions({
       applications: APPLICATIONS_MOCK,
       category: CATEGORIES_MOCK.all,
       search: "First",
@@ -48,7 +48,7 @@ describe("hooks/useFilteredSubmissions", () => {
   });
 
   test("returns applications filtered by category", () => {
-    const filteredApplications = useFilteredSubmissions({
+    const filteredApplications = getFilteredSubmissions({
       applications: APPLICATIONS_MOCK,
       category: CATEGORIES_MOCK.first,
       search: "",

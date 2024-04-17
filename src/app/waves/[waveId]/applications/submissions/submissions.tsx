@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 
 import { Application } from "@/types/Application";
 import { type Category } from "@/types/Category";
 import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
-import { useFilteredSubmissions } from "@/hooks/submissions/useFilteredSubmissions";
 import { useTabsSubmissions } from "@/hooks/submissions/useTabsSubmissions";
 import { useSearchState } from "@/hooks/useSearchState";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
@@ -54,7 +54,7 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   const [pageApplications, setPageApplications] =
     useState<Application[]>(allApplications);
 
-  const filteredApplications = useFilteredSubmissions({
+  const filteredApplications = getFilteredSubmissions({
     applications: pageApplications,
     category: selectedCategory,
     search,

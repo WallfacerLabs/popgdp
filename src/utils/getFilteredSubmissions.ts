@@ -7,7 +7,7 @@ interface FilteredSubmissionsProps {
   search: string;
 }
 
-export function useFilteredSubmissions({
+export function getFilteredSubmissions({
   applications,
   category,
   search,
