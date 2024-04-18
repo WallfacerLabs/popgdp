@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 
 import { Application } from "@/types/Application";
 import { type Category } from "@/types/Category";
@@ -33,12 +34,13 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   const search = searchParams.get("search") ?? "";
 
   const categories: CategoryFilterOption[] = [
-    { id: "allCategories", name: "All Categories" },
+    { id: "all", name: "All Categories" },
     ...wave.categories,
   ];
 
-  const [selectedCategory, setSelectedCategory] =
-    useState<CategoryFilterOption["id"]>("allCategories");
+  const [selectedCategory, setSelectedCategory] = useState<
+    CategoryFilterOption["id"] | undefined
+  >();
 
   const applications = wave.applications.filter(
     (application) => application.user.isContentHidden === false,
@@ -52,15 +54,11 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   const [pageApplications, setPageApplications] =
     useState<Application[]>(allApplications);
 
-  const filteredApplications = pageApplications
-    .filter(
-      (application) =>
-        selectedCategory === "allCategories" ||
-        application.categoryId === selectedCategory,
-    )
-    .filter((application) =>
-      application.name.toLowerCase().includes(search.toLowerCase()),
-    );
+  const filteredApplications = getFilteredSubmissions({
+    applications: pageApplications,
+    category: selectedCategory,
+    search,
+  });
 
   const applicationsCount = filteredApplications.length;
   const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);

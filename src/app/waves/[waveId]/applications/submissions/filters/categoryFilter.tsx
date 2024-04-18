@@ -29,7 +29,7 @@ export const CategoryFilter = ({
   onCategoryChange,
 }: CategoryFilterProps) => {
   return (
-    <Select onValueChange={onCategoryChange} defaultValue="allCategories">
+    <Select onValueChange={onCategoryChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Category" />
       </SelectTrigger>
