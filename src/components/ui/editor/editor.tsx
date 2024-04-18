@@ -30,7 +30,7 @@ function Editor({
 }: EditorProps & VariantProps<typeof editorVariants>) {
   return (
     <LexicalComposer initialConfig={getInitialConfig({ namespace: "Editor" })}>
-      <div className="rounded-3xl border shadow-sm transition-colors focus-within:border-primary">
+      <div className="group rounded-3xl border shadow-sm transition-colors focus-within:border-primary">
         <ToolbarPlugin />
         <div className="relative">
           <RichTextPlugin
@@ -70,6 +70,7 @@ const editorVariants = cva(
     "prose w-full max-w-none border-t bg-transparent px-3 py-2 text-sm",
     "focus-visible:outline-none",
     "disabled:cursor-not-allowed disabled:opacity-50",
+    "group-has-[:focus-within]:border-primary",
   ),
   {
     variants: {
