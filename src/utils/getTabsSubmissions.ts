@@ -6,7 +6,7 @@ interface UserSubmissionsProps {
   userId: UserId | undefined;
 }
 
-export function useTabsSubmissions({
+export function getTabsSubmissions({
   applications,
   userId,
 }: UserSubmissionsProps) {
