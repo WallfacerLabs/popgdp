@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, suite, test } from "vitest";
 
 import { compareObjectsByProperties } from "@/lib/comparison";
 
@@ -23,9 +23,9 @@ const vaultWithSmallerProperties = {
   },
 };
 
-describe("compareObjectsByProperties", () => {
-  describe("date", () => {
-    describe("shallow", () => {
+describe("utils/comparison", () => {
+  test("date", () => {
+    suite("shallow", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
@@ -49,7 +49,7 @@ describe("compareObjectsByProperties", () => {
       });
     });
 
-    describe("nested", () => {
+    suite("nested", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
@@ -74,8 +74,8 @@ describe("compareObjectsByProperties", () => {
     });
   });
 
-  describe("number", () => {
-    describe("shallow", () => {
+  test("number", () => {
+    suite("shallow", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
@@ -99,7 +99,7 @@ describe("compareObjectsByProperties", () => {
       });
     });
 
-    describe("nested", () => {
+    suite("nested", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
@@ -124,8 +124,8 @@ describe("compareObjectsByProperties", () => {
     });
   });
 
-  describe("string", () => {
-    describe("shallow", () => {
+  test("string", () => {
+    suite("shallow", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
@@ -149,7 +149,7 @@ describe("compareObjectsByProperties", () => {
       });
     });
 
-    describe("nested", () => {
+    suite("nested", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
