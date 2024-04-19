@@ -34,4 +34,10 @@ const Link: Story = {
   },
 };
 
-export { Primary, Secondary, Outline, Link };
+const Default: Story = {
+  args: {
+    variant: "default",
+  },
+};
+
+export { Primary, Secondary, Outline, Link, Default };
