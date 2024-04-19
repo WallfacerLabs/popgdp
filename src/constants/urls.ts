@@ -19,6 +19,10 @@ export const urls = {
       `/waves/${waveId}/applications/create/preview` as const,
     preview: ({ waveId, applicationId }: ApplicationParamsSchema) =>
       `/waves/${waveId}/applications/${applicationId}` as const,
+    edit: ({ waveId, applicationId }: ApplicationParamsSchema) =>
+      `/waves/${waveId}/applications/${applicationId}/edit` as const,
+    editPreview: ({ waveId, applicationId }: ApplicationParamsSchema) =>
+      `/waves/${waveId}/applications/${applicationId}/edit/preview` as const,
   },
   moderator: {
     reviewers: "/moderator/reviewers",

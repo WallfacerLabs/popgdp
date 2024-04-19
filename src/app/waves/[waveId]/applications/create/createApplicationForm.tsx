@@ -37,10 +37,12 @@ const stepsConfig = [
 
 interface CreateApplicationFormProps {
   categories: Array<Category>;
+  previewUrl: string;
 }
 
 export default function CreateApplicationForm({
   categories,
+  previewUrl,
 }: CreateApplicationFormProps) {
   const { currentStep } = useStepsContext();
 
@@ -50,7 +52,7 @@ export default function CreateApplicationForm({
       <TeamInformation />
       <GrantScoping />
       <Roadmap />
-      <Resources />
+      <Resources previewUrl={previewUrl} />
     </Stepper>
   );
 }

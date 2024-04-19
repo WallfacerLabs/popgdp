@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { urls } from "@/constants/urls";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,7 +25,11 @@ export const resourcesSchema = z.object({
 });
 export type ResourcesSchema = z.infer<typeof resourcesSchema>;
 
-export function Resources() {
+interface ResourcesProps {
+  previewUrl: string;
+}
+
+export function Resources({ previewUrl }: ResourcesProps) {
   const router = useRouter();
   const { waveId } = parseWaveParams(useParams());
 
@@ -45,7 +48,7 @@ export function Resources() {
         className="flex w-full flex-col gap-6"
         onSubmit={form.handleSubmit(async (payload) => {
           dispatch({ type: "UPDATE_APPLICATION_DATA", payload });
-          router.push(urls.applications.createPreview({ waveId }));
+          router.push(previewUrl);
         })}
       >
         <FormField

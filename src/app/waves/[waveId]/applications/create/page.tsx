@@ -37,7 +37,10 @@ export default async function CreateApplication({
         <PageTitle>Apply for the Grant</PageTitle>
       </div>
 
-      <CreateApplicationForm categories={categories} />
+      <CreateApplicationForm
+        categories={categories}
+        previewUrl={urls.applications.createPreview({ waveId })}
+      />
     </>
   );
 }
