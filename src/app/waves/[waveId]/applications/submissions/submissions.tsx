@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
+import { getSortedSubmissions } from "@/utils/getSortedSubmissions";
 import { getTabsSubmissions } from "@/utils/getTabsSubmissions";
-import { useSortedSubmissions } from "@/utils/useSortedSubmissions";
 import { useSubmissionsSearchState } from "@/utils/useSubmissionsSearchState";
 import { useSubmissionsSortState } from "@/utils/useSubmissionsSortState";
 
@@ -51,7 +51,7 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   const [pageApplications, setPageApplications] =
     useState<Application[]>(allApplications);
 
-  const sortedApplications = useSortedSubmissions({
+  const sortedApplications = getSortedSubmissions({
     applications: pageApplications,
     sortBy,
   });
