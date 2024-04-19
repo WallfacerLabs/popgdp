@@ -9,11 +9,11 @@ export function useSubmissionsSearchState() {
   const category = searchParams.get("category") ?? "all";
 
   function onCategoryChange(value: Category["id"]) {
-    updateSearchParams("category", value);
+    updateSearchParams(["category", value]);
   }
 
   function onSearchPhraseChange(value: string) {
-    updateSearchParams("search", value);
+    updateSearchParams(["search", value]);
   }
 
   return {

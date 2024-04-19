@@ -28,7 +28,7 @@ describe("hooks/useSearchState", () => {
 
   test("updates search params correctly", () => {
     const { updateSearchParams } = useSearchState();
-    updateSearchParams("testParam", "test");
+    updateSearchParams(["testParam", "test"]);
     const { searchParams } = useSearchState();
     expect(searchParams.get("testParam")).toBe("test");
   });
