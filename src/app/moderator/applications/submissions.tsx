@@ -1,5 +1,7 @@
 "use client";
 
+import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
+
 import { ModeratorApplication } from "@/types/Application";
 import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
 import { ModeratorApplicationsTable } from "@/components/ui/applicationsTable/moderatorApplicationsTable";
@@ -26,14 +28,11 @@ export function Submissions({ applications }: SubmissionsProps) {
     ...applicationCategories,
   ];
 
-  const filteredApplications = applications
-    .filter(
-      (application) =>
-        category === "all" || application.category.id === category,
-    )
-    .filter((application) =>
-      application.name.toLowerCase().includes(search.toLowerCase()),
-    );
+  const filteredApplications = getFilteredSubmissions({
+    applications,
+    category,
+    search,
+  });
 
   const applicationsCount = filteredApplications.length;
   const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
