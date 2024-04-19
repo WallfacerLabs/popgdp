@@ -14,7 +14,7 @@ import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionF
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const PAGE_SIZE = 10;
+const MAX_APPLICATIONS_PER_PAGE = 10;
 
 const SUBMISSION_TABS = {
   allSubmissions: "All Submissions",
@@ -54,11 +54,11 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   });
 
   const applicationsCount = filteredApplications.length;
-  const totalPages = Math.ceil(applicationsCount / PAGE_SIZE);
+  const totalPages = Math.ceil(applicationsCount / MAX_APPLICATIONS_PER_PAGE);
 
   const currentPageApplications = filteredApplications.slice(
-    (page - 1) * PAGE_SIZE,
-    page * PAGE_SIZE,
+    (page - 1) * MAX_APPLICATIONS_PER_PAGE,
+    page * MAX_APPLICATIONS_PER_PAGE,
   );
 
   function onTabChange(value: string) {
