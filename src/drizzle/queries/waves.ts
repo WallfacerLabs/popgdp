@@ -63,7 +63,9 @@ export const getWaveWithApplications = cache(async (id: number) => {
       applications: {
         with: {
           user: userFragment,
-          category: { columns: { color: true, name: true } },
+          category: {
+            columns: { id: true, name: true, color: true, description: true },
+          },
         },
       },
       categories: {

@@ -3,24 +3,11 @@ import { notFound } from "next/navigation";
 import { getModeratorPanelApplications } from "@/drizzle/queries/applications";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
-import { BudgetCell } from "@/components/ui/applicationsTable/cells/budgetCell";
-import { CategoryCell } from "@/components/ui/applicationsTable/cells/categoryCell";
-import { DateCell } from "@/components/ui/applicationsTable/cells/dateCell";
-import { EntityCell } from "@/components/ui/applicationsTable/cells/entityCell";
-import { NameCell } from "@/components/ui/applicationsTable/cells/nameCell";
-import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import { ModeratorNavigation } from "@/components/ui/moderatorNavigation";
 import { PageTitle } from "@/components/ui/pageTitle";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 import { ExportSubmissions } from "./exportSubmissions";
+import { Submissions } from "./submissions";
 
 export const metadata: Metadata = {
   title: "Submissions",
@@ -31,7 +18,6 @@ export default async function ReviewersPage() {
   if (!isModerator) {
     throw notFound();
   }
-
   const applications = await getModeratorPanelApplications();
 
   return (
@@ -42,38 +28,8 @@ export default async function ReviewersPage() {
         <ExportSubmissions />
       </div>
       <ModeratorNavigation />
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Project name</TableHead>
-            <TableHead>User</TableHead>
-            <TableHead>Entity name</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Proposed budget</TableHead>
-            <TableHead>Upvotes</TableHead>
-            <TableHead>Spam</TableHead>
-            <TableHead>Category</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {applications.map((application) => (
-            <TableRow key={application.id}>
-              <NameCell name={application.name} />
-              <UserCell
-                name={application.user.name}
-                ethereumAddress={application.user.ethereumAddress}
-                image={application.userImage}
-              />
-              <EntityCell entityName={application.entityName} />
-              <DateCell createdAt={application.createdAt} />
-              <BudgetCell budget={application.budget} />
-              <TableCell>{application.helpfulCount}</TableCell>
-              <TableCell>{application.spamCount}</TableCell>
-              <CategoryCell category={application.category} />
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+
+      <Submissions applications={applications} />
     </div>
   );
 }

@@ -10,19 +10,29 @@ const CATEGORIES_MOCK = {
 };
 
 const APPLICATIONS_MOCK = [
-  { id: "1", name: "First Applications", userId: "user1", categoryId: "first" },
+  {
+    id: "1",
+    name: "First Applications",
+    userId: "user1",
+    category: { id: "first" },
+  },
   {
     id: "2",
     name: "Second Applications",
     userId: "user1",
-    categoryId: "second",
+    category: { id: "second" },
   },
-  { id: "3", name: "Third Applications", userId: "user2", categoryId: "first" },
+  {
+    id: "3",
+    name: "Third Applications",
+    userId: "user2",
+    category: { id: "first" },
+  },
   {
     id: "4",
     name: "Fourth Applications",
     userId: "user3",
-    categoryId: "second",
+    category: { id: "second" },
   },
 ] as Application[];
 

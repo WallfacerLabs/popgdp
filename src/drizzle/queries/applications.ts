@@ -124,8 +124,10 @@ export const getModeratorPanelApplications = cache(async () => {
         height: Image.height,
       },
       category: {
+        id: Category.id,
         name: Category.name,
         color: Category.color,
+        description: Category.description,
       },
       helpfulCount: countApplicationValue(ContentValue.positive),
       spamCount: countApplicationValue(ContentValue.spam),
@@ -142,8 +144,10 @@ export const getModeratorPanelApplications = cache(async () => {
       Application.id,
       User.name,
       User.ethereumAddress,
+      Category.id,
       Category.name,
       Category.color,
+      Category.description,
       Image.id,
     );
 });
