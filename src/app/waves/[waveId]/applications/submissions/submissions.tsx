@@ -4,17 +4,15 @@ import { useState } from "react";
 import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 
 import { Application } from "@/types/Application";
-import { type Category } from "@/types/Category";
 import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
 import { useTabsSubmissions } from "@/hooks/submissions/useTabsSubmissions";
-import { useSearchState } from "@/hooks/useSearchState";
+import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
+import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
+import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { CategoryFilterOption } from "./filters/categoryFilter";
-import { SubmissionFilters } from "./submissionFilters";
 
 const PAGE_SIZE = 10;
 
@@ -29,10 +27,8 @@ interface SubmissionsProps {
 }
 
 export function Submissions({ wave, userId }: SubmissionsProps) {
-  const { searchParams, updateSearchParams } = useSearchState();
-  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
-  const search = searchParams.get("search") ?? "";
-  const category = searchParams.get("category") ?? "all";
+  const { page, search, category, onCategoryChange, onSearchPhraseChange } =
+    useSubmissionsSearchState();
 
   const categories: CategoryFilterOption[] = [
     { id: "all", name: "All Categories" },
@@ -65,10 +61,6 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
     page * PAGE_SIZE,
   );
 
-  function onCategoryChange(value: Category["id"]) {
-    updateSearchParams("category", value);
-  }
-
   function onTabChange(value: string) {
     setPageApplications(
       value === SUBMISSION_TABS.allSubmissions
@@ -77,13 +69,9 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
     );
   }
 
-  function onSearchPhraseChange(value: string) {
-    updateSearchParams("search", value);
-  }
-
   return (
     <>
-      <SubmissionFilters
+      <SubmissionFiltersPanel
         categories={categories}
         onCategoryChange={onCategoryChange}
         searchPhrase={search}

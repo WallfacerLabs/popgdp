@@ -3,14 +3,14 @@
 import { CategoryFilter, CategoryFilterProps } from "./filters/categoryFilter";
 import { SearchFilter, SearchFilterProps } from "./filters/searchFilter";
 
-type SubmissionFiltersProps = CategoryFilterProps & SearchFilterProps;
+type SubmissionFiltersPanelProps = CategoryFilterProps & SearchFilterProps;
 
-export function SubmissionFilters({
+export function SubmissionFiltersPanel({
   categories,
   onCategoryChange,
   searchPhrase,
   onSearchPhraseChange,
-}: SubmissionFiltersProps) {
+}: SubmissionFiltersPanelProps) {
   return (
     <nav className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
       <CategoryFilter
