@@ -15,6 +15,7 @@ import {
 
 async function checkUserId(errorMsg: string) {
   const userId = await getUserId();
+  console.log({userId})
   if (!userId) {
     throw new ValidationError(errorMsg);
   }

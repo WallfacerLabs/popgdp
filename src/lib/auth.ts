@@ -12,6 +12,7 @@ const userSchema = z.object({
 
 export const getUserData = cache(async () => {
   const session = await getSession();
+  console.log('session', {session})
 
   const user = userSchema.safeParse(session?.user);
   if (!user.success) {
