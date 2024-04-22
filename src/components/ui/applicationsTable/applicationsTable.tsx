@@ -23,6 +23,15 @@ interface ApplicationsTableProps {
   className?: string;
 }
 
+const SUBMISSIONS_LIST_COLUMNS = [
+  "name",
+  "user",
+  "entity",
+  "submissionDate",
+  "budget",
+  "category",
+] as const;
+
 export const ApplicationsTable = ({
   applications,
   waveId,
@@ -32,12 +41,9 @@ export const ApplicationsTable = ({
     <Table className={className}>
       <TableHeader>
         <TableRow>
-          <TableHead>Project name</TableHead>
-          <TableHead>User</TableHead>
-          <TableHead>Entity name</TableHead>
-          <TableHead>Submitted</TableHead>
-          <TableHead>Proposed budget</TableHead>
-          <TableHead>Category</TableHead>
+          {SUBMISSIONS_LIST_COLUMNS.map((column) => (
+            <SubmissionsListColumn key={column} column={column} />
+          ))}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -61,3 +67,30 @@ export const ApplicationsTable = ({
     </Table>
   );
 };
+
+type SubmissionsListColumnKey = (typeof SUBMISSIONS_LIST_COLUMNS)[number];
+
+interface SubmissionsListColumnProps {
+  column: SubmissionsListColumnKey;
+}
+
+const SubmissionsListColumn = ({ column }: SubmissionsListColumnProps) => {
+  return <TableHead>{getSubmissionsListColumn(column)}</TableHead>;
+};
+
+function getSubmissionsListColumn(column: SubmissionsListColumnKey) {
+  switch (column) {
+    case "name":
+      return "Project name";
+    case "user":
+      return "User";
+    case "entity":
+      return "Entity name";
+    case "submissionDate":
+      return "Submitted";
+    case "budget":
+      return "Proposed budget";
+    case "category":
+      return "Category";
+  }
+}
