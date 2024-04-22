@@ -5,15 +5,16 @@ export default defineConfig({
   test: {
     include: ["**/*.test.ts", "**/*.test.tsx"],
     setupFiles: ["dotenv/config"],
+    poolOptions: {
+      threads: {
+        singleThread: true,
+      },
+    },
   },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
       react: "next/dist/compiled/react/cjs/react.development.js",
-      "@auth0/nextjs-auth0": path.resolve(
-        __dirname,
-        "./tests/helpers/getSession.ts",
-      ),
     },
   },
 });
