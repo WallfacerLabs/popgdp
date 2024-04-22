@@ -38,6 +38,8 @@ export { ReviewIcon } from "@/components/icons/reviewIcon";
 export { SaveIcon } from "@/components/icons/saveIcon";
 export { SunIcon } from "@/components/icons/sunIcon";
 export { SettingsIcon } from "@/components/icons/settingsIcon";
+export { SdkIcon } from "@/components/icons/sdkIcon";
+export { StackIcon } from "@/components/icons/stackIcon";
 export { TeamIcon } from "@/components/icons/teamIcon";
 export { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 export { TrashIcon } from "@/components/icons/trashIcon";
