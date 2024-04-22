@@ -11,6 +11,8 @@ export const badgeColors = {
   pink: "bg-pink",
   purple: "bg-purple",
   gray: "bg-primary/10",
+  yellow: "bg-yellow",
+  cyan: "bg-cyan",
 } as const;
 
 export const badgeVariants = cva(
