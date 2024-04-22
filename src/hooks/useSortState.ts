@@ -1,22 +1,22 @@
 import { SortBy } from "@/types/Sort";
 import { useSearchState } from "@/hooks/useSearchState";
 
-interface SubmissionsSortStateProps<T> {
+interface SortStateProps<T> {
   columns: T[];
   defaultDescendingColumns?: T[];
 }
 
-interface SubmissionsSortBy<T> extends Omit<SortBy, "sortName"> {
+interface SortStateSortBy<T> extends Omit<SortBy, "sortName"> {
   sortName: T;
 }
 
-export function useSubmissionsSortState<T extends string>({
+export function useSortState<T extends string>({
   columns,
   defaultDescendingColumns,
-}: SubmissionsSortStateProps<T>) {
+}: SortStateProps<T>) {
   const { searchParams, updateSearchParams } = useSearchState();
 
-  const handleSortBy = (name: SubmissionsSortBy<T>["sortName"]): void => {
+  const handleSortBy = (name: SortStateSortBy<T>["sortName"]): void => {
     const descendingByDefault =
       defaultDescendingColumns && defaultDescendingColumns.includes(name);
     const sortBy = searchParams.get("sortBy");
@@ -32,7 +32,7 @@ export function useSubmissionsSortState<T extends string>({
     : columns[0];
   const sortName = columns.includes(sortByRaw as T) ? sortByRaw : columns[0];
 
-  const sortBy: SubmissionsSortBy<T> = {
+  const sortBy: SortStateSortBy<T> = {
     sortName,
     asc,
   };
