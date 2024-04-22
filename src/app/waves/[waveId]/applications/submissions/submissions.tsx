@@ -23,6 +23,15 @@ const SUBMISSION_TABS = {
   mySubmissions: "My Submissions",
 } as const;
 
+export const SUBMISSIONS_LIST_COLUMNS = [
+  "name",
+  "user",
+  "entity",
+  "submissionDate",
+  "budget",
+  "category",
+];
+
 interface SubmissionsProps {
   wave: WaveWithApplications;
   userId: UserId | undefined;
@@ -32,7 +41,10 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   const { page, search, category, onCategoryChange, onSearchPhraseChange } =
     useSubmissionsSearchState();
 
-  const { sortBy, handleSortBy } = useSubmissionsSortState();
+  const { sortBy, handleSortBy } = useSubmissionsSortState({
+    columns: SUBMISSIONS_LIST_COLUMNS,
+    defaultDescendingColumns: ["submissionDate", "budget"],
+  });
 
   const categories: CategoryFilterOption[] = [
     { id: "all", name: "All Categories" },
