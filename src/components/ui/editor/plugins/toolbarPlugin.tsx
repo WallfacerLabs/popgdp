@@ -22,6 +22,7 @@ import {
   UNDO_COMMAND,
 } from "lexical";
 
+import { cn } from "@/lib/cn";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { getLinkNode } from "@/components/ui/editor/utils/getLinkNode";
 import { Separator } from "@/components/ui/separator";
@@ -39,7 +40,10 @@ import { UndoArrowIcon } from "@/components/icons/undoArrowIcon";
 import { LinkEditorPlugin } from "./linkEditorPlugin/linkEditorPlugin";
 
 export const formatButtonVariants = cva(
-  "h-6 w-6 p-0 rounded transition-colors border-transparent",
+  cn(
+    "h-6 w-6 p-0 rounded transition-colors border-transparent",
+    "focus-visible:ring-0 focus-visible:ring-offset-0",
+  ),
   {
     variants: {
       active: {

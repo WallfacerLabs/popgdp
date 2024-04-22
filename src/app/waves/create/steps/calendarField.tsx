@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Control, type FieldPath } from "react-hook-form";
 
 import { type WaveStage } from "@/config/waveStages";
+import { cn } from "@/lib/cn";
 import { formatDate, getStartOfDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -55,7 +56,12 @@ export const CalendarField = ({
               <FormControl>
                 <Button
                   variant="outline"
-                  className="h-12 w-40 justify-start gap-2 aria-[invalid=true]:border-red"
+                  className={cn(
+                    "h-12 w-40 justify-start gap-2",
+                    "focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+                    "hover:border-primary hover:bg-background focus-visible:border-primary focus-visible:bg-background data-[state=open]:border-primary",
+                    "aria-[invalid=true]:border-red",
+                  )}
                 >
                   <CalendarIcon className="h-6 w-6" />
                   {field.value ? formatDate(field.value) : "Pick a date"}

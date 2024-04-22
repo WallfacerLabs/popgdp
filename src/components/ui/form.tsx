@@ -126,6 +126,8 @@ interface FormHintProps {
   className?: string;
 }
 
+const hintClassNames = "absolute pointer-events-none user-select-none";
+
 const FormHint = ({
   leftHint,
   rightHint,
@@ -142,9 +144,13 @@ const FormHint = ({
         className,
       )}
     >
-      {leftHint && <div className="absolute left-4">{leftHint}</div>}
+      {leftHint && (
+        <div className={cn(hintClassNames, "left-4")}>{leftHint}</div>
+      )}
       {children}
-      {rightHint && <div className=" absolute right-4">{rightHint}</div>}
+      {rightHint && (
+        <div className={cn(hintClassNames, "right-4")}>{rightHint}</div>
+      )}
     </div>
   );
 };

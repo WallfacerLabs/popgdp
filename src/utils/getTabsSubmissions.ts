@@ -6,13 +6,16 @@ interface UserSubmissionsProps {
   userId: UserId | undefined;
 }
 
-export function useTabsSubmissions({
+export function getTabsSubmissions({
   applications,
   userId,
 }: UserSubmissionsProps) {
+  const allApplications = applications.filter(
+    (application) => !(application.draft && application.userId !== userId),
+  );
   const userApplications = applications.filter(
     (application) => application.userId === userId,
   );
 
-  return { allApplications: applications, userApplications };
+  return { allApplications, userApplications };
 }

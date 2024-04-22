@@ -26,10 +26,21 @@ describe("hooks/useSearchState", () => {
     expect(searchParams.toString()).toBe("");
   });
 
-  test("updates search params correctly", () => {
+  test("updates single search param correctly", () => {
     const { updateSearchParams } = useSearchState();
-    updateSearchParams("testParam", "test");
+    updateSearchParams(["testParam", "test"]);
     const { searchParams } = useSearchState();
     expect(searchParams.get("testParam")).toBe("test");
+  });
+
+  test("updates multiple search params correctly", () => {
+    const { updateSearchParams } = useSearchState();
+    updateSearchParams(
+      ["firstParam", "firstValue"],
+      ["secondParam", "secondValue"],
+    );
+    const { searchParams } = useSearchState();
+    expect(searchParams.get("firstParam")).toBe("firstValue");
+    expect(searchParams.get("secondParam")).toBe("secondValue");
   });
 });

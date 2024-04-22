@@ -16,7 +16,7 @@ interface CategoryPickerProps {
 export function CategoryPicker({ value, onChange, name }: CategoryPickerProps) {
   return (
     <RadioGroup.Root
-      className="flex gap-6"
+      className="grid grid-cols-4 gap-4"
       required
       value={value}
       name={name}

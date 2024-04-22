@@ -7,6 +7,7 @@ import {
 } from "react";
 import Link from "next/link";
 
+import { SortBy } from "@/types/Sort";
 import { cn } from "@/lib/cn";
 
 import { ChevronIcon } from "../icons/chevronIcon";
@@ -41,11 +42,11 @@ const TableBody = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 TableBody.displayName = "TableBody";
 
 const rowClasses =
-  "table-row border transition-colors data-[state=selected]:bg-muted";
+  "group table-row transition-colors data-[state=selected]:bg-muted";
 
 const TableRow = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div className={cn(rowClasses, className)} {...props} />
+    <div ref={ref} className={cn(rowClasses, className)} {...props} />
   ),
 );
 TableRow.displayName = "TableRow";
@@ -56,15 +57,15 @@ const TableLinkRow = forwardRef<HTMLDivElement, ComponentProps<typeof Link>>(
       ref={ref}
       className={cn(
         rowClasses,
-        "relative [&>.table-cell>*]:relative [&>.table-cell>*]:z-10 [&>.table-cell>*]:w-fit",
+        "relative focus-within:z-10 [&>.table-cell>*]:relative [&>.table-cell>*]:z-10 [&>.table-cell>*]:w-fit",
         className,
       )}
     >
       {children}
       <Link
         className={cn(
-          "absolute inset-0 h-full w-full transition-colors last:rounded-b-lg",
-          "hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
+          "absolute inset-0 h-full w-full rounded transition-colors group-last:rounded-b-2xl",
+          "hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-0",
         )}
         {...props}
       />
@@ -87,12 +88,10 @@ const TableHead = forwardRef<HTMLDivElement, ThHTMLAttributes<HTMLDivElement>>(
 );
 TableHead.displayName = "TableHead";
 
-type SortBy = { sortName: string; asc: boolean };
-
-interface TableSortHeadProps extends ThHTMLAttributes<HTMLDivElement> {
+export interface TableSortHeadProps extends ThHTMLAttributes<HTMLDivElement> {
   sortName: string;
   sortBy: SortBy;
-  setSortBy: (sortBy: SortBy) => void;
+  setSortBy: (sortBy: SortBy["sortName"]) => void;
 }
 
 const TableSortHead = forwardRef<HTMLDivElement, TableSortHeadProps>(
@@ -103,7 +102,7 @@ const TableSortHead = forwardRef<HTMLDivElement, TableSortHeadProps>(
       <TableHead ref={ref} {...props}>
         <Button
           variant="default"
-          onClick={() => setSortBy(sortBy)}
+          onClick={() => setSortBy(sortName)}
           className="px-0"
         >
           {children}
@@ -149,8 +148,8 @@ export {
   TableBody,
   TableCell,
   TableHead,
-  TableSortHead,
   TableHeader,
   TableLinkRow,
   TableRow,
+  TableSortHead,
 };

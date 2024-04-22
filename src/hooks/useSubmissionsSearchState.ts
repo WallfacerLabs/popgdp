@@ -1,6 +1,5 @@
 import { Category } from "@/types/Category";
-
-import { useSearchState } from "./useSearchState";
+import { useSearchState } from "@/hooks/useSearchState";
 
 export function useSubmissionsSearchState() {
   const { searchParams, updateSearchParams } = useSearchState();
@@ -9,11 +8,11 @@ export function useSubmissionsSearchState() {
   const category = searchParams.get("category") ?? "all";
 
   function onCategoryChange(value: Category["id"]) {
-    updateSearchParams("category", value);
+    updateSearchParams(["category", value]);
   }
 
   function onSearchPhraseChange(value: string) {
-    updateSearchParams("search", value);
+    updateSearchParams(["search", value]);
   }
 
   return {
