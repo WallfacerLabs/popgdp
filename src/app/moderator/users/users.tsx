@@ -9,6 +9,15 @@ import { UserFiltersPanel } from "@/components/ui/filterPanels/userFiltersPanel"
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import { UsersTable } from "@/components/ui/usersTable/usersTable";
 
+export const MODERATOR_USERS_LIST_COLUMNS = [
+  "user",
+  "address",
+  "reviews",
+  "spam",
+  "useful",
+  "submissions",
+];
+
 interface UsersProps {
   users: ModeratorPanelUser[];
 }
