@@ -43,7 +43,7 @@ describe("userHasRole", () => {
   it("blocked", async () => {
     await createBlocked();
     setUser({ id, credentialType: "orb" });
-    
+
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
     expect(await userHasRole(UserPermission.blocked)).toBe(true);
     expect(await userHasRole(UserPermission.deviceVerified)).toBe(false);
@@ -54,7 +54,7 @@ describe("userHasRole", () => {
 
   it("device verified", async () => {
     setUser({ id, credentialType: "device" });
-    
+
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
     expect(await userHasRole(UserPermission.blocked)).toBe(true);
     expect(await userHasRole(UserPermission.deviceVerified)).toBe(true);
@@ -64,8 +64,8 @@ describe("userHasRole", () => {
   });
 
   it("orb verified", async () => {
-    setUser({id, credentialType: "orb" });
-    
+    setUser({ id, credentialType: "orb" });
+
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
     expect(await userHasRole(UserPermission.blocked)).toBe(true);
     expect(await userHasRole(UserPermission.deviceVerified)).toBe(true);
