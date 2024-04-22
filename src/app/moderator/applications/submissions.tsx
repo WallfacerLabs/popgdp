@@ -3,7 +3,7 @@
 import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 
 import { ModeratorApplication } from "@/types/Application";
-import { useSubmissionsSearchState } from "@/hooks/submissions/useSubmissionsSearchState";
+import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
 import { ModeratorApplicationsTable } from "@/components/ui/applicationsTable/moderatorApplicationsTable";
 import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
 import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";

@@ -1,6 +1,7 @@
 import { Application } from "@/types/Application";
 import { sortObjectsByKey } from "@/lib/sort";
-import { SubmissionsSortBy } from './useSubmissionsSortState';
+
+import { SubmissionsSortBy } from "../hooks/useSubmissionsSortState";
 
 interface SortedSubmissionsProps {
   applications: Application[];

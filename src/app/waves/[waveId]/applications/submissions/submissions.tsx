@@ -4,12 +4,12 @@ import { useState } from "react";
 import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 import { getSortedSubmissions } from "@/utils/getSortedSubmissions";
 import { getTabsSubmissions } from "@/utils/getTabsSubmissions";
-import { useSubmissionsSearchState } from "@/utils/useSubmissionsSearchState";
-import { useSubmissionsSortState } from "@/utils/useSubmissionsSortState";
 
 import { Application } from "@/types/Application";
 import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
+import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
+import { useSubmissionsSortState } from "@/hooks/useSubmissionsSortState";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
 import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";
