@@ -13,6 +13,7 @@ export function UserFiltersPanel({
       <SearchFilter
         searchPhrase={searchPhrase}
         onSearchPhraseChange={onSearchPhraseChange}
+        className="ml-auto"
       />
     </nav>
   );
