@@ -2,7 +2,7 @@ import { describe, expect, it, suite, test } from "vitest";
 
 import { compareObjectsByProperties } from "@/lib/comparison";
 
-const vaultWithGreaterProperties = {
+const objectWithGreaterProperties = {
   date: new Date("2024-04-15"),
   number: 100,
   string: "name 2",
@@ -12,7 +12,7 @@ const vaultWithGreaterProperties = {
     string: "name 1",
   },
 };
-const vaultWithSmallerProperties = {
+const objectWithSmallerProperties = {
   date: new Date("2024-04-01"),
   number: 25,
   string: "name 1",
@@ -29,8 +29,8 @@ describe("utils/comparison", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["date"],
             true,
           ),
@@ -40,8 +40,8 @@ describe("utils/comparison", () => {
       it("descending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["date"],
             false,
           ),
@@ -53,8 +53,8 @@ describe("utils/comparison", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["nested", "date"],
             true,
           ),
@@ -64,8 +64,8 @@ describe("utils/comparison", () => {
       it("descending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["nested", "date"],
             false,
           ),
@@ -79,8 +79,8 @@ describe("utils/comparison", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["number"],
             true,
           ),
@@ -90,8 +90,8 @@ describe("utils/comparison", () => {
       it("descending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["number"],
             false,
           ),
@@ -103,8 +103,8 @@ describe("utils/comparison", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["nested", "number"],
             true,
           ),
@@ -114,8 +114,8 @@ describe("utils/comparison", () => {
       it("descending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["nested", "number"],
             false,
           ),
@@ -129,8 +129,8 @@ describe("utils/comparison", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["string"],
             true,
           ),
@@ -140,8 +140,8 @@ describe("utils/comparison", () => {
       it("descending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["string"],
             false,
           ),
@@ -153,8 +153,8 @@ describe("utils/comparison", () => {
       it("ascending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["nested", "string"],
             true,
           ),
@@ -164,8 +164,8 @@ describe("utils/comparison", () => {
       it("descending", () => {
         expect(
           compareObjectsByProperties(
-            vaultWithGreaterProperties,
-            vaultWithSmallerProperties,
+            objectWithGreaterProperties,
+            objectWithSmallerProperties,
             ["nested", "string"],
             false,
           ),
