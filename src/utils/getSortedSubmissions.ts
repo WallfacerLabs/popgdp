@@ -1,7 +1,6 @@
 import { Application } from "@/types/Application";
 import { sortObjectsByKey } from "@/lib/sort";
-
-import { SubmissionsSortBy } from "../hooks/useSubmissionsSortState";
+import { SubmissionsSortBy } from "@/components/ui/applicationsTable/applicationsTable";
 
 interface SortedSubmissionsProps {
   applications: Application[];
