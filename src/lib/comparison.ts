@@ -1,7 +1,7 @@
 const GREATER_A = 1;
 const GREATER_B = -1;
 
-type ObjectEndpoints<T> = {
+export type ObjectEndpoints<T> = {
   [K in keyof Required<T>]: T[K] extends Date
     ? [K]
     : T[K] extends object
