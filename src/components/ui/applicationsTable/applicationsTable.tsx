@@ -1,11 +1,7 @@
 import { urls } from "@/constants/urls";
 
 import { Application } from "@/types/Application";
-import {
-  SUBMISSIONS_LIST_COLUMNS,
-  SubmissionsListColumn,
-  SubmissionsSortBy,
-} from "@/hooks/useSubmissionsSortState";
+import { SortBy } from "@/types/Sort";
 import {
   Table,
   TableBody,
@@ -15,6 +11,7 @@ import {
   TableSortHead,
   TableSortHeadProps,
 } from "@/components/ui/table";
+import { SUBMISSIONS_LIST_COLUMNS } from "@/app/waves/[waveId]/applications/submissions/submissions";
 
 import { BudgetCell } from "./cells/budgetCell";
 import { CategoryCell } from "./cells/categoryCell";
@@ -22,6 +19,12 @@ import { DateCell } from "./cells/dateCell";
 import { EntityCell } from "./cells/entityCell";
 import { NameCell } from "./cells/nameCell";
 import { UserCell } from "./cells/userCell";
+
+type SubmissionsListColumn = (typeof SUBMISSIONS_LIST_COLUMNS)[number];
+
+export interface SubmissionsSortBy extends Omit<SortBy, "sortName"> {
+  sortName: SubmissionsListColumn;
+}
 
 interface ApplicationsTableProps {
   applications: Application[];
