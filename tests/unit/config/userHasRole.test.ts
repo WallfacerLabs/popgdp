@@ -1,13 +1,9 @@
 import { db } from "@/drizzle/db";
 import { Moderator, Reviewer, User } from "@/drizzle/schema";
-import { getUser } from "tests/helpers/getUser";
+import { mockUserSession } from "tests/helpers/mockUserSession";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
-
-const { mockedGetSession } = vi.hoisted(() => ({ mockedGetSession: vi.fn() }));
-
-vi.mock("@auth0/nextjs-auth0", () => ({ getSession: mockedGetSession }));
 
 describe("userHasRole", () => {
   afterEach(async () => {
@@ -46,9 +42,7 @@ describe("userHasRole", () => {
 
   it("blocked", async () => {
     await createBlocked();
-    mockedGetSession.mockResolvedValue({
-      user: getUser({ id, credentialType: "device" }),
-    });
+    mockUserSession({ id, credentialType: "orb" });
 
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
     expect(await userHasRole(UserPermission.blocked)).toBe(true);
@@ -59,9 +53,7 @@ describe("userHasRole", () => {
   });
 
   it("device verified", async () => {
-    mockedGetSession.mockResolvedValue({
-      user: getUser({ id, credentialType: "device" }),
-    });
+    mockUserSession({ id, credentialType: "device" });
 
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
     expect(await userHasRole(UserPermission.blocked)).toBe(true);
@@ -72,9 +64,7 @@ describe("userHasRole", () => {
   });
 
   it("orb verified", async () => {
-    mockedGetSession.mockResolvedValue({
-      user: getUser({ id, credentialType: "orb" }),
-    });
+    mockUserSession({ id, credentialType: "orb" });
 
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
     expect(await userHasRole(UserPermission.blocked)).toBe(true);
@@ -86,9 +76,7 @@ describe("userHasRole", () => {
 
   it("reviewer", async () => {
     await createReviewer();
-    mockedGetSession.mockResolvedValue({
-      user: getUser({ id, credentialType: "orb" }),
-    });
+    mockUserSession({ id, credentialType: "orb" });
 
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
     expect(await userHasRole(UserPermission.blocked)).toBe(true);
@@ -100,9 +88,7 @@ describe("userHasRole", () => {
 
   it("moderator", async () => {
     await createModerator();
-    mockedGetSession.mockResolvedValue({
-      user: getUser({ id, credentialType: "orb" }),
-    });
+    mockUserSession({ id, credentialType: "orb" });
 
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
     expect(await userHasRole(UserPermission.blocked)).toBe(true);

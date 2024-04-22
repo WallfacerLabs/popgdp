@@ -1,16 +1,10 @@
 import { db } from "@/drizzle/db";
 import { Moderator, Reviewer, User } from "@/drizzle/schema";
-import { getUser } from "tests/helpers/getUser";
+import { mockUserSession } from "tests/helpers/mockUserSession";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { createWaveAction } from "@/app/waves/create/createWaveAction";
 import { type WaveData } from "@/app/waves/create/stepsProvider";
-
-const { mockedGetSession } = vi.hoisted(() => ({ mockedGetSession: vi.fn() }));
-
-vi.mock("@auth0/nextjs-auth0", () => ({ getSession: mockedGetSession }));
-vi.mock("next/cache");
-vi.mock("next/navigation");
 
 const WAVE_DATA: WaveData = {
   name: "Wave",
@@ -38,7 +32,7 @@ describe("app/waves/create/createWaveAction", () => {
   });
 
   const ethereumAddress = "0x88009922334455";
-  const id = "1";
+  const id = "0";
 
   async function createModerator() {
     await db.insert(Moderator).values({ ethereumAddress });
@@ -63,9 +57,7 @@ describe("app/waves/create/createWaveAction", () => {
 
     it("blocked", async () => {
       await createBlocked();
-      mockedGetSession.mockResolvedValue({
-        user: getUser({ id, credentialType: "orb" }),
-      });
+      mockUserSession({ id, credentialType: "orb" });
 
       expect(() => createWaveAction(WAVE_DATA)).rejects.toThrowError(
         "Unauthorized",
@@ -73,9 +65,7 @@ describe("app/waves/create/createWaveAction", () => {
     });
 
     it("device verified", async () => {
-      mockedGetSession.mockResolvedValue({
-        user: getUser({ id, credentialType: "device" }),
-      });
+      mockUserSession({ id, credentialType: "device" });
 
       expect(() => createWaveAction(WAVE_DATA)).rejects.toThrowError(
         "Unauthorized",
@@ -83,9 +73,7 @@ describe("app/waves/create/createWaveAction", () => {
     });
 
     it("orb verified", async () => {
-      mockedGetSession.mockResolvedValue({
-        user: getUser({ id, credentialType: "orb" }),
-      });
+      mockUserSession({ id, credentialType: "orb" });
 
       expect(() => createWaveAction(WAVE_DATA)).rejects.toThrowError(
         "Unauthorized",
@@ -94,9 +82,7 @@ describe("app/waves/create/createWaveAction", () => {
 
     it("reviewer", async () => {
       await createReviewer();
-      mockedGetSession.mockResolvedValue({
-        user: getUser({ id, credentialType: "orb" }),
-      });
+      mockUserSession({ id, credentialType: "orb" });
 
       expect(() => createWaveAction(WAVE_DATA)).rejects.toThrowError(
         "Unauthorized",
@@ -105,9 +91,7 @@ describe("app/waves/create/createWaveAction", () => {
 
     it("moderator", async () => {
       await createModerator();
-      mockedGetSession.mockResolvedValue({
-        user: getUser({ id, credentialType: "orb" }),
-      });
+      mockUserSession({ id, credentialType: "orb" });
 
       await createWaveAction(WAVE_DATA);
     });
