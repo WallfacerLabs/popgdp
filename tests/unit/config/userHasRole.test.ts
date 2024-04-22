@@ -1,6 +1,6 @@
 import { db } from "@/drizzle/db";
 import { Moderator, Reviewer, User } from "@/drizzle/schema";
-import { afterEach, describe, expect, it, test } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
 
@@ -28,51 +28,73 @@ describe("userHasRole", () => {
   }
 
   async function createBlocked() {
-    await db.insert(User).values({ id, ethereumAddress, isBlocked: true });
+    await db.insert(User).values({ id, isBlocked: true });
   }
 
-  async function createOrbVerified() {
-    await db.insert(User).values({ id, ethereumAddress });
-  }
-
-  it("no user", async () => {
+  it("visitor", async () => {
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
-    expect(await userHasRole(UserPermission.moderator)).toBe(false);
     expect(await userHasRole(UserPermission.blocked)).toBe(false);
-    expect(await userHasRole(UserPermission.reviewer)).toBe(false);
-    expect(await userHasRole(UserPermission.orbVerified)).toBe(false);
     expect(await userHasRole(UserPermission.deviceVerified)).toBe(false);
-  });
-
-  it.skip("moderator", async () => {
-    await createModerator();
-    setUser({ sub: `oauth2|worldcoin|${id}`, credentialType: "orb" });
-    expect(await userHasRole(UserPermission.moderator)).toBe(true);
-    expect(await userHasRole(UserPermission.blocked)).toBe(false);
-    // expect(await userHasRole(UserPermission.reviewer)).toBe(false);
-    // expect(await userHasRole(UserPermission.orbVerified)).toBe(false);
-    // expect(await userHasRole(UserPermission.deviceVerified)).toBe(false);
-    expect(await userHasRole(UserPermission.visitor)).toBe(false);
+    expect(await userHasRole(UserPermission.orbVerified)).toBe(false);
+    expect(await userHasRole(UserPermission.reviewer)).toBe(false);
+    expect(await userHasRole(UserPermission.moderator)).toBe(false);
   });
 
   it("blocked", async () => {
     await createBlocked();
-    setUser({ sub: `oauth2|worldcoin|${id}`, credentialType: "orb" });
-    expect(await userHasRole(UserPermission.blocked)).toBe(true);
+    setUser({ id, credentialType: "orb" });
+    
     expect(await userHasRole(UserPermission.visitor)).toBe(true);
+    expect(await userHasRole(UserPermission.blocked)).toBe(true);
+    expect(await userHasRole(UserPermission.deviceVerified)).toBe(false);
+    expect(await userHasRole(UserPermission.orbVerified)).toBe(false);
+    expect(await userHasRole(UserPermission.reviewer)).toBe(false);
+    expect(await userHasRole(UserPermission.moderator)).toBe(false);
   });
 
-  it.skip("orb verified", async () => {
-    // no need for checking in the db? really?
-    setUser({ sub: `oauth2|worldcoin|${id}`, credentialType: "orb" });
+  it("device verified", async () => {
+    setUser({ id, credentialType: "device" });
+    
+    expect(await userHasRole(UserPermission.visitor)).toBe(true);
+    expect(await userHasRole(UserPermission.blocked)).toBe(true);
+    expect(await userHasRole(UserPermission.deviceVerified)).toBe(true);
+    expect(await userHasRole(UserPermission.orbVerified)).toBe(false);
+    expect(await userHasRole(UserPermission.reviewer)).toBe(false);
+    expect(await userHasRole(UserPermission.moderator)).toBe(false);
+  });
+
+  it("orb verified", async () => {
+    setUser({id, credentialType: "orb" });
+    
+    expect(await userHasRole(UserPermission.visitor)).toBe(true);
+    expect(await userHasRole(UserPermission.blocked)).toBe(true);
+    expect(await userHasRole(UserPermission.deviceVerified)).toBe(true);
     expect(await userHasRole(UserPermission.orbVerified)).toBe(true);
+    expect(await userHasRole(UserPermission.reviewer)).toBe(false);
+    expect(await userHasRole(UserPermission.moderator)).toBe(false);
   });
 
   it("reviewer", async () => {
     await createReviewer();
-    setUser({ sub: `oauth2|worldcoin|${id}`, credentialType: "orb" });
+    setUser({ id, credentialType: "orb" });
+
+    expect(await userHasRole(UserPermission.visitor)).toBe(true);
+    expect(await userHasRole(UserPermission.blocked)).toBe(true);
+    expect(await userHasRole(UserPermission.deviceVerified)).toBe(true);
+    expect(await userHasRole(UserPermission.orbVerified)).toBe(true);
     expect(await userHasRole(UserPermission.reviewer)).toBe(true);
     expect(await userHasRole(UserPermission.moderator)).toBe(false);
-    // expect(await userHasRole(UserPermission.blocked)).toBe(false);
+  });
+
+  it("moderator", async () => {
+    await createModerator();
+    setUser({ id, credentialType: "orb" });
+
+    expect(await userHasRole(UserPermission.visitor)).toBe(true);
+    expect(await userHasRole(UserPermission.blocked)).toBe(true);
+    expect(await userHasRole(UserPermission.deviceVerified)).toBe(true);
+    expect(await userHasRole(UserPermission.orbVerified)).toBe(true);
+    expect(await userHasRole(UserPermission.reviewer)).toBe(true);
+    expect(await userHasRole(UserPermission.moderator)).toBe(true);
   });
 });
