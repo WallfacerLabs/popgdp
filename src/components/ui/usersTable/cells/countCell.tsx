@@ -5,12 +5,11 @@ import { TableCell } from "../../table";
 interface CountCellProps {
   count: number | null;
   icon: ReactNode;
-  className?: string;
 }
 
-export const CountCell = ({ count, icon, className }: CountCellProps) => {
+export const CountCell = ({ count, icon }: CountCellProps) => {
   return (
-    <TableCell className={className}>
+    <TableCell>
       {count ? (
         <span className="flex items-center gap-1 [&>svg]:h-4 [&>svg]:w-4">
           {icon}

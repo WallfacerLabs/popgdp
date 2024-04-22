@@ -53,7 +53,6 @@ export const UsersTable = ({ users }: UsersTableProps) => {
             <CountCell
               count={user.submissionsCount}
               icon={<AssignmentIcon />}
-              className="text-red"
             />
             <UserActionsCell user={user} />
           </TableRow>
