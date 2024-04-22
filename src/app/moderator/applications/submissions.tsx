@@ -4,8 +4,8 @@ import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 
 import { ModeratorApplication } from "@/types/Application";
 import { sortObjectsByKey } from "@/lib/sort";
+import { useSortState } from "@/hooks/useSortState";
 import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
-import { useSubmissionsSortState } from "@/hooks/useSubmissionsSortState";
 import {
   ModeratorApplicationsTable,
   ModeratorSubmissionsSortBy,
@@ -35,7 +35,7 @@ export function Submissions({ applications }: SubmissionsProps) {
   const { page, search, category, onCategoryChange, onSearchPhraseChange } =
     useSubmissionsSearchState();
 
-  const { sortBy, handleSortBy } = useSubmissionsSortState({
+  const { sortBy, handleSortBy } = useSortState({
     columns: MODERATOR_SUBMISSIONS_LIST_COLUMNS,
     defaultDescendingColumns: ["submissionDate", "upvotes", "spam", "budget"],
   });
