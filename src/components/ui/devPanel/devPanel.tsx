@@ -113,7 +113,7 @@ export async function DevFloatingPanel() {
                 revalidatePath("/");
               }}
             >
-              Enable skip stage check
+              Disable skip stage check
             </Button>
           ) : (
             <Button
@@ -123,7 +123,7 @@ export async function DevFloatingPanel() {
                 revalidatePath("/");
               }}
             >
-              Disable skip stage check
+              Enable skip stage check
             </Button>
           )}
         </form>
