@@ -1,28 +1,24 @@
 import { SortBy } from "@/types/Sort";
 import { useSearchState } from "@/hooks/useSearchState";
 
-const DEFAULT_SORT_BY: SubmissionsListColumn = "name";
-
-export const SUBMISSIONS_LIST_COLUMNS = [
-  "name",
-  "user",
-  "entity",
-  "submissionDate",
-  "budget",
-  "category",
-] as const;
-
-export type SubmissionsListColumn = (typeof SUBMISSIONS_LIST_COLUMNS)[number];
-
-export interface SubmissionsSortBy extends Omit<SortBy, "sortName"> {
-  sortName: SubmissionsListColumn;
+interface SubmissionsSortStateProps<T> {
+  columns: T[];
+  defaultDescendingColumns?: T[];
 }
 
-export function useSubmissionsSortState() {
+interface SubmissionsSortBy<T> extends Omit<SortBy, "sortName"> {
+  sortName: T;
+}
+
+export function useSubmissionsSortState<T extends string>({
+  columns,
+  defaultDescendingColumns,
+}: SubmissionsSortStateProps<T>) {
   const { searchParams, updateSearchParams } = useSearchState();
 
-  const handleSortBy = (name: SubmissionsSortBy["sortName"]): void => {
-    const descendingByDefault = name === "submissionDate" || name === "budget";
+  const handleSortBy = (name: SubmissionsSortBy<T>["sortName"]): void => {
+    const descendingByDefault =
+      defaultDescendingColumns && defaultDescendingColumns.includes(name);
     const sortBy = searchParams.get("sortBy");
     const previousAsc = searchParams.get("asc") === "true";
     const asc = sortBy === name ? !previousAsc : !descendingByDefault;
@@ -31,14 +27,12 @@ export function useSubmissionsSortState() {
   };
 
   const asc = searchParams.get("asc") === "true";
-  const sortByRaw = searchParams.get("sortBy") ?? "name";
-  const sortName = SUBMISSIONS_LIST_COLUMNS.includes(
-    sortByRaw as SubmissionsListColumn,
-  )
-    ? (sortByRaw as SubmissionsListColumn)
-    : DEFAULT_SORT_BY;
+  const sortByRaw = columns.includes(searchParams.get("sortBy") as T)
+    ? (searchParams.get("sortBy") as T)
+    : columns[0];
+  const sortName = columns.includes(sortByRaw as T) ? sortByRaw : columns[0];
 
-  const sortBy: SubmissionsSortBy = {
+  const sortBy: SubmissionsSortBy<T> = {
     sortName,
     asc,
   };
