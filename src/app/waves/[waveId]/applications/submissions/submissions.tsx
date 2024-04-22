@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { MAX_ITEMS_PER_PAGE } from "@/constants/pagination";
 import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 import { getTabsSubmissions } from "@/utils/getTabsSubmissions";
 
@@ -18,8 +19,6 @@ import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categ
 import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-const MAX_APPLICATIONS_PER_PAGE = 10;
 
 const SUBMISSION_TABS = {
   allSubmissions: "All Submissions",
@@ -78,11 +77,11 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   });
 
   const applicationsCount = filteredApplications.length;
-  const totalPages = Math.ceil(applicationsCount / MAX_APPLICATIONS_PER_PAGE);
+  const totalPages = Math.ceil(applicationsCount / MAX_ITEMS_PER_PAGE);
 
   const currentPageApplications = filteredApplications.slice(
-    (page - 1) * MAX_APPLICATIONS_PER_PAGE,
-    page * MAX_APPLICATIONS_PER_PAGE,
+    (page - 1) * MAX_ITEMS_PER_PAGE,
+    page * MAX_ITEMS_PER_PAGE,
   );
 
   function onTabChange(value: string) {
