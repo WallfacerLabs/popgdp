@@ -2,12 +2,18 @@ import { urls } from "@/constants/urls";
 
 import { Application } from "@/types/Application";
 import {
+  SUBMISSIONS_LIST_COLUMNS,
+  SubmissionsListColumn,
+  SubmissionsSortBy,
+} from "@/hooks/useSubmissionsSortState";
+import {
   Table,
   TableBody,
-  TableHead,
   TableHeader,
   TableLinkRow,
   TableRow,
+  TableSortHead,
+  TableSortHeadProps,
 } from "@/components/ui/table";
 
 import { BudgetCell } from "./cells/budgetCell";
@@ -20,29 +26,27 @@ import { UserCell } from "./cells/userCell";
 interface ApplicationsTableProps {
   applications: Application[];
   waveId: number;
-  className?: string;
+  sortBy: SubmissionsSortBy;
+  setSortBy: (sortBy: SubmissionsSortBy["sortName"]) => void;
 }
-
-const SUBMISSIONS_LIST_COLUMNS = [
-  "name",
-  "user",
-  "entity",
-  "submissionDate",
-  "budget",
-  "category",
-] as const;
 
 export const ApplicationsTable = ({
   applications,
   waveId,
-  className,
+  sortBy,
+  setSortBy,
 }: ApplicationsTableProps) => {
   return (
-    <Table className={className}>
+    <Table>
       <TableHeader>
         <TableRow>
           {SUBMISSIONS_LIST_COLUMNS.map((column) => (
-            <SubmissionsListColumn key={column} column={column} />
+            <SubmissionsListHead
+              key={column}
+              sortName={column}
+              sortBy={sortBy}
+              setSortBy={setSortBy as (sortBy: string) => void}
+            />
           ))}
         </TableRow>
       </TableHeader>
@@ -68,17 +72,23 @@ export const ApplicationsTable = ({
   );
 };
 
-type SubmissionsListColumnKey = (typeof SUBMISSIONS_LIST_COLUMNS)[number];
-
-interface SubmissionsListColumnProps {
-  column: SubmissionsListColumnKey;
-}
-
-const SubmissionsListColumn = ({ column }: SubmissionsListColumnProps) => {
-  return <TableHead>{getSubmissionsListColumn(column)}</TableHead>;
+const SubmissionsListHead = ({
+  sortName,
+  sortBy,
+  setSortBy,
+}: TableSortHeadProps) => {
+  return (
+    <TableSortHead
+      sortName={sortName}
+      sortBy={sortBy}
+      setSortBy={() => setSortBy(sortName)}
+    >
+      {getSubmissionsListColumn(sortName as SubmissionsSortBy["sortName"])}
+    </TableSortHead>
+  );
 };
 
-function getSubmissionsListColumn(column: SubmissionsListColumnKey) {
+function getSubmissionsListColumn(column: SubmissionsListColumn) {
   switch (column) {
     case "name":
       return "Project name";

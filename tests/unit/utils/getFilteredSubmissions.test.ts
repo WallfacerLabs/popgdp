@@ -36,7 +36,7 @@ const APPLICATIONS_MOCK = [
   },
 ] as Application[];
 
-describe("hooks/useFilteredSubmissions", () => {
+describe("hooks/getFilteredSubmissions", () => {
   test("default filters", () => {
     const filteredApplications = getFilteredSubmissions({
       applications: APPLICATIONS_MOCK,

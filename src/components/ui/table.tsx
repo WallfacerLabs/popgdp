@@ -7,6 +7,7 @@ import {
 } from "react";
 import Link from "next/link";
 
+import { SortBy } from "@/types/Sort";
 import { cn } from "@/lib/cn";
 
 import { ChevronIcon } from "../icons/chevronIcon";
@@ -87,12 +88,10 @@ const TableHead = forwardRef<HTMLDivElement, ThHTMLAttributes<HTMLDivElement>>(
 );
 TableHead.displayName = "TableHead";
 
-type SortBy = { sortName: string; asc: boolean };
-
-interface TableSortHeadProps extends ThHTMLAttributes<HTMLDivElement> {
+export interface TableSortHeadProps extends ThHTMLAttributes<HTMLDivElement> {
   sortName: string;
   sortBy: SortBy;
-  setSortBy: (sortBy: SortBy) => void;
+  setSortBy: (sortBy: SortBy["sortName"]) => void;
 }
 
 const TableSortHead = forwardRef<HTMLDivElement, TableSortHeadProps>(
@@ -103,7 +102,7 @@ const TableSortHead = forwardRef<HTMLDivElement, TableSortHeadProps>(
       <TableHead ref={ref} {...props}>
         <Button
           variant="default"
-          onClick={() => setSortBy(sortBy)}
+          onClick={() => setSortBy(sortName)}
           className="px-0"
         >
           {children}
@@ -149,8 +148,8 @@ export {
   TableBody,
   TableCell,
   TableHead,
-  TableSortHead,
   TableHeader,
   TableLinkRow,
   TableRow,
+  TableSortHead,
 };

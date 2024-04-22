@@ -46,8 +46,10 @@ export const getApplicationWithComments = cache(
         user: userFragment,
         category: {
           columns: {
+            id: true,
             color: true,
             name: true,
+            description: true,
           },
         },
         comments: {
