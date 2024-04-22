@@ -1,6 +1,7 @@
 import type { ChangeEvent } from "react";
 import { useCallback, useState } from "react";
 
+import { cn } from "@/lib/cn";
 import { FormHint } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "@/components/icons/searchIcon";
@@ -28,7 +29,7 @@ export const SearchFilter = ({
   );
 
   return (
-    <FormHint className="w-64" rightHint={<SearchIcon />}>
+    <FormHint className={cn("w-64", className)} rightHint={<SearchIcon />}>
       <Input
         placeholder="Search..."
         value={search}
