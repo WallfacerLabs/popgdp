@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
+import { getTabsSubmissions } from "@/utils/getTabsSubmissions";
 
 import { Application } from "@/types/Application";
 import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
-import { useTabsSubmissions } from "@/hooks/submissions/useTabsSubmissions";
 import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
@@ -39,7 +39,7 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
     (application) => application.user.isContentHidden === false,
   );
 
-  const { allApplications, userApplications } = useTabsSubmissions({
+  const { allApplications, userApplications } = getTabsSubmissions({
     applications: applications,
     userId,
   });
