@@ -1,13 +1,16 @@
 import { ModeratorApplication } from "@/types/Application";
+import { type SortBy } from "@/types/Sort";
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableHeader,
   TableRow,
+  TableSortHead,
+  TableSortHeadProps,
 } from "@/components/ui/table";
+import { MODERATOR_SUBMISSIONS_LIST_COLUMNS } from "@/app/moderator/applications/submissions";
 
 import { BudgetCell } from "./cells/budgetCell";
 import { CategoryCell } from "./cells/categoryCell";
@@ -15,25 +18,36 @@ import { DateCell } from "./cells/dateCell";
 import { EntityCell } from "./cells/entityCell";
 import { NameCell } from "./cells/nameCell";
 
+type ModeratorSubmissionsListColumn =
+  (typeof MODERATOR_SUBMISSIONS_LIST_COLUMNS)[number];
+
+export interface ModeratorSubmissionsSortBy extends Omit<SortBy, "sortName"> {
+  sortName: ModeratorSubmissionsListColumn;
+}
+
 interface ModeratorApplicationsTableProps {
   applications: ModeratorApplication[];
+  sortBy: ModeratorSubmissionsSortBy;
+  setSortBy: (sortBy: ModeratorSubmissionsSortBy["sortName"]) => void;
 }
 
 export const ModeratorApplicationsTable = ({
   applications,
+  sortBy,
+  setSortBy,
 }: ModeratorApplicationsTableProps) => {
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Project name</TableHead>
-          <TableHead>User</TableHead>
-          <TableHead>Entity name</TableHead>
-          <TableHead>Date</TableHead>
-          <TableHead>Proposed budget</TableHead>
-          <TableHead>Upvotes</TableHead>
-          <TableHead>Spam</TableHead>
-          <TableHead>Category</TableHead>
+          {MODERATOR_SUBMISSIONS_LIST_COLUMNS.map((column) => (
+            <SubmissionsListHead
+              key={column}
+              sortName={column}
+              sortBy={sortBy}
+              setSortBy={setSortBy as (sortBy: string) => void}
+            />
+          ))}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -57,3 +71,42 @@ export const ModeratorApplicationsTable = ({
     </Table>
   );
 };
+
+const SubmissionsListHead = ({
+  sortName,
+  sortBy,
+  setSortBy,
+}: TableSortHeadProps) => {
+  return (
+    <TableSortHead
+      sortName={sortName}
+      sortBy={sortBy}
+      setSortBy={() => setSortBy(sortName)}
+    >
+      {getSubmissionsListColumn(
+        sortName as ModeratorSubmissionsSortBy["sortName"],
+      )}
+    </TableSortHead>
+  );
+};
+
+function getSubmissionsListColumn(column: ModeratorSubmissionsListColumn) {
+  switch (column) {
+    case "name":
+      return "Project name";
+    case "user":
+      return "User";
+    case "entity":
+      return "Entity name";
+    case "submissionDate":
+      return "Submitted";
+    case "budget":
+      return "Proposed budget";
+    case "upvotes":
+      return "Upvotes";
+    case "spam":
+      return "Spam";
+    case "category":
+      return "Category";
+  }
+}
