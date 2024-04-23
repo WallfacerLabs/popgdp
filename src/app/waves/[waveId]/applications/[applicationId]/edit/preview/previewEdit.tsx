@@ -5,6 +5,7 @@ import { urls } from "@/constants/urls";
 import { ImageData } from "@/constants/validationSchemas";
 
 import { Category } from "@/types/Category";
+import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
 import { BackButton } from "@/components/ui/backButton";
@@ -17,8 +18,9 @@ import {
   applicationDataSchema,
   useStepsContext,
 } from "../../../create/stepsProvider";
+import { updateDraftAction } from "./updateDraftAction";
 
-interface EditPreview extends WaveParamsSchema {
+interface PreviewEditProps extends WaveParamsSchema {
   applicationId: string;
   user: {
     image: ImageData | null;
@@ -27,12 +29,12 @@ interface EditPreview extends WaveParamsSchema {
   categories: Category[];
 }
 
-export function EditPreview({
+export default function PreviewEdit({
   applicationId,
   waveId,
   user,
   categories,
-}: EditPreview) {
+}: PreviewEditProps) {
   const { applicationData } = useStepsContext();
 
   const validationResult = applicationDataSchema.safeParse(applicationData);
@@ -47,6 +49,11 @@ export function EditPreview({
     (category) => category.id === validatedApplicationData.categoryId,
   )!;
 
+  const onApplicationSubmit = async ({ isDraft }: { isDraft: boolean }) => {
+    await updateDraftAction(validatedApplicationData, waveId, isDraft);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.applicationStepsData);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="mb-8 flex items-center justify-between">
@@ -60,17 +67,26 @@ export function EditPreview({
         <div className="flex gap-4">
           <Button
             variant="secondary"
-            onClick={() => console.log("save as draft")}
+            onClick={() => onApplicationSubmit({ isDraft: true })}
           >
             Save as draft
             <SaveIcon />
           </Button>
-          <Button className="px-14" onClick={() => console.log("submit")}>
+          <Button
+            className="px-14"
+            onClick={() => onApplicationSubmit({ isDraft: false })}
+          >
             Submit
           </Button>
         </div>
       </div>
-      <ApplicationPreview application={{ ...validatedApplicationData, user }} />
+
+      <ApplicationPreview
+        application={{
+          ...validatedApplicationData,
+          user,
+        }}
+      />
     </div>
   );
 }
