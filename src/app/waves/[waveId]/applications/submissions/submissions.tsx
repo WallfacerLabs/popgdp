@@ -8,8 +8,8 @@ import { getTabsSubmissions } from "@/utils/getTabsSubmissions";
 import { Application } from "@/types/Application";
 import { UserId } from "@/types/User";
 import { type WaveWithApplications } from "@/types/Wave";
+import { useSortState } from "@/hooks/useSortState";
 import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
-import { useSubmissionsSortState } from "@/hooks/useSubmissionsSortState";
 import { ApplicationsTable } from "@/components/ui/applicationsTable/applicationsTable";
 import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
 import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";
@@ -23,6 +23,15 @@ const SUBMISSION_TABS = {
   mySubmissions: "My Submissions",
 } as const;
 
+export const SUBMISSIONS_LIST_COLUMNS = [
+  "name",
+  "user",
+  "entity",
+  "submissionDate",
+  "budget",
+  "category",
+] as const;
+
 interface SubmissionsProps {
   wave: WaveWithApplications;
   userId: UserId | undefined;
@@ -32,7 +41,10 @@ export function Submissions({ wave, userId }: SubmissionsProps) {
   const { page, search, category, onCategoryChange, onSearchPhraseChange } =
     useSubmissionsSearchState();
 
-  const { sortBy, handleSortBy } = useSubmissionsSortState();
+  const { sortBy, handleSortBy } = useSortState({
+    columns: SUBMISSIONS_LIST_COLUMNS,
+    defaultDescendingColumns: ["submissionDate", "budget"],
+  });
 
   const categories: CategoryFilterOption[] = [
     { id: "all", name: "All Categories" },
