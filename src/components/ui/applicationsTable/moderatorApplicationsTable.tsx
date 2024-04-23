@@ -1,5 +1,5 @@
 import { ModeratorApplication } from "@/types/Application";
-import { SortBy } from "@/types/Sort";
+import { type SortBy } from "@/types/Sort";
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import {
   Table,

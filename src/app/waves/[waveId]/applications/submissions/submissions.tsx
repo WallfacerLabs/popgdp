@@ -12,7 +12,7 @@ import { useSortState } from "@/hooks/useSortState";
 import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
 import {
   ApplicationsTable,
-  SubmissionsSortBy,
+  type SubmissionsSortBy,
 } from "@/components/ui/applicationsTable/applicationsTable";
 import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
 import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";

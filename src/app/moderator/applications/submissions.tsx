@@ -8,7 +8,7 @@ import { useSortState } from "@/hooks/useSortState";
 import { useSubmissionsSearchState } from "@/hooks/useSubmissionsSearchState";
 import {
   ModeratorApplicationsTable,
-  ModeratorSubmissionsSortBy,
+  type ModeratorSubmissionsSortBy,
 } from "@/components/ui/applicationsTable/moderatorApplicationsTable";
 import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
 import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";
@@ -25,7 +25,7 @@ export const MODERATOR_SUBMISSIONS_LIST_COLUMNS = [
   "upvotes",
   "spam",
   "category",
-];
+] as const;
 
 interface SubmissionsProps {
   applications: ModeratorApplication[];
