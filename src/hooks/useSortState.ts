@@ -2,8 +2,8 @@ import { SortBy } from "@/types/Sort";
 import { useSearchState } from "@/hooks/useSearchState";
 
 interface SortStateProps<T> {
-  columns: T[];
-  defaultDescendingColumns?: T[];
+  columns: readonly T[];
+  defaultDescendingColumns?: readonly NoInfer<T>[];
 }
 
 interface SortStateSortBy<T> extends Omit<SortBy, "sortName"> {

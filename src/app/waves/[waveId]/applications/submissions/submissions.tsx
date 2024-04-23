@@ -30,7 +30,7 @@ export const SUBMISSIONS_LIST_COLUMNS = [
   "submissionDate",
   "budget",
   "category",
-];
+] as const;
 
 interface SubmissionsProps {
   wave: WaveWithApplications;
