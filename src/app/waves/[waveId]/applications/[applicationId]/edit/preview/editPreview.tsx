@@ -1,10 +1,13 @@
 "use client";
 
 import { notFound } from "next/navigation";
+import { urls } from "@/constants/urls";
 import { ImageData } from "@/constants/validationSchemas";
 
 import { Category } from "@/types/Category";
+import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
+import { BackButton } from "@/components/ui/backButton";
 import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
@@ -15,7 +18,8 @@ import {
   useStepsContext,
 } from "../../../create/stepsProvider";
 
-interface EditPreview {
+interface EditPreview extends WaveParamsSchema {
+  applicationId: string;
   user: {
     image: ImageData | null;
     name: string | null;
@@ -23,7 +27,12 @@ interface EditPreview {
   categories: Category[];
 }
 
-export function EditPreview({ user, categories }: EditPreview) {
+export function EditPreview({
+  applicationId,
+  waveId,
+  user,
+  categories,
+}: EditPreview) {
   const { applicationData } = useStepsContext();
 
   const validationResult = applicationDataSchema.safeParse(applicationData);
@@ -42,7 +51,9 @@ export function EditPreview({ user, categories }: EditPreview) {
     <div className="flex flex-col gap-4">
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          {/* <BackButton  /> */}
+          <BackButton
+            href={urls.applications.edit({ waveId, applicationId })}
+          />
           <PageTitle>{applicationData.name}</PageTitle>
           <CategoryBadge category={category} />
         </div>
