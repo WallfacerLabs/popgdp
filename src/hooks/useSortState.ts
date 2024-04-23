@@ -17,8 +17,7 @@ export function useSortState<T extends string>({
   const { searchParams, updateSearchParams } = useSearchState();
 
   const handleSortBy = (name: SortStateSortBy<T>["sortName"]): void => {
-    const descendingByDefault =
-      defaultDescendingColumns && defaultDescendingColumns.includes(name);
+    const descendingByDefault = defaultDescendingColumns?.includes(name);
     const sortBy = searchParams.get("sortBy");
     const previousAsc = searchParams.get("asc") === "true";
     const asc = sortBy === name ? !previousAsc : !descendingByDefault;
