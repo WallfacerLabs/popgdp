@@ -3,8 +3,10 @@
 import { notFound } from "next/navigation";
 import { ImageData } from "@/constants/validationSchemas";
 
+import { Category } from "@/types/Category";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
 import { Button } from "@/components/ui/button";
+import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageTitle } from "@/components/ui/pageTitle";
 import { SaveIcon } from "@/components/icons/saveIcon";
 
@@ -18,15 +20,23 @@ interface EditPreview {
     image: ImageData | null;
     name: string | null;
   };
+  categories: Category[];
 }
 
-export function EditPreview({ user }: EditPreview) {
+export function EditPreview({ user, categories }: EditPreview) {
   const { applicationData } = useStepsContext();
 
-  const validatedResult = applicationDataSchema.safeParse(applicationData);
-  if (!validatedResult.success) {
+  const validationResult = applicationDataSchema.safeParse(applicationData);
+
+  if (!validationResult.success) {
     throw notFound();
   }
+
+  const validatedApplicationData = validationResult.data;
+
+  const category = categories.find(
+    (category) => category.id === validatedApplicationData.categoryId,
+  )!;
 
   return (
     <div className="flex flex-col gap-4">
@@ -34,7 +44,7 @@ export function EditPreview({ user }: EditPreview) {
         <div className="flex items-center gap-4">
           {/* <BackButton  /> */}
           <PageTitle>{applicationData.name}</PageTitle>
-          {/* <CategoryBadge category={waveData.categories} /> */}
+          <CategoryBadge category={category} />
         </div>
         <div className="flex gap-4">
           <Button
@@ -49,7 +59,7 @@ export function EditPreview({ user }: EditPreview) {
           </Button>
         </div>
       </div>
-      <ApplicationPreview application={{ ...validatedResult.data, user }} />
+      <ApplicationPreview application={{ ...validatedApplicationData, user }} />
     </div>
   );
 }
