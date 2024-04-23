@@ -25,7 +25,7 @@ export async function ApplicationUserButtons({
         });
       }}
     >
-      <Button> Publish</Button>
+      <Button>Publish</Button>
     </form>
   ) : (
     <Button asChild>

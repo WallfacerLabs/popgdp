@@ -6,8 +6,6 @@ import { getUser } from "@/drizzle/queries/user";
 
 import { canAddSubmission } from "@/config/actionPermissions";
 import { parseWaveParams } from "@/lib/paramsValidation";
-import { Button } from "@/components/ui/button";
-import { SaveIcon } from "@/components/icons/saveIcon";
 
 export const metadata: Metadata = {
   title: "Submission preview",

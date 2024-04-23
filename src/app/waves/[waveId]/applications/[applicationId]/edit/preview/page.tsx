@@ -11,7 +11,7 @@ export default async function EditPreviewPage() {
   if (!user) {
     throw new Error("User not found");
   }
-  
-  console.log('Edit preview page')
+
+  console.log("Edit preview page");
   return <EditPreview user={user} />;
 }

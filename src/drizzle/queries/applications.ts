@@ -188,9 +188,12 @@ export function updateApplication(
   // membersData: MemberInsertData,
 ) {
   return db.transaction(async (db) => {
-    const [ { applicationId }] = await db.update(Application).set(applicationData).returning({ applicationId: Application.id })
+    const [{ applicationId }] = await db
+      .update(Application)
+      .set(applicationData)
+      .returning({ applicationId: Application.id });
     return applicationId;
-  })
+  });
 }
 
 export function publishDraft(

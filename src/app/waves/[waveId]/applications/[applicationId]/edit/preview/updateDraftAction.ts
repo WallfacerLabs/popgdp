@@ -1,4 +1,5 @@
 import { updateApplication } from "@/drizzle/queries/applications";
+
 import { ApplicationData } from "../../../create/stepsProvider";
 
 export async function updateDraftAction(
@@ -6,7 +7,6 @@ export async function updateDraftAction(
   waveId: number,
   isDraft: boolean,
 ) {
-
   updateApplication({
     draft: isDraft,
     name: application.name,
@@ -30,5 +30,5 @@ export async function updateDraftAction(
     imageId: application.image?.id,
     waveId,
     userId: "1",
-  },);
+  });
 }
