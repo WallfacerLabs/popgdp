@@ -27,7 +27,6 @@ export function EditPreview({ user }: EditPreview) {
   if (!validatedResult.success) {
     throw notFound();
   }
-  console.log("edit preview 2");
 
   return (
     <>
