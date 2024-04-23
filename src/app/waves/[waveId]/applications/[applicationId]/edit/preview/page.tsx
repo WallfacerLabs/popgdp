@@ -1,10 +1,18 @@
+import { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { getCategoriesForWave } from "@/drizzle/queries/categories";
 import { getUser } from "@/drizzle/queries/user";
 
 import { getUserId } from "@/lib/auth";
 import { parseApplicationParams } from "@/lib/paramsValidation";
 
-import { EditPreview } from "./editPreview";
+export const metadata: Metadata = {
+  title: "Draft preview",
+};
+
+const PreviewEdit = dynamic(() => import("./previewEdit"), {
+  ssr: false,
+});
 
 export default async function EditPreviewPage({ params }: { params: unknown }) {
   const userId = await getUserId();
@@ -17,7 +25,7 @@ export default async function EditPreviewPage({ params }: { params: unknown }) {
   }
 
   return (
-    <EditPreview
+    <PreviewEdit
       user={user}
       categories={categories}
       waveId={waveId}
