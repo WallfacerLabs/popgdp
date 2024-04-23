@@ -1,3 +1,8 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { urls } from "@/constants/urls";
 import { updateApplication } from "@/drizzle/queries/applications";
 
 import { canAddSubmission } from "@/config/actionPermissions";
@@ -39,4 +44,7 @@ export async function updateDraftAction(
     waveId,
     userId,
   });
+
+  revalidatePath(urls.waves.preview({ waveId }));
+  redirect(urls.waves.preview({ waveId }));
 }
