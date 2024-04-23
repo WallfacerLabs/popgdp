@@ -1,5 +1,3 @@
-"use server";
-
 import { ModeratorPanelUser } from "@/types/User";
 import { Button } from "@/components/ui/button";
 
@@ -9,7 +7,7 @@ interface BlockUserFormProps {
   user: ModeratorPanelUser;
 }
 
-export async function BlockUserForm({ user }: BlockUserFormProps) {
+export const BlockUserForm = ({ user }: BlockUserFormProps) => {
   const isBlockedAndHidden = user.isBlocked && user.isContentHidden;
 
   return (
@@ -18,8 +16,6 @@ export async function BlockUserForm({ user }: BlockUserFormProps) {
         variant="outline"
         className="justify-start border-transparent"
         formAction={async () => {
-          "use server";
-
           await blockUserAction({
             userId: user.id,
             isBlocked: !user.isBlocked,
@@ -33,8 +29,6 @@ export async function BlockUserForm({ user }: BlockUserFormProps) {
         variant="outline"
         className="justify-start border-transparent text-red"
         formAction={async () => {
-          "use server";
-
           await blockUserAction({
             userId: user.id,
             isBlocked: !isBlockedAndHidden,
@@ -48,4 +42,4 @@ export async function BlockUserForm({ user }: BlockUserFormProps) {
       </Button>
     </form>
   );
-}
+};
