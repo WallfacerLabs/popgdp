@@ -1,5 +1,7 @@
 import { updateApplication } from "@/drizzle/queries/applications";
 
+import { canAddSubmission } from "@/config/actionPermissions";
+
 import { ApplicationData } from "../../../create/stepsProvider";
 
 export async function updateDraftAction(
@@ -7,6 +9,12 @@ export async function updateDraftAction(
   waveId: number,
   isDraft: boolean,
 ) {
+  const { userId, validationErrorMessage } = await canAddSubmission({ waveId });
+
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
+  }
+
   updateApplication({
     draft: isDraft,
     name: application.name,
@@ -29,6 +37,6 @@ export async function updateDraftAction(
 
     imageId: application.image?.id,
     waveId,
-    userId: "1",
+    userId,
   });
 }
