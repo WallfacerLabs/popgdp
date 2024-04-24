@@ -48,7 +48,7 @@ async function checkWaveStage({
   action: UserAction;
   errorMsg: string;
 }) {
-  if (cookies().get("skipWaveStageCheck")?.value === "true") return;
+  if (cookies()?.get("skipWaveStageCheck")?.value === "true") return;
 
   const wave = await getWaveDates(waveId);
   const waveStage = getWaveStage(wave);
