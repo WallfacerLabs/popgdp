@@ -188,7 +188,7 @@ export async function updateApplication(
 ) {
   const [{ applicationId }] = await db
     .update(Application)
-    .set({ name: applicationData.name })
+    .set(applicationData)
     .returning({ applicationId: Application.id });
 
   return applicationId;
