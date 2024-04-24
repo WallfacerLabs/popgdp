@@ -1,4 +1,4 @@
-import { ModeratorPanelUser } from "@/types/User";
+import { type ModeratorPanelUser } from "@/types/User";
 import { Button } from "@/components/ui/button";
 
 import { blockUserAction } from "./blockUserAction";

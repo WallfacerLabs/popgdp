@@ -6,7 +6,7 @@ interface FilteredUsersProps {
 }
 
 export function getFilteredUsers({ users, search }: FilteredUsersProps) {
-  return users.filter(
-    ({ name }) => name && name.toLowerCase().includes(search.toLowerCase()),
+  return users.filter(({ name }) =>
+    name?.toLowerCase().includes(search.toLowerCase()),
   );
 }

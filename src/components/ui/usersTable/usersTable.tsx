@@ -1,4 +1,4 @@
-import { ModeratorPanelUser } from "@/types/User";
+import { type ModeratorPanelUser } from "@/types/User";
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import {
   Table,

@@ -1,4 +1,4 @@
-import { ModeratorPanelUser } from "@/types/User";
+import { type ModeratorPanelUser } from "@/types/User";
 import { BlockUserButton } from "@/app/moderator/users/blockUserButton/blockUserButton";
 
 import { TableCell } from "../../table";

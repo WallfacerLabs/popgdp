@@ -1,4 +1,4 @@
-import { ModeratorPanelUser } from "@/types/User";
+import { type ModeratorPanelUser } from "@/types/User";
 
 import { EtherscanLink } from "../../etherscanLink";
 import { TableCell } from "../../table";

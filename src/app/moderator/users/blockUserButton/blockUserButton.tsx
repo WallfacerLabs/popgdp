@@ -1,4 +1,4 @@
-import { ModeratorPanelUser } from "@/types/User";
+import { type ModeratorPanelUser } from "@/types/User";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -13,7 +13,7 @@ interface BlockUserButtonProps {
   user: ModeratorPanelUser;
 }
 
-export const BlockUserButton = ({ user }: BlockUserButtonProps) => {
+export function BlockUserButton({ user }: BlockUserButtonProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -26,4 +26,4 @@ export const BlockUserButton = ({ user }: BlockUserButtonProps) => {
       </PopoverContent>
     </Popover>
   );
-};
+}
