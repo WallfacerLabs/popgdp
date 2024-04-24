@@ -4,6 +4,7 @@ import { urls } from "@/constants/urls";
 import { ApplicationWithComments } from "@/types/Application";
 import { canPublishDraft } from "@/config/actionPermissions";
 import { Button } from "@/components/ui/button";
+import { EditSquareIcon } from "@/components/icons/editSquareIcon";
 
 import { publishDraftAction } from "./publishDraftAction";
 
@@ -25,7 +26,7 @@ export async function ApplicationUserButtons({
         });
       }}
     >
-      <Button> Publish</Button>
+      <Button>Publish</Button>
     </form>
   ) : (
     <Button asChild>
@@ -36,6 +37,7 @@ export async function ApplicationUserButtons({
         })}
       >
         Edit
+        <EditSquareIcon />
       </Link>
     </Button>
   );
