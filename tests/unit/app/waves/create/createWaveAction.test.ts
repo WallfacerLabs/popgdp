@@ -1,5 +1,5 @@
 import { db } from "@/drizzle/db";
-import { Moderator, Reviewer, User } from "@/drizzle/schema";
+import { Moderator, Reviewer, User, Wave } from "@/drizzle/schema";
 import { mockUserSession } from "tests/helpers/mockUserSession";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -27,6 +27,7 @@ describe("app/waves/create/createWaveAction", () => {
     await db.delete(Moderator);
     await db.delete(User);
     await db.delete(Reviewer);
+    await db.delete(Wave);
 
     vi.clearAllMocks();
   });
@@ -94,6 +95,26 @@ describe("app/waves/create/createWaveAction", () => {
       mockUserSession({ id, credentialType: "orb" });
 
       await createWaveAction(WAVE_DATA);
+
+      const waves = await db.query.Wave.findMany();
+      expect(waves).toHaveLength(1);
+      expect(waves[0]).toMatchObject({
+        name: WAVE_DATA.name,
+        summary: WAVE_DATA.summary,
+        openStartDate: WAVE_DATA.openStartDate,
+        denoisingStartDate: WAVE_DATA.denoisingStartDate,
+        assesmentStartDate: WAVE_DATA.assesmentStartDate,
+        closeDate: WAVE_DATA.closeDate,
+      });
+
+      const categories = await db.query.Category.findMany();
+      expect(categories).toHaveLength(1);
+      expect(categories[0]).toMatchObject({
+        waveId: waves[0].id,
+        color: WAVE_DATA.categories[0].color,
+        description: WAVE_DATA.categories[0].description,
+        name: WAVE_DATA.categories[0].name,
+      });
     });
   });
 });
