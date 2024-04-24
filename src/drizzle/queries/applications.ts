@@ -185,7 +185,6 @@ export function insertApplication(
 
 export function updateApplication(
   applicationData: typeof Application.$inferInsert,
-  // membersData: MemberInsertData,
 ) {
   return db.transaction(async (db) => {
     const [{ applicationId }] = await db
