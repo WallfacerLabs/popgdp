@@ -20,7 +20,7 @@ export async function updateDraftAction(
     throw new Error(validationErrorMessage);
   }
 
-  updateApplication({
+  await updateApplication({
     draft: isDraft,
     name: application.name,
     summary: application.summary,
