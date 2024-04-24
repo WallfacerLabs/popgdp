@@ -183,16 +183,15 @@ export function insertApplication(
   });
 }
 
-export function updateApplication(
+export async function updateApplication(
   applicationData: typeof Application.$inferInsert,
 ) {
-  return db.transaction(async (db) => {
-    const [{ applicationId }] = await db
-      .update(Application)
-      .set(applicationData)
-      .returning({ applicationId: Application.id });
-    return applicationId;
-  });
+  const [{ applicationId }] = await db
+    .update(Application)
+    .set({ name: applicationData.name })
+    .returning({ applicationId: Application.id });
+
+  return applicationId;
 }
 
 export function publishDraft(
