@@ -23,15 +23,6 @@ export const MODERATOR_USERS_LIST_COLUMNS = [
   "submissions",
 ];
 
-export const MODERATOR_USERS_LIST_COLUMNS = [
-  "user",
-  "address",
-  "reviews",
-  "spam",
-  "useful",
-  "submissions",
-];
-
 interface UsersProps {
   users: ModeratorPanelUser[];
 }
