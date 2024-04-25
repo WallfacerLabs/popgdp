@@ -1,5 +1,6 @@
 "use client";
 
+import { MAX_ITEMS_PER_PAGE } from "@/constants/pagination";
 import { getFilteredSubmissions } from "@/utils/getFilteredSubmissions";
 
 import { ModeratorApplication } from "@/types/Application";
@@ -13,8 +14,6 @@ import {
 import { CategoryFilterOption } from "@/components/ui/filterPanels/filters/categoryFilter";
 import { SubmissionFiltersPanel } from "@/components/ui/filterPanels/submissionFiltersPanel";
 import { TablePagination } from "@/components/ui/pagination/tablePagination";
-
-const MAX_APPLICATIONS_PER_PAGE = 10;
 
 export const MODERATOR_SUBMISSIONS_LIST_COLUMNS = [
   "name",
@@ -61,11 +60,11 @@ export function Submissions({ applications }: SubmissionsProps) {
   });
 
   const applicationsCount = filteredApplications.length;
-  const totalPages = Math.ceil(applicationsCount / MAX_APPLICATIONS_PER_PAGE);
+  const totalPages = Math.ceil(applicationsCount / MAX_ITEMS_PER_PAGE);
 
   const currentPageApplications = filteredApplications.slice(
-    (page - 1) * MAX_APPLICATIONS_PER_PAGE,
-    page * MAX_APPLICATIONS_PER_PAGE,
+    (page - 1) * MAX_ITEMS_PER_PAGE,
+    page * MAX_ITEMS_PER_PAGE,
   );
 
   return (

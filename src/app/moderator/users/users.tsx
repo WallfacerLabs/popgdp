@@ -1,10 +1,12 @@
 "use client";
 
+import { MAX_ITEMS_PER_PAGE } from "@/constants/pagination";
 import { getFilteredUsers } from "@/utils/getFilteredUsers";
 
 import { ModeratorPanelUser } from "@/types/User";
 import { useUsersSearchState } from "@/hooks/useUsersSearchState";
 import { UserFiltersPanel } from "@/components/ui/filterPanels/userFiltersPanel";
+import { TablePagination } from "@/components/ui/pagination/tablePagination";
 import { UsersTable } from "@/components/ui/usersTable/usersTable";
 
 interface UsersProps {
@@ -12,12 +14,20 @@ interface UsersProps {
 }
 
 export function Users({ users }: UsersProps) {
-  const { search, onSearchPhraseChange } = useUsersSearchState();
+  const { page, search, onSearchPhraseChange } = useUsersSearchState();
 
   const filteredUsers = getFilteredUsers({
     users,
     search,
   });
+
+  const applicationsCount = filteredUsers.length;
+  const totalPages = Math.ceil(applicationsCount / MAX_ITEMS_PER_PAGE);
+
+  const currentPageUsers = filteredUsers.slice(
+    (page - 1) * MAX_ITEMS_PER_PAGE,
+    page * MAX_ITEMS_PER_PAGE,
+  );
 
   return (
     <>
@@ -26,7 +36,11 @@ export function Users({ users }: UsersProps) {
         onSearchPhraseChange={onSearchPhraseChange}
       />
 
-      <UsersTable users={filteredUsers} />
+      <UsersTable users={currentPageUsers} />
+
+      {totalPages > 1 && (
+        <TablePagination currentPage={page} totalPages={totalPages} />
+      )}
     </>
   );
 }
