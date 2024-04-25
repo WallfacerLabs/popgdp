@@ -21,7 +21,7 @@ export const MODERATOR_USERS_LIST_COLUMNS = [
   "spam",
   "useful",
   "submissions",
-];
+] as const;
 
 interface UsersProps {
   users: ModeratorPanelUser[];

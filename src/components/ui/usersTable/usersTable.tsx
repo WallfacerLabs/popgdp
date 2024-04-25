@@ -1,4 +1,4 @@
-import { SortBy } from "@/types/Sort";
+import { type SortBy } from "@/types/Sort";
 import { type ModeratorPanelUser } from "@/types/User";
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import {
