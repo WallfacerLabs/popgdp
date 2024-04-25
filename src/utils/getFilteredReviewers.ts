@@ -9,7 +9,9 @@ export function getFilteredReviewers({
   reviewers,
   search,
 }: FilteredReviewersProps) {
-  return reviewers.filter(({ name }) =>
-    name?.toLowerCase().includes(search.toLowerCase()),
+  return reviewers.filter(
+    ({ name, ethereumAddress }) =>
+      name?.toLowerCase().includes(search.toLowerCase()) ||
+      ethereumAddress?.toLowerCase().includes(search.toLowerCase()),
   );
 }
