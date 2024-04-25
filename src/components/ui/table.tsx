@@ -13,14 +13,13 @@ import { cn } from "@/lib/cn";
 import { ChevronIcon } from "../icons/chevronIcon";
 import { Button } from "./button";
 
+const tableStyles = "relative w-full overflow-auto rounded-2xl border";
+
 const Table = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(
-        "relative table w-full caption-bottom overflow-auto rounded-2xl border text-xs",
-        className,
-      )}
+      className={cn(tableStyles, "table caption-bottom text-xs", className)}
       {...props}
     />
   ),
@@ -143,6 +142,22 @@ const TableCell = forwardRef<HTMLDivElement, TdHTMLAttributes<HTMLDivElement>>(
 );
 TableCell.displayName = "TableCell";
 
+const TablePlaceholder = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      tableStyles,
+      "flex flex-col items-center justify-center gap-2 px-4 py-8",
+      className,
+    )}
+    {...props}
+  />
+));
+TablePlaceholder.displayName = "TablePlaceholder";
+
 export {
   Table,
   TableBody,
@@ -152,4 +167,5 @@ export {
   TableLinkRow,
   TableRow,
   TableSortHead,
+  TablePlaceholder,
 };
