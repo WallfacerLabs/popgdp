@@ -6,6 +6,7 @@ import {
   TableBody,
   TableHead,
   TableHeader,
+  TablePlaceholder,
   TableRow,
   TableSortHead,
   TableSortHeadProps,
@@ -33,6 +34,15 @@ interface UsersTableProps {
 }
 
 export const UsersTable = ({ users, sortBy, setSortBy }: UsersTableProps) => {
+  if (users.length === 0) {
+    return (
+      <TablePlaceholder>
+        <h4 className="text-xl font-bold">No users</h4>
+        <p className="text-xs opacity-60">There is no users yet.</p>
+      </TablePlaceholder>
+    );
+  }
+
   return (
     <Table>
       <TableHeader>
