@@ -6,6 +6,7 @@ import {
   TableBody,
   TableCell,
   TableHeader,
+  TablePlaceholder,
   TableRow,
   TableSortHead,
   TableSortHeadProps,
@@ -36,6 +37,15 @@ export const ModeratorApplicationsTable = ({
   sortBy,
   setSortBy,
 }: ModeratorApplicationsTableProps) => {
+  if (applications.length === 0) {
+    return (
+      <TablePlaceholder>
+        <h4 className="text-xl font-bold">No submissions</h4>
+        <p className="text-xs opacity-60">There is no submissions yet.</p>
+      </TablePlaceholder>
+    );
+  }
+
   return (
     <Table>
       <TableHeader>
