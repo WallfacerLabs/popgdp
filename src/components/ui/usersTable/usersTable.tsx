@@ -1,3 +1,4 @@
+import { type SortBy } from "@/types/Sort";
 import { type ModeratorPanelUser } from "@/types/User";
 import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
 import {
@@ -6,31 +7,44 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableSortHead,
+  TableSortHeadProps,
 } from "@/components/ui/table";
 import { AssignmentIcon } from "@/components/icons/assignmentIcon";
 import { ErrorCircleIcon } from "@/components/icons/errorCircleIcon";
 import { ReviewIcon } from "@/components/icons/reviewIcon";
 import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
+import { MODERATOR_USERS_LIST_COLUMNS } from "@/app/moderator/users/users";
 
 import { CountCell } from "./cells/countCell";
 import { EtherscanLinkCell } from "./cells/etherscanLinkCell";
 import { UserActionsCell } from "./cells/userActionsCell";
 
-interface UsersTableProps {
-  users: ModeratorPanelUser[];
+type ModeratorUsersListColumn = (typeof MODERATOR_USERS_LIST_COLUMNS)[number];
+
+export interface ModeratorUsersSortBy extends Omit<SortBy, "sortName"> {
+  sortName: ModeratorUsersListColumn;
 }
 
-export const UsersTable = ({ users }: UsersTableProps) => {
+interface UsersTableProps {
+  users: ModeratorPanelUser[];
+  sortBy: ModeratorUsersSortBy;
+  setSortBy: (sortBy: ModeratorUsersSortBy["sortName"]) => void;
+}
+
+export const UsersTable = ({ users, sortBy, setSortBy }: UsersTableProps) => {
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>User</TableHead>
-          <TableHead>Wallet address</TableHead>
-          <TableHead>Reviews</TableHead>
-          <TableHead>SPAM count</TableHead>
-          <TableHead>Useful</TableHead>
-          <TableHead>Submissions</TableHead>
+          {MODERATOR_USERS_LIST_COLUMNS.map((column) => (
+            <UsersListHead
+              key={column}
+              sortName={column}
+              sortBy={sortBy}
+              setSortBy={setSortBy as (sortBy: string) => void}
+            />
+          ))}
           <TableHead />
         </TableRow>
       </TableHeader>
@@ -61,3 +75,32 @@ export const UsersTable = ({ users }: UsersTableProps) => {
     </Table>
   );
 };
+
+const UsersListHead = ({ sortName, sortBy, setSortBy }: TableSortHeadProps) => {
+  return (
+    <TableSortHead
+      sortName={sortName}
+      sortBy={sortBy}
+      setSortBy={() => setSortBy(sortName)}
+    >
+      {getUsersListColumn(sortName as ModeratorUsersSortBy["sortName"])}
+    </TableSortHead>
+  );
+};
+
+function getUsersListColumn(column: ModeratorUsersListColumn) {
+  switch (column) {
+    case "user":
+      return "User";
+    case "address":
+      return "Wallet Address";
+    case "reviews":
+      return "Reviews";
+    case "spam":
+      return "SPAM count";
+    case "useful":
+      return "Useful";
+    case "submissions":
+      return "Submissions";
+  }
+}
