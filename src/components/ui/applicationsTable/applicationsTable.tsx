@@ -7,6 +7,7 @@ import {
   TableBody,
   TableHeader,
   TableLinkRow,
+  TablePlaceholder,
   TableRow,
   TableSortHead,
   TableSortHeadProps,
@@ -39,6 +40,17 @@ export const ApplicationsTable = ({
   sortBy,
   setSortBy,
 }: ApplicationsTableProps) => {
+  if (applications.length === 0) {
+    return (
+      <TablePlaceholder>
+        <h4 className="text-xl font-bold">No submissions</h4>
+        <p className="text-xs opacity-60">
+          There is no submissions for this wave yet.
+        </p>
+      </TablePlaceholder>
+    );
+  }
+
   return (
     <Table>
       <TableHeader>
