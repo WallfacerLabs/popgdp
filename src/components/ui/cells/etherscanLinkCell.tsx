@@ -1,7 +1,7 @@
 import { type ModeratorPanelUser } from "@/types/User";
 
-import { EtherscanLink } from "../../etherscanLink";
-import { TableCell } from "../../table";
+import { EtherscanLink } from "../etherscanLink";
+import { TableCell } from "../table";
 
 interface EtherscanLinkCellProps {
   ethereumAddress: ModeratorPanelUser["ethereumAddress"];
