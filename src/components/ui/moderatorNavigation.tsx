@@ -12,6 +12,7 @@ import { Button } from "./button";
 export function ModeratorNavigation() {
   return (
     <nav className="flex gap-2">
+      <ActiveLink href={urls.moderator.waves}>Waves</ActiveLink>
       <ActiveLink href={urls.moderator.applications}>Submissions</ActiveLink>
       <ActiveLink href={urls.moderator.users}>Users</ActiveLink>
       <ActiveLink href={urls.moderator.reviewers}>Reviewers</ActiveLink>

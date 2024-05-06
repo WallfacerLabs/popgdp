@@ -25,6 +25,7 @@ export const urls = {
       `/waves/${waveId}/applications/${applicationId}/edit/preview` as const,
   },
   moderator: {
+    waves: "/moderator/waves",
     reviewers: "/moderator/reviewers",
     applications: "/moderator/applications",
     users: "/moderator/users",
