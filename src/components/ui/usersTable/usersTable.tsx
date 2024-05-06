@@ -38,7 +38,7 @@ export const UsersTable = ({ users, sortBy, setSortBy }: UsersTableProps) => {
     return (
       <TablePlaceholder>
         <h4 className="text-xl font-bold">No users</h4>
-        <p className="text-xs opacity-60">There is no users yet.</p>
+        <p className="text-xs opacity-60">There are no users yet.</p>
       </TablePlaceholder>
     );
   }
