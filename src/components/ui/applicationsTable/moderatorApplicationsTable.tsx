@@ -41,7 +41,7 @@ export const ModeratorApplicationsTable = ({
     return (
       <TablePlaceholder>
         <h4 className="text-xl font-bold">No submissions</h4>
-        <p className="text-xs opacity-60">There is no submissions yet.</p>
+        <p className="text-xs opacity-60">There are no submissions yet.</p>
       </TablePlaceholder>
     );
   }
