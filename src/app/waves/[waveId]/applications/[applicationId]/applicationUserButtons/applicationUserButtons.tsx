@@ -2,8 +2,9 @@ import Link from "next/link";
 import { urls } from "@/constants/urls";
 
 import { ApplicationWithComments } from "@/types/Application";
-import { canPublishDraft } from "@/config/actionPermissions";
+import { canEditSubmission, canPublishDraft } from "@/config/actionPermissions";
 import { Button } from "@/components/ui/button";
+import { ErrorTooltip } from "@/components/ui/tooltip";
 import { EditSquareIcon } from "@/components/icons/editSquareIcon";
 
 import { publishDraftAction } from "./publishDraftAction";
@@ -14,8 +15,12 @@ export async function ApplicationUserButtons({
   application: ApplicationWithComments;
 }) {
   const { draft } = application;
-  const { validationErrorMessage } = await canPublishDraft(application);
-  const isPublishDisabled = !draft && Boolean(validationErrorMessage);
+  const { validationErrorMessage: publishValidationErrorMessage } =
+    await canPublishDraft(application);
+  const { validationErrorMessage: editValidationErrorMessage } =
+    await canEditSubmission(application);
+  const isPublishDisabled = !draft && Boolean(publishValidationErrorMessage);
+  const canEdit = !editValidationErrorMessage;
 
   return (
     <div className="flex gap-4">
@@ -33,17 +38,26 @@ export async function ApplicationUserButtons({
         </form>
       )}
 
-      <Button asChild>
-        <Link
-          href={urls.applications.edit({
-            applicationId: application.id,
-            waveId: application.waveId,
-          })}
-        >
-          Edit
-          <EditSquareIcon />
-        </Link>
-      </Button>
+      {canEdit ? (
+        <Button asChild>
+          <Link
+            href={urls.applications.edit({
+              applicationId: application.id,
+              waveId: application.waveId,
+            })}
+          >
+            Edit
+            <EditSquareIcon />
+          </Link>
+        </Button>
+      ) : (
+        <ErrorTooltip message={editValidationErrorMessage}>
+          <Button disabled>
+            Edit
+            <EditSquareIcon />
+          </Button>
+        </ErrorTooltip>
+      )}
     </div>
   );
 }
