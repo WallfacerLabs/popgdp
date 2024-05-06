@@ -14,12 +14,12 @@ import {
 } from "@/components/ui/table";
 import { SUBMISSIONS_LIST_COLUMNS } from "@/app/waves/[waveId]/applications/submissions/submissions";
 
+import { UserCell } from "../cells/userCell";
 import { BudgetCell } from "./cells/budgetCell";
 import { CategoryCell } from "./cells/categoryCell";
 import { DateCell } from "./cells/dateCell";
 import { EntityCell } from "./cells/entityCell";
 import { NameCell } from "./cells/nameCell";
-import { UserCell } from "./cells/userCell";
 
 type SubmissionsListColumn = (typeof SUBMISSIONS_LIST_COLUMNS)[number];
 

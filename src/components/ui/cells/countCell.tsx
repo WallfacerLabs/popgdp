@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-import { TableCell } from "../../table";
+import { TableCell } from "../table";
 
 interface CountCellProps {
   count: number | null;

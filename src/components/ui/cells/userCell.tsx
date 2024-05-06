@@ -4,7 +4,7 @@ import { EtherscanLink } from "@/components/ui/etherscanLink";
 import { TableCell } from "@/components/ui/table";
 import { UserAvatar } from "@/components/ui/userAvatar";
 
-import { Badge } from "../../badge";
+import { Badge } from "../badge";
 
 interface UserCellProps {
   name: string | null;

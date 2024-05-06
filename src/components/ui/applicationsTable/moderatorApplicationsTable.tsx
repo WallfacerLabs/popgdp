@@ -1,6 +1,6 @@
 import { ModeratorApplication } from "@/types/Application";
 import { type SortBy } from "@/types/Sort";
-import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
+import { UserCell } from "@/components/ui/cells/userCell";
 import {
   Table,
   TableBody,

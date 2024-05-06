@@ -4,21 +4,12 @@ import { getAllReviewers } from "@/drizzle/queries/user";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { Button } from "@/components/ui/button";
-import { EtherscanLink } from "@/components/ui/etherscanLink";
 import { ModeratorNavigation } from "@/components/ui/moderatorNavigation";
 import { PageTitle } from "@/components/ui/pageTitle";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { UserPreview } from "@/components/ui/userPreview";
 import { DotsHorizontalIcon } from "@/components/icons/dotsHorizontalIcon";
 import { InfoCircleIcon } from "@/components/icons/infoCircleIcon";
 
+import { Reviewers } from "./reviewers";
 import { UpdateReviewersDialog } from "./updateReviewersDialog";
 
 export const metadata: Metadata = {
@@ -53,30 +44,7 @@ export default async function ReviewersPage() {
 
       <ModeratorNavigation />
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>User</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Reviews</TableHead>
-            <TableHead>Wallet address</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {reviewers.map((reviewer) => (
-            <TableRow key={reviewer.id}>
-              <TableCell>
-                <UserPreview name={reviewer.name} image={reviewer.image} />
-              </TableCell>
-              <TableCell>Reviewer</TableCell>
-              <TableCell>{reviewer.reviewsCount ?? "-"}</TableCell>
-              <TableCell>
-                <EtherscanLink ethereumAddress={reviewer.ethereumAddress!} />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <Reviewers reviewers={reviewers} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { type SortBy } from "@/types/Sort";
 import { type ModeratorPanelUser } from "@/types/User";
-import { UserCell } from "@/components/ui/applicationsTable/cells/userCell";
+import { UserCell } from "@/components/ui/cells/userCell";
 import {
   Table,
   TableBody,
@@ -17,8 +17,8 @@ import { ReviewIcon } from "@/components/icons/reviewIcon";
 import { ThumbUpIcon } from "@/components/icons/thumbUpIcon";
 import { MODERATOR_USERS_LIST_COLUMNS } from "@/app/moderator/users/users";
 
-import { CountCell } from "./cells/countCell";
-import { EtherscanLinkCell } from "./cells/etherscanLinkCell";
+import { CountCell } from "../cells/countCell";
+import { EtherscanLinkCell } from "../cells/etherscanLinkCell";
 import { UserActionsCell } from "./cells/userActionsCell";
 
 type ModeratorUsersListColumn = (typeof MODERATOR_USERS_LIST_COLUMNS)[number];
