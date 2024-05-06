@@ -2,6 +2,12 @@ import { db } from "@/drizzle/db";
 import { Category, Moderator, Reviewer, User, Wave } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { mockUserSession } from "tests/helpers/mockUserSession";
+import {
+  createBlocked,
+  createModerator,
+  createReviewer,
+  createUser,
+} from "tests/helpers/queries";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { getWaveStage } from "@/config/waveStages";
@@ -10,7 +16,6 @@ import { createApplicationAction } from "@/app/waves/[waveId]/applications/creat
 
 const waveId = 0;
 const categoryId = "8e60662c-e935-48dd-9493-76139d5bf950";
-const ethereumAddress = "0x88009922334455";
 const userId = "0";
 
 const applicationData = {
@@ -62,23 +67,9 @@ describe("app/waves/create/createWaveAction", () => {
     vi.clearAllMocks();
   });
 
-  async function createModerator(userId: string) {
-    await db.insert(Moderator).values({ ethereumAddress });
-    await db.insert(User).values({ id: userId, ethereumAddress });
-  }
-
-  async function createReviewer(userId: string) {
-    await db.insert(Reviewer).values({ ethereumAddress });
-    await db.insert(User).values({ id: userId, ethereumAddress });
-  }
-
-  async function createBlocked(userId: string) {
-    await db.insert(User).values({ id: userId, isBlocked: true });
-  }
-
   describe("permissions", () => {
     it("visitor", async () => {
-      await db.insert(User).values({ id: userId });
+      await createUser(userId);
 
       expect(() =>
         createApplicationAction(applicationData, waveId, false),
@@ -87,7 +78,7 @@ describe("app/waves/create/createWaveAction", () => {
 
     it("blocked", async () => {
       await createBlocked(userId);
-      mockUserSession({ id: userId, credentialType: "orb" });
+      mockUserSession({ userId, credentialType: "orb" });
 
       expect(() =>
         createApplicationAction(applicationData, waveId, false),
@@ -95,8 +86,8 @@ describe("app/waves/create/createWaveAction", () => {
     });
 
     it("device verified", async () => {
-      await db.insert(User).values({ id: userId });
-      mockUserSession({ id: userId, credentialType: "device" });
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "device" });
 
       await createApplicationAction(applicationData, waveId, false);
 
@@ -105,8 +96,8 @@ describe("app/waves/create/createWaveAction", () => {
     });
 
     it("orb verified", async () => {
-      await db.insert(User).values({ id: userId });
-      mockUserSession({ id: userId, credentialType: "orb" });
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "orb" });
 
       await createApplicationAction(applicationData, waveId, false);
 
@@ -116,7 +107,7 @@ describe("app/waves/create/createWaveAction", () => {
 
     it("reviewer", async () => {
       await createReviewer(userId);
-      mockUserSession({ id: userId, credentialType: "orb" });
+      mockUserSession({ userId, credentialType: "orb" });
 
       await createApplicationAction(applicationData, waveId, false);
 
@@ -126,7 +117,7 @@ describe("app/waves/create/createWaveAction", () => {
 
     it("moderator", async () => {
       await createModerator(userId);
-      mockUserSession({ id: userId, credentialType: "orb" });
+      mockUserSession({ userId, credentialType: "orb" });
 
       await createApplicationAction(applicationData, waveId, false);
 
@@ -137,8 +128,8 @@ describe("app/waves/create/createWaveAction", () => {
 
   describe("wave stages", () => {
     it("open", async () => {
-      await db.insert(User).values({ id: userId });
-      mockUserSession({ id: userId, credentialType: "device" });
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "device" });
 
       await createApplicationAction(applicationData, waveId, false);
 
@@ -155,8 +146,8 @@ describe("app/waves/create/createWaveAction", () => {
 
       expect(getWaveStage(updatedWave)).toBe("denoising");
 
-      await db.insert(User).values({ id: userId });
-      mockUserSession({ id: userId, credentialType: "device" });
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "device" });
 
       expect(() =>
         createApplicationAction(applicationData, waveId, false),
@@ -171,8 +162,8 @@ describe("app/waves/create/createWaveAction", () => {
 
       expect(getWaveStage(updatedWave)).toBe("assesment");
 
-      await db.insert(User).values({ id: userId });
-      mockUserSession({ id: userId, credentialType: "device" });
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "device" });
 
       expect(() =>
         createApplicationAction(applicationData, waveId, false),
@@ -187,8 +178,8 @@ describe("app/waves/create/createWaveAction", () => {
 
       expect(getWaveStage(updatedWave)).toBe("close");
 
-      await db.insert(User).values({ id: userId });
-      mockUserSession({ id: userId, credentialType: "device" });
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "device" });
 
       expect(() =>
         createApplicationAction(applicationData, waveId, false),
@@ -197,8 +188,8 @@ describe("app/waves/create/createWaveAction", () => {
   });
 
   it("should create an application", async () => {
-    await db.insert(User).values({ id: userId });
-    mockUserSession({ id: userId, credentialType: "device" });
+    await createUser(userId);
+    mockUserSession({ userId, credentialType: "device" });
 
     await createApplicationAction(applicationData, waveId, false);
 

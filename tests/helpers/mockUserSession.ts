@@ -7,14 +7,19 @@ vi.mock("next/cache");
 vi.mock("next/navigation");
 vi.mock("next/headers");
 
-export function mockUserSession(user: {
-  id: string;
+interface MockUserSessionArgs {
+  userId: string;
   credentialType: "orb" | "device";
-}) {
+}
+
+export function mockUserSession({
+  credentialType,
+  userId,
+}: MockUserSessionArgs) {
   mockedGetSession.mockResolvedValue({
     user: {
-      sub: `oauth2|worldcoin|${user.id}`,
-      credentialType: user.credentialType,
+      sub: `oauth2|worldcoin|${userId}`,
+      credentialType,
     },
   });
 }
