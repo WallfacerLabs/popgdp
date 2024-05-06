@@ -39,7 +39,7 @@ export const ReviewersTable = ({
     return (
       <TablePlaceholder>
         <h4 className="text-xl font-bold">No reviewers</h4>
-        <p className="text-xs opacity-60">There is no reviewers yet.</p>
+        <p className="text-xs opacity-60">There are no reviewers yet.</p>
       </TablePlaceholder>
     );
   }
