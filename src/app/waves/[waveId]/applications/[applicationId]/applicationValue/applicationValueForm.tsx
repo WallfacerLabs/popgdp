@@ -16,7 +16,7 @@ export async function ApplicationValueForm({
   application,
 }: ApplicationValueFormProps) {
   return (
-    <form className="flex gap-4">
+    <form className="flex flex-wrap items-center gap-x-4 gap-y-2">
       <ActionButton application={application} value="spam" />
       <ActionButton application={application} value="positive" />
     </form>

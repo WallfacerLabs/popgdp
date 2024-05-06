@@ -8,10 +8,9 @@ import { type Category } from "@/types/Category";
 import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
-import { BackButton } from "@/components/ui/backButton";
 import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 import { SaveIcon } from "@/components/icons/saveIcon";
 
 import { applicationDataSchema, useStepsContext } from "../stepsProvider";
@@ -54,28 +53,25 @@ export default function PreviewApplication({
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <BackButton href={urls.applications.create({ waveId })} />
-          <PageTitle>{applicationData.name}</PageTitle>
-          <CategoryBadge category={category} />
-        </div>
-        <div className="flex gap-4">
-          <Button
-            variant="secondary"
-            onClick={() => onApplicationSubmit({ isDraft: true })}
-          >
-            Save as draft
-            <SaveIcon />
-          </Button>
-          <Button
-            className="px-14"
-            onClick={() => onApplicationSubmit({ isDraft: false })}
-          >
-            Submit
-          </Button>
-        </div>
-      </div>
+      <PageHeader
+        title={applicationData.name ?? "Submission"}
+        backUrl={urls.applications.create({ waveId })}
+        badges={<CategoryBadge category={category} />}
+      >
+        <Button
+          variant="secondary"
+          onClick={() => onApplicationSubmit({ isDraft: true })}
+        >
+          Save as draft
+          <SaveIcon />
+        </Button>
+        <Button
+          className="px-14"
+          onClick={() => onApplicationSubmit({ isDraft: false })}
+        >
+          Submit
+        </Button>
+      </PageHeader>
 
       <ApplicationPreview
         application={{

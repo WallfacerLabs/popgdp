@@ -23,7 +23,7 @@ export async function ApplicationUserButtons({
   const canEdit = !editValidationErrorMessage;
 
   return (
-    <div className="flex gap-4">
+    <>
       {draft && (
         <form
           className="flex"
@@ -58,6 +58,6 @@ export async function ApplicationUserButtons({
           </Button>
         </ErrorTooltip>
       )}
-    </div>
+    </>
   );
 }

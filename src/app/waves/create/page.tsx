@@ -4,8 +4,7 @@ import { notFound } from "next/navigation";
 import { urls } from "@/constants/urls";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
-import { BackButton } from "@/components/ui/backButton";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 
 export const metadata: Metadata = {
   title: "Create wave",
@@ -23,10 +22,11 @@ export default async function CreateWave() {
 
   return (
     <>
-      <div className="mb-16 flex items-center gap-4">
-        <BackButton href={urls.root} />
-        <PageTitle>Create new wave</PageTitle>
-      </div>
+      <PageHeader
+        className="mb-16"
+        title="Create New Wave"
+        backUrl={urls.root}
+      />
       <CreateWaveForm />
     </>
   );

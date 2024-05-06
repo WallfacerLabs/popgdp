@@ -4,7 +4,7 @@ import { getWaves } from "@/drizzle/queries/waves";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { Button } from "@/components/ui/button";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 import { WavePreview } from "@/components/ui/wavePreview.tsx/wavePreview";
 
 export default async function Home() {
@@ -14,14 +14,14 @@ export default async function Home() {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <div className="flex justify-between">
-        <PageTitle>Current waves</PageTitle>
+      <PageHeader title="Current waves">
         {isModerator && (
           <Button variant="secondary" asChild>
             <Link href={urls.waves.create}>Create wave</Link>
           </Button>
         )}
-      </div>
+      </PageHeader>
+
       <ol className="flex flex-col gap-8">
         {waves.map((wave) => (
           <WavePreview wave={wave} key={wave.id} />

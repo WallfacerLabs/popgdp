@@ -7,7 +7,7 @@ import { canAddSubmission } from "@/config/actionPermissions";
 import { getUserId } from "@/lib/auth";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { Button } from "@/components/ui/button";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 import { ErrorTooltip } from "@/components/ui/tooltip";
 
 import { Submissions } from "./submissions";
@@ -21,10 +21,9 @@ export async function SubmissionsSection({ wave }: SubmissionsProps) {
 
   return (
     <>
-      <div className="flex items-center justify-between">
-        <PageTitle>Submissions</PageTitle>
+      <PageHeader title="Submissions">
         <ApplyForGrantButton waveId={wave.id} userId={userId} />
-      </div>
+      </PageHeader>
 
       <Submissions wave={wave} userId={userId} />
     </>

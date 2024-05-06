@@ -4,7 +4,7 @@ import { getModeratorPanelUsers } from "@/drizzle/queries/user";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { ModeratorNavigation } from "@/components/ui/moderatorNavigation";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 
 import { ExportUsers } from "./exportUsers";
 import { Users } from "./users";
@@ -23,11 +23,9 @@ export default async function UsersPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
-        <PageTitle>Manage</PageTitle>
-
+      <PageHeader title="Manage">
         <ExportUsers />
-      </div>
+      </PageHeader>
 
       <ModeratorNavigation />
       <Users users={users} />

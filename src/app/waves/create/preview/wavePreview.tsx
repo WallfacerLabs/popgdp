@@ -6,7 +6,6 @@ import { urls } from "@/constants/urls";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/dates";
 import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
-import { BackButton } from "@/components/ui/backButton";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -16,7 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 import { Separator } from "@/components/ui/separator";
 import { CalendarIcon } from "@/components/icons/calendarIcon";
 
@@ -35,11 +34,7 @@ export default function PreviewApplication() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <BackButton href={urls.waves.create} />
-          <PageTitle>{validatedWaveData.name}</PageTitle>
-        </div>
+      <PageHeader title={validatedWaveData.name} backUrl={urls.waves.create}>
         <Button
           className="px-14"
           onClick={async () => {
@@ -49,7 +44,7 @@ export default function PreviewApplication() {
         >
           Submit
         </Button>
-      </div>
+      </PageHeader>
       <Card className="bg-gray-50">
         <CardHeader>
           <CardTitle>{validatedWaveData.name}</CardTitle>
