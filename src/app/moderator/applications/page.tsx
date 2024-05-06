@@ -4,7 +4,7 @@ import { getModeratorPanelApplications } from "@/drizzle/queries/applications";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { ModeratorNavigation } from "@/components/ui/moderatorNavigation";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 
 import { ExportSubmissions } from "./exportSubmissions";
 import { Submissions } from "./submissions";
@@ -22,11 +22,9 @@ export default async function ReviewersPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
-        <PageTitle>Manage</PageTitle>
-
+      <PageHeader title="Manage">
         <ExportSubmissions />
-      </div>
+      </PageHeader>
       <ModeratorNavigation />
 
       <Submissions applications={applications} />

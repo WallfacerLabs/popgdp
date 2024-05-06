@@ -8,10 +8,9 @@ import { Category } from "@/types/Category";
 import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
 import { WaveParamsSchema } from "@/lib/paramsValidation";
 import { ApplicationPreview } from "@/components/ui/applicationPreview/applicationPreview";
-import { BackButton } from "@/components/ui/backButton";
 import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 import { SaveIcon } from "@/components/icons/saveIcon";
 
 import {
@@ -56,15 +55,13 @@ export default function PreviewEdit({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <BackButton
-            href={urls.applications.edit({ waveId, applicationId })}
-          />
-          <PageTitle>{applicationData.name}</PageTitle>
-          <CategoryBadge category={category} />
-        </div>
-        <div className="flex gap-4">
+      <PageHeader
+        className="mb-8"
+        title={applicationData.name ?? "Submission"}
+        backUrl={urls.applications.edit({ waveId, applicationId })}
+        badges={<CategoryBadge category={category} />}
+      >
+        <>
           <Button
             variant="secondary"
             onClick={() => onApplicationSubmit({ isDraft: true })}
@@ -78,8 +75,8 @@ export default function PreviewEdit({
           >
             Submit
           </Button>
-        </div>
-      </div>
+        </>
+      </PageHeader>
 
       <ApplicationPreview
         application={{

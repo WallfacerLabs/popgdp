@@ -3,8 +3,7 @@ import { urls } from "@/constants/urls";
 import { getUser } from "@/drizzle/queries/user";
 
 import { getUserId } from "@/lib/auth";
-import { BackButton } from "@/components/ui/backButton";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 import { Unauthenticated } from "@/components/ui/unauthenticated";
 
 import { ProfileSettingsStepper } from "./ProfileSettingsStepper";
@@ -23,10 +22,8 @@ export default async function ProfilePage() {
 
   return (
     <>
-      <div className="mb-16 flex items-center gap-4">
-        <BackButton href={urls.root} />
-        <PageTitle>My profile</PageTitle>
-      </div>
+      <PageHeader className="mb-16" title="My Profile" backUrl={urls.root} />
+
       <ProfileSettingsStepper
         userAvatar={user?.image}
         userName={user?.name}

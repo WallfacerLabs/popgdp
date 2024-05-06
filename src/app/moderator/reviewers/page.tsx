@@ -5,7 +5,7 @@ import { getAllReviewers } from "@/drizzle/queries/user";
 import { userHasRole, UserPermission } from "@/config/userPermissions";
 import { Button } from "@/components/ui/button";
 import { ModeratorNavigation } from "@/components/ui/moderatorNavigation";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 import { DotsHorizontalIcon } from "@/components/icons/dotsHorizontalIcon";
 import { InfoCircleIcon } from "@/components/icons/infoCircleIcon";
 
@@ -26,9 +26,8 @@ export default async function ReviewersPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
-        <PageTitle>Manage</PageTitle>
-        <div className="flex items-center gap-2">
+      <PageHeader title="Manage">
+        <>
           <div className="flex items-center gap-1">
             <InfoCircleIcon className="h-6 w-6" /> Master CSV being replaced
             each time
@@ -39,9 +38,8 @@ export default async function ReviewersPage() {
           <Button size="icon" variant="secondary">
             <DotsHorizontalIcon />
           </Button>
-        </div>
-      </div>
-
+        </>
+      </PageHeader>
       <ModeratorNavigation />
 
       <Reviewers reviewers={reviewers} />

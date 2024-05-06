@@ -6,8 +6,7 @@ import { getCategoriesForWave } from "@/drizzle/queries/categories";
 
 import { canAddSubmission } from "@/config/actionPermissions";
 import { parseWaveParams } from "@/lib/paramsValidation";
-import { BackButton } from "@/components/ui/backButton";
-import { PageTitle } from "@/components/ui/pageTitle";
+import { PageHeader } from "@/components/ui/pageHeader";
 
 const CreateApplicationForm = dynamic(() => import("./createApplicationForm"), {
   ssr: false,
@@ -32,10 +31,11 @@ export default async function CreateApplication({
 
   return (
     <>
-      <div className="mb-16 flex items-center gap-4">
-        <BackButton href={urls.waves.preview({ waveId })} />
-        <PageTitle>Apply for the Grant</PageTitle>
-      </div>
+      <PageHeader
+        className="mb-16"
+        title="Apply for the Grant"
+        backUrl={urls.waves.preview({ waveId })}
+      />
 
       <CreateApplicationForm
         categories={categories}
