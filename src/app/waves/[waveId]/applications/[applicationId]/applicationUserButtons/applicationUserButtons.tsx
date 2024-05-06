@@ -15,30 +15,35 @@ export async function ApplicationUserButtons({
 }) {
   const { draft } = application;
   const { validationErrorMessage } = await canPublishDraft(application);
-  const canPublish = draft && !!validationErrorMessage;
+  const canPublish = draft && !validationErrorMessage;
 
-  return canPublish ? (
-    <form
-      action={async () => {
-        "use server";
-        await publishDraftAction({
-          application,
-        });
-      }}
-    >
-      <Button>Publish</Button>
-    </form>
-  ) : (
-    <Button asChild>
-      <Link
-        href={urls.applications.edit({
-          applicationId: application.id,
-          waveId: application.waveId,
-        })}
-      >
-        Edit
-        <EditSquareIcon />
-      </Link>
-    </Button>
+  return (
+    <div className="flex gap-4">
+      {draft && (
+        <form
+          className="flex"
+          action={async () => {
+            "use server";
+            await publishDraftAction({
+              application,
+            });
+          }}
+        >
+          <Button disabled={!canPublish}>Publish</Button>
+        </form>
+      )}
+
+      <Button asChild>
+        <Link
+          href={urls.applications.edit({
+            applicationId: application.id,
+            waveId: application.waveId,
+          })}
+        >
+          Edit
+          <EditSquareIcon />
+        </Link>
+      </Button>
+    </div>
   );
 }
