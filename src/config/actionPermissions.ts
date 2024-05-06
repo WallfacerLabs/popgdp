@@ -75,6 +75,26 @@ export async function canAddSubmission({ waveId }: { waveId: number }) {
   }
 }
 
+export async function canEditSubmission(application: ApplicationWithComments) {
+  try {
+    const userId = await checkUserId("You need to be signed in to edit");
+    if (userId !== application.userId) {
+      throw new ValidationError("You can only edit your own submission");
+    }
+    await checkWaveStage({
+      waveId: application.waveId,
+      action: "submissionEdit",
+      errorMsg: "You cannot edit submission in this wave stage",
+    });
+    return { userId };
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return { validationErrorMessage: error.message };
+    }
+    throw error;
+  }
+}
+
 export async function canPublishDraft(application: ApplicationWithComments) {
   try {
     const userId = await checkUserId(
