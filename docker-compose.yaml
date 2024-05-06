@@ -9,3 +9,5 @@ services:
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
+    volumes:
+      - ./src/drizzle/db-autostart:/docker-entrypoint-initdb.d

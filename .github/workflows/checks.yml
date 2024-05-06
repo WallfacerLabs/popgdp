@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PLAYWRIGHT: true
-      DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      DRIZZLE_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
       AUTH0_SECRET: 810bd1ccbf7b1d388d98339ac86d420649bdb789c9ac0c1fad383820341b1773
       AUTH0_BASE_URL: "http://localhost:3000"
       AUTH0_ISSUER_BASE_URL: "https://YOUR_AUTH0_DOMAIN.auth0.com"
@@ -22,7 +22,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_DB: test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s

@@ -1,10 +1,11 @@
 import path from "node:path";
+import { config } from "dotenv";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
     include: ["**/*.test.ts", "**/*.test.tsx"],
-    setupFiles: ["dotenv/config"],
+    env: config({ path: ".env.test" }).parsed,
     poolOptions: {
       threads: {
         singleThread: true,

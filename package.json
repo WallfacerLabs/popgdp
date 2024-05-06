@@ -15,7 +15,8 @@
     "test:e2e": "playwright test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "drizzle:migrate": "tsx ./src/drizzle/migrate.ts",
+    "drizzle:migrate": "tsx -r dotenv/config ./src/drizzle/migrate.ts dotenv_config_path=.env",
+    "drizzle:migrate-test": "tsx -r dotenv/config ./src/drizzle/migrate.ts dotenv_config_path=.env.test",
     "drizzle:studio": "drizzle-kit studio",
     "drizzle:generate": "drizzle-kit generate:pg",
     "drizzle:push": "drizzle-kit push:pg"
