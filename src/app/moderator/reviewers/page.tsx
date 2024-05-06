@@ -27,18 +27,16 @@ export default async function ReviewersPage() {
   return (
     <div className="flex flex-col gap-4">
       <PageHeader title="Manage">
-        <>
-          <div className="flex items-center gap-1">
-            <InfoCircleIcon className="h-6 w-6" /> Master CSV being replaced
-            each time
-          </div>
+        <div className="flex items-center gap-1">
+          <InfoCircleIcon className="h-6 w-6" /> Master CSV being replaced each
+          time
+        </div>
 
-          <UpdateReviewersDialog />
+        <UpdateReviewersDialog />
 
-          <Button size="icon" variant="secondary">
-            <DotsHorizontalIcon />
-          </Button>
-        </>
+        <Button size="icon" variant="secondary">
+          <DotsHorizontalIcon />
+        </Button>
       </PageHeader>
       <ModeratorNavigation />
 

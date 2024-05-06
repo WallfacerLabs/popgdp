@@ -61,21 +61,19 @@ export default function PreviewEdit({
         backUrl={urls.applications.edit({ waveId, applicationId })}
         badges={<CategoryBadge category={category} />}
       >
-        <>
-          <Button
-            variant="secondary"
-            onClick={() => onApplicationSubmit({ isDraft: true })}
-          >
-            Save as draft
-            <SaveIcon />
-          </Button>
-          <Button
-            className="px-14"
-            onClick={() => onApplicationSubmit({ isDraft: false })}
-          >
-            Submit
-          </Button>
-        </>
+        <Button
+          variant="secondary"
+          onClick={() => onApplicationSubmit({ isDraft: true })}
+        >
+          Save as draft
+          <SaveIcon />
+        </Button>
+        <Button
+          className="px-14"
+          onClick={() => onApplicationSubmit({ isDraft: false })}
+        >
+          Submit
+        </Button>
       </PageHeader>
 
       <ApplicationPreview
