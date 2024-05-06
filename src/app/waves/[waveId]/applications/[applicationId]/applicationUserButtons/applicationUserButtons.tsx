@@ -15,7 +15,7 @@ export async function ApplicationUserButtons({
 }) {
   const { draft } = application;
   const { validationErrorMessage } = await canPublishDraft(application);
-  const canPublish = draft && !validationErrorMessage;
+  const isPublishDisabled = !draft && Boolean(validationErrorMessage);
 
   return (
     <div className="flex gap-4">
@@ -29,7 +29,7 @@ export async function ApplicationUserButtons({
             });
           }}
         >
-          <Button disabled={!canPublish}>Publish</Button>
+          <Button disabled={isPublishDisabled}>Publish</Button>
         </form>
       )}
 
