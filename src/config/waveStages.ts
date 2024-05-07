@@ -71,7 +71,7 @@ const canPerformByStage = {
   assesment: {
     submissionAdd: false,
     submissionEdit: false,
-    submissioInvalid: true,
+    submissionInvalid: true,
     submissionVote: true,
     commentAdd: true,
     commentValue: true,
