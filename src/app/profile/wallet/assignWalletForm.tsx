@@ -10,7 +10,12 @@ import {
 } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { recoverMessageAddress } from "viem";
-import { useAccount, useSignMessage, WagmiProvider } from "wagmi";
+import {
+  useAccount,
+  useDisconnect,
+  useSignMessage,
+  WagmiProvider,
+} from "wagmi";
 import { mainnet } from "wagmi/chains";
 
 import { Button } from "@/components/ui/button";
@@ -67,32 +72,7 @@ export function AssignWalletForm({
 function AddressForm({
   ethereumAddress,
 }: Pick<AssignWalletFormProps, "ethereumAddress">) {
-  const { address, isConnected } = useAccount();
-  const { error: signError, signMessageAsync } = useSignMessage();
-
-  const handleSignMessage = useCallback(async () => {
-    const message = `Sign this message to verify that you own ${address} ethereum address`;
-    const signature = await signMessageAsync({ message });
-    const recoveredAddress = await recoverMessageAddress({
-      message,
-      signature,
-    });
-    await addWalletAddressAction({
-      addressMessageSignature: signature,
-      addressMessage: message,
-      ethereumAddress: recoveredAddress,
-    });
-  }, [address, signMessageAsync]);
-
-  useEffect(() => {
-    if (isConnected && !ethereumAddress) {
-      handleSignMessage();
-    }
-  }, [ethereumAddress, isConnected, signMessageAsync, handleSignMessage]);
-
-  if (!isConnected) {
-    return <ConnectButton />;
-  }
+  const { isConnected } = useAccount();
 
   if (ethereumAddress) {
     return (
@@ -116,10 +96,45 @@ function AddressForm({
     );
   }
 
+  if (!isConnected) {
+    return <ConnectButton />;
+  }
+
+  return <SignMessageForm />;
+}
+
+function SignMessageForm() {
+  const { disconnectAsync } = useDisconnect();
+  const { address, status } = useAccount();
+  const { error: signError, signMessageAsync } = useSignMessage();
+
+  const handleSignMessage = useCallback(async () => {
+    if (status !== "connected") {
+      return;
+    }
+
+    const message = `Sign this message to verify that you own ${address} ethereum address`;
+    const signature = await signMessageAsync({ message });
+    const recoveredAddress = await recoverMessageAddress({
+      message,
+      signature,
+    });
+    await addWalletAddressAction({
+      addressMessageSignature: signature,
+      addressMessage: message,
+      ethereumAddress: recoveredAddress,
+    });
+    await disconnectAsync();
+  }, [address, signMessageAsync, status, disconnectAsync]);
+
+  useEffect(() => {
+    handleSignMessage();
+  }, [signMessageAsync, handleSignMessage]);
+
   return (
     <>
       <p className="text-sm text-muted-foreground">
-        Sigh message to add ethereum address to your account.
+        Sign message to add ethereum address to your account.
       </p>
 
       {signError && <p className="text-sm text-red">{signError.message}</p>}
