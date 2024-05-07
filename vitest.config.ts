@@ -11,6 +11,10 @@ export default defineConfig({
         singleThread: true,
       },
     },
+    coverage: {
+      provider: "v8",
+      include: ["**/*Action.ts"],
+    },
   },
   resolve: {
     alias: {
