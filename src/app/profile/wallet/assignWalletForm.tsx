@@ -1,5 +1,6 @@
 import "@rainbow-me/rainbowkit/styles.css";
 
+import { useCallback, useEffect } from "react";
 import Link from "next/link";
 import { urls } from "@/constants/urls";
 import {
@@ -17,6 +18,7 @@ import { EtherscanLink } from "@/components/ui/etherscanLink";
 import { FormFooter } from "@/components/ui/form";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
 import { CrossIcon } from "@/components/icons/crossIcon";
+import { EditSquareIcon } from "@/components/icons/editSquareIcon";
 
 import {
   addWalletAddressAction,
@@ -45,15 +47,17 @@ export function AssignWalletForm({
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
-          <AddressForm ethereumAddress={ethereumAddress} />
-          <FormFooter>
-            <Button variant="secondary" onClick={decrementStep}>
-              <ArrowIcon direction="left" /> Back
-            </Button>
-            <Button asChild>
-              <Link href={urls.root}>Go to main page</Link>
-            </Button>
-          </FormFooter>
+          <div className="flex flex-col gap-6">
+            <AddressForm ethereumAddress={ethereumAddress} />
+            <FormFooter>
+              <Button variant="secondary" onClick={decrementStep}>
+                <ArrowIcon direction="left" /> Back
+              </Button>
+              <Button asChild>
+                <Link href={urls.root}>Go to main page</Link>
+              </Button>
+            </FormFooter>
+          </div>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
@@ -63,8 +67,32 @@ export function AssignWalletForm({
 function AddressForm({
   ethereumAddress,
 }: Pick<AssignWalletFormProps, "ethereumAddress">) {
-  const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  const { address, isConnected } = useAccount();
+  const { error: signError, signMessageAsync } = useSignMessage();
+
+  const handleSignMessage = useCallback(async () => {
+    const message = `Sign this message to verify that you own ${address} ethereum address`;
+    const signature = await signMessageAsync({ message });
+    const recoveredAddress = await recoverMessageAddress({
+      message,
+      signature,
+    });
+    await addWalletAddressAction({
+      addressMessageSignature: signature,
+      addressMessage: message,
+      ethereumAddress: recoveredAddress,
+    });
+  }, [address, signMessageAsync]);
+
+  useEffect(() => {
+    if (isConnected && !ethereumAddress) {
+      handleSignMessage();
+    }
+  }, [isConnected, signMessageAsync, handleSignMessage]);
+
+  if (!isConnected) {
+    return <ConnectButton />;
+  }
 
   if (ethereumAddress) {
     return (
@@ -88,27 +116,17 @@ function AddressForm({
     );
   }
 
-  if (!address) {
-    return <ConnectButton />;
-  }
-
   return (
-    <Button
-      onClick={async () => {
-        const message = `Sign this message to verify that you own ${address} ethereum address`;
-        const signature = await signMessageAsync({ message });
-        const recoveredAddress = await recoverMessageAddress({
-          message,
-          signature,
-        });
-        await addWalletAddressAction({
-          addressMessageSignature: signature,
-          addressMessage: message,
-          ethereumAddress: recoveredAddress,
-        });
-      }}
-    >
-      Add ethereum address to your account
-    </Button>
+    <>
+      <p className="text-sm text-muted-foreground">
+        Sigh message to add ethereum address to your account.
+      </p>
+
+      {signError && <p className="text-sm text-red">{signError.message}</p>}
+      <Button onClick={handleSignMessage} className="w-fit">
+        <EditSquareIcon />
+        Sign message
+      </Button>
+    </>
   );
 }
