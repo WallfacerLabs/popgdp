@@ -80,7 +80,7 @@ export const getModeratorPanelUsers = cache(async () => {
       isContentHidden: User.isContentHidden,
       image: Image,
       reviewsCount: countReviewsQuery.count,
-      spamCount: countCommentValuesQuery.spamCount,
+      invalidCount: countCommentValuesQuery.invalidCount,
       helpfulCount: countCommentValuesQuery.helpfulCount,
       submissionsCount: countApplicationsQuery.count,
     })

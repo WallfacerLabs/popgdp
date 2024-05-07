@@ -73,7 +73,7 @@ export const ModeratorApplicationsTable = ({
             <DateCell createdAt={application.createdAt} />
             <BudgetCell budget={application.budget} />
             <TableCell>{application.helpfulCount}</TableCell>
-            <TableCell>{application.spamCount}</TableCell>
+            <TableCell>{application.invalidCount}</TableCell>
             <CategoryCell category={application.category} />
           </TableRow>
         ))}
@@ -114,8 +114,8 @@ function getSubmissionsListColumn(column: ModeratorSubmissionsListColumn) {
       return "Proposed budget";
     case "upvotes":
       return "Upvotes";
-    case "spam":
-      return "Spam";
+    case "invalid":
+      return "invalid";
     case "category":
       return "Category";
   }

@@ -39,7 +39,7 @@ async function getCsvData() {
       "submission_created_at",
       "user_name",
       "upvotes",
-      "spam_votes",
+      "inlavid_votes",
       "category_name",
     ],
   ];
@@ -62,7 +62,7 @@ async function getCsvData() {
       row.createdAt,
       row.user.name,
       row.helpfulCount,
-      row.spamCount,
+      row.invalidCount,
       row.category.name,
     ]);
   }

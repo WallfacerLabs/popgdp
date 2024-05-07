@@ -28,7 +28,7 @@ async function getCsvData() {
       "user_ethereumAddress",
       "user_createdAt",
       "user_reviewsCount",
-      "user_spamCount",
+      "user_invalidCount",
       "user_helpfulCount",
       "user_submissionsCount",
     ],
@@ -41,7 +41,7 @@ async function getCsvData() {
       row.ethereumAddress,
       row.createdAt,
       row.reviewsCount,
-      row.spamCount,
+      row.invalidCount,
       row.helpfulCount,
       row.submissionsCount,
     ]);

@@ -31,7 +31,7 @@ export function CommentValueForm({
   const form = useForm();
 
   const isUpvoted = comment.commentValues[0]?.value === ContentValue.positive;
-  const isSpam = comment.commentValues[0]?.value === ContentValue.spam;
+  const isInvalid = comment.commentValues[0]?.value === ContentValue.invalid;
 
   const isCommentator = userId === comment.userId;
 
@@ -59,13 +59,13 @@ export function CommentValueForm({
       <ErrorTooltip message={rateCommentValidationError}>
         <Button
           variant="link"
-          className={commentButtonVariants({ isActive: isSpam })}
-          aria-label={isSpam ? "Unmark as SPAM" : "Mark as SPAM"}
+          className={commentButtonVariants({ isActive: isInvalid })}
+          aria-label={isInvalid ? "Unmark as invalid" : "Mark as invalid"}
           disabled={isVotingDisabled}
-          onClick={handleAction("spam", isSpam)}
+          onClick={handleAction("invalid", isInvalid)}
         >
           <ErrorCircleIcon />
-          {isSpam ? "Marked as SPAM" : "SPAM"}
+          {isInvalid ? "Marked as invalid" : "invalid"}
         </Button>
       </ErrorTooltip>
 

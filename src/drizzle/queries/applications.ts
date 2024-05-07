@@ -132,7 +132,7 @@ export const getModeratorPanelApplications = cache(async () => {
         description: Category.description,
       },
       helpfulCount: countApplicationValue(ContentValue.positive),
-      spamCount: countApplicationValue(ContentValue.spam),
+      invalidCount: countApplicationValue(ContentValue.invalid),
     })
     .from(Application)
     .leftJoin(

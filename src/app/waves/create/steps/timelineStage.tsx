@@ -44,8 +44,10 @@ function ActionsList({ stage }: ActionsListProps) {
         <AvailabilityIndicator available={canPerformAction("submissionEdit")}>
           Edit submission
         </AvailabilityIndicator>
-        <AvailabilityIndicator available={canPerformAction("submissionSpam")}>
-          Set submission as spam
+        <AvailabilityIndicator
+          available={canPerformAction("submissionInvalid")}
+        >
+          Set submission as invalid
         </AvailabilityIndicator>
         <AvailabilityIndicator available={canPerformAction("commentAdd")}>
           Comments

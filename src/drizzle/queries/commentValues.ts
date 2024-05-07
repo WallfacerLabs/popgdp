@@ -34,7 +34,7 @@ function countCommentValue(value: ContentValue) {
 export const countCommentValuesQuery = db
   .select({
     userId: CommentValue.userId,
-    spamCount: countCommentValue(ContentValue.spam).as("spamCount"),
+    invalidCount: countCommentValue(ContentValue.invalid).as("invalidCount"),
     helpfulCount: countCommentValue(ContentValue.positive).as("helpfulCount"),
   })
   .from(CommentValue)

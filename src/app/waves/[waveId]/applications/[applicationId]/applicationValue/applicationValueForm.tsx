@@ -17,7 +17,7 @@ export async function ApplicationValueForm({
 }: ApplicationValueFormProps) {
   return (
     <form className="flex flex-wrap items-center gap-x-4 gap-y-2">
-      <ActionButton application={application} value="spam" />
+      <ActionButton application={application} value="invalid" />
       <ActionButton application={application} value="positive" />
     </form>
   );
@@ -66,13 +66,13 @@ async function ActionButton({ application, value }: ActionButtonProps) {
 }
 
 const buttonsConfig = {
-  spam: {
+  invalid: {
     true: {
-      text: "Marked as SPAM",
+      text: "Marked as invalid",
       variant: "secondary",
     },
     false: {
-      text: "Report SPAM",
+      text: "Report invalid",
       variant: "outline",
     },
   },

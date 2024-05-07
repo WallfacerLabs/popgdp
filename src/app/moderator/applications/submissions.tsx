@@ -22,7 +22,7 @@ export const MODERATOR_SUBMISSIONS_LIST_COLUMNS = [
   "submissionDate",
   "budget",
   "upvotes",
-  "spam",
+  "invalid",
   "category",
 ] as const;
 
@@ -36,7 +36,12 @@ export function Submissions({ applications }: SubmissionsProps) {
 
   const { sortBy, handleSortBy } = useSortState({
     columns: MODERATOR_SUBMISSIONS_LIST_COLUMNS,
-    defaultDescendingColumns: ["submissionDate", "upvotes", "spam", "budget"],
+    defaultDescendingColumns: [
+      "submissionDate",
+      "upvotes",
+      "invalid",
+      "budget",
+    ],
   });
 
   const applicationCategories = Array.from(
@@ -108,8 +113,8 @@ export function getModeratorSortedSubmissions({
       return sortObjectsByKey(applications, ["budget"], sortBy.asc);
     case "upvotes":
       return sortObjectsByKey(applications, ["helpfulCount"], sortBy.asc);
-    case "spam":
-      return sortObjectsByKey(applications, ["spamCount"], sortBy.asc);
+    case "invalid":
+      return sortObjectsByKey(applications, ["invalidCount"], sortBy.asc);
     case "category":
       return sortObjectsByKey(applications, ["category", "name"], sortBy.asc);
   }

@@ -72,7 +72,7 @@ export const UsersTable = ({ users, sortBy, setSortBy }: UsersTableProps) => {
             />
             <EtherscanLinkCell ethereumAddress={user.ethereumAddress} />
             <CountCell count={user.reviewsCount} icon={<ReviewIcon />} />
-            <CountCell count={user.spamCount} icon={<ErrorCircleIcon />} />
+            <CountCell count={user.invalidCount} icon={<ErrorCircleIcon />} />
             <CountCell count={user.helpfulCount} icon={<ThumbUpIcon />} />
             <CountCell
               count={user.submissionsCount}
@@ -106,8 +106,8 @@ function getUsersListColumn(column: ModeratorUsersListColumn) {
       return "Wallet Address";
     case "reviews":
       return "Reviews";
-    case "spam":
-      return "SPAM count";
+    case "invalid":
+      return "Invalid count";
     case "useful":
       return "Useful";
     case "submissions":
