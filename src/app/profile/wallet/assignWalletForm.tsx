@@ -88,7 +88,7 @@ function AddressForm({
     if (isConnected && !ethereumAddress) {
       handleSignMessage();
     }
-  }, [isConnected, signMessageAsync, handleSignMessage]);
+  }, [ethereumAddress, isConnected, signMessageAsync, handleSignMessage]);
 
   if (!isConnected) {
     return <ConnectButton />;
