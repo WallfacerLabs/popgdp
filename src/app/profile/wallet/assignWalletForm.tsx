@@ -137,11 +137,24 @@ function SignMessageForm() {
         Sign message to add ethereum address to your account.
       </p>
 
-      {signError && <p className="text-sm text-red">{signError.message}</p>}
+      {signError && (
+        <p className="text-sm text-red">
+          {getRejectionErrorMessage(signError.message)}
+        </p>
+      )}
       <Button onClick={handleSignMessage} className="w-fit">
         <EditSquareIcon />
         Sign message
       </Button>
     </>
   );
+}
+
+const REJECTED_SIGNATURE_MESSAGE = "User rejected the request";
+
+function getRejectionErrorMessage(message: string) {
+  if (message.includes(REJECTED_SIGNATURE_MESSAGE)) {
+    return REJECTED_SIGNATURE_MESSAGE;
+  }
+  return message;
 }
