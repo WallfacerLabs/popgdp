@@ -184,7 +184,7 @@ export function insertApplication(
 }
 
 export async function updateApplication(
-  applicationData: typeof Application.$inferInsert,
+  applicationData: Partial<typeof Application.$inferInsert>,
 ) {
   const [{ applicationId }] = await db
     .update(Application)

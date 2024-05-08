@@ -24,7 +24,9 @@ export async function addCommentAction({
   const applicationId = application.id;
   const waveId = application.waveId;
 
-  const { userId, validationErrorMessage } = await canAddComment(application);
+  const { userId, validationErrorMessage } = await canAddComment(
+    application.id,
+  );
 
   if (typeof validationErrorMessage !== "undefined") {
     throw new Error(validationErrorMessage);
@@ -73,7 +75,9 @@ export async function addReplyAction({
   const applicationId = application.id;
   const waveId = application.waveId;
 
-  const { userId, validationErrorMessage } = await canAddComment(application);
+  const { userId, validationErrorMessage } = await canAddComment(
+    application.id,
+  );
 
   if (typeof validationErrorMessage !== "undefined") {
     throw new Error(validationErrorMessage);

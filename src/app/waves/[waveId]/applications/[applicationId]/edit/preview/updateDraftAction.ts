@@ -5,16 +5,24 @@ import { redirect } from "next/navigation";
 import { urls } from "@/constants/urls";
 import { updateApplication } from "@/drizzle/queries/applications";
 
-import { canAddSubmission } from "@/config/actionPermissions";
+import { type ApplicationId } from "@/types/Application";
+import { canEditSubmission } from "@/config/actionPermissions";
+import { type ApplicationData } from "@/app/waves/[waveId]/applications/create/stepsProvider";
 
-import { ApplicationData } from "../../../create/stepsProvider";
+interface UpdateDraftActionArgs {
+  applicationId: ApplicationId;
+  applicationData: ApplicationData;
+  isDraft: boolean;
+  waveId: number;
+}
 
-export async function updateDraftAction(
-  application: ApplicationData,
-  waveId: number,
-  isDraft: boolean,
-) {
-  const { userId, validationErrorMessage } = await canAddSubmission({ waveId });
+export async function updateDraftAction({
+  applicationId,
+  applicationData,
+  isDraft,
+  waveId,
+}: UpdateDraftActionArgs) {
+  const { validationErrorMessage } = await canEditSubmission(applicationId);
 
   if (typeof validationErrorMessage !== "undefined") {
     throw new Error(validationErrorMessage);
@@ -22,27 +30,25 @@ export async function updateDraftAction(
 
   await updateApplication({
     draft: isDraft,
-    name: application.name,
-    summary: application.summary,
-    entityName: application.entityName,
-    email: application.email,
-    duration: String(application.duration),
-    budget: application.budget,
-    categoryId: application.categoryId,
+    name: applicationData.name,
+    summary: applicationData.summary,
+    entityName: applicationData.entityName,
+    email: applicationData.email,
+    duration: String(applicationData.duration),
+    budget: applicationData.budget,
+    categoryId: applicationData.categoryId,
 
-    teamSummary: application.teamSummary,
+    teamSummary: applicationData.teamSummary,
 
-    idea: application.idea,
-    reason: application.reason,
-    state: application.state,
-    goals: application.goals,
-    requirements: application.requirements,
+    idea: applicationData.idea,
+    reason: applicationData.reason,
+    state: applicationData.state,
+    goals: applicationData.goals,
+    requirements: applicationData.requirements,
 
-    tbd: application.tbd,
+    tbd: applicationData.tbd,
 
-    imageId: application.image?.id,
-    waveId,
-    userId,
+    imageId: applicationData.image?.id,
   });
 
   revalidatePath(urls.waves.preview({ waveId }));
