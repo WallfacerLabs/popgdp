@@ -1,3 +1,3 @@
 export const DURATIONS = {
-  commentDebounce: 5000,
+  commentDebounce: 3000,
 };
