@@ -37,3 +37,13 @@ export function saveToLocalStorage(key: LocalStorageKey, value: unknown) {
     }
   }
 }
+
+export function removeLocalStorageItem(key: LocalStorageKey) {
+  if (typeof localStorage !== "undefined") {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.error("Error removing from local storage", error);
+    }
+  }
+}
