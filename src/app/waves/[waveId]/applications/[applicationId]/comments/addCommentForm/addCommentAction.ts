@@ -13,10 +13,7 @@ import { canAddComment, canAddReview } from "@/config/actionPermissions";
 import { type AddCommentSchema } from "./addCommentSchema";
 
 export interface AddCommentActionPayload {
-  application: Pick<
-    ApplicationWithComments,
-    "id" | "waveId" | "userId" | "comments"
-  >;
+  application: Pick<ApplicationWithComments, "id" | "waveId" | "userId">;
   content: AddCommentSchema["content"];
 }
 
@@ -49,7 +46,7 @@ export async function addReviewAction({
   const applicationId = application.id;
   const waveId = application.waveId;
 
-  const { userId, validationErrorMessage } = await canAddReview(application);
+  const { userId, validationErrorMessage } = await canAddReview(applicationId);
 
   if (typeof validationErrorMessage !== "undefined") {
     throw new Error(validationErrorMessage);

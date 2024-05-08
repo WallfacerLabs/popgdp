@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { ValidationError } from "@/constants/errors";
+import { getApplicationWithComments } from "@/drizzle/queries/applications";
 import { getUserRoles } from "@/drizzle/queries/user";
 import { getWaveDates } from "@/drizzle/queries/waves";
 
@@ -183,7 +184,7 @@ export async function canAddComment(
 }
 
 export async function canAddReview(
-  application: Pick<ApplicationWithComments, "userId" | "waveId" | "comments">,
+  applicationId: ApplicationWithComments["id"],
 ) {
   try {
     const userId = await checkUserId("You need to be signed in to review");
@@ -191,6 +192,11 @@ export async function canAddReview(
       role: UserPermission.reviewer,
       errorMsg: "You need to be reviewer to review",
     });
+
+    const application = await getApplicationWithComments(applicationId, userId);
+    if (!application) {
+      throw new Error("Application not found");
+    }
 
     if (application.userId === userId) {
       throw new ValidationError("You cannot review your own submission");
