@@ -44,9 +44,14 @@ export function Submissions({ applications }: SubmissionsProps) {
     ],
   });
 
-  const applicationCategories = Array.from(
-    new Set(applications.map((application) => application.category)),
-  );
+  const applicationCategories = applications
+    .map((application) => application.category)
+    .filter((category, index, categories) => {
+      const firstCategoryIndex = categories.findIndex(
+        (c) => c.id === category.id,
+      );
+      return firstCategoryIndex === index;
+    });
 
   const categories: CategoryFilterOption[] = [
     { id: "all", name: "All Categories" },
