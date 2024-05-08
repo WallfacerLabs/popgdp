@@ -45,15 +45,15 @@ export function AddCommentForm({
   const form = useForm<AddCommentSchema>({
     resolver: zodResolver(addCommentSchema),
     defaultValues: {
-      comment: "",
+      content: "",
     },
   });
 
   const handleSubmit = (
     action: (payload: AddCommentActionPayload) => Promise<void>,
   ) =>
-    form.handleSubmit(async (data) => {
-      await action({ data, application });
+    form.handleSubmit(async ({ content }) => {
+      await action({ content, application });
       setEditorKey((prev) => prev + 1);
       form.reset();
     });
@@ -63,7 +63,7 @@ export function AddCommentForm({
       <form className="flex flex-col gap-4">
         <FormField
           control={form.control}
-          name="comment"
+          name="content"
           render={({ field }) => (
             <FormItem>
               <FormControl>

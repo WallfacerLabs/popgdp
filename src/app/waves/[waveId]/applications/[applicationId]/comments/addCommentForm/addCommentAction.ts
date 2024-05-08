@@ -13,12 +13,15 @@ import { canAddComment, canAddReview } from "@/config/actionPermissions";
 import { type AddCommentSchema } from "./addCommentSchema";
 
 export interface AddCommentActionPayload {
-  application: ApplicationWithComments;
-  data: AddCommentSchema;
+  application: Pick<
+    ApplicationWithComments,
+    "id" | "waveId" | "userId" | "comments"
+  >;
+  content: AddCommentSchema["content"];
 }
 
 export async function addCommentAction({
-  data,
+  content,
   application,
 }: AddCommentActionPayload) {
   const applicationId = application.id;
@@ -33,14 +36,14 @@ export async function addCommentAction({
   await insertComment({
     applicationId,
     userId,
-    content: data.comment,
+    content,
   });
 
   revalidatePath(urls.applications.preview({ waveId, applicationId }));
 }
 
 export async function addReviewAction({
-  data,
+  content,
   application,
 }: AddCommentActionPayload) {
   const applicationId = application.id;
@@ -55,21 +58,21 @@ export async function addReviewAction({
   await insertCommentAsReview({
     applicationId,
     userId,
-    content: data.comment,
+    content,
   });
 
   revalidatePath(urls.applications.preview({ waveId, applicationId }));
 }
 
-export interface AddReplyACtionPayload extends AddCommentActionPayload {
+export interface AddReplyActionPayload extends AddCommentActionPayload {
   replyTargetId: string;
 }
 
 export async function addReplyAction({
-  data,
+  content,
   application,
   replyTargetId,
-}: AddReplyACtionPayload) {
+}: AddReplyActionPayload) {
   const applicationId = application.id;
   const waveId = application.waveId;
 
@@ -82,7 +85,7 @@ export async function addReplyAction({
   await insertComment({
     applicationId,
     userId,
-    content: data.comment,
+    content,
     replyTargetId,
   });
 

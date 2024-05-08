@@ -2,7 +2,7 @@ import { errorMessages } from "@/constants/errorMessages";
 import { z } from "zod";
 
 export const addCommentSchema = z.object({
-  comment: z
+  content: z
     .string()
     .trim()
     .min(1, { message: errorMessages.nonEmptyString("Comment") }),
