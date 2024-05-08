@@ -49,7 +49,12 @@ export default function PreviewEdit({
   )!;
 
   const onApplicationSubmit = async ({ isDraft }: { isDraft: boolean }) => {
-    await updateDraftAction(validatedApplicationData, waveId, isDraft);
+    await updateDraftAction({
+      applicationData: validatedApplicationData,
+      waveId,
+      isDraft,
+      applicationId,
+    });
     localStorage.removeItem(LOCAL_STORAGE_KEYS.applicationStepsData);
   };
 

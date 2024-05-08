@@ -1,6 +1,5 @@
 import { db } from "@/drizzle/db";
 import { Moderator, Reviewer, User, Wave } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
 import { mockUserSession } from "tests/helpers/mockUserSession";
 import {
   createApplication,
@@ -14,8 +13,6 @@ import {
 } from "tests/helpers/queries";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { getWaveStage } from "@/config/waveStages";
-import { addDays } from "@/lib/dates";
 import { publishDraftAction } from "@/app/waves/[waveId]/applications/[applicationId]/applicationUserButtons/publishDraftAction";
 
 const userId = "user";
@@ -24,8 +21,7 @@ const applicationId = "f8e46fab-f2c4-4c46-85ca-9e5cbf716d39";
 const categoryId = "7979fbc1-1a84-4b75-8f7e-bea6f9bf0a99";
 
 const defaultActionArgs = {
-  id: applicationId,
-  userId,
+  applicationId,
   waveId,
 } as const;
 
@@ -139,6 +135,13 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
       await updateWaveStage("notOpen");
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
       expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
         "You cannot publish draft in this wave stage",
@@ -168,6 +171,13 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
       await updateWaveStage("denoising");
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
       expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
         "You cannot publish draft in this wave stage",
@@ -178,6 +188,13 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
       await updateWaveStage("assesment");
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
       expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
         "You cannot publish draft in this wave stage",
@@ -188,6 +205,13 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
       await updateWaveStage("close");
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
       expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
         "You cannot publish draft in this wave stage",
@@ -197,11 +221,18 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
 
   it("throws error if other user tries to publish application", async () => {
     await createUser(userId);
-    mockUserSession({ userId, credentialType: "orb" });
+    mockUserSession({ userId: "randomUserId", credentialType: "orb" });
+    await createApplication({
+      applicationId,
+      categoryId,
+      userId,
+      waveId,
+      isDraft: true,
+    });
 
-    expect(() =>
-      publishDraftAction({ ...defaultActionArgs, userId: "randomUserId" }),
-    ).rejects.toThrowError("Invalid user id");
+    expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+      "Invalid user id",
+    );
   });
 
   it("throws error if application does not exist", async () => {

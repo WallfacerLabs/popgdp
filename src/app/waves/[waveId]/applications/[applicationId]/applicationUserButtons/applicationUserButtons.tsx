@@ -16,9 +16,9 @@ export async function ApplicationUserButtons({
 }) {
   const { draft } = application;
   const { validationErrorMessage: publishValidationErrorMessage } =
-    await canPublishDraft(application);
+    await canPublishDraft(application.id);
   const { validationErrorMessage: editValidationErrorMessage } =
-    await canEditSubmission(application);
+    await canEditSubmission(application.id);
   const isPublishDisabled = !draft && Boolean(publishValidationErrorMessage);
   const canEdit = !editValidationErrorMessage;
 
@@ -29,7 +29,10 @@ export async function ApplicationUserButtons({
           className="flex"
           action={async () => {
             "use server";
-            await publishDraftAction(application);
+            await publishDraftAction({
+              applicationId: application.id,
+              waveId: application.waveId,
+            });
           }}
         >
           <Button disabled={isPublishDisabled}>Publish</Button>

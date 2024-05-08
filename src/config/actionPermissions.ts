@@ -4,7 +4,10 @@ import { getApplicationWithComments } from "@/drizzle/queries/applications";
 import { getUserRoles } from "@/drizzle/queries/user";
 import { getWaveDates } from "@/drizzle/queries/waves";
 
-import { type ApplicationWithComments } from "@/types/Application";
+import {
+  type ApplicationId,
+  type ApplicationWithComments,
+} from "@/types/Application";
 import { getUserId } from "@/lib/auth";
 
 import { userHasRole, UserPermission } from "./userPermissions";
@@ -76,9 +79,14 @@ export async function canAddSubmission({ waveId }: { waveId: number }) {
   }
 }
 
-export async function canEditSubmission(application: ApplicationWithComments) {
+export async function canEditSubmission(applicationId: ApplicationId) {
   try {
     const userId = await checkUserId("You need to be signed in to edit");
+    const application = await getApplicationWithComments(applicationId, userId);
+    if (!application) {
+      throw new Error("Application not found");
+    }
+
     if (userId !== application.userId) {
       throw new ValidationError("You can only edit your own submission");
     }
@@ -96,13 +104,16 @@ export async function canEditSubmission(application: ApplicationWithComments) {
   }
 }
 
-export async function canPublishDraft(
-  application: Pick<ApplicationWithComments, "userId" | "waveId">,
-) {
+export async function canPublishDraft(applicationId: ApplicationId) {
   try {
     const userId = await checkUserId(
       "You need to be signed in to publish draft",
     );
+    const application = await getApplicationWithComments(applicationId, userId);
+    if (!application) {
+      throw new Error("Application not found");
+    }
+
     if (userId !== application.userId) {
       throw new ValidationError("Invalid user id");
     }
@@ -120,15 +131,7 @@ export async function canPublishDraft(
   }
 }
 
-interface CanRateApplicationArgs {
-  creatorId: string;
-  waveId: number;
-}
-
-export async function canRateApplication({
-  creatorId,
-  waveId,
-}: CanRateApplicationArgs) {
+export async function canRateApplication(applicationId: ApplicationId) {
   try {
     const userId = await checkUserId(
       "You need to be signed in to rate submissions",
@@ -137,12 +140,18 @@ export async function canRateApplication({
       role: UserPermission.orbVerified,
       errorMsg: "You need to be orb verified to rate submissions",
     });
+
+    const application = await getApplicationWithComments(applicationId, userId);
+    if (!application) {
+      throw new Error("Application not found");
+    }
+
     await checkWaveStage({
-      waveId,
+      waveId: application.waveId,
       action: "submissionVote",
       errorMsg: "You cannot rate submissions in this wave stage",
     });
-    if (creatorId === userId) {
+    if (application.userId === userId) {
       throw new ValidationError("You cannot rate your own submission");
     }
     return { userId };
@@ -154,13 +163,16 @@ export async function canRateApplication({
   }
 }
 
-export async function canAddComment(
-  application: Pick<ApplicationWithComments, "userId" | "waveId">,
-) {
+export async function canAddComment(applicationId: ApplicationId) {
   try {
     const userId = await checkUserId(
       "You need to be signed in to add comments",
     );
+
+    const application = await getApplicationWithComments(applicationId, userId);
+    if (!application) {
+      throw new Error("Application not found");
+    }
 
     const isOrbVerified = await userHasRole(UserPermission.orbVerified);
     if (!isOrbVerified && application.userId !== userId) {

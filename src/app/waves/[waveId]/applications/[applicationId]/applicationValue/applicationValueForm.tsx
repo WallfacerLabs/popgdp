@@ -29,10 +29,9 @@ interface ActionButtonProps {
 }
 
 async function ActionButton({ application, value }: ActionButtonProps) {
-  const { userId, validationErrorMessage } = await canRateApplication({
-    creatorId: application.userId,
-    waveId: application.waveId,
-  });
+  const { userId, validationErrorMessage } = await canRateApplication(
+    application.id,
+  );
 
   const applicationValue = await getApplicationValue({
     applicationId: application.id,

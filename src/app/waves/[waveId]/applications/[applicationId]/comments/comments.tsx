@@ -32,7 +32,7 @@ export async function Comments({ application, userId }: CommentsProps) {
   const reviews = comments.filter((comment) => comment.review?.isReview);
 
   const { validationErrorMessage: commentValidationError } =
-    await canAddComment(application);
+    await canAddComment(application.id);
   const { validationErrorMessage: reviewValidationError } = await canAddReview(
     application.id,
   );

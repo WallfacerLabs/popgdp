@@ -25,10 +25,9 @@ export async function applicationValueAction({
   const applicationId = application.id;
   const waveId = application.waveId;
 
-  const { validationErrorMessage, userId } = await canRateApplication({
-    creatorId: application.userId,
-    waveId,
-  });
+  const { validationErrorMessage, userId } = await canRateApplication(
+    application.id,
+  );
 
   if (typeof validationErrorMessage !== "undefined") {
     throw new Error(validationErrorMessage);

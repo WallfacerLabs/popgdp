@@ -8,6 +8,8 @@ export type Application = NonNullable<
   Awaited<ReturnType<typeof getWaveWithApplications>>
 >["applications"][number];
 
+export type ApplicationId = Application["id"];
+
 export type ApplicationWithComments = NonNullable<
   Awaited<ReturnType<typeof getApplicationWithComments>>
 >;
