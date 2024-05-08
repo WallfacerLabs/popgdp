@@ -8,6 +8,7 @@ import {
   Wave,
 } from "@/drizzle/schema";
 
+import { WaveStage } from "@/config/waveStages";
 import { addDays } from "@/lib/dates";
 
 export async function createModerator(userId: string, ethereumAddress = "0x0") {
@@ -28,16 +29,46 @@ export async function createUser(userId: string) {
   await db.insert(User).values({ id: userId });
 }
 
+const defaultWaveDates = {
+  openStartDate: addDays(new Date(), 1),
+  denoisingStartDate: addDays(new Date(), 2),
+  assesmentStartDate: addDays(new Date(), 3),
+  closeDate: addDays(new Date(), 4),
+};
+
 export async function createWave(waveId: number) {
   await db.insert(Wave).values({
     id: waveId,
     name: "First wave",
     summary: "Wave summary",
-    openStartDate: new Date(),
-    denoisingStartDate: addDays(new Date(), 1),
-    assesmentStartDate: addDays(new Date(), 2),
-    closeDate: addDays(new Date(), 3),
+    ...defaultWaveDates,
   });
+}
+
+function getUpdatedWaveDates(waveStage: WaveStage) {
+  switch (waveStage) {
+    case "notOpen": {
+      return {};
+    }
+    case "open": {
+      return { openStartDate: addDays(new Date(), -1) };
+    }
+    case "denoising": {
+      return { denoisingStartDate: addDays(new Date(), -1) };
+    }
+    case "assesment": {
+      return { assesmentStartDate: addDays(new Date(), -1) };
+    }
+    case "close": {
+      return { closeDate: addDays(new Date(), -1) };
+    }
+  }
+}
+
+export async function updateWaveStage(waveStage: WaveStage) {
+  await db
+    .update(Wave)
+    .set({ ...defaultWaveDates, ...getUpdatedWaveDates(waveStage) });
 }
 
 interface CreateCategoryArgs {

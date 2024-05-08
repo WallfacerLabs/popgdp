@@ -9,6 +9,7 @@ import {
   createReviewer,
   createUser,
   createWave,
+  updateWaveStage,
 } from "tests/helpers/queries";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -42,6 +43,7 @@ const applicationData = {
 describe("app/waves/create/createWaveAction", () => {
   beforeEach(async () => {
     await createWave(waveId);
+    await updateWaveStage("open");
     await createCategory({ waveId, categoryId });
   });
 
@@ -114,9 +116,20 @@ describe("app/waves/create/createWaveAction", () => {
   });
 
   describe("wave stages", () => {
+    it("not open", async () => {
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("notOpen");
+
+      expect(() =>
+        createApplicationAction(applicationData, waveId, false),
+      ).rejects.toThrowError("You cannot apply in this wave stage");
+    });
+
     it("open", async () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("open");
 
       await createApplicationAction(applicationData, waveId, false);
 
@@ -125,16 +138,9 @@ describe("app/waves/create/createWaveAction", () => {
     });
 
     it("denoising", async () => {
-      const [updatedWave] = await db
-        .update(Wave)
-        .set({ denoisingStartDate: addDays(new Date(), -1) })
-        .where(eq(Wave.id, waveId))
-        .returning();
-
-      expect(getWaveStage(updatedWave)).toBe("denoising");
-
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("denoising");
 
       expect(() =>
         createApplicationAction(applicationData, waveId, false),
@@ -142,15 +148,9 @@ describe("app/waves/create/createWaveAction", () => {
     });
 
     it("assesment", async () => {
-      const [updatedWave] = await db
-        .update(Wave)
-        .set({ assesmentStartDate: addDays(new Date(), -1) })
-        .returning();
-
-      expect(getWaveStage(updatedWave)).toBe("assesment");
-
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("assesment");
 
       expect(() =>
         createApplicationAction(applicationData, waveId, false),
@@ -158,15 +158,9 @@ describe("app/waves/create/createWaveAction", () => {
     });
 
     it("close", async () => {
-      const [updatedWave] = await db
-        .update(Wave)
-        .set({ closeDate: addDays(new Date(), -1) })
-        .returning();
-
-      expect(getWaveStage(updatedWave)).toBe("close");
-
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("close");
 
       expect(() =>
         createApplicationAction(applicationData, waveId, false),

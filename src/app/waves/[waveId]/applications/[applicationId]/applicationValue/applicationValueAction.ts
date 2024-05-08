@@ -14,7 +14,7 @@ import { canRateApplication } from "@/config/actionPermissions";
 interface ApplicationValueActionPayload {
   isChecked: boolean;
   value: ContentValue;
-  application: ApplicationWithComments;
+  application: Pick<ApplicationWithComments, "id" | "waveId" | "userId">;
 }
 
 export async function applicationValueAction({
