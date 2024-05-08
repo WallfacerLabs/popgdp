@@ -13,7 +13,7 @@ export default defineConfig({
     },
     coverage: {
       provider: "v8",
-      include: ["**/*Action.ts"],
+      include: ["**/*Action.ts", "**/actionPermissions.ts"],
     },
   },
   resolve: {

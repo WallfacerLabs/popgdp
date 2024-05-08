@@ -95,7 +95,9 @@ export async function canEditSubmission(application: ApplicationWithComments) {
   }
 }
 
-export async function canPublishDraft(application: ApplicationWithComments) {
+export async function canPublishDraft(
+  application: Pick<ApplicationWithComments, "userId" | "waveId">,
+) {
   try {
     const userId = await checkUserId(
       "You need to be signed in to publish draft",
