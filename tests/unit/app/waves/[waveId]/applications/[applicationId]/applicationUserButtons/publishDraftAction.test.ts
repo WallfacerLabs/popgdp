@@ -10,6 +10,7 @@ import {
   createReviewer,
   createUser,
   createWave,
+  updateWaveStage,
 } from "tests/helpers/queries";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -31,6 +32,7 @@ const defaultActionArgs = {
 describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons/publishDraftAction", () => {
   beforeEach(async () => {
     await createWave(waveId);
+    await updateWaveStage("open");
     await createCategory({ categoryId, waveId });
   });
 
@@ -133,9 +135,20 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
   });
 
   describe("wave stages", () => {
+    it("not open", async () => {
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("notOpen");
+
+      expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+        "You cannot publish draft in this wave stage",
+      );
+    });
+
     it("open", async () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("open");
       await createApplication({
         applicationId,
         categoryId,
@@ -152,16 +165,9 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
     });
 
     it("denoising", async () => {
-      const [updatedWave] = await db
-        .update(Wave)
-        .set({ denoisingStartDate: addDays(new Date(), -1) })
-        .where(eq(Wave.id, waveId))
-        .returning();
-
-      expect(getWaveStage(updatedWave)).toBe("denoising");
-
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("denoising");
 
       expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
         "You cannot publish draft in this wave stage",
@@ -169,15 +175,9 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
     });
 
     it("assesment", async () => {
-      const [updatedWave] = await db
-        .update(Wave)
-        .set({ assesmentStartDate: addDays(new Date(), -1) })
-        .returning();
-
-      expect(getWaveStage(updatedWave)).toBe("assesment");
-
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("assesment");
 
       expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
         "You cannot publish draft in this wave stage",
@@ -185,15 +185,9 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons
     });
 
     it("close", async () => {
-      const [updatedWave] = await db
-        .update(Wave)
-        .set({ closeDate: addDays(new Date(), -1) })
-        .returning();
-
-      expect(getWaveStage(updatedWave)).toBe("close");
-
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await updateWaveStage("close");
 
       expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
         "You cannot publish draft in this wave stage",
