@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { DURATIONS } from "@/constants/durations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { type ApplicationWithComments } from "@/types/Application";
-import { parseApplicationParams } from "@/lib/paramsValidation";
+import { useDebounceCallback } from "@/hooks/useDebounceCallback";
 import { Button } from "@/components/ui/button";
 import { Editor } from "@/components/ui/editor/editor";
 import {
@@ -39,8 +39,6 @@ export function AddCommentForm({
   reviewValidationError,
   commentValidationError,
 }: AddCommentFormProps) {
-  const { waveId, applicationId } = parseApplicationParams(useParams());
-
   const [editorKey, setEditorKey] = useState(0);
   const form = useForm<AddCommentSchema>({
     resolver: zodResolver(addCommentSchema),
@@ -48,6 +46,11 @@ export function AddCommentForm({
       content: "",
     },
   });
+
+  const handleDebouncedChange = useDebounceCallback((value: string) => {
+    console.log("form:", form);
+    console.log("value: ", value);
+  }, DURATIONS.commentDebounce);
 
   const handleSubmit = (
     action: (payload: AddCommentActionPayload) => Promise<void>,
@@ -71,7 +74,13 @@ export function AddCommentForm({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Editor onChange={field.onChange} key={editorKey} />
+                <Editor
+                  onChange={(value) => {
+                    field.onChange(value);
+                    handleDebouncedChange(value);
+                  }}
+                  key={editorKey}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
