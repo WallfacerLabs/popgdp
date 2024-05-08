@@ -6,6 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { type ApplicationWithComments } from "@/types/Application";
+import {
+  LOCAL_STORAGE_KEYS,
+  LocalStorageKey,
+  saveToLocalStorage,
+} from "@/lib/localStorage";
 import { useDebounceCallback } from "@/hooks/useDebounceCallback";
 import { Button } from "@/components/ui/button";
 import { Editor } from "@/components/ui/editor/editor";
@@ -47,9 +52,10 @@ export function AddCommentForm({
     },
   });
 
-  const handleDebouncedChange = useDebounceCallback((value: string) => {
-    console.log("form:", form);
-    console.log("value: ", value);
+  const commentLocalStorageKey = `${LOCAL_STORAGE_KEYS.commentData}-${application.id}`;
+
+  const onDebounce = useDebounceCallback((value: string) => {
+    saveToLocalStorage(commentLocalStorageKey as LocalStorageKey, value);
   }, DURATIONS.commentDebounce);
 
   const handleSubmit = (
@@ -77,7 +83,7 @@ export function AddCommentForm({
                 <Editor
                   onChange={(value) => {
                     field.onChange(value);
-                    handleDebouncedChange(value);
+                    onDebounce(value);
                   }}
                   key={editorKey}
                 />

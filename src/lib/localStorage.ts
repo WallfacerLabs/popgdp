@@ -3,10 +3,10 @@ import { z } from "zod";
 export const LOCAL_STORAGE_KEYS = {
   waveStepsData: "waveStepsData",
   applicationStepsData: "applicationStepsData",
-  commentsData: "commentsData",
+  commentData: "commentData",
 } as const;
 
-type LocalStorageKey =
+export type LocalStorageKey =
   (typeof LOCAL_STORAGE_KEYS)[keyof typeof LOCAL_STORAGE_KEYS];
 
 export function getLocalStorageValue<T extends z.ZodTypeAny>(
