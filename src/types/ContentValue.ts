@@ -1,10 +1,10 @@
 export const ContentValue = {
   positive: "positive",
-  spam: "spam",
+  invalid: "invalid",
 } as const;
 
 export const contentValues = [
   ContentValue.positive,
-  ContentValue.spam,
+  ContentValue.invalid,
 ] as const;
 export type ContentValue = (typeof contentValues)[number];

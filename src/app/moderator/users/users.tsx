@@ -18,7 +18,7 @@ export const MODERATOR_USERS_LIST_COLUMNS = [
   "user",
   "address",
   "reviews",
-  "spam",
+  "invalid",
   "useful",
   "submissions",
 ] as const;
@@ -32,7 +32,7 @@ export function Users({ users }: UsersProps) {
 
   const { sortBy, handleSortBy } = useSortState({
     columns: MODERATOR_USERS_LIST_COLUMNS,
-    defaultDescendingColumns: ["reviews", "spam", "useful", "submissions"],
+    defaultDescendingColumns: ["reviews", "invalid", "useful", "submissions"],
   });
 
   const sortedUsers = getModeratorSortedUsers({
@@ -88,8 +88,8 @@ function getModeratorSortedUsers({
       return sortObjectsByKey(users, ["ethereumAddress"], sortBy.asc);
     case "reviews":
       return sortObjectsByKey(users, ["reviewsCount"], sortBy.asc);
-    case "spam":
-      return sortObjectsByKey(users, ["spamCount"], sortBy.asc);
+    case "invalid":
+      return sortObjectsByKey(users, ["invalidCount"], sortBy.asc);
     case "useful":
       return sortObjectsByKey(users, ["helpfulCount"], sortBy.asc);
     case "submissions":

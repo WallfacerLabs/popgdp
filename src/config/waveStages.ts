@@ -42,7 +42,7 @@ export function getWaveStage({
 export type UserAction =
   | "submissionAdd"
   | "submissionEdit"
-  | "submissionSpam"
+  | "submissionInvalid"
   | "submissionVote"
   | "commentAdd"
   | "commentValue"
@@ -51,31 +51,31 @@ export type UserAction =
 // prettier-ignore
 const canPerformByStage = {
   open: {
-    submissionAdd:  true,
+    submissionAdd: true,
     submissionEdit: true,
-    submissionSpam: true,
+    submissionInvalid: true,
     submissionVote: false,
-    commentAdd:     true,
-    commentValue:   true,
-    reviewAdd:      false,
+    commentAdd: true,
+    commentValue: true,
+    reviewAdd: false,
   },
   denoising: {
-    submissionAdd:  false,
+    submissionAdd: false,
     submissionEdit: true,
-    submissionSpam: true,
+    submissionInvalid: true,
     submissionVote: false,
-    commentAdd:     true,
-    commentValue:   true,
-    reviewAdd:      false,
+    commentAdd: true,
+    commentValue: true,
+    reviewAdd: false,
   },
   assesment: {
-    submissionAdd:  false,
+    submissionAdd: false,
     submissionEdit: false,
-    submissionSpam: true,
+    submissionInvalid: true,
     submissionVote: true,
-    commentAdd:     true,
-    commentValue:   true,
-    reviewAdd:      true,
+    commentAdd: true,
+    commentValue: true,
+    reviewAdd: true,
   },
 } satisfies Record<
   Exclude<WaveStage, "notOpen" | "close">,
