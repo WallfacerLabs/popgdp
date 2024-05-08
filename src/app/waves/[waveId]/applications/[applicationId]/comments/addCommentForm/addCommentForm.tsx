@@ -11,6 +11,7 @@ import {
   getLocalStorageValue,
   LOCAL_STORAGE_KEYS,
   LocalStorageKey,
+  removeLocalStorageItem,
   saveToLocalStorage,
 } from "@/lib/localStorage";
 import { useDebounceCallback } from "@/hooks/useDebounceCallback";
@@ -75,6 +76,7 @@ export function AddCommentForm({
         applicationId: application.id,
         waveId: application.waveId,
       });
+      removeLocalStorageItem(commentLocalStorageKey as LocalStorageKey);
       setEditorKey((prev) => prev + 1);
       form.reset();
     });
