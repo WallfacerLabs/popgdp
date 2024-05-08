@@ -4,9 +4,11 @@ import { useState } from "react";
 import { DURATIONS } from "@/constants/durations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { type ApplicationWithComments } from "@/types/Application";
 import {
+  getLocalStorageValue,
   LOCAL_STORAGE_KEYS,
   LocalStorageKey,
   saveToLocalStorage,
@@ -45,14 +47,20 @@ export function AddCommentForm({
   commentValidationError,
 }: AddCommentFormProps) {
   const [editorKey, setEditorKey] = useState(0);
+  const commentLocalStorageKey = `${LOCAL_STORAGE_KEYS.commentData}-${application.id}`;
+
+  const storedCommentValue = getLocalStorageValue(
+    z.string(),
+    commentLocalStorageKey as LocalStorageKey,
+    "",
+  );
+
   const form = useForm<AddCommentSchema>({
     resolver: zodResolver(addCommentSchema),
     defaultValues: {
-      content: "",
+      content: storedCommentValue,
     },
   });
-
-  const commentLocalStorageKey = `${LOCAL_STORAGE_KEYS.commentData}-${application.id}`;
 
   const onDebounce = useDebounceCallback((value: string) => {
     saveToLocalStorage(commentLocalStorageKey as LocalStorageKey, value);
@@ -81,6 +89,7 @@ export function AddCommentForm({
             <FormItem>
               <FormControl>
                 <Editor
+                  initialMarkdown={storedCommentValue}
                   onChange={(value) => {
                     field.onChange(value);
                     onDebounce(value);
