@@ -1,6 +1,7 @@
 import { CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
+import { $convertFromMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import type { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
@@ -8,10 +9,12 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 type InitialConfig = Parameters<typeof LexicalComposer>[0]["initialConfig"];
 
 interface EditorConfigProps {
+  initialMarkdown: string | undefined;
   namespace: string;
 }
 
 export const getInitialConfig = ({
+  initialMarkdown,
   namespace,
 }: EditorConfigProps): InitialConfig => ({
   namespace,
@@ -29,6 +32,9 @@ export const getInitialConfig = ({
   onError(error) {
     console.error(error);
   },
+  editorState: initialMarkdown
+    ? () => $convertFromMarkdownString(initialMarkdown, TRANSFORMERS)
+    : undefined,
   nodes: [
     HeadingNode,
     ListNode,
