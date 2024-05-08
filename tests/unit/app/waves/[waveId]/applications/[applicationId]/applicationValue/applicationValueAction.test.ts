@@ -48,7 +48,7 @@ describe("app/waves/[waveId]/applications/[applicationId]/applicationValue/appli
       categoryId,
       userId: anotherUserId,
       waveId,
-      isDraft: true,
+      isDraft: false,
     });
   });
 

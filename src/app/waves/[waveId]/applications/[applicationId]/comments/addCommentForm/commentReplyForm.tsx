@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/form";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
-import { addReplyAction, AddReplyACtionPayload } from "./addCommentAction";
+import { addReplyAction, AddReplyActionPayload } from "./addCommentAction";
 import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
 
 interface CommentReplyFormProps
-  extends Pick<AddReplyACtionPayload, "replyTargetId" | "application"> {
+  extends Pick<AddReplyActionPayload, "replyTargetId" | "application"> {
   onReply: () => void;
 }
 
@@ -31,12 +31,12 @@ export function CommentReplyForm({
   const form = useForm<AddCommentSchema>({
     resolver: zodResolver(addCommentSchema),
     defaultValues: {
-      comment: "",
+      content: "",
     },
   });
 
-  const handleSubmit = form.handleSubmit(async (data) => {
-    await addReplyAction({ data, application, replyTargetId });
+  const handleSubmit = form.handleSubmit(async ({ content }) => {
+    await addReplyAction({ content, application, replyTargetId });
     form.reset();
     onReply();
   });
@@ -51,7 +51,7 @@ export function CommentReplyForm({
       <form className="flex flex-col gap-4">
         <FormField
           control={form.control}
-          name="comment"
+          name="content"
           render={({ field }) => (
             <FormItem>
               <FormControl>

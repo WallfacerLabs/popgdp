@@ -153,7 +153,9 @@ export async function canRateApplication({
   }
 }
 
-export async function canAddComment(application: ApplicationWithComments) {
+export async function canAddComment(
+  application: Pick<ApplicationWithComments, "userId" | "waveId">,
+) {
   try {
     const userId = await checkUserId(
       "You need to be signed in to add comments",
@@ -180,7 +182,9 @@ export async function canAddComment(application: ApplicationWithComments) {
   }
 }
 
-export async function canAddReview(application: ApplicationWithComments) {
+export async function canAddReview(
+  application: Pick<ApplicationWithComments, "userId" | "waveId" | "comments">,
+) {
   try {
     const userId = await checkUserId("You need to be signed in to review");
     await checkUserRole({
