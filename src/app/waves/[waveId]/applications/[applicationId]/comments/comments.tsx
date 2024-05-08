@@ -33,8 +33,9 @@ export async function Comments({ application, userId }: CommentsProps) {
 
   const { validationErrorMessage: commentValidationError } =
     await canAddComment(application);
-  const { validationErrorMessage: reviewValidationError } =
-    await canAddReview(application);
+  const { validationErrorMessage: reviewValidationError } = await canAddReview(
+    application.id,
+  );
 
   const { validationErrorMessage: rateCommentValidationError } =
     await canRateComment({ waveId: application.waveId });
