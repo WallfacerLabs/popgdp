@@ -1,1 +1,1 @@
-ALTER TYPE "contentValue" ADD VALUE 'invalid';
+ALTER TYPE "contentValue" ADD VALUE IF NOT EXISTS 'invalid';
