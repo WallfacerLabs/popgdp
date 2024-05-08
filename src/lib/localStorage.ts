@@ -3,6 +3,7 @@ import { z } from "zod";
 export const LOCAL_STORAGE_KEYS = {
   waveStepsData: "waveStepsData",
   applicationStepsData: "applicationStepsData",
+  commentsData: "commentsData",
 } as const;
 
 type LocalStorageKey =
