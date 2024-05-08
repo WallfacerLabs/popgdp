@@ -29,9 +29,7 @@ export async function ApplicationUserButtons({
           className="flex"
           action={async () => {
             "use server";
-            await publishDraftAction({
-              application,
-            });
+            await publishDraftAction(application);
           }}
         >
           <Button disabled={isPublishDisabled}>Publish</Button>

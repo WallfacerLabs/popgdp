@@ -9,7 +9,7 @@ import {
   Member,
   User,
 } from "@/drizzle/schema";
-import { count, eq, sql } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 
 import { ContentValue } from "@/types/ContentValue";
 import { type UserId } from "@/types/User";
@@ -200,7 +200,8 @@ export function publishDraft(
   return db
     .update(Application)
     .set({ draft: false })
-    .where(eq(Application.id, applicationId));
+    .where(and(eq(Application.id, applicationId), eq(Application.draft, true)))
+    .returning({ updatedId: Application.id });
 }
 
 export const countApplicationsQuery = db

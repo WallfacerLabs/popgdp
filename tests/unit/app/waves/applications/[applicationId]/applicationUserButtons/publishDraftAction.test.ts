@@ -3,6 +3,7 @@ import { Moderator, Reviewer, User, Wave } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { mockUserSession } from "tests/helpers/mockUserSession";
 import {
+  createApplication,
   createBlocked,
   createCategory,
   createModerator,
@@ -14,35 +15,23 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { getWaveStage } from "@/config/waveStages";
 import { addDays } from "@/lib/dates";
-import { createApplicationAction } from "@/app/waves/[waveId]/applications/create/preview/createApplicationAction";
+import { publishDraftAction } from "@/app/waves/[waveId]/applications/[applicationId]/applicationUserButtons/publishDraftAction";
 
-const waveId = 0;
-const categoryId = "8e60662c-e935-48dd-9493-76139d5bf950";
-const userId = "0";
+const userId = "user";
+const waveId = 1;
+const applicationId = "f8e46fab-f2c4-4c46-85ca-9e5cbf716d39";
+const categoryId = "7979fbc1-1a84-4b75-8f7e-bea6f9bf0a99";
 
-const applicationData = {
-  name: "Application",
-  summary: "Application summary",
-  entityName: "Entity",
-  email: "email.com",
-  duration: 12,
-  budget: 100,
-  categoryId,
-  goals: "Goals",
-  idea: "Idea",
-  members: [],
-  reason: "Reason",
-  requirements: "Requirements",
-  state: "State",
-  teamSummary: "Team summary",
-  tbd: "TBD",
-  tbdb: "TBDB",
-};
+const defaultActionArgs = {
+  id: applicationId,
+  userId,
+  waveId,
+} as const;
 
-describe("app/waves/create/createWaveAction", () => {
+describe("app/waves/[waveId]/applications/[applicationId]/applicationUserButtons/publishDraftAction", () => {
   beforeEach(async () => {
     await createWave(waveId);
-    await createCategory({ waveId, categoryId });
+    await createCategory({ categoryId, waveId });
   });
 
   afterEach(async () => {
@@ -56,60 +45,90 @@ describe("app/waves/create/createWaveAction", () => {
 
   describe("permissions", () => {
     it("visitor", async () => {
-      await createUser(userId);
-
-      expect(() =>
-        createApplicationAction(applicationData, waveId, false),
-      ).rejects.toThrowError("You need to be signed in to apply");
+      expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+        "You need to be signed in to publish draft",
+      );
     });
 
     it("blocked", async () => {
       await createBlocked(userId);
       mockUserSession({ userId, credentialType: "orb" });
 
-      expect(() =>
-        createApplicationAction(applicationData, waveId, false),
-      ).rejects.toThrowError("You are blocked from performing this action");
+      expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+        "You are blocked from performing this action",
+      );
     });
 
     it("device verified", async () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
-      await createApplicationAction(applicationData, waveId, false);
+      await publishDraftAction(defaultActionArgs);
 
       const applications = await db.query.Application.findMany();
       expect(applications).toHaveLength(1);
+      expect(applications[0].draft).toBe(false);
     });
 
     it("orb verified", async () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "orb" });
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
-      await createApplicationAction(applicationData, waveId, false);
+      await publishDraftAction(defaultActionArgs);
 
       const applications = await db.query.Application.findMany();
       expect(applications).toHaveLength(1);
+      expect(applications[0].draft).toBe(false);
     });
 
     it("reviewer", async () => {
       await createReviewer(userId);
       mockUserSession({ userId, credentialType: "orb" });
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
-      await createApplicationAction(applicationData, waveId, false);
+      await publishDraftAction(defaultActionArgs);
 
       const applications = await db.query.Application.findMany();
       expect(applications).toHaveLength(1);
+      expect(applications[0].draft).toBe(false);
     });
 
     it("moderator", async () => {
       await createModerator(userId);
       mockUserSession({ userId, credentialType: "orb" });
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
-      await createApplicationAction(applicationData, waveId, false);
+      await publishDraftAction(defaultActionArgs);
 
       const applications = await db.query.Application.findMany();
       expect(applications).toHaveLength(1);
+      expect(applications[0].draft).toBe(false);
     });
   });
 
@@ -117,11 +136,19 @@ describe("app/waves/create/createWaveAction", () => {
     it("open", async () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
+      await createApplication({
+        applicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: true,
+      });
 
-      await createApplicationAction(applicationData, waveId, false);
+      await publishDraftAction(defaultActionArgs);
 
       const applications = await db.query.Application.findMany();
       expect(applications).toHaveLength(1);
+      expect(applications[0].draft).toBe(false);
     });
 
     it("denoising", async () => {
@@ -136,9 +163,9 @@ describe("app/waves/create/createWaveAction", () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
 
-      expect(() =>
-        createApplicationAction(applicationData, waveId, false),
-      ).rejects.toThrowError("You cannot apply in this wave stage");
+      expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+        "You cannot publish draft in this wave stage",
+      );
     });
 
     it("assesment", async () => {
@@ -152,9 +179,9 @@ describe("app/waves/create/createWaveAction", () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
 
-      expect(() =>
-        createApplicationAction(applicationData, waveId, false),
-      ).rejects.toThrowError("You cannot apply in this wave stage");
+      expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+        "You cannot publish draft in this wave stage",
+      );
     });
 
     it("close", async () => {
@@ -168,40 +195,43 @@ describe("app/waves/create/createWaveAction", () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "device" });
 
-      expect(() =>
-        createApplicationAction(applicationData, waveId, false),
-      ).rejects.toThrowError("You cannot apply in this wave stage");
+      expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+        "You cannot publish draft in this wave stage",
+      );
     });
   });
 
-  it("should create an application", async () => {
+  it("throws error if other user tries to publish application", async () => {
+    await createUser(userId);
+    mockUserSession({ userId, credentialType: "orb" });
+
+    expect(() =>
+      publishDraftAction({ ...defaultActionArgs, userId: "randomUserId" }),
+    ).rejects.toThrowError("Invalid user id");
+  });
+
+  it("throws error if application does not exist", async () => {
     await createUser(userId);
     mockUserSession({ userId, credentialType: "device" });
 
-    await createApplicationAction(applicationData, waveId, false);
+    expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+      "Application not found",
+    );
+  });
 
-    const applications = await db.query.Application.findMany();
-    expect(applications).toHaveLength(1);
-
-    expect(applications[0]).toMatchObject({
-      draft: false,
-      name: applicationData.name,
-      summary: applicationData.summary,
-      entityName: applicationData.entityName,
-      email: applicationData.email,
-      duration: String(applicationData.duration),
-      budget: applicationData.budget,
+  it("throws error if application is not a draft", async () => {
+    await createUser(userId);
+    mockUserSession({ userId, credentialType: "device" });
+    await createApplication({
+      applicationId,
       categoryId,
-      teamSummary: applicationData.teamSummary,
-      idea: applicationData.idea,
-      reason: applicationData.reason,
-      state: applicationData.state,
-      goals: applicationData.goals,
-      requirements: applicationData.requirements,
-      tbd: applicationData.tbd,
-      imageId: null,
-      waveId,
       userId,
+      waveId,
+      isDraft: false,
     });
+
+    expect(() => publishDraftAction(defaultActionArgs)).rejects.toThrowError(
+      "Application not found",
+    );
   });
 });
