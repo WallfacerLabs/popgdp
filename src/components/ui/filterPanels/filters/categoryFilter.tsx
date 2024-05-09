@@ -28,13 +28,17 @@ export const CategoryFilter = ({
   categories,
   onCategoryChange,
 }: CategoryFilterProps) => {
+  const sortedCategories = [...categories].sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
+
   return (
     <Select onValueChange={onCategoryChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Category" />
       </SelectTrigger>
       <SelectContent>
-        {categories.map(({ id, name, color }) => (
+        {sortedCategories.map(({ id, name, color }) => (
           <SelectItem key={id} value={id}>
             <span
               className={cn(
