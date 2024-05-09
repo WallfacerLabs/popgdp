@@ -5,6 +5,10 @@ export async function insertComment(data: typeof Comment.$inferInsert) {
   return db.insert(Comment).values(data);
 }
 
+export async function editComment(data: typeof Comment.$inferInsert) {
+  return db.update(Comment).set(data).returning({ commentId: Comment.id });
+}
+
 export async function insertCommentAsReview(data: typeof Comment.$inferInsert) {
   return db.transaction(async (db) => {
     const [{ commentId }] = await db

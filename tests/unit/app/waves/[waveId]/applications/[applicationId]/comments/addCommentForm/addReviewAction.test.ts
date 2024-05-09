@@ -13,7 +13,7 @@ import {
 } from "tests/helpers/queries";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { addReviewAction } from "@/app/waves/[waveId]/applications/[applicationId]/comments/addCommentForm/addCommentAction";
+import { addReviewAction } from "@/app/waves/[waveId]/applications/[applicationId]/comments/addCommentForm/commentActions";
 
 const userId = "user";
 const anotherUserId = "anotherUser";
