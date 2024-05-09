@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/form";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
-import { addReplyAction, AddReplyActionPayload } from "./addCommentAction";
 import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
+import { addReplyAction, AddReplyActionPayload } from "./commentActions";
 
 interface CommentReplyFormProps
   extends Pick<

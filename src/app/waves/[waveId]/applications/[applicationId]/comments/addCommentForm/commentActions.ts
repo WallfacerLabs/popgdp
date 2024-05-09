@@ -1,14 +1,15 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { urls } from "@/constants/urls";
 import {
+  editComment,
   insertComment,
   insertCommentAsReview,
 } from "@/drizzle/queries/comments";
+import { revalidatePath } from "next/cache";
 
+import { canAddComment, canAddReview, canEditComment } from "@/config/actionPermissions";
 import { type ApplicationId } from "@/types/Application";
-import { canAddComment, canAddReview } from "@/config/actionPermissions";
 
 import { type AddCommentSchema } from "./addCommentSchema";
 
@@ -82,4 +83,27 @@ export async function addReplyAction({
   });
 
   revalidatePath(urls.applications.preview({ waveId, applicationId }));
+}
+
+export interface EditCommentActionPayload extends AddCommentActionPayload {
+  editTargetId: string;
+}
+
+export async function editCommentAction({
+  content,
+  applicationId,
+}: EditCommentActionPayload) {
+  const { userId, validationErrorMessage } = await canEditComment(
+    applicationId,
+  );
+
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
+  }
+
+  await editComment({
+    applicationId,
+    userId,
+    content,
+  });
 }
