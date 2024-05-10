@@ -1,12 +1,13 @@
 import { db } from "@/drizzle/db";
 import { Comment, Review } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
 
 export async function insertComment(data: typeof Comment.$inferInsert) {
   return db.insert(Comment).values(data);
 }
 
-export async function editComment(data: typeof Comment.$inferInsert) {
-  return db.update(Comment).set(data).returning({ commentId: Comment.id });
+export async function updateComment(data: typeof Comment.$inferInsert) {
+  return db.update(Comment).set(data).where(eq(Comment.id, data.id!));
 }
 
 export async function insertCommentAsReview(data: typeof Comment.$inferInsert) {
