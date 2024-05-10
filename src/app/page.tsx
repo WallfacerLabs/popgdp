@@ -28,7 +28,7 @@ export default async function Home() {
 function NotWaveMessage() {
   return (
     <div className="my-[25vh] flex flex-col items-center">
-      <h2 className="text-xl">No wave was started yet</h2>
+      <h2 className="text-xl">No wave has been started yet</h2>
     </div>
   );
 }
