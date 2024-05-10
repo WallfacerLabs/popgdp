@@ -1,12 +1,13 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { urls } from "@/constants/urls";
 import { getModeratorPanelApplications } from "@/drizzle/queries/applications";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
+import { Button } from "@/components/ui/button";
 import { ModeratorNavigation } from "@/components/ui/moderatorNavigation";
 import { PageHeader } from "@/components/ui/pageHeader";
 
-import { ExportSubmissions } from "./exportSubmissions";
 import { Submissions } from "./submissions";
 
 export const metadata: Metadata = {
@@ -23,7 +24,11 @@ export default async function ReviewersPage() {
   return (
     <div className="flex flex-col gap-4">
       <PageHeader title="Manage">
-        <ExportSubmissions />
+        <Button asChild>
+          <a download="submissionsData.csv" href={urls.exports.submissions}>
+            Export submissions
+          </a>
+        </Button>
       </PageHeader>
       <ModeratorNavigation />
 
