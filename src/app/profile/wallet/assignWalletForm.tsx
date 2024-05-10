@@ -9,7 +9,7 @@ import {
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { recoverMessageAddress } from "viem";
+import { recoverMessageAddress, UserRejectedRequestError } from "viem";
 import {
   useAccount,
   useDisconnect,
@@ -129,7 +129,7 @@ function SignMessageForm() {
 
   useEffect(() => {
     handleSignMessage();
-  }, [signMessageAsync, handleSignMessage]);
+  }, [handleSignMessage]);
 
   return (
     <>
@@ -139,7 +139,7 @@ function SignMessageForm() {
 
       {signError && (
         <p className="text-sm text-red">
-          {getRejectionErrorMessage(signError.message)}
+          {getRejectionErrorMessage(signError)}
         </p>
       )}
       <Button onClick={handleSignMessage} className="w-fit">
@@ -150,11 +150,9 @@ function SignMessageForm() {
   );
 }
 
-const REJECTED_SIGNATURE_MESSAGE = "User rejected the request";
-
-function getRejectionErrorMessage(message: string) {
-  if (message.includes(REJECTED_SIGNATURE_MESSAGE)) {
-    return REJECTED_SIGNATURE_MESSAGE;
+function getRejectionErrorMessage(error: Error) {
+  if (error instanceof UserRejectedRequestError) {
+    return "You need to sign the message to confirm your address";
   }
-  return message;
+  return error.message;
 }
