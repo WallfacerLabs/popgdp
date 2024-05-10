@@ -28,7 +28,7 @@ test("creates a new wave", async ({ browser }) => {
 
   await mockDate(page, new Date("Jun 1 2020 00:00:00"));
 
-  await page.goto(urls.root);
+  await page.goto(urls.moderator.waves);
 
   await page.getByRole("link", { name: "Create wave" }).click();
 
