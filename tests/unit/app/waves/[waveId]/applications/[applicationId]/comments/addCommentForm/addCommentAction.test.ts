@@ -82,7 +82,7 @@ describe("app/waves/[waveId]/applications/[applicationId]/comments/addCommentFor
 
     it("device verified - own application", async () => {
       await createUser(userId);
-      mockUserSession({ userId, credentialType: "orb" });
+      mockUserSession({ userId, credentialType: "device" });
 
       await addCommentAction({
         ...defaultActionArgs,
