@@ -2,7 +2,7 @@ import { cache } from "react";
 import { QueryError } from "@/constants/errors";
 import { db } from "@/drizzle/db";
 import { Category, Wave } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, gt, inArray, SQL, sql } from "drizzle-orm";
 
 const imageFragment = {
   columns: {
@@ -56,9 +56,9 @@ export const getWaveDates = cache(async (waveId: number) => {
   return wave;
 });
 
-export const getWaveWithApplications = cache(async (id: number) => {
+const getWave = async (where: SQL) => {
   const wave = await db.query.Wave.findFirst({
-    where: eq(Wave.id, id),
+    where,
     with: {
       applications: {
         with: {
@@ -80,6 +80,20 @@ export const getWaveWithApplications = cache(async (id: number) => {
   });
 
   return wave;
+};
+
+const firstNotClosedWave = db
+  .select({ id: Wave.id })
+  .from(Wave)
+  .where(gt(Wave.closeDate, sql`now()`))
+  .limit(1);
+
+export const getFirstNotClosedWave = cache(async () => {
+  return getWave(inArray(Wave.id, firstNotClosedWave));
+});
+
+export const getWaveWithApplications = cache(async (id: number) => {
+  return getWave(eq(Wave.id, id));
 });
 
 type CategoryInsertData = Omit<typeof Category.$inferInsert, "waveId">;

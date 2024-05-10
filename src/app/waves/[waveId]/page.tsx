@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getWaveWithApplications } from "@/drizzle/queries/waves";
 
 import { parseWaveParams } from "@/lib/paramsValidation";
+import { PageHeader } from "@/components/ui/pageHeader";
 import { TimelinePreview } from "@/components/ui/wavesTimelinePreview/timelinePreview";
 
 import { SubmissionsSection } from "./applications/submissions/submissionsSection";
@@ -36,6 +37,8 @@ export default async function Wave({ params }: { params: unknown }) {
 
   return (
     <div className="flex flex-col gap-6">
+      <PageHeader title={wave.name} />
+
       <WaveBanner />
 
       <TimelinePreview wave={wave} />
