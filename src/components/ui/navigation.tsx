@@ -22,7 +22,7 @@ export async function Navigation() {
         {isModerator && (
           <li>
             <Button variant="link" className="font-bold" asChild>
-              <Link href={urls.moderator.applications}>
+              <Link href={urls.moderator.waves}>
                 <TuneIcon />
                 Moderator panel
               </Link>
