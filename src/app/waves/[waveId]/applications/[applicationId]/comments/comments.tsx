@@ -9,6 +9,7 @@ import {
   canEditComment,
   canRateComment,
 } from "@/config/actionPermissions";
+import { sortObjectsByKey } from "@/lib/sort";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -30,7 +31,9 @@ export async function Comments({ application, userId }: CommentsProps) {
     (comment) => comment.user.isContentHidden === false,
   );
 
-  const reviews = comments.filter((comment) => comment.review?.isReview);
+  const sortedComments = sortObjectsByKey(comments, ["createdAt"], true);
+
+  const reviews = sortedComments.filter((comment) => comment.review?.isReview);
 
   const { validationErrorMessage: addCommentValidationError } =
     await canAddComment(application.id);
@@ -51,7 +54,7 @@ export async function Comments({ application, userId }: CommentsProps) {
           <TabsList className="gap-6">
             <SectionButton
               section={SECTIONS.discussion}
-              elementsAmount={comments.length}
+              elementsAmount={sortedComments.length}
             />
             <SectionButton
               section={SECTIONS.reviews}
@@ -65,7 +68,7 @@ export async function Comments({ application, userId }: CommentsProps) {
           >
             <CommentsList
               application={application}
-              comments={comments}
+              comments={sortedComments}
               userId={userId}
               addCommentValidationError={addCommentValidationError}
               editCommentValidationError={editCommentValidationError}
