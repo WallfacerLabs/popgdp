@@ -19,7 +19,7 @@ const userId = "user";
 const anotherUserId = "anotherUser";
 const waveId = 1;
 const applicationId = "f8e46fab-f2c4-4c46-85ca-9e5cbf716d39";
-const anotherApplicationId = "92effe54-7821-4932-be1f-6fa264fa7ec6"
+const anotherApplicationId = "92effe54-7821-4932-be1f-6fa264fa7ec6";
 const categoryId = "7979fbc1-1a84-4b75-8f7e-bea6f9bf0a99";
 
 const defaultActionArgs = {
