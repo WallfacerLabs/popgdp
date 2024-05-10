@@ -142,4 +142,73 @@ describe("app/waves/[waveId]/applications/[applicationId]/comments/addCommentFor
       expect(updatedComments[0].content).toBe(expectedContent);
     });
   });
+
+  describe("wave stages", () => {
+    it("not open", async () => {
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "orb" });
+      await updateWaveStage("notOpen");
+
+      expect(() =>
+        updateCommentAction(updateCommentActionArgs),
+      ).rejects.toThrowError("You cannot edit comments in this wave stage");
+    });
+
+    it("open", async () => {
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "orb" });
+      await updateWaveStage("open");
+      await createUserComment();
+
+      await updateCommentAction(updateCommentActionArgs);
+
+      const updatedComments = await db.query.Comment.findMany();
+      expect(updatedComments[0].content).toBe(expectedContent);
+    });
+
+    it("denoising", async () => {
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "orb" });
+      await updateWaveStage("denoising");
+      await createUserComment();
+
+      await updateCommentAction(updateCommentActionArgs);
+
+      const updatedComments = await db.query.Comment.findMany();
+      expect(updatedComments[0].content).toBe(expectedContent);
+    });
+
+    it("assesment", async () => {
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "orb" });
+      await createUserComment();
+
+      await updateCommentAction(updateCommentActionArgs);
+
+      const updatedComments = await db.query.Comment.findMany();
+      expect(updatedComments[0].content).toBe(expectedContent);
+    });
+
+    it("close", async () => {
+      await createUser(userId);
+      mockUserSession({ userId, credentialType: "orb" });
+      await updateWaveStage("close");
+
+      expect(() =>
+        updateCommentAction(updateCommentActionArgs),
+      ).rejects.toThrowError("You cannot edit comments in this wave stage");
+    });
+  });
+
+  it("can edit comment", async () => {
+    await createUser(userId);
+    mockUserSession({ userId, credentialType: "orb" });
+
+    await createUserComment();
+
+    await updateCommentAction(updateCommentActionArgs);
+
+    const updatedComments = await db.query.Comment.findMany();
+    expect(updatedComments[0].content).toBe(expectedContent);
+  });
 });
