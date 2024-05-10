@@ -20,13 +20,13 @@ import {
 import { ErrorTooltip } from "@/components/ui/tooltip";
 import { AddCommentIcon } from "@/components/icons/addCommentIcon";
 
+import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
+import { AddReviewDialog } from "./addReviewDialog";
 import {
   addCommentAction,
   addReviewAction,
   type AddCommentActionPayload,
-} from "./addCommentAction";
-import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
-import { AddReviewDialog } from "./addReviewDialog";
+} from "./commentActions";
 
 interface AddCommentFormProps {
   application: ApplicationWithComments;

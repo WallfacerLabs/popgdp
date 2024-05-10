@@ -6,6 +6,7 @@ import { type UserId } from "@/types/User";
 import {
   canAddComment,
   canAddReview,
+  canEditComment,
   canRateComment,
 } from "@/config/actionPermissions";
 import { Separator } from "@/components/ui/separator";
@@ -31,11 +32,14 @@ export async function Comments({ application, userId }: CommentsProps) {
 
   const reviews = comments.filter((comment) => comment.review?.isReview);
 
-  const { validationErrorMessage: commentValidationError } =
+  const { validationErrorMessage: addCommentValidationError } =
     await canAddComment(application.id);
   const { validationErrorMessage: reviewValidationError } = await canAddReview(
     application.id,
   );
+
+  const { validationErrorMessage: editCommentValidationError } =
+    await canEditComment(application.id);
 
   const { validationErrorMessage: rateCommentValidationError } =
     await canRateComment({ waveId: application.waveId });
@@ -63,7 +67,8 @@ export async function Comments({ application, userId }: CommentsProps) {
               application={application}
               comments={comments}
               userId={userId}
-              commentValidationError={commentValidationError}
+              addCommentValidationError={addCommentValidationError}
+              editCommentValidationError={editCommentValidationError}
               rateCommentValidationError={rateCommentValidationError}
             />
           </TabsContent>
@@ -76,7 +81,8 @@ export async function Comments({ application, userId }: CommentsProps) {
               application={application}
               comments={reviews}
               userId={userId}
-              commentValidationError={commentValidationError}
+              addCommentValidationError={addCommentValidationError}
+              editCommentValidationError={editCommentValidationError}
               rateCommentValidationError={rateCommentValidationError}
             />
           </TabsContent>
@@ -85,7 +91,7 @@ export async function Comments({ application, userId }: CommentsProps) {
 
       <AddCommentForm
         application={application}
-        commentValidationError={commentValidationError}
+        commentValidationError={addCommentValidationError}
         reviewValidationError={reviewValidationError}
       />
     </div>
@@ -112,7 +118,8 @@ interface CommentsListProps {
   application: ApplicationWithComments;
   comments: Comment[];
   userId: UserId | undefined;
-  commentValidationError: string | undefined;
+  addCommentValidationError: string | undefined;
+  editCommentValidationError: string | undefined;
   rateCommentValidationError: string | undefined;
 }
 
@@ -120,7 +127,8 @@ function CommentsList({
   application,
   comments,
   userId,
-  commentValidationError,
+  addCommentValidationError,
+  editCommentValidationError,
   rateCommentValidationError,
 }: CommentsListProps) {
   return comments.map((comment) => (
@@ -129,7 +137,8 @@ function CommentsList({
         application={application}
         comment={comment}
         userId={userId}
-        addCommentValidationError={commentValidationError}
+        addCommentValidationError={addCommentValidationError}
+        editCommentValidationError={editCommentValidationError}
         rateCommentValidationError={rateCommentValidationError}
       />
       <Separator className="my-6 last:hidden" />

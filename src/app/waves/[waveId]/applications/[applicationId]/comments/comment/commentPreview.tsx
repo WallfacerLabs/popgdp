@@ -13,8 +13,10 @@ import { MarkdownPreview } from "@/components/ui/markdownPreview";
 import { Separator } from "@/components/ui/separator";
 import { ErrorTooltip } from "@/components/ui/tooltip";
 import { UserAvatar } from "@/components/ui/userAvatar";
+import { EditSquareIcon } from "@/components/icons/editSquareIcon";
 import { ReplyIcon } from "@/components/icons/replyIcon";
 
+import { CommentEditForm } from "../addCommentForm/commentEditForm";
 import { CommentReplyForm } from "../addCommentForm/commentReplyForm";
 import { CommentValueForm } from "../commentValue/commentValueForm";
 import { ReplyTarget } from "../replyTarget/replyTarget";
@@ -24,6 +26,7 @@ interface CommentPreviewProps {
   comment: Comment;
   userId: UserId | undefined;
   addCommentValidationError: string | undefined;
+  editCommentValidationError: string | undefined;
   rateCommentValidationError: string | undefined;
 }
 
@@ -32,6 +35,7 @@ export const CommentPreview = ({
   comment,
   userId,
   addCommentValidationError,
+  editCommentValidationError,
   rateCommentValidationError,
 }: CommentPreviewProps) => {
   const { waveId, comments: allComments } = application;
@@ -39,9 +43,14 @@ export const CommentPreview = ({
 
   const isReview = review?.isReview;
   const [isReply, setIsReply] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   function onReply() {
     setIsReply(false);
+  }
+
+  function onEdit() {
+    setIsEdit(false);
   }
 
   return (
@@ -67,17 +76,34 @@ export const CommentPreview = ({
                   <Separator orientation="dot" className="opacity-60" />
                   <span className="opacity-60">{formatTime(createdAt)}</span>
                 </div>
-                <ErrorTooltip message={addCommentValidationError}>
-                  <Button
-                    disabled={!!addCommentValidationError}
-                    variant="link"
-                    className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
-                    onClick={() => setIsReply(true)}
-                  >
-                    <ReplyIcon />
-                    Reply
-                  </Button>
-                </ErrorTooltip>
+                <div className="flex items-center gap-1">
+                  <ErrorTooltip message={editCommentValidationError}>
+                    <Button
+                      disabled={!!editCommentValidationError}
+                      variant="link"
+                      className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+                      onClick={() => setIsEdit(true)}
+                    >
+                      <EditSquareIcon />
+                      Edit
+                    </Button>
+                  </ErrorTooltip>
+                  <Separator
+                    orientation="vertical"
+                    className="h-6 bg-primary opacity-10"
+                  />
+                  <ErrorTooltip message={addCommentValidationError}>
+                    <Button
+                      disabled={!!addCommentValidationError}
+                      variant="link"
+                      className="h-6 p-2 py-0 opacity-60 transition-opacity before:opacity-0 hover:opacity-100 focus-visible:opacity-100"
+                      onClick={() => setIsReply(true)}
+                    >
+                      <ReplyIcon />
+                      Reply
+                    </Button>
+                  </ErrorTooltip>
+                </div>
               </div>
 
               <MarkdownPreview body={comment.markdownContent} />
@@ -98,6 +124,13 @@ export const CommentPreview = ({
           waveId={application.waveId}
           replyTargetId={id}
           onReply={onReply}
+        />
+      )}
+      {isEdit && (
+        <CommentEditForm
+          application={application}
+          comment={comment}
+          onEdit={onEdit}
         />
       )}
     </div>

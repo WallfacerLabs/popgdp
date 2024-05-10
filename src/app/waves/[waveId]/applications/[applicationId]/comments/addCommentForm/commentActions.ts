@@ -5,10 +5,16 @@ import { urls } from "@/constants/urls";
 import {
   insertComment,
   insertCommentAsReview,
+  updateComment,
 } from "@/drizzle/queries/comments";
 
 import { type ApplicationId } from "@/types/Application";
-import { canAddComment, canAddReview } from "@/config/actionPermissions";
+import { Comment } from "@/types/Comment";
+import {
+  canAddComment,
+  canAddReview,
+  canEditComment,
+} from "@/config/actionPermissions";
 
 import { type AddCommentSchema } from "./addCommentSchema";
 
@@ -82,4 +88,27 @@ export async function addReplyAction({
   });
 
   revalidatePath(urls.applications.preview({ waveId, applicationId }));
+}
+
+export interface UpdateCommentActionPayload {
+  applicationId: ApplicationId;
+  commentId: Comment["id"];
+  newContent: Comment["content"];
+}
+
+export async function updateCommentAction({
+  applicationId,
+  commentId,
+  newContent,
+}: UpdateCommentActionPayload) {
+  const { validationErrorMessage } = await canEditComment(applicationId);
+
+  if (typeof validationErrorMessage !== "undefined") {
+    throw new Error(validationErrorMessage);
+  }
+
+  await updateComment({
+    newContent,
+    commentId,
+  });
 }

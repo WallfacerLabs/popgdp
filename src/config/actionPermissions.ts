@@ -195,6 +195,38 @@ export async function canAddComment(applicationId: ApplicationId) {
   }
 }
 
+export async function canEditComment(applicationId: ApplicationId) {
+  try {
+    const userId = await checkUserId(
+      "You need to be signed in to edit comments",
+    );
+
+    const application = await getApplicationWithComments(applicationId, userId);
+    if (!application) {
+      throw new Error("Application not found");
+    }
+
+    const isOrbVerified = await userHasRole(UserPermission.orbVerified);
+    if (!isOrbVerified && application.userId !== userId) {
+      throw new ValidationError(
+        "You need to be orb verified to edit comments under other users submissions",
+      );
+    }
+
+    await checkWaveStage({
+      waveId: application.waveId,
+      action: "commentAdd",
+      errorMsg: "You cannot edit comments in this wave stage",
+    });
+    return { userId };
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return { validationErrorMessage: error.message };
+    }
+    throw error;
+  }
+}
+
 export async function canAddReview(
   applicationId: ApplicationWithComments["id"],
 ) {
