@@ -19,12 +19,16 @@ import { addReplyAction, AddReplyActionPayload } from "./addCommentAction";
 import { addCommentSchema, type AddCommentSchema } from "./addCommentSchema";
 
 interface CommentReplyFormProps
-  extends Pick<AddReplyActionPayload, "replyTargetId" | "application"> {
+  extends Pick<
+    AddReplyActionPayload,
+    "replyTargetId" | "applicationId" | "waveId"
+  > {
   onReply: () => void;
 }
 
 export function CommentReplyForm({
-  application,
+  applicationId,
+  waveId,
   replyTargetId,
   onReply,
 }: CommentReplyFormProps) {
@@ -36,7 +40,7 @@ export function CommentReplyForm({
   });
 
   const handleSubmit = form.handleSubmit(async ({ content }) => {
-    await addReplyAction({ content, application, replyTargetId });
+    await addReplyAction({ content, applicationId, waveId, replyTargetId });
     form.reset();
     onReply();
   });

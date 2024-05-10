@@ -94,7 +94,8 @@ export const CommentPreview = ({
       </div>
       {isReply && (
         <CommentReplyForm
-          application={application}
+          applicationId={application.id}
+          waveId={application.waveId}
           replyTargetId={id}
           onReply={onReply}
         />

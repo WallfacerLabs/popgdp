@@ -53,7 +53,11 @@ export function AddCommentForm({
     action: (payload: AddCommentActionPayload) => Promise<void>,
   ) =>
     form.handleSubmit(async ({ content }) => {
-      await action({ content, application });
+      await action({
+        content,
+        applicationId: application.id,
+        waveId: application.waveId,
+      });
       setEditorKey((prev) => prev + 1);
       form.reset();
     });

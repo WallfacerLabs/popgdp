@@ -22,11 +22,8 @@ const applicationId = "f8e46fab-f2c4-4c46-85ca-9e5cbf716d39";
 const categoryId = "7979fbc1-1a84-4b75-8f7e-bea6f9bf0a99";
 
 const defaultActionArgs = {
-  application: {
-    id: applicationId,
-    userId: anotherUserId,
-    waveId,
-  },
+  applicationId,
+  waveId,
   content: "comment",
 };
 
@@ -210,7 +207,7 @@ describe("app/waves/[waveId]/applications/[applicationId]/comments/addCommentFor
     expect(() =>
       addReviewAction({
         ...defaultActionArgs,
-        application: { id: newApplicationId, userId, waveId },
+        applicationId: newApplicationId,
       }),
     ).rejects.toThrowError("You cannot review your own submission");
   });
@@ -223,7 +220,7 @@ describe("app/waves/[waveId]/applications/[applicationId]/comments/addCommentFor
     expect(() =>
       addReviewAction({
         ...defaultActionArgs,
-        application: { id: newApplicationId, userId, waveId },
+        applicationId: newApplicationId,
       }),
     ).rejects.toThrowError("Application not found");
   });
