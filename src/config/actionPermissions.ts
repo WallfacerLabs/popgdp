@@ -55,7 +55,7 @@ async function checkWaveStage({
   if (cookies()?.get("skipWaveStageCheck")?.value === "true") return;
 
   const wave = await getWaveDates(waveId);
-  const waveStage = getWaveStage(wave);
+  const { waveStage } = getWaveStage(wave);
   const isCorrectStage = canPerformActionByStage(waveStage, action);
   if (!isCorrectStage) {
     throw new ValidationError(errorMsg);

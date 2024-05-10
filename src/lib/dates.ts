@@ -9,7 +9,7 @@ export function formatDate(date: Date) {
 }
 
 const timeFormatter = new Intl.DateTimeFormat("en-US", {
-  year: "2-digit",
+  year: "numeric",
   month: "short",
   day: "2-digit",
   hour: "2-digit",

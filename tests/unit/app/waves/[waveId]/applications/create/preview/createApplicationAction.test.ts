@@ -1,6 +1,5 @@
 import { db } from "@/drizzle/db";
 import { Moderator, Reviewer, User, Wave } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
 import { mockUserSession } from "tests/helpers/mockUserSession";
 import {
   createBlocked,
@@ -13,8 +12,6 @@ import {
 } from "tests/helpers/queries";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { getWaveStage } from "@/config/waveStages";
-import { addDays } from "@/lib/dates";
 import { createApplicationAction } from "@/app/waves/[waveId]/applications/create/preview/createApplicationAction";
 
 const waveId = 0;

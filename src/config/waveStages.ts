@@ -17,26 +17,26 @@ export function getWaveStage({
   denoisingStartDate,
   assesmentStartDate,
   closeDate,
-}: WaveStageArgs): WaveStage {
+}: WaveStageArgs): { waveStage: WaveStage; nextStageDate: Date | undefined } {
   const currentDate = new Date();
 
   if (currentDate > closeDate) {
-    return "close";
+    return { waveStage: "close", nextStageDate: undefined };
   }
 
   if (currentDate > assesmentStartDate) {
-    return "assesment";
+    return { waveStage: "assesment", nextStageDate: closeDate };
   }
 
   if (currentDate > denoisingStartDate) {
-    return "denoising";
+    return { waveStage: "denoising", nextStageDate: assesmentStartDate };
   }
 
   if (currentDate > openStartDate) {
-    return "open";
+    return { waveStage: "open", nextStageDate: denoisingStartDate };
   }
 
-  return "notOpen";
+  return { waveStage: "notOpen", nextStageDate: openStartDate };
 }
 
 export type UserAction =

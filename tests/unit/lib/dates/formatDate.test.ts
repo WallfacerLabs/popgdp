@@ -12,7 +12,7 @@ describe("lib/dates", () => {
   describe("formatTime", () => {
     test("should correctly format a Date object into a time string", () => {
       expect(formatTime(new Date("2022-01-01 00:00:00"))).toBe(
-        "Jan 01, 22, 00:00",
+        "Jan 01, 2022, 00:00",
       );
     });
   });

@@ -1,6 +1,7 @@
 import { Wave } from "@/types/Wave";
 import { getWaveStage } from "@/config/waveStages";
 import { cn } from "@/lib/cn";
+import { formatTime } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
 
 import { TimelineStage } from "./timelineStage";
@@ -14,12 +15,18 @@ export const TimelinePreview = ({ wave, className }: TimelinePreviewProps) => {
   const { openStartDate, denoisingStartDate, assesmentStartDate, closeDate } =
     wave;
 
-  const waveStage = getWaveStage(wave);
+  const { waveStage, nextStageDate } = getWaveStage(wave);
 
   return (
     <div className={cn("flex flex-col items-center gap-2", className)}>
-      {waveStage === "notOpen" && (
-        <Badge className="px-4 font-mono">Wave will start soon</Badge>
+      {nextStageDate && (
+        <Badge className="px-4 font-mono">
+          {`${
+            waveStage === "notOpen"
+              ? "Wave will start at"
+              : "Next stage will start at"
+          } ${formatTime(nextStageDate)}`}
+        </Badge>
       )}
       <ul className="flex w-full rounded-3xl  ">
         <TimelineStage
