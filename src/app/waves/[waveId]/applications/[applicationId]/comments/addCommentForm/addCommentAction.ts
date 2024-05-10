@@ -7,26 +7,23 @@ import {
   insertCommentAsReview,
 } from "@/drizzle/queries/comments";
 
-import { type ApplicationWithComments } from "@/types/Application";
+import { type ApplicationId } from "@/types/Application";
 import { canAddComment, canAddReview } from "@/config/actionPermissions";
 
 import { type AddCommentSchema } from "./addCommentSchema";
 
 export interface AddCommentActionPayload {
-  application: Pick<ApplicationWithComments, "id" | "waveId" | "userId">;
+  applicationId: ApplicationId;
+  waveId: number;
   content: AddCommentSchema["content"];
 }
 
 export async function addCommentAction({
   content,
-  application,
+  applicationId,
+  waveId,
 }: AddCommentActionPayload) {
-  const applicationId = application.id;
-  const waveId = application.waveId;
-
-  const { userId, validationErrorMessage } = await canAddComment(
-    application.id,
-  );
+  const { userId, validationErrorMessage } = await canAddComment(applicationId);
 
   if (typeof validationErrorMessage !== "undefined") {
     throw new Error(validationErrorMessage);
@@ -43,11 +40,9 @@ export async function addCommentAction({
 
 export async function addReviewAction({
   content,
-  application,
+  applicationId,
+  waveId,
 }: AddCommentActionPayload) {
-  const applicationId = application.id;
-  const waveId = application.waveId;
-
   const { userId, validationErrorMessage } = await canAddReview(applicationId);
 
   if (typeof validationErrorMessage !== "undefined") {
@@ -69,15 +64,11 @@ export interface AddReplyActionPayload extends AddCommentActionPayload {
 
 export async function addReplyAction({
   content,
-  application,
+  applicationId,
+  waveId,
   replyTargetId,
 }: AddReplyActionPayload) {
-  const applicationId = application.id;
-  const waveId = application.waveId;
-
-  const { userId, validationErrorMessage } = await canAddComment(
-    application.id,
-  );
+  const { userId, validationErrorMessage } = await canAddComment(applicationId);
 
   if (typeof validationErrorMessage !== "undefined") {
     throw new Error(validationErrorMessage);

@@ -22,12 +22,8 @@ const applicationId = "f8e46fab-f2c4-4c46-85ca-9e5cbf716d39";
 const categoryId = "7979fbc1-1a84-4b75-8f7e-bea6f9bf0a99";
 
 const defaultActionArgs = {
-  application: {
-    id: applicationId,
-    userId: anotherUserId,
-    waveId,
-    comments: [],
-  },
+  applicationId,
+  waveId,
   content: "comment",
 };
 
@@ -82,11 +78,19 @@ describe("app/waves/[waveId]/applications/[applicationId]/comments/addCommentFor
 
     it("device verified - own application", async () => {
       await createUser(userId);
-      mockUserSession({ userId, credentialType: "orb" });
+      mockUserSession({ userId, credentialType: "device" });
+      const userApplicationId = "d14f44cd-7a64-4b1c-9731-47cee811e149";
+      await createApplication({
+        applicationId: userApplicationId,
+        categoryId,
+        userId,
+        waveId,
+        isDraft: false,
+      });
 
       await addCommentAction({
         ...defaultActionArgs,
-        application: { ...defaultActionArgs.application, userId },
+        applicationId: userApplicationId,
       });
 
       const comments = await db.query.Comment.findMany();
