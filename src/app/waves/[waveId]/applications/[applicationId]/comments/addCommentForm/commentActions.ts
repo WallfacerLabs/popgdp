@@ -1,16 +1,20 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { urls } from "@/constants/urls";
 import {
   insertComment,
   insertCommentAsReview,
   updateComment,
 } from "@/drizzle/queries/comments";
-import { revalidatePath } from "next/cache";
 
-import { canAddComment, canAddReview, canEditComment } from "@/config/actionPermissions";
 import { type ApplicationId } from "@/types/Application";
 import { Comment } from "@/types/Comment";
+import {
+  canAddComment,
+  canAddReview,
+  canEditComment,
+} from "@/config/actionPermissions";
 
 import { type AddCommentSchema } from "./addCommentSchema";
 
