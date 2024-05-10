@@ -1,2 +1,2 @@
-ALTER TYPE "categoryColor" ADD VALUE 'yellow';
-ALTER TYPE "categoryColor" ADD VALUE 'cyan';
+ALTER TYPE "categoryColor" ADD VALUE IF NOT EXISTS 'yellow';
+ALTER TYPE "categoryColor" ADD VALUE IF NOT EXISTS 'cyan';
