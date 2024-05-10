@@ -3,6 +3,7 @@
 import { type Category } from "@/types/Category";
 import { CategoryColor } from "@/types/CategoryColor";
 import { cn } from "@/lib/cn";
+import { sortObjectsByKey } from "@/lib/sort";
 import { getCategoryIcon } from "@/components/ui/categories/getCategoryIcon";
 import { getCategoryStyles } from "@/components/ui/categories/getCategoryStyles";
 import {
@@ -28,9 +29,7 @@ export const CategoryFilter = ({
   categories,
   onCategoryChange,
 }: CategoryFilterProps) => {
-  const sortedCategories = [...categories].sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
+  const sortedCategories = sortObjectsByKey(categories, ["name"], true);
 
   return (
     <Select onValueChange={onCategoryChange}>
