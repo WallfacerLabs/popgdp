@@ -17,65 +17,70 @@ describe("config/waveStages", () => {
   test("should return notOpen when current date is before start date", () => {
     vi.useFakeTimers({ now: initialDate });
 
-    const stage = getWaveStage({
+    const { waveStage, nextStageDate } = getWaveStage({
       openStartDate: createDate(1),
       denoisingStartDate: createDate(2),
       assesmentStartDate: createDate(3),
       closeDate: createDate(4),
     });
 
-    expect(stage).toBe("notOpen");
+    expect(waveStage).toBe("notOpen");
+    expect(nextStageDate).toStrictEqual(createDate(1));
   });
 
   test("should return open when current date is after start date", () => {
     vi.useFakeTimers({ now: createDate(2) });
 
-    const stage = getWaveStage({
+    const { waveStage, nextStageDate } = getWaveStage({
       openStartDate: createDate(1),
       denoisingStartDate: createDate(2),
       assesmentStartDate: createDate(3),
       closeDate: createDate(4),
     });
 
-    expect(stage).toBe("open");
+    expect(waveStage).toBe("open");
+    expect(nextStageDate).toStrictEqual(createDate(2));
   });
 
   test("should return denoising when current date is after denoising start date", () => {
     vi.useFakeTimers({ now: createDate(3) });
 
-    const stage = getWaveStage({
+    const { waveStage, nextStageDate } = getWaveStage({
       openStartDate: createDate(1),
       denoisingStartDate: createDate(2),
       assesmentStartDate: createDate(3),
       closeDate: createDate(4),
     });
 
-    expect(stage).toBe("denoising");
+    expect(waveStage).toBe("denoising");
+    expect(nextStageDate).toStrictEqual(createDate(3));
   });
 
   test("should return assesment when current date is after assesment start date", () => {
     vi.useFakeTimers({ now: createDate(4) });
 
-    const stage = getWaveStage({
+    const { waveStage, nextStageDate } = getWaveStage({
       openStartDate: createDate(1),
       denoisingStartDate: createDate(2),
       assesmentStartDate: createDate(3),
       closeDate: createDate(4),
     });
 
-    expect(stage).toBe("assesment");
+    expect(waveStage).toBe("assesment");
+    expect(nextStageDate).toStrictEqual(createDate(4));
   });
 
   test("should return closed when current date is after close date", () => {
     vi.useFakeTimers({ now: createDate(5) });
 
-    const stage = getWaveStage({
+    const { waveStage, nextStageDate } = getWaveStage({
       openStartDate: createDate(1),
       denoisingStartDate: createDate(2),
       assesmentStartDate: createDate(3),
       closeDate: createDate(4),
     });
 
-    expect(stage).toBe("close");
+    expect(waveStage).toBe("close");
+    expect(nextStageDate).toBeUndefined();
   });
 });
