@@ -1,25 +1,16 @@
-import { getModeratorPanelApplications } from "@/drizzle/queries/applications";
-import * as csv from "csv/sync";
+import { notFound } from "next/navigation";
+import { NextResponse } from "next/server";
+import { getApplicationsExport } from "@/drizzle/queries/applications";
+import { stringify } from "csv/sync";
 
-import { Button } from "@/components/ui/button";
+import { userHasRole, UserPermission } from "@/config/userPermissions";
 
-export async function ExportSubmissions() {
-  const csvData = await getCsvData();
-
-  return (
-    <Button asChild>
-      <a
-        download="submissionData.csv"
-        href={`data:text/csv;charset=utf-8,${encodeURIComponent(csvData)}`}
-      >
-        Export submissions
-      </a>
-    </Button>
-  );
-}
-
-async function getCsvData() {
-  const applications = await getModeratorPanelApplications();
+export async function GET() {
+  const isModerator = await userHasRole(UserPermission.moderator);
+  if (!isModerator) {
+    throw notFound();
+  }
+  const applications = await getApplicationsExport();
 
   const csvData: any = [
     [
@@ -67,5 +58,5 @@ async function getCsvData() {
     ]);
   }
 
-  return csv.stringify(csvData);
+  return new NextResponse(stringify(csvData));
 }

@@ -101,38 +101,65 @@ function countApplicationValue(value: ContentValue) {
   );
 }
 
+const tableVisibleFields = {
+  id: Application.id,
+  name: Application.name,
+  entityName: Application.entityName,
+  budget: Application.budget,
+  createdAt: Application.createdAt,
+  user: { name: User.name, ethereumAddress: User.ethereumAddress },
+  userImage: {
+    id: Image.id,
+    placeholder: Image.placeholder,
+    width: Image.width,
+    height: Image.height,
+  },
+  category: {
+    id: Category.id,
+    name: Category.name,
+    color: Category.color,
+    description: Category.description,
+  },
+  helpfulCount: countApplicationValue(ContentValue.positive),
+  invalidCount: countApplicationValue(ContentValue.invalid),
+} as const;
+
 export const getModeratorPanelApplications = cache(async () => {
   return db
+    .select(tableVisibleFields)
+    .from(Application)
+    .leftJoin(
+      ApplicationValue,
+      eq(Application.id, ApplicationValue.applicationId),
+    )
+    .innerJoin(User, eq(Application.userId, User.id))
+    .innerJoin(Category, eq(Application.categoryId, Category.id))
+    .leftJoin(Image, eq(User.imageId, Image.id))
+    .groupBy(
+      Application.id,
+      User.name,
+      User.ethereumAddress,
+      Category.id,
+      Category.name,
+      Category.color,
+      Category.description,
+      Image.id,
+    );
+});
+
+export const getApplicationsExport = cache(async () => {
+  return db
     .select({
-      id: Application.id,
-      name: Application.name,
       summary: Application.summary,
-      entityName: Application.entityName,
       email: Application.email,
       duration: Application.duration,
-      budget: Application.budget,
       teamSummary: Application.teamSummary,
       idea: Application.idea,
       reason: Application.reason,
       state: Application.state,
       goals: Application.goals,
       requirements: Application.requirements,
-      createdAt: Application.createdAt,
-      user: { name: User.name, ethereumAddress: User.ethereumAddress },
-      userImage: {
-        id: Image.id,
-        placeholder: Image.placeholder,
-        width: Image.width,
-        height: Image.height,
-      },
-      category: {
-        id: Category.id,
-        name: Category.name,
-        color: Category.color,
-        description: Category.description,
-      },
-      helpfulCount: countApplicationValue(ContentValue.positive),
-      invalidCount: countApplicationValue(ContentValue.invalid),
+      ...tableVisibleFields,
     })
     .from(Application)
     .leftJoin(

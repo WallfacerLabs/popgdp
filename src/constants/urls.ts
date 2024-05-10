@@ -39,4 +39,7 @@ export const urls = {
     loginCallback: "/api/loginCallback",
     logout: "/api/auth/logout",
   },
+  exports: {
+    submissions: "/api/exports/submissions",
+  },
 } as const;

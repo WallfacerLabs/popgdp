@@ -1,6 +1,6 @@
 import {
-  getModeratorPanelApplications,
   type getApplicationWithComments,
+  type getModeratorPanelApplications,
 } from "@/drizzle/queries/applications";
 import { type getWaveWithApplications } from "@/drizzle/queries/waves";
 
