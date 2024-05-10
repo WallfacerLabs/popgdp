@@ -5,6 +5,7 @@ import {
   createApplication,
   createBlocked,
   createCategory,
+  createComment,
   createModerator,
   createReviewer,
   createUser,
@@ -13,10 +14,8 @@ import {
 } from "tests/helpers/queries";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  addCommentAction,
-  updateCommentAction,
-} from "@/app/waves/[waveId]/applications/[applicationId]/comments/addCommentForm/commentActions";
+import { formatTime } from "@/lib/dates";
+import { updateCommentAction } from "@/app/waves/[waveId]/applications/[applicationId]/comments/addCommentForm/commentActions";
 
 const userId = "user";
 const anotherUserId = "anotherUser";
@@ -25,17 +24,28 @@ const applicationId = "f8e46fab-f2c4-4c46-85ca-9e5cbf716d39";
 const categoryId = "7979fbc1-1a84-4b75-8f7e-bea6f9bf0a99";
 const commentId = "5c8c268c-3a34-43ec-b8b7-58a0cbe9adde";
 
-const addCommentActionArgs = {
-  applicationId,
-  waveId,
-  content: "Original comment",
-};
+const initialCommentContent = "Original comment";
 
 const updateCommentActionArgs = {
   applicationId,
   commentId,
-  content: "Updated comment",
+  newContent: "Updated comment",
 };
+
+const expectedContent = `${initialCommentContent}
+
+Edited ${formatTime(new Date())}:
+
+${updateCommentActionArgs.newContent}`;
+
+async function createUserComment() {
+  createComment({
+    content: initialCommentContent,
+    applicationId,
+    commentId,
+    userId,
+  });
+}
 
 describe("app/waves/[waveId]/applications/[applicationId]/comments/addCommentForm/updateCommentAction", () => {
   beforeEach(async () => {
@@ -90,91 +100,46 @@ describe("app/waves/[waveId]/applications/[applicationId]/comments/addCommentFor
 
     it("device verified - own application", async () => {
       await createUser(userId);
-      mockUserSession({ userId, credentialType: "device" });
-      const userApplicationId = "d14f44cd-7a64-4b1c-9731-47cee811e149";
-      await createApplication({
-        applicationId: userApplicationId,
-        categoryId,
-        userId,
-        waveId,
-        isDraft: false,
-      });
+      mockUserSession({ userId, credentialType: "orb" });
+      await createUserComment();
 
-      await addCommentAction({
-        ...addCommentActionArgs,
-        applicationId: userApplicationId,
-      });
-
-      const comments = await db.query.Comment.findMany();
-      expect(comments).toHaveLength(1);
-
-      const comment = comments[0];
-
-      await updateCommentAction({
-        ...updateCommentActionArgs,
-        applicationId: userApplicationId,
-        commentId: comment.id,
-      });
+      await updateCommentAction(updateCommentActionArgs);
 
       const updatedComments = await db.query.Comment.findMany();
-      expect(updatedComments[0].content).toBe(updateCommentActionArgs.content);
+      expect(updatedComments[0].content).toBe(expectedContent);
     });
 
     it("orb verified", async () => {
       await createUser(userId);
       mockUserSession({ userId, credentialType: "orb" });
+      await createUserComment();
 
-      await addCommentAction(addCommentActionArgs);
-
-      const comments = await db.query.Comment.findMany();
-      expect(comments).toHaveLength(1);
-
-      const comment = comments[0];
-      await updateCommentAction({
-        ...updateCommentActionArgs,
-        commentId: comment.id,
-      });
+      await updateCommentAction(updateCommentActionArgs);
 
       const updatedComments = await db.query.Comment.findMany();
-      expect(updatedComments[0].content).toBe(updateCommentActionArgs.content);
+      expect(updatedComments[0].content).toBe(expectedContent);
     });
 
     it("reviewer", async () => {
       await createReviewer(userId);
       mockUserSession({ userId, credentialType: "orb" });
+      await createUserComment();
 
-      await addCommentAction(addCommentActionArgs);
-
-      const comments = await db.query.Comment.findMany();
-      expect(comments).toHaveLength(1);
-
-      const comment = comments[0];
-      await updateCommentAction({
-        ...updateCommentActionArgs,
-        commentId: comment.id,
-      });
+      await updateCommentAction(updateCommentActionArgs);
 
       const updatedComments = await db.query.Comment.findMany();
-      expect(updatedComments[0].content).toBe(updateCommentActionArgs.content);
+      expect(updatedComments[0].content).toBe(expectedContent);
     });
 
     it("moderator", async () => {
       await createModerator(userId);
       mockUserSession({ userId, credentialType: "orb" });
+      await createUserComment();
 
-      await addCommentAction(addCommentActionArgs);
-
-      const comments = await db.query.Comment.findMany();
-      expect(comments).toHaveLength(1);
-
-      const comment = comments[0];
-      await updateCommentAction({
-        ...updateCommentActionArgs,
-        commentId: comment.id,
-      });
+      await updateCommentAction(updateCommentActionArgs);
 
       const updatedComments = await db.query.Comment.findMany();
-      expect(updatedComments[0].content).toBe(updateCommentActionArgs.content);
+      expect(updatedComments[0].content).toBe(expectedContent);
     });
   });
 });

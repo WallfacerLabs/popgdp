@@ -93,25 +93,22 @@ export async function addReplyAction({
 export interface UpdateCommentActionPayload {
   applicationId: ApplicationId;
   commentId: Comment["id"];
-  content: Comment["content"];
+  newContent: Comment["content"];
 }
 
 export async function updateCommentAction({
   applicationId,
   commentId,
-  content,
+  newContent,
 }: UpdateCommentActionPayload) {
-  const { userId, validationErrorMessage } =
-    await canEditComment(applicationId);
+  const { validationErrorMessage } = await canEditComment(applicationId);
 
   if (typeof validationErrorMessage !== "undefined") {
     throw new Error(validationErrorMessage);
   }
 
   await updateComment({
-    content,
-    applicationId,
-    userId,
-    id: commentId,
+    newContent,
+    commentId,
   });
 }

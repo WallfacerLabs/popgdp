@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 
 import { ApplicationWithComments } from "@/types/Application";
 import { type Comment } from "@/types/Comment";
-import { formatTime } from "@/lib/dates";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Editor } from "@/components/ui/editor/editor";
@@ -44,13 +43,10 @@ export function CommentEditForm({
   });
 
   const handleSubmit = form.handleSubmit(async ({ content }) => {
-    const appendContent = `\n\nEdited ${formatTime(new Date())}:\n\n${content}`;
-    const submitContent = comment.content + appendContent;
-
     await updateCommentAction({
       applicationId: application.id,
       commentId: comment.id,
-      content: submitContent,
+      newContent: content,
     });
     form.reset();
     onEdit();

@@ -1,13 +1,28 @@
 import { db } from "@/drizzle/db";
 import { Comment, Review } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
+
+import { formatTime } from "@/lib/dates";
 
 export async function insertComment(data: typeof Comment.$inferInsert) {
   return db.insert(Comment).values(data);
 }
 
-export async function updateComment(data: typeof Comment.$inferInsert) {
-  return db.update(Comment).set(data).where(eq(Comment.id, data.id!));
+interface UpdateCommentArgs {
+  commentId: string;
+  newContent: string;
+}
+
+export async function updateComment({
+  commentId,
+  newContent,
+}: UpdateCommentArgs) {
+  const formattedContent = `\n\nEdited ${formatTime(new Date())}:\n\n${newContent}`;
+
+  return db
+    .update(Comment)
+    .set({ content: sql`${Comment.content} || ${formattedContent}` })
+    .where(eq(Comment.id, commentId));
 }
 
 export async function insertCommentAsReview(data: typeof Comment.$inferInsert) {

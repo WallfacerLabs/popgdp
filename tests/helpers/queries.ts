@@ -2,6 +2,7 @@ import { db } from "@/drizzle/db";
 import {
   Application,
   Category,
+  Comment,
   Moderator,
   Reviewer,
   User,
@@ -123,5 +124,26 @@ export async function createApplication({
     summary: "summary",
     tbd: "tbd",
     teamSummary: "teamSummary",
+  });
+}
+
+interface CreateCommentArgs {
+  commentId: string;
+  applicationId: string;
+  userId: string;
+  content: string;
+}
+
+export async function createComment({
+  commentId,
+  applicationId,
+  userId,
+  content,
+}: CreateCommentArgs) {
+  await db.insert(Comment).values({
+    id: commentId,
+    applicationId,
+    content,
+    userId,
   });
 }
