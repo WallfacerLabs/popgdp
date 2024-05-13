@@ -1,4 +1,4 @@
-import { describe, expect, it, suite, test } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { compareObjectsByProperties } from "@/lib/comparison";
 
@@ -24,153 +24,141 @@ const objectWithSmallerProperties = {
 };
 
 describe("utils/comparison", () => {
-  test("date", () => {
-    suite("shallow", () => {
-      it("ascending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["date"],
-            true,
-          ),
-        ).toBe(1);
-      });
-
-      it("descending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["date"],
-            false,
-          ),
-        ).toBe(-1);
-      });
+  describe("date", () => {
+    it("shallow ascending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["date"],
+          true,
+        ),
+      ).toBe(1);
     });
 
-    suite("nested", () => {
-      it("ascending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["nested", "date"],
-            true,
-          ),
-        ).toBe(-1);
-      });
+    it("shallow descending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["date"],
+          false,
+        ),
+      ).toBe(-1);
+    });
 
-      it("descending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["nested", "date"],
-            false,
-          ),
-        ).toBe(1);
-      });
+    it("nested ascending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["nested", "date"],
+          true,
+        ),
+      ).toBe(-1);
+    });
+
+    it("nested descending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["nested", "date"],
+          false,
+        ),
+      ).toBe(1);
     });
   });
 
-  test("number", () => {
-    suite("shallow", () => {
-      it("ascending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["number"],
-            true,
-          ),
-        ).toBe(1);
-      });
-
-      it("descending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["number"],
-            false,
-          ),
-        ).toBe(-1);
-      });
+  describe("number", () => {
+    it("shallow ascending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["number"],
+          true,
+        ),
+      ).toBe(1);
     });
 
-    suite("nested", () => {
-      it("ascending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["nested", "number"],
-            true,
-          ),
-        ).toBe(-1);
-      });
+    it("shallow descending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["number"],
+          false,
+        ),
+      ).toBe(-1);
+    });
 
-      it("descending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["nested", "number"],
-            false,
-          ),
-        ).toBe(1);
-      });
+    it("nested ascending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["nested", "number"],
+          true,
+        ),
+      ).toBe(-1);
+    });
+
+    it("nested descending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["nested", "number"],
+          false,
+        ),
+      ).toBe(1);
     });
   });
 
-  test("string", () => {
-    suite("shallow", () => {
-      it("ascending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["string"],
-            true,
-          ),
-        ).toBe(1);
-      });
-
-      it("descending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["string"],
-            false,
-          ),
-        ).toBe(-1);
-      });
+  describe("string", () => {
+    it("shallow ascending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["string"],
+          true,
+        ),
+      ).toBe(1);
     });
 
-    suite("nested", () => {
-      it("ascending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["nested", "string"],
-            true,
-          ),
-        ).toBe(-1);
-      });
+    it("shallow descending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["string"],
+          false,
+        ),
+      ).toBe(-1);
+    });
 
-      it("descending", () => {
-        expect(
-          compareObjectsByProperties(
-            objectWithGreaterProperties,
-            objectWithSmallerProperties,
-            ["nested", "string"],
-            false,
-          ),
-        ).toBe(1);
-      });
+    it("nested ascending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["nested", "string"],
+          true,
+        ),
+      ).toBe(-1);
+    });
+
+    it("nested descending", () => {
+      expect(
+        compareObjectsByProperties(
+          objectWithGreaterProperties,
+          objectWithSmallerProperties,
+          ["nested", "string"],
+          false,
+        ),
+      ).toBe(1);
     });
   });
 });
