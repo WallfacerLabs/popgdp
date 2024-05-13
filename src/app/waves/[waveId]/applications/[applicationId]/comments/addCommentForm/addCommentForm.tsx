@@ -1,12 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { DURATIONS } from "@/constants/durations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { type ApplicationWithComments } from "@/types/Application";
-import { parseApplicationParams } from "@/lib/paramsValidation";
+import {
+  getLocalStorageValue,
+  LOCAL_STORAGE_KEYS,
+  LocalStorageKey,
+  removeLocalStorageItem,
+  saveToLocalStorage,
+} from "@/lib/localStorage";
+import { useDebounceCallback } from "@/hooks/useDebounceCallback";
 import { Button } from "@/components/ui/button";
 import { Editor } from "@/components/ui/editor/editor";
 import {
@@ -39,15 +47,25 @@ export function AddCommentForm({
   reviewValidationError,
   commentValidationError,
 }: AddCommentFormProps) {
-  const { waveId, applicationId } = parseApplicationParams(useParams());
-
   const [editorKey, setEditorKey] = useState(0);
+  const commentLocalStorageKey = LOCAL_STORAGE_KEYS.commentData(application.id);
+
+  const storedCommentValue = getLocalStorageValue(
+    z.string(),
+    commentLocalStorageKey,
+    "",
+  );
+
   const form = useForm<AddCommentSchema>({
     resolver: zodResolver(addCommentSchema),
     defaultValues: {
-      content: "",
+      content: storedCommentValue,
     },
   });
+
+  const onDebounce = useDebounceCallback((value: string) => {
+    saveToLocalStorage(commentLocalStorageKey as LocalStorageKey, value);
+  }, DURATIONS.commentDebounce);
 
   const handleSubmit = (
     action: (payload: AddCommentActionPayload) => Promise<void>,
@@ -58,6 +76,7 @@ export function AddCommentForm({
         applicationId: application.id,
         waveId: application.waveId,
       });
+      removeLocalStorageItem(commentLocalStorageKey as LocalStorageKey);
       setEditorKey((prev) => prev + 1);
       form.reset();
     });
@@ -71,7 +90,14 @@ export function AddCommentForm({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Editor onChange={field.onChange} key={editorKey} />
+                <Editor
+                  initialMarkdown={storedCommentValue}
+                  onChange={(value) => {
+                    field.onChange(value);
+                    onDebounce(value);
+                  }}
+                  key={editorKey}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

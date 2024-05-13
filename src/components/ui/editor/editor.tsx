@@ -21,15 +21,19 @@ import { ToolbarPlugin } from "./plugins/toolbarPlugin";
 interface EditorProps {
   onChange: (value: string) => void;
   placeholder?: string;
+  initialMarkdown?: string;
 }
 
 function Editor({
   onChange,
   placeholder,
+  initialMarkdown,
   size,
 }: EditorProps & VariantProps<typeof editorVariants>) {
   return (
-    <LexicalComposer initialConfig={getInitialConfig({ namespace: "Editor" })}>
+    <LexicalComposer
+      initialConfig={getInitialConfig({ initialMarkdown, namespace: "Editor" })}
+    >
       <div className="group rounded-3xl border shadow-sm transition-colors focus-within:border-primary">
         <ToolbarPlugin />
         <div className="relative">
