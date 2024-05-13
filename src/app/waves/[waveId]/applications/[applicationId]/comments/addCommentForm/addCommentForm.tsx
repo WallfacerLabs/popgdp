@@ -48,11 +48,11 @@ export function AddCommentForm({
   commentValidationError,
 }: AddCommentFormProps) {
   const [editorKey, setEditorKey] = useState(0);
-  const commentLocalStorageKey = `${LOCAL_STORAGE_KEYS.commentData}-${application.id}`;
+  const commentLocalStorageKey = LOCAL_STORAGE_KEYS.commentData(application.id);
 
   const storedCommentValue = getLocalStorageValue(
     z.string(),
-    commentLocalStorageKey as LocalStorageKey,
+    commentLocalStorageKey,
     "",
   );
 

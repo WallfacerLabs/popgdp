@@ -1,13 +1,24 @@
 import { z } from "zod";
 
+import { ApplicationId } from "@/types/Application";
+
 export const LOCAL_STORAGE_KEYS = {
   waveStepsData: "waveStepsData",
   applicationStepsData: "applicationStepsData",
-  commentData: "commentData",
+  commentData: (applicationId: ApplicationId) =>
+    `commentData-${applicationId}` as const,
 } as const;
 
+type LocalStorageValueMapping = {
+  [Key in keyof typeof LOCAL_STORAGE_KEYS]: (typeof LOCAL_STORAGE_KEYS)[Key] extends (
+    ...args: any[]
+  ) => any
+    ? ReturnType<(typeof LOCAL_STORAGE_KEYS)[Key]>
+    : (typeof LOCAL_STORAGE_KEYS)[Key];
+};
+
 export type LocalStorageKey =
-  (typeof LOCAL_STORAGE_KEYS)[keyof typeof LOCAL_STORAGE_KEYS];
+  LocalStorageValueMapping[keyof LocalStorageValueMapping];
 
 export function getLocalStorageValue<T extends z.ZodTypeAny>(
   schema: T,
