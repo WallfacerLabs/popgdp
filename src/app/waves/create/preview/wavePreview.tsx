@@ -6,7 +6,6 @@ import { urls } from "@/constants/urls";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/dates";
 import { LOCAL_STORAGE_KEYS } from "@/lib/localStorage";
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CategoryBadge } from "@/components/ui/categories/categoryBadge";
 import { PageHeader } from "@/components/ui/pageHeader";
 import { Separator } from "@/components/ui/separator";
 import { CalendarIcon } from "@/components/icons/calendarIcon";
@@ -56,9 +56,9 @@ export default function PreviewApplication() {
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-bold">Categories:</span>
             <ul className="flex flex-wrap items-center gap-2">
-              {validatedWaveData.categories.map(({ name, color }, index) => (
-                <li key={name + index}>
-                  <Badge variant={color}>{name}</Badge>
+              {validatedWaveData.categories.map((category, index) => (
+                <li key={category.name + index}>
+                  <CategoryBadge category={category} />
                 </li>
               ))}
             </ul>
