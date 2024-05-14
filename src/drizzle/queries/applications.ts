@@ -64,6 +64,7 @@ export const getApplicationWithComments = cache(
               },
             },
           },
+          orderBy: (comments, { asc }) => [asc(comments.createdAt)],
         },
         members: {
           columns: {
