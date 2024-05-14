@@ -32,6 +32,7 @@ export const getWaves = cache(async () => {
           id: true,
           name: true,
           color: true,
+          description: true,
         },
       },
     },
