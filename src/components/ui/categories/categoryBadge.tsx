@@ -1,22 +1,23 @@
-import { type CategoryColor } from "@/types/CategoryColor";
+import { Category } from "@/types/Category";
 
 import { Badge } from "../badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { getCategoryIcon } from "./getCategoryIcon";
 
-interface Category {
-  color: CategoryColor;
-  name: string;
-}
-
 interface CategoryBadgeProps {
-  category: Category;
+  category: Omit<Category, "id">;
 }
 
 export function CategoryBadge({ category }: CategoryBadgeProps) {
   return (
-    <Badge variant={category.color}>
-      {getCategoryIcon(category.color)}
-      {category.name}
-    </Badge>
+    <Tooltip>
+      <TooltipTrigger>
+        <Badge variant={category.color}>
+          {getCategoryIcon(category.color)}
+          {category.name}
+        </Badge>
+      </TooltipTrigger>
+      <TooltipContent>{category.description}</TooltipContent>
+    </Tooltip>
   );
 }
