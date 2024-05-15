@@ -11,13 +11,16 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { createWaveAction } from "@/app/waves/create/createWaveAction";
 import { type WaveData } from "@/app/waves/create/stepsProvider";
 
+const inputDate = new Date("2024-05-15 15:30:00");
+const expectedDate = new Date("2024-05-15T00:00:00.000Z");
+
 const WAVE_DATA: WaveData = {
   name: "Wave",
   summary: "Summary",
-  openStartDate: new Date(),
-  denoisingStartDate: new Date(),
-  assesmentStartDate: new Date(),
-  closeDate: new Date(),
+  openStartDate: inputDate,
+  denoisingStartDate: inputDate,
+  assesmentStartDate: inputDate,
+  closeDate: inputDate,
   categories: [
     {
       color: "blue",
@@ -91,10 +94,10 @@ describe("app/waves/create/createWaveAction", () => {
       expect(waves[0]).toMatchObject({
         name: WAVE_DATA.name,
         summary: WAVE_DATA.summary,
-        openStartDate: WAVE_DATA.openStartDate,
-        denoisingStartDate: WAVE_DATA.denoisingStartDate,
-        assesmentStartDate: WAVE_DATA.assesmentStartDate,
-        closeDate: WAVE_DATA.closeDate,
+        openStartDate: expectedDate,
+        denoisingStartDate: expectedDate,
+        assesmentStartDate: expectedDate,
+        closeDate: expectedDate,
       });
 
       const categories = await db.query.Category.findMany();

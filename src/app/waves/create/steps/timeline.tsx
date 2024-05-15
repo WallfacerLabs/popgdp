@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { cn } from "@/lib/cn";
+import { formatDate, formatTime, getUTCStartOfDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Form, FormFooter } from "@/components/ui/form";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
@@ -75,6 +76,12 @@ export function Timeline({ className }: TimelineProps) {
               label="Close date"
               stage="close"
             />
+          </div>
+          <div className="-mt-4 text-center text-xs opacity-60">
+            {`Date set here will be stored in UTC timezone:
+            ${formatDate(new Date())} is 
+            ${formatTime(getUTCStartOfDate(new Date()))} 
+            (${getUTCStartOfDate(new Date()).toISOString()})`}
           </div>
 
           <FormFooter>

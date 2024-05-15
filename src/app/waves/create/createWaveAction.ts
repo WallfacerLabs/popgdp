@@ -7,6 +7,7 @@ import { urls } from "@/constants/urls";
 import { insertWave } from "@/drizzle/queries/waves";
 
 import { userHasRole, UserPermission } from "@/config/userPermissions";
+import { getUTCStartOfDate } from "@/lib/dates";
 
 import { WaveData } from "./stepsProvider";
 
@@ -20,10 +21,10 @@ export async function createWaveAction(data: WaveData) {
     {
       name: data.name,
       summary: data.summary,
-      openStartDate: data.openStartDate,
-      denoisingStartDate: data.denoisingStartDate,
-      assesmentStartDate: data.assesmentStartDate,
-      closeDate: data.closeDate,
+      openStartDate: getUTCStartOfDate(data.openStartDate),
+      denoisingStartDate: getUTCStartOfDate(data.denoisingStartDate),
+      assesmentStartDate: getUTCStartOfDate(data.assesmentStartDate),
+      closeDate: getUTCStartOfDate(data.closeDate),
     },
     data.categories,
   );
