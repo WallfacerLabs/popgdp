@@ -25,6 +25,12 @@ export function getStartOfDate(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
+export function getUTCStartOfDate(date: Date) {
+  const utcDate = new Date(date);
+  utcDate.setUTCHours(0, 0, 0, 0);
+  return utcDate;
+}
+
 export function addDays(date: Date, days: number) {
   const newDate = new Date(date);
   newDate.setDate(newDate.getDate() + days);

@@ -28,7 +28,7 @@ export const TimelinePreview = ({ wave, className }: TimelinePreviewProps) => {
           } ${formatTime(nextStageDate)}`}
         </Badge>
       )}
-      <ul className="flex w-full rounded-3xl  ">
+      <ul className="flex w-full rounded-3xl">
         <TimelineStage
           name="open"
           currentStage={waveStage}
