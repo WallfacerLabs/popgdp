@@ -14,7 +14,6 @@ const expected = "2023-05-15T00:00:00.000Z";
 describe("lib/dates/getUTCStarOfDate", () => {
   for (const testCase of testCases) {
     it(testCase, () => {
-      console.log(new Date(testCase).toUTCString());
       const utcDate = getUTCStartOfDate(new Date(testCase));
       expect(utcDate).toStrictEqual(new Date(expected));
     });
