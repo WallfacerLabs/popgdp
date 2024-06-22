@@ -1,0 +1,128 @@
+@startuml
+
+entity UserAccounts {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime
+    ethereumAddress: Text
+    is_blocked: boolean
+}
+
+entity Reviewers {
+    id: ID <<generated>>
+    claimed: boolean
+    ethereumAddress: Text
+}
+
+entity Moderators {
+    id: ID <<generated>>
+    ethereumAddress: Text 
+}
+
+entity Applications {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime
+    name: Text
+    --
+    wave_id: ID <<FK>>
+    user_id: ID <<FK>>
+    category_id: ID <<FK>>
+}
+
+'private data of application
+entity ApplicationContacts {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime
+    name: Text
+    email: Text
+    --
+    application_id: ID <<FK>>
+
+}
+
+entity ApplicationCategories {
+    id: ID <<generated>>
+    name: Text
+}
+
+entity ApplicationValue {
+    application_id: ID <<FK>>
+    user_id: ID <<FK>>
+    value: ContentValue
+    --
+    PrimaryKey(application_id, user_id)
+}
+
+entity Comments {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime
+    --
+    application_id: ID <<FK>>
+    user_id: ID <<FK>>
+}
+
+entity CommentValue {
+    comment_id: ID <<FK>>
+    user_id: ID <<FK>>
+    value: ContentValue
+    --
+    PrimaryKey(comment_id, user_id)
+}
+
+enum ContentValue {
+    POSITIVE
+    SPAM
+}
+
+entity Reviews {
+    comment_id: ID <<FK>>
+    application_id: ID <<FK>>
+    reviewer_id: ID <<FK>>
+
+    PrimaryKey(reviewer_id, application_id)
+}
+
+entity Wave {
+    id: ID <<generated>>
+    created_at: DateTime
+    updated_at: DateTime 
+    name: Text
+    start_date: DateTime
+    end_date: DateTime
+    phase: WavePhase
+  
+}
+
+Reviewers ||--o| UserAccounts
+Moderators ||--o| UserAccounts
+Applications }o--|| Wave
+Applications }o--|| UserAccounts
+Comments }o--|| Applications
+Comments }o--|| UserAccounts
+Reviews ||--o| Comments
+Reviews }o--|| Applications
+Reviews }o--|| UserAccounts
+ApplicationContacts ||--|| Applications
+Applications }o--|| ApplicationCategories
+CommentValue }o--|| Comments
+CommentValue }o--|| UserAccounts
+ApplicationValue }o--|| Applications
+ApplicationValue }o--|| UserAccounts
+
+
+enum WavePhase {
+    OPEN
+    DENOISING
+    ASSESEMENT
+    CLOSED
+}
+
+WavePhase --> Wave
+
+CommentValue <-- ContentValue
+ApplicationValue <-- ContentValue
+
+@enduml
